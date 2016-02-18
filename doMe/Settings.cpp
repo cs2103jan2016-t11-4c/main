@@ -1,0 +1,113 @@
+#include "Settings.h"
+const string Settings::FILE_SETTINGS = "settings.txt";
+
+
+Settings::Settings(void) {
+}
+
+Settings::~Settings(void) {
+}
+
+bool Settings::checkForSettingsFile() {
+	std::ifstream settingFile(FILE_SETTINGS);
+
+	if (settingFile.is_open()) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void Settings::firstTimeUser() {
+	UserInterface UI;
+	string input;
+	UI.printFirstTimeUserPrompt();
+
+	getline(cin,input);
+	updateTextFileName(input);
+
+	UI.printFirstTimeUserDirectoryPrompt();
+	getline(cin,input);
+	changeDirectory(input);
+	checkEmptySaveDirectory();
+
+
+}
+
+void Settings::updateTextFileName(string sentence) {
+	istringstream iss(sentence);
+	string textFileName;
+
+	iss >> textFileName;
+
+	_textFileName = createTextFileNameString(textFileName);
+}
+
+string Settings::createTextFileNameString(string textFileName) {
+	string fileExtension = ".txt";
+	if(textFileName.substr(textFileName.find_last_of(".") + 1) == "txt") {
+		return textFileName;
+	} else {
+		return(textFileName + fileExtension);
+		//textFileName.insert(textFileName.end(),".txt"); doesn't work? why?
+	}
+}
+
+void Settings::changeDirectory(string directory) { //need refactoring
+	//delete old text file?
+	size_t found;
+	string extractedDirectory;
+	string textFileName;
+
+	//check for existing txt file inputted 
+	//extract correct data
+	if(directory.substr(directory.find_last_of(".") + 1) == "txt") {
+		found = directory.find_last_of("/\\");
+		extractedDirectory = directory.substr(0,found+1);
+		textFileName = directory.substr(found+1);
+	} else {
+		if(directory.find_last_of("/\\")+1 == directory.size()) {
+			extractedDirectory = directory;
+			textFileName = _textFileName;
+		} else {
+			extractedDirectory = directory;
+			textFileName = _textFileName;
+			extractedDirectory = (extractedDirectory + "/");
+		}
+	}
+
+	if(checkValidityOfDirectory(extractedDirectory) == true) {
+		UserInterface UI;
+		_textFileName = textFileName;
+		_saveDirectory = extractedDirectory;
+
+		UI.printChangeSaveFileDirectory(getDirectory());
+	} else {
+		UserInterface UI;
+		UI.printInvalidSaveFileDirectory();
+	}
+}
+
+//https://msdn.microsoft.com/en-us/library/windows/desktop/bb773584(v=vs.85).aspx
+bool Settings::checkValidityOfDirectory(const string& directory) {
+	DWORD ftyp = GetFileAttributesA(directory.c_str());
+	if (ftyp == INVALID_FILE_ATTRIBUTES) {
+		return false;  
+	}
+	if (ftyp & FILE_ATTRIBUTE_DIRECTORY) {
+		return true;   
+	}
+
+	return false;    
+}
+
+string Settings::getDirectory() {
+	return(_saveDirectory+_textFileName);
+}
+
+void Settings::checkEmptySaveDirectory() {
+	if(_saveDirectory.empty()) {
+		UserInterface UI;
+		UI.printChangeSaveFileDirectory();
+	}
+}
