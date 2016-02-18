@@ -43,6 +43,34 @@ public:
 
 		Assert::AreEqual(Settings.getDirectory(), expectedDirectory);
 	}
-	
+
+	TEST_METHOD(LoadSaveTest) {
+		Settings Setting;
+		Settings testSetting;
+
+		Setting._textFileName = "text.txt";
+		Setting._saveDirectory = "C:/user/";
+		string expectedTextFileName = "text.txt";
+		string expectedDirectory = "C:/user/";
+
+		Setting.openNewSettingFile();
+		Setting.saveSettings();
+
+		testSetting.loadSettings();
+
+		Assert::AreEqual(testSetting._textFileName, expectedTextFileName);
+		Assert::AreEqual(testSetting._saveDirectory, expectedDirectory);
+
+		Setting._textFileName = Setting.VOID_STRING;
+		Setting._saveDirectory = "C:/user/";
+		expectedTextFileName = "";
+
+		Setting.saveSettings();
+		testSetting.loadSettings();
+
+		Assert::AreEqual(testSetting._textFileName, expectedTextFileName);
+		Assert::AreEqual(testSetting._saveDirectory, expectedDirectory);
+	}
+
 	};
 }

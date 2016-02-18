@@ -1,5 +1,7 @@
 #include "Settings.h"
-const string Settings::FILE_SETTINGS = "settings.txt";
+const string Settings::FILE_NAME_SETTINGS = "settings.txt";
+const string Settings::VOID_INDICATOR = "-";
+const string Settings::VOID_STRING = "";
 
 
 Settings::Settings(void) {
@@ -8,8 +10,58 @@ Settings::Settings(void) {
 Settings::~Settings(void) {
 }
 
+void Settings::setEnvironment() { 
+	if(checkForSettingsFile()== false) {
+		firstTimeUser();
+	} else {
+		loadSettings();
+	}
+}
+
+void Settings::loadSettings() {
+	ifstream readFile(FILE_NAME_SETTINGS);
+	string extractedSettings;
+
+	getline(readFile, extractedSettings);
+	_textFileName = loadSettingsDetails(extractedSettings);
+
+	getline(readFile, extractedSettings);
+	_saveDirectory = loadSettingsDetails(extractedSettings);
+}
+
+void Settings::saveSettings() {
+	ofstream writeFile;
+	writeFile.close(); //close and reopen file to refresh the data file for overwriting
+	writeFile.open(FILE_NAME_SETTINGS);
+
+	writeFile << writeSettingsDetails(_textFileName) << endl;
+	writeFile << writeSettingsDetails(_saveDirectory) << endl;
+}
+
+string Settings::writeSettingsDetails(string sentence) {
+	if(sentence.empty()) {
+		return VOID_INDICATOR;
+	} else {
+		return sentence;
+	}
+}
+
+string Settings::loadSettingsDetails(string sentence) {
+	if(sentence == VOID_INDICATOR) {
+		return VOID_STRING;
+	} else {
+		return sentence;
+	}
+}
+
+void Settings::openNewSettingFile() {
+	std::ofstream writeFile;
+
+	writeFile.open(FILE_NAME_SETTINGS);
+}
+
 bool Settings::checkForSettingsFile() {
-	std::ifstream settingFile(FILE_SETTINGS);
+	std::ifstream settingFile(FILE_NAME_SETTINGS);
 
 	if (settingFile.is_open()) {
 		return true;
@@ -31,6 +83,8 @@ void Settings::firstTimeUser() {
 	changeDirectory(input);
 	checkEmptySaveDirectory();
 
+	openNewSettingFile();
+	saveSettings();
 
 }
 

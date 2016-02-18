@@ -9,12 +9,14 @@ using namespace std;
 
 class Settings {
 #ifndef TESTMODE 
-private: 
+public: 
 #else 
 public: 
 #endif
 
-	static const string FILE_SETTINGS;
+	static const string FILE_NAME_SETTINGS;
+	static const string VOID_INDICATOR;
+	static const string VOID_STRING;
 
 	string _textFileName;
 	string _saveDirectory;
@@ -24,9 +26,12 @@ public:
 	void firstTimeUser();
 	string createTextFileNameString(string textFileName); //helper 
 	bool checkValidityOfDirectory(const string& directory); //helper
+	void openNewSettingFile(); 
+	string writeSettingsDetails(string sentence); //helper
+	string loadSettingsDetails(string sentence); //helper 
 
 	void loadSettings();
-	void saveSettings();
+	void saveSettings(); // complete
 
 	std::string promptForTextName();
 	void writeTextFiletoDataFile(); //call storage
@@ -36,7 +41,7 @@ public:
 public:
 	Settings(void);
 	~Settings(void);
-	void setEnvironment();
+	void setEnvironment(); //doing
 	void updateTextFileName(string textFileName);
 	void changeDirectory(string directory);
 	string getDirectory(); //getter function
