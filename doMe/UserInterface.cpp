@@ -57,6 +57,7 @@ void UserInterface::printChangeSaveFileDirectory() {
 	showToUser(MESSAGE_TIP_SAVE_FILE_DIRECTORY);
 }
 
+/*
 void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,int viewType) {
 	vector<Task*>::iterator taskListIter = (*taskList).begin();
 	vector<Task*> displayList;
@@ -81,6 +82,7 @@ void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,i
 		displayListIter++;
 	}
 }
+*/
 
 void UserInterface::showToUser(string string) {
 	cout << string << endl;
