@@ -17,7 +17,6 @@
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Core.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="UserInterface.h" />

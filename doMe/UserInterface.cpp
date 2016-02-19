@@ -1,4 +1,5 @@
 #include "UserInterface.h"
+
 const string MESSAGE_FIRST_TIME = "This is your first time using this programme";
 const string MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
 const string MESSAGE_SET_SAVE_FILE_DIRECTORY = "New save directory: %s";
@@ -57,32 +58,33 @@ void UserInterface::printChangeSaveFileDirectory() {
 	showToUser(MESSAGE_TIP_SAVE_FILE_DIRECTORY);
 }
 
-/*
+
 void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,int viewType) {
 	vector<Task*>::iterator taskListIter = (*taskList).begin();
 	vector<Task*> displayList;
 	int index = 1;
-
+	
 	//create display list 
 	//not refactored yet for future development to different view type
 	while(taskListIter != (*taskList).end()) {
+		
 		if((**taskListIter).getFirstDate() >= currentDate) {
 			displayList.push_back(*taskListIter);
 		}
 		taskListIter++;
 	}
-
+	
 	//printing display list
 	vector<Task*>::iterator displayListIter = displayList.begin();
 	while(displayListIter != displayList.end()) {
-		sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(), index , ((**displayListIter).getTaskString()).c_str());
+		sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(),index , ((**displayListIter).getTaskString()).c_str());
 		showToUser(buffer);
-
+		
 		index++;
 		displayListIter++;
 	}
 }
-*/
+
 
 void UserInterface::showToUser(string string) {
 	cout << string << endl;

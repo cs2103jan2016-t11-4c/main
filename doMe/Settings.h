@@ -4,7 +4,6 @@
 #include <iostream>
 #include <sstream>
 #include <windows.h>
-#include <vector>
 
 #include "UserInterface.h"
 using namespace std;

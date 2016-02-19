@@ -3,12 +3,10 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
-#include <windows.h>
 #include <vector>
+
 #include "Task.h"
-
 using namespace std;
-
 
 class UserInterface {
 private:
@@ -18,7 +16,7 @@ private:
 public:
 	UserInterface(void);
 	~UserInterface(void);
-	
+
 	void printWelcomeNotification();
 	//void printDataWithNumbering();
 	void printAddNotification(string name, int date1, int date2, int time1, int time2, string location);
@@ -30,7 +28,7 @@ public:
 	void printSearchNotification(string text, int index);
 	void printInvalidCommandNotification();
 
-	void printTaskList(vector<Task*> *taskList, string currentDate ,int viewType); //complete view all task not refactored
+	void printTaskList(vector<Task*> *taskList, string currentDate ,int viewType);  //complete view all task not refactored
 	void updateTextFileName(string newTextFileName); //complete
 	void printFirstTimeUserPrompt(); //complete
 	void printFirstTimeUserDirectoryPrompt(); //complete
