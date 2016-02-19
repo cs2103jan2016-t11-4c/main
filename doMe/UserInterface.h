@@ -1,5 +1,14 @@
 #pragma once
-#include "Core.h"
+#include <string>
+#include <fstream>
+#include <iostream>
+#include <sstream>
+#include <windows.h>
+#include <vector>
+#include "Task.h"
+
+using namespace std;
+
 
 class UserInterface {
 private:
