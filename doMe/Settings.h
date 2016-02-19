@@ -1,15 +1,9 @@
 #pragma once
-#include <string>
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <windows.h>
-#include "UserInterface.h"
-using namespace std;
+#include "Core.h"
 
 class Settings {
 #ifndef TESTMODE 
-public: 
+private: 
 #else 
 public: 
 #endif
@@ -23,20 +17,20 @@ public:
 	int _viewType; //temporary this first before we finalise naming
 
 	bool checkForSettingsFile(); //complete
-	void firstTimeUser();
+	void firstTimeUser(); // complete
 	string createTextFileNameString(string textFileName); //helper 
 	bool checkValidityOfDirectory(const string& directory); //helper
-	void openNewSettingFile(); 
+	void openNewSettingFile(); // complete
 	string writeSettingsDetails(string sentence); //helper
 	string loadSettingsDetails(string sentence); //helper 
 
-	void loadSettings();
+	void loadSettings(); // complete
 	void saveSettings(); // complete
 
-	std::string promptForTextName();
+	std::string promptForTextName(); // complete
 	void writeTextFiletoDataFile(); //call storage
 	void openNewTextFile(); //call storage
-	void checkEmptySaveDirectory();
+	void checkEmptySaveDirectory(); // complete
 
 public:
 	Settings(void);
@@ -44,6 +38,6 @@ public:
 	void setEnvironment(); //doing
 	void updateTextFileName(string textFileName);
 	void changeDirectory(string directory);
-	string getDirectory(); //getter function
+	string getDirectory(); //getter function to pass to storage
 };
 

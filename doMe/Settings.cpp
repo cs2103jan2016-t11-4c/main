@@ -73,6 +73,7 @@ bool Settings::checkForSettingsFile() {
 void Settings::firstTimeUser() {
 	UserInterface UI;
 	string input;
+
 	UI.printFirstTimeUserPrompt();
 
 	getline(cin,input);
@@ -85,7 +86,6 @@ void Settings::firstTimeUser() {
 
 	openNewSettingFile();
 	saveSettings();
-
 }
 
 void Settings::updateTextFileName(string sentence) {

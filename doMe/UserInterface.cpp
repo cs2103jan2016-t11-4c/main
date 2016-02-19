@@ -21,16 +21,17 @@ const string MESSAGE_DISPLAY_CONTENTS = "%d. %s";
 
 const string ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been inputted. Please try again";
 const string ERROR_INVALID_COMMAND = "Invalid command has been inputted. Please try again";
-
-
-void UserInterface::updateTextFileName(string newTextFileName) {
-	_textFileName = newTextFileName;
-}
+const string MESSAGE_HELP_TIPS = 
+	"add <task description> \n delete <index> \n edit <task description>"; //test ideas?
 
 UserInterface::UserInterface(void) {
 }
 
 UserInterface::~UserInterface(void) {
+}
+
+void UserInterface::updateTextFileName(string newTextFileName) {
+	_textFileName = newTextFileName;
 }
 
 void UserInterface::printFirstTimeUserPrompt() {
@@ -55,6 +56,32 @@ void UserInterface::printChangeSaveFileDirectory() {
 	showToUser(MESSAGE_EMPTY_SAVE_FILE_DIRECTORY);
 	showToUser(MESSAGE_TIP_SAVE_FILE_DIRECTORY);
 }
+
+void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,int viewType) {
+	vector<Task*>::iterator taskListIter = (*taskList).begin();
+	vector<Task*> displayList;
+	int index = 1;
+
+	//create display list 
+	//not refactored yet for future development to different view type
+	while(taskListIter != (*taskList).end()) {
+		if((**taskListIter).getFirstDate() >= currentDate) {
+			displayList.push_back(*taskListIter);
+		}
+		taskListIter++;
+	}
+
+	//printing display list
+	vector<Task*>::iterator displayListIter = displayList.begin();
+	while(displayListIter != displayList.end()) {
+		sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(), index , ((**displayListIter).getTaskString()).c_str());
+		showToUser(buffer);
+
+		index++;
+		displayListIter++;
+	}
+}
+
 void UserInterface::showToUser(string string) {
 	cout << string << endl;
 }
