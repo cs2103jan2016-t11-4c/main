@@ -2,7 +2,7 @@
 
 Logic::Logic() {
 	_settings = new Settings();
-	_UI = new UI();
+	_UI = new UserInterface();
 	_storage = new Storage();
 	_taskList = new vector<Task*>;
 	_prevTaskList = new vector<Task*>;
@@ -26,7 +26,7 @@ void Logic::executeCommandsUntilExitCommand() {
 	} while (command != "exit");
 }
 
-void Logic::add(*Task task) {
+void Logic::add(Task* task) {
 	if(task == NULL) {
 		_UI->printInvalidAddNotification();
 		return;
@@ -132,7 +132,7 @@ void Logic::search(string searchTerm) {
 }
 
 void Logic::changeViewType(int newViewType) {
-	_settings->changeViewType(viewType);
+	_settings->changeViewType(newViewType);
 	_UI->printViewTypeChangeNotification(newViewType);
 }
 
@@ -152,7 +152,7 @@ void Logic::saveToTxtFile() {
 }
 
 void Logic::saveLastChange() {
-	*_prevTaskList = *_Tasklist;
+	*_prevTaskList = *_tasklist;
 }
 
 void Logic::executeCommand(string command) {
