@@ -10,9 +10,10 @@ using namespace std;
 
 class UserInterface {
 private:
-	string _textFileName;
+	
 	char buffer[255];
 
+	void showToUser(string string); //core helper
 public:
 	UserInterface(void);
 	~UserInterface(void);
@@ -29,12 +30,13 @@ public:
 	void printInvalidCommandNotification();
 
 	void printTaskList(vector<Task*> *taskList, string currentDate ,int viewType);  //complete view all task not refactored
-	void updateTextFileName(string newTextFileName); //complete
-	void printFirstTimeUserPrompt(); //complete
-	void printFirstTimeUserDirectoryPrompt(); //complete
-	void printChangeSaveFileDirectory(string newDirectory); //complete
-	void printInvalidSaveFileDirectory(); //complete
-	void printChangeSaveFileDirectory(); //complete
-	void showToUser(string string); //core helper
+	
+	void printPromptFirstTimeUser(); //complete
+	void printPromptFirstTimeUserDirectory(); //complete
+
+	void printNotificationChangeSaveFileDirectory(string newDirectory); //complete
+	void printNotificationInvalidSaveFileDirectory(); //complete
+	void printNotificationEmptySaveFileDirectory();  //complete
+	
 };
 

@@ -23,29 +23,28 @@ public:
 	string _textFileName;
 	string _saveDirectory;
 	int _viewType; //temporary this first before we finalise naming
-
-	bool checkForSettingsFile(); //complete
-	void firstTimeUser(); // complete
-	string createTextFileNameString(string textFileName); //helper 
+ 
+	string createTextFileNameString(string textFileName); //helper input test return test.txt
 	bool checkValidityOfDirectory(const string& directory); //helper
 	void openNewSettingFile(); // complete
 	string writeSettingsDetails(string sentence); //helper
 	string loadSettingsDetails(string sentence); //helper 
-
-	void loadSettings(); // complete
-	void saveSettings(); // complete
-
 	std::string promptForTextName(); // complete
-	void writeTextFiletoDataFile(); //call storage
-	void openNewTextFile(); //call storage
-	void checkEmptySaveDirectory(); // complete
-
+	
 public:
 	Settings(void);
 	~Settings(void);
-	void setEnvironment(); //doing
+	//read only
+	void setEnvironment(); //may remove
+	void firstTimeUser(); // complete //might remove
+
+	//remaining
 	void updateTextFileName(string textFileName);
-	void changeDirectory(string directory);
-	string getDirectory(); //getter function to pass to storage
+	void changeSaveDirectory(string directory);
+	bool checkForSettingsFile();
+	string getSaveDirectory(); //getter function to pass to storage
+	void loadSettings(); // complete
+	void saveSettings(); // complete
+	bool checkEmptySaveDirectory(); // complete
 };
 

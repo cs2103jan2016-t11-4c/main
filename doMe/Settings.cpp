@@ -10,6 +10,7 @@ Settings::Settings(void) {
 Settings::~Settings(void) {
 }
 
+//ideas only
 void Settings::setEnvironment() { 
 	if(checkForSettingsFile()== false) {
 		firstTimeUser();
@@ -70,19 +71,22 @@ bool Settings::checkForSettingsFile() {
 	}
 }
 
+//for reference will remove next time
 void Settings::firstTimeUser() {
 	UserInterface UI;
 	string input;
 
-	UI.printFirstTimeUserPrompt();
+	UI.printPromptFirstTimeUser();
 
 	getline(cin,input);
 	updateTextFileName(input);
 
-	UI.printFirstTimeUserDirectoryPrompt();
+	UI.printPromptFirstTimeUserDirectory();
 	getline(cin,input);
-	changeDirectory(input);
-	checkEmptySaveDirectory();
+	changeSaveDirectory(input);
+	if(checkEmptySaveDirectory()) {
+		UI.printNotificationEmptySaveFileDirectory();
+	}
 
 	openNewSettingFile();
 	saveSettings();
@@ -107,7 +111,7 @@ string Settings::createTextFileNameString(string textFileName) {
 	}
 }
 
-void Settings::changeDirectory(string directory) { //need refactoring
+void Settings::changeSaveDirectory(string directory) { //need refactoring
 	//delete old text file?
 	size_t found;
 	string extractedDirectory;
@@ -135,10 +139,10 @@ void Settings::changeDirectory(string directory) { //need refactoring
 		_textFileName = textFileName;
 		_saveDirectory = extractedDirectory;
 
-		UI.printChangeSaveFileDirectory(getDirectory());
+		UI.printNotificationChangeSaveFileDirectory(getSaveDirectory());
 	} else {
 		UserInterface UI;
-		UI.printInvalidSaveFileDirectory();
+		UI.printNotificationInvalidSaveFileDirectory();
 	}
 }
 
@@ -155,13 +159,14 @@ bool Settings::checkValidityOfDirectory(const string& directory) {
 	return false;    
 }
 
-string Settings::getDirectory() {
+string Settings::getSaveDirectory() {
 	return(_saveDirectory+_textFileName);
 }
 
-void Settings::checkEmptySaveDirectory() {
+bool Settings::checkEmptySaveDirectory() {
 	if(_saveDirectory.empty()) {
-		UserInterface UI;
-		UI.printChangeSaveFileDirectory();
+		return false;
+	} else {
+		return true;
 	}
 }

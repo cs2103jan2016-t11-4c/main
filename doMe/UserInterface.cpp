@@ -31,33 +31,29 @@ UserInterface::UserInterface(void) {
 UserInterface::~UserInterface(void) {
 }
 
-void UserInterface::updateTextFileName(string newTextFileName) {
-	_textFileName = newTextFileName;
-}
 
-void UserInterface::printFirstTimeUserPrompt() {
+void UserInterface::printPromptFirstTimeUser() {
 	showToUser(MESSAGE_FIRST_TIME);
 	showToUser(MESSAGE_SAVE_FILE_NAME);
 }
 
-void UserInterface::printFirstTimeUserDirectoryPrompt() {
+void UserInterface::printPromptFirstTimeUserDirectory() {
 	showToUser(MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT);
 }
 
-void UserInterface::printInvalidSaveFileDirectory() {
+void UserInterface::printNotificationInvalidSaveFileDirectory() {
 	showToUser(MESSAGE_SET_INVALID_SAVE_FILE_DIRECTORY);
 }
 
-void UserInterface::printChangeSaveFileDirectory(string newDirectory) {
+void UserInterface::printNotificationChangeSaveFileDirectory(string newDirectory) {
 	sprintf_s(buffer, MESSAGE_SET_SAVE_FILE_DIRECTORY.c_str(), newDirectory.c_str());
 	showToUser(buffer);
 }
 
-void UserInterface::printChangeSaveFileDirectory() {
+void UserInterface::printNotificationEmptySaveFileDirectory() {
 	showToUser(MESSAGE_EMPTY_SAVE_FILE_DIRECTORY);
 	showToUser(MESSAGE_TIP_SAVE_FILE_DIRECTORY);
 }
-
 
 void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,int viewType) {
 	vector<Task*>::iterator taskListIter = (*taskList).begin();
@@ -84,7 +80,6 @@ void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,i
 		displayListIter++;
 	}
 }
-
 
 void UserInterface::showToUser(string string) {
 	cout << string << endl;
