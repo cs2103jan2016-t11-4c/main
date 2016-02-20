@@ -46,4 +46,7 @@ public:
 	bool timeSort(Task* a, Task* b);
 	int wordFoundInEntry(string text, string entry);
 	int isNotValidDirectory(string newSaveDirectory);
+	int stringToInteger(string text);
+	string integerToString(int integer);
+	int getDateToday();
 };
