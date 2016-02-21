@@ -11,15 +11,21 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CommandPackage.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
+    <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommandPackage.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="Storage.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="UserInterface.h" />
   </ItemGroup>

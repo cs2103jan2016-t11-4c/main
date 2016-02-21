@@ -1,16 +1,9 @@
 #include "Task.h"
 
 
-Task::Task(void) {
+Task::Task(string _name, int date1, int date2, int time1, int time2, string location) {
 }
 
 Task::~Task(void) {
 }
 
-string Task::getFirstDate() {
-	return "empty";
-}
-
-string Task::getTaskString() {
-	return "empty";
-}
