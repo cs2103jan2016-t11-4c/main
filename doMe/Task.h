@@ -29,8 +29,9 @@ public:
 	void setTime2(int newTime);
 	void setLocation(string newLocation);
 
-	virtual string getFirstDate() = 0;
-	virtual string getTaskString() = 0;
+	 
+	
 
 
 };
+

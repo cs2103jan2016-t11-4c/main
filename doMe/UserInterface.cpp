@@ -55,30 +55,41 @@ void UserInterface::printNotificationEmptySaveFileDirectory() {
 	showToUser(MESSAGE_TIP_SAVE_FILE_DIRECTORY);
 }
 
-void UserInterface::printTaskList(vector<Task*> *taskList, string currentDate ,int viewType) {
+void UserInterface::printTaskList(vector<Task*> *taskList, int currentDate ,int viewType) {
 	vector<Task*>::iterator taskListIter = (*taskList).begin();
 	vector<Task*> displayList;
+	string displayString;
 	int index = 1;
 	
 	//create display list 
 	//not refactored yet for future development to different view type
 	while(taskListIter != (*taskList).end()) {
 		
-		if((**taskListIter).getFirstDate() >= currentDate) {
+		if((**taskListIter).getDate1() >= currentDate) {
 			displayList.push_back(*taskListIter);
 		}
 		taskListIter++;
 	}
 	
+	
+
 	//printing display list
 	vector<Task*>::iterator displayListIter = displayList.begin();
+	
 	while(displayListIter != displayList.end()) {
-		sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(),index , ((**displayListIter).getTaskString()).c_str());
+		displayString = getTaskString(*displayListIter, viewType);
+		sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(),index , displayString.c_str());
 		showToUser(buffer);
 		
 		index++;
 		displayListIter++;
 	}
+}
+
+string UserInterface::getTaskString(Task* individualTask , int viewType) {
+	string taskString;
+	
+	return taskString;
 }
 
 void UserInterface::showToUser(string string) {

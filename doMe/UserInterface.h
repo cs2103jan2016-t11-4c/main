@@ -28,8 +28,9 @@ public:
 	void printClearNotification();
 	void printSearchNotification(string text, int index);
 	void printInvalidCommandNotification();
+	void printPromptCommand();	//prints Ågcommand:Åh
 
-	void printTaskList(vector<Task*> *taskList, string currentDate ,int viewType);  //complete view all task not refactored
+	void printTaskList(vector<Task*> *taskList, int currentDate ,int viewType);  //complete view all task not refactored
 	
 	void printPromptFirstTimeUser(); //complete
 	void printPromptFirstTimeUserDirectory(); //complete
@@ -37,6 +38,7 @@ public:
 	void printNotificationChangeSaveFileDirectory(string newDirectory); //complete
 	void printNotificationInvalidSaveFileDirectory(); //complete
 	void printNotificationEmptySaveFileDirectory();  //complete
-	
+
+	string getTaskString(Task* individualTask, int viewType) ; //doing helper
 };
 
