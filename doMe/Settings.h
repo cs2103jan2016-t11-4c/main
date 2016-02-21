@@ -23,16 +23,13 @@ public:
 	string _textFileName;
 	string _saveDirectory;
 	int _viewType; //temporary this first before we finalise naming
-	enum VIEW_TYPE {
-		DEFAULT
-	};
  
 	string createTextFileNameString(string textFileName); //helper input test return test.txt
 	bool checkValidityOfDirectory(const string& directory); //helper
 	void openNewSettingFile(); // complete
 	string writeSettingsDetails(string sentence); //helper
 	string loadSettingsDetails(string sentence); //helper 
-	string promptForTextName(); // complete
+	std::string promptForTextName(); // complete
 	
 public:
 	Settings(void);
@@ -49,7 +46,5 @@ public:
 	void loadSettings(); // complete
 	void saveSettings(); // complete
 	bool checkEmptySaveDirectory(); // complete
-
-	VIEW_TYPE returnViewType();
 };
 

@@ -7,7 +7,3 @@ Task::Task(string _name, int date1, int date2, int time1, int time2, string loca
 Task::~Task(void) {
 }
 
-int Task::getDate1() {
-	//empty
-	return 0;
-}
