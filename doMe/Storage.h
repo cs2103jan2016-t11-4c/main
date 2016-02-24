@@ -9,10 +9,9 @@ class Storage {
 public:
 	Storage(void);
 	~Storage(void);
-	void saveUpdatedData(vector<Task*> *taskList, string saveDirectory);
-	vector<Task*>* getExistingData(); 			 	
-	void changeSaveDirectory(string url);
-};
 
+	void saveUpdatedData(vector<string> updatedData, string saveDirectory);
+	vector<string> getExistingData(); 			 	
+};
 
 
