@@ -50,13 +50,23 @@ void Task::setLocation(std::string newLocation){
 /*
 *  Default constructor and destructor
 */
-Task::Task(string _name, int date1, int date2, int time1, int time2, string location) {
-	_name = "";
-	_date1 = _date2 =0;
-	_time1 = _time2 =0;
-	_location = "";
+Task::Task(string name, int date1, int date2, int time1, int time2, string location) :
+	_name(name),
+	_date1(date1),
+	_date2(date2),
+	_time1(time1),
+	_time2(time2),
+	_location(location)
+{
 }
 
 Task::~Task(void) {
 }
 
+string Task::getFirstDate() {
+	return "You shouldn't be here";
+}
+
+string Task::getTaskString() {
+	return "You shouldn't be here";
+}

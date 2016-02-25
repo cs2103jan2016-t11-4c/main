@@ -5,6 +5,9 @@ using namespace std;
 
 class CommandPackage {
 private:
+	Task _task;
+
+
 
 public:
 	CommandPackage(void);
