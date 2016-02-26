@@ -1,6 +1,17 @@
 #pragma once
 #include <string>
 
+//Constructor changed for proper default parameterization
+//Task object made non-abstract
+//I would recommend switching order of parameters to name,time1,date1,time2,date2,location
+//Example1: I want make a task about shower by 11 feb 1700hrs
+// the object would need to be Task task1("shower",20160211,0,1700);
+// if the order is name,time1,date1,time2,date2,location, it's Task task1("shower,1700,20160211);
+//example 2: Meeting 11feb 1300-1700
+// task("meeting",1300,20160211,1700) vs task("meeting",20160211,0,1300,1700)
+
+
+
 using namespace std;
 
 class Task {
@@ -13,7 +24,11 @@ private:
 	string _location;
 	
 public:
+<<<<<<< HEAD
 	Task(string name, int date1, int date2, int time1, int time2, string location);
+=======
+	Task(string name = "", int date1 = 0, int date2 = 0, int time1 = 0, int time2 = 0, string location = "");
+>>>>>>> 429c9751080111660675127bb77629c53de97952
 	~Task();
 	string getName();
 	int getDate1();
@@ -29,4 +44,9 @@ public:
 	void setTime2(int newTime);
 	void setLocation(string newLocation);
 
+<<<<<<< HEAD
+=======
+	virtual string getFirstDate();
+	virtual string getTaskString();
+>>>>>>> 429c9751080111660675127bb77629c53de97952
 };
