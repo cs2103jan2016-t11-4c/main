@@ -63,21 +63,8 @@ void Task::setLocation(std::string newLocation) {
 	_location = newLocation;
 }
 
-<<<<<<< HEAD
-=======
-/*
-*  Default constructor and destructor
-*/
-Task::Task(string name, int date1, int date2, int time1, int time2, string location) :
-	_name(name),
-	_date1(date1),
-	_date2(date2),
-	_time1(time1),
-	_time2(time2),
-	_location(location)
-{
-}
->>>>>>> 429c9751080111660675127bb77629c53de97952
+
+
 
 
 

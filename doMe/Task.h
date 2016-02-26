@@ -24,11 +24,8 @@ private:
 	string _location;
 	
 public:
-<<<<<<< HEAD
 	Task(string name, int date1, int date2, int time1, int time2, string location);
-=======
-	Task(string name = "", int date1 = 0, int date2 = 0, int time1 = 0, int time2 = 0, string location = "");
->>>>>>> 429c9751080111660675127bb77629c53de97952
+    Task();
 	~Task();
 	string getName();
 	int getDate1();
@@ -44,9 +41,4 @@ public:
 	void setTime2(int newTime);
 	void setLocation(string newLocation);
 
-<<<<<<< HEAD
-=======
-	virtual string getFirstDate();
-	virtual string getTaskString();
->>>>>>> 429c9751080111660675127bb77629c53de97952
 };
