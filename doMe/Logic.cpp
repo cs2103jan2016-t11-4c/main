@@ -41,7 +41,7 @@ void Logic::executeCommandsUntilExitCommand() {
 
 void Logic::add(Task* task) {
 	if(task == NULL) {
-		_UI->printInvalidAddNotification();
+		_UI->printNotificationInvalidAdd();
 		return;
 	}
 
@@ -175,13 +175,13 @@ void Logic::changeViewType(int newViewType) {
 
 void Logic::changeSaveDirectory(string newSaveDirectory) {
 	if(isNotValidDirectory(newSaveDirectory)) {
-		_UI->printNotificationInvalidDirectory();
+		_UI->printNotificationInvalidSaveFileDirectory();
 		return;
 	}
 
 	_settings->changeSaveDirectory(newSaveDirectory);
 
-	_UI->printNotificationSaveDirectoryChange(newSaveDirectory);
+	_UI->printNotificationChangeSaveFileDirectory(newSaveDirectory);
 }
 
 void Logic::saveToTxtFile() {
@@ -313,23 +313,23 @@ bool Logic::timeSort(Task* a, Task* b) {
 	return a->getTime1() < b->getTime2();
 }
 
-int Logic::foundInTask(Task* task, string searchTerm) {
+bool Logic::foundInTask(Task* task, string searchTerm) {
 	size_t found = (task->getName()).find(searchTerm);
 	if(found != string::npos) {
-		return 1;
+		return true;
 	}
-	return 0;
+	return false;
 }
 
-int Logic::isNotValidDirectory(string newSaveDirectory) {
+bool Logic::isNotValidDirectory(string newSaveDirectory) {
 	struct stat info;
 
 	if(stat(newSaveDirectory.c_str(), &info) != 0) {
-		return 1;
+		return true;
 	}else if(info.st_mode & S_IFDIR) {
-		return 0;
+		return false;
 	}
-	return 1;
+	return true;
 }
 
 int Logic::stringToInteger(string text) {

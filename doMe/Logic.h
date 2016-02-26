@@ -52,8 +52,8 @@ public:
 	bool outOfRange(int index);
 	bool dateSort(Task* a, Task* b);
 	bool timeSort(Task* a, Task* b);
-	int foundInTask(Task* task, string searchTerm);
-	int isNotValidDirectory(string newSaveDirectory);
+	bool foundInTask(Task* task, string searchTerm);
+	bool isNotValidDirectory(string newSaveDirectory);
 	int stringToInteger(string text);
 	string integerToString(int integer);
 	int getCurrentDate();
