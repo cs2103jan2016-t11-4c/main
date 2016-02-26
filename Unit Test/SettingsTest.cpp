@@ -40,9 +40,10 @@ public:
 	TEST_METHOD(GetDirectoryTest) {
 		Settings Settings;
 		Settings._textFileName = "text.txt";
-		string expectedDirectory = "text.txt";
+        Settings._saveDirectory = "C:/my documents/";
+		string expectedDirectory = "C:/my documents/text.txt";
 
-		//Assert::AreEqual(Settings.changeSaveDirectory(), expectedDirectory);
+		Assert::AreEqual(Settings.getSaveDirectory(), expectedDirectory);
 	}
 
 	TEST_METHOD(LoadSaveTest) {

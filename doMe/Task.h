@@ -13,7 +13,7 @@ private:
 	string _location;
 	
 public:
-	Task(string _name, int date1, int date2, int time1, int time2, string location);
+	Task(string name, int date1, int date2, int time1, int time2, string location);
 	~Task();
 	string getName();
 	int getDate1();
@@ -28,9 +28,5 @@ public:
 	void setTime1(int newTime);
 	void setTime2(int newTime);
 	void setLocation(string newLocation);
-
-	virtual string getFirstDate() = 0;
-	virtual string getTaskString() = 0;
-
 
 };

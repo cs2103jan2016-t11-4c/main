@@ -1,0 +1,140 @@
+#include "ViewType.h"
+const string ViewType::MESSAGE_DATE_SEPERATOR = "/";
+const string ViewType::MESSAGE_TIME_SEPERATOR = ":";
+const string ViewType::MESSAGE_TIMING_SEPERATOR = "- ";
+const string ViewType::MESSAGE_VOID_STRING = "";
+const string ViewType::MESSAGE_SPACE_STRING = " ";
+const string ViewType::MESSAGE_BRACKETS = "(%s)";
+const string ViewType::MESSAGE_FLOATING_TASK = "<No deadlines>";
+
+
+ViewType::ViewType(void) {
+}
+
+ViewType::ViewType(vector<Task*> *taskList, int currentDate) {
+    _taskList = taskList;
+    _currentDate = currentDate;
+}
+
+ViewType::~ViewType(void) {
+}
+
+vector<string> ViewType::createDisplayList() {
+    vector<Task*>::iterator taskListIter = (*_taskList).begin();
+
+    while(taskListIter != (*_taskList).end()) {
+        _displayList.push_back(getTaskString(*taskListIter));
+        taskListIter++;
+    }
+    return _displayList;
+}
+
+string ViewType::getTaskString(Task* individualTask) {
+    string name = individualTask->getName();
+    string location = individualTask->getLocation();
+    string date1 = getDateTaskString(individualTask->getDate1());
+    string date2 = getDateTaskString(individualTask->getDate2());
+    string time1 = getTimeTaskString(individualTask->getTime1());
+    string time2 = getTimeTaskString(individualTask->getTime2());
+
+    string taskString = formatTaskString(name,date1,date2,time1,time2,location);
+
+    return taskString;
+}
+
+string ViewType::formatTaskString(string name , string date1 , string date2 , string time1 , string time2 , string location) {
+    string taskString;
+    string dateString;
+
+    name = formateAddSpace(name);
+    date1 = formateAddSpace(date1);
+    date2 = formateAddSpace(date2);
+    time1 = formateAddSpace(time1);
+    time2 = formateAddSpace(time2);
+
+    location = formateAddBracket(location);
+    location = formateAddSpace(location);
+
+    dateString = formateDateString(time1 + date1 , time2 + date2);
+    taskString = name + location + dateString;
+
+    return taskString;
+}
+
+string ViewType::formateAddSpace(string s) {
+    if(!s.empty()) {
+        return s + MESSAGE_SPACE_STRING;
+    } 
+    return s;
+}
+
+string ViewType::formateAddBracket(string s) {
+    if(!s.empty()) {
+        sprintf_s(buffer, MESSAGE_BRACKETS.c_str(), s.c_str());
+        return buffer;
+    }
+    return s;
+}
+
+string ViewType::formateDateString(string s1, string s2) {
+    if((s1.empty()) && (s2.empty())) {
+        return MESSAGE_FLOATING_TASK;
+    }
+    if((s1.empty()) || (s2.empty())) {
+        return s1 + s2;
+    } else {
+        return s1 + MESSAGE_TIMING_SEPERATOR + s2;
+    }
+}
+
+string ViewType::getDateTaskString(int date) {
+    string dateString;
+    string day;
+    string month;
+    string year;
+
+    if(date != 0) {
+        day = getDay(date);
+        month = getMonth(date);
+        year = getYear(date);
+        dateString = day + MESSAGE_DATE_SEPERATOR + month + MESSAGE_DATE_SEPERATOR + year;
+
+        return dateString;
+    } else {
+        return MESSAGE_VOID_STRING;
+    }
+}
+
+string ViewType::getTimeTaskString(int time) {
+    ostringstream oss;
+    string timeString;
+
+    if(time != 0) {
+        oss << time;  
+        timeString = oss.str();
+        timeString.insert(2,MESSAGE_TIME_SEPERATOR);
+
+        return timeString;
+    } else {
+        return MESSAGE_VOID_STRING;
+    }
+}
+
+string ViewType::getDay(int date) {
+    ostringstream oss;
+    oss << date % 100;
+    return oss.str();
+}
+
+string ViewType::getMonth(int date) {
+    ostringstream oss;
+    date = date / 100;
+    oss << date % 100;
+    return oss.str();
+}
+
+string ViewType::getYear(int date) {
+    ostringstream oss;
+    oss << date / 10000;
+    return oss.str();
+}

@@ -6,37 +6,55 @@
 #include <vector>
 
 #include "Task.h"
+#include "ViewType.h"
+#include "ViewType0.h"
+
 using namespace std;
 
 class UserInterface {
 private:
-	
-	char buffer[255];
+    int _defaultViewType;
+    string _textFileName;
+    char buffer[255];
 
-	void showToUser(string string); //core helper
+    void showToUser(string string); //core helper
 public:
-	UserInterface(void);
-	~UserInterface(void);
+    UserInterface(void);
+    UserInterface(string textFileName, int defaultViewType);
+    ~UserInterface(void);
 
-	void printWelcomeNotification();
-	//void printDataWithNumbering();
-	void printAddNotification(string name, int date1, int date2, int time1, int time2, string location);
-	void printInvalidAddNotification();
-	void printEmptyNotification();
-	void printDeleteNotification(int index);
-	void printInvalidDeletionNotification();
-	void printClearNotification();
-	void printSearchNotification(string text, int index);
-	void printInvalidCommandNotification();
+    //doing
+    void printSearchList(vector<Task*>* taskList, string searchTerm);//thinking on how to implement 
+    void printPromptHelp();
 
-	void printTaskList(vector<Task*> *taskList, string currentDate ,int viewType);  //complete view all task not refactored
-	
-	void printPromptFirstTimeUser(); //complete
-	void printPromptFirstTimeUserDirectory(); //complete
+    //prompts
+    void printPromptFirstTimeUser(); //complete
+    void printPromptFirstTimeUserDirectory(); //complete
+    void printPromptCommand();	//complete
 
-	void printNotificationChangeSaveFileDirectory(string newDirectory); //complete
-	void printNotificationInvalidSaveFileDirectory(); //complete
-	void printNotificationEmptySaveFileDirectory();  //complete
-	
+    //notification
+    void printNotificationWelcome(); //complete
+    void printNotificationAdd(Task* task); //have extra space at the back
+    void printNotificationDelete(Task* task); //complete
+    void printNotificationClear(); //complete
+    void printNotificationViewTypeChange(int newViewType);
+    void printNotificationEmpty();
+    void printNotificationChangeSaveFileDirectory(string newDirectory); //complete
+    void printNotificationEmptySaveFileDirectory();  //complete
+
+    //error
+    void printNotificationInvalidCommand(); //complete
+    void printNotificationInvalidAdd(); //complete
+    void printNotificationInvalidDeletion(); //complete
+    void printNotificationInvalidSaveFileDirectory(); //complete
+
+    //main printing
+    void printTaskList(vector<Task*> *taskList, int currentDate ,int viewType);  //complete view all task not refactored
+    
+
+    //helper
+    void printDisplayList(vector<string> displayList); //helper
+    string getTaskString(Task* task, int viewType); 
+    void printNotificationSearchTerm(string searchTerm); //helper
 };
 
