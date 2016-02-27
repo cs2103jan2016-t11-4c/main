@@ -4,6 +4,7 @@
 #include <iostream>
 #include <sstream>
 #include <vector>
+#include <list>
 
 #include "Task.h"
 #include "ViewType.h"
@@ -24,7 +25,7 @@ public:
     ~UserInterface(void);
 
     //doing
-    void printSearchList(vector<Task*>* taskList, string searchTerm);//thinking on how to implement 
+    void printSearchList(list<Task*>* taskList, string searchTerm);//thinking on how to implement 
     void printPromptHelp();
 
     //prompts
@@ -41,6 +42,7 @@ public:
     void printNotificationEmpty();
     void printNotificationChangeSaveFileDirectory(string newDirectory); //complete
     void printNotificationEmptySaveFileDirectory();  //complete
+    void printNotificationClearSearch(string searchTerm);
 
     //error
     void printNotificationInvalidCommand(); //complete
@@ -49,7 +51,7 @@ public:
     void printNotificationInvalidSaveFileDirectory(); //complete
 
     //main printing
-    void printTaskList(vector<Task*> *taskList, int currentDate ,int viewType);  //complete view all task not refactored
+    void printTaskList(list<Task*> *taskList, int currentDate ,int viewType);  //complete view all task not refactored
     
 
     //helper

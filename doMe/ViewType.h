@@ -3,6 +3,7 @@
 #include <sstream>
 #include <vector>
 #include <iostream>
+#include <list>
 
 #include "Task.h"
 
@@ -11,7 +12,7 @@ using namespace std;
 class ViewType {
 
 protected:
-    vector<Task*> *_taskList;
+    list<Task*> *_taskList;
     vector<string> _displayList;
     int _currentDate;
     char buffer[255];
@@ -28,7 +29,7 @@ protected:
 
 public:
     ViewType(void);
-    ViewType(vector<Task*> *taskList, int currentDate);
+    ViewType(list<Task*> *taskList, int currentDate);
     ~ViewType(void);
     vector<string> createDisplayList();
     virtual string getTaskString(Task* individualTask);

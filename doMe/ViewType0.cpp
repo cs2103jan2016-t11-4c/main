@@ -5,11 +5,11 @@ const string ViewType0::MESSAGE_NEW_LINE = "\n";
 ViewType0::ViewType0(void) {
 }
 
-ViewType0::ViewType0(vector<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
+ViewType0::ViewType0(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
     _headerMarker = 0;
 }
 
-ViewType0::ViewType0(vector<Task*> *taskList, int currentDate, int headerMarker) : ViewType(taskList,currentDate) {
+ViewType0::ViewType0(list<Task*> *taskList, int currentDate, int headerMarker) : ViewType(taskList,currentDate) {
     _headerMarker = headerMarker; //still in planning phase
 }
 

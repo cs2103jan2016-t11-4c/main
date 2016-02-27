@@ -10,33 +10,34 @@ Settings::Settings(void) {
 Settings::~Settings(void) {
 }
 
-//ideas only
-void Settings::setEnvironment() { 
-	if(checkForSettingsFile()== false) {
-		firstTimeUser();
-	} else {
-		loadSettings();
-	}
-}
-
 void Settings::loadSettings() {
 	ifstream readFile(FILE_NAME_SETTINGS);
 	string extractedSettings;
+    
 
 	getline(readFile, extractedSettings);
 	_textFileName = loadSettingsDetails(extractedSettings);
 
 	getline(readFile, extractedSettings);
 	_saveDirectory = loadSettingsDetails(extractedSettings);
+
+    getline(readFile, extractedSettings);
+    istringstream iss(loadSettingsDetails(extractedSettings));
+    iss >> _viewType;
 }
 
 void Settings::saveSettings() {
 	ofstream writeFile;
+    stringstream convert;
+    string viewType;
 	writeFile.close(); //close and reopen file to refresh the data file for overwriting
 	writeFile.open(FILE_NAME_SETTINGS);
 
+    convert << _viewType;
+    viewType = convert.str();
 	writeFile << writeSettingsDetails(_textFileName) << endl;
 	writeFile << writeSettingsDetails(_saveDirectory) << endl;
+    writeFile << writeSettingsDetails(viewType) << endl;
 }
 
 string Settings::writeSettingsDetails(string sentence) {
@@ -69,27 +70,6 @@ bool Settings::checkForSettingsFile() {
 	} else {
 		return false;
 	}
-}
-
-//for reference will remove next time
-void Settings::firstTimeUser() {
-	UserInterface UI;
-	string input;
-
-	UI.printPromptFirstTimeUser();
-
-	getline(cin,input);
-	updateTextFileName(input);
-
-	UI.printPromptFirstTimeUserDirectory();
-	getline(cin,input);
-	changeSaveDirectory(input);
-	if(checkEmptySaveDirectory()) {
-		UI.printNotificationEmptySaveFileDirectory();
-	}
-
-	openNewSettingFile();
-	saveSettings();
 }
 
 void Settings::updateTextFileName(string sentence) {
@@ -169,4 +149,12 @@ bool Settings::checkEmptySaveDirectory() {
 	} else {
 		return true;
 	}
+}
+
+int Settings::getViewType() {
+    return _viewType;
+}
+
+void Settings::changeViewType(int newViewType) {
+    _viewType = newViewType;
 }

@@ -10,8 +10,8 @@ private:
     static const string MESSAGE_NEW_LINE;
 public:
     ViewType0(void);
-    ViewType0(vector<Task*> *taskList, int currentDate);
-    ViewType0(vector<Task*> *taskList, int currentDate,int headerMarker); //in progress thinking for removal of header
+    ViewType0(list<Task*> *taskList, int currentDate);
+    ViewType0(list<Task*> *taskList, int currentDate,int headerMarker); //in progress thinking for removal of header
     ~ViewType0(void);
 
     string getTaskString(Task* individualTask);

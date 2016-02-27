@@ -34,11 +34,7 @@ public:
 public:
 	Settings(void);
 	~Settings(void);
-	//read only
-	void setEnvironment(); //may remove
-	void firstTimeUser(); // complete //might remove
 
-	//remaining
 	void updateTextFileName(string textFileName);
 	void changeSaveDirectory(string directory);
 	bool checkForSettingsFile();
@@ -46,5 +42,7 @@ public:
 	void loadSettings(); // complete
 	void saveSettings(); // complete
 	bool checkEmptySaveDirectory(); // complete
+    int getViewType();
+    void changeViewType(int newViewType);
 };
 

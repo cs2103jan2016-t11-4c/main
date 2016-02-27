@@ -11,7 +11,7 @@ const string ViewType::MESSAGE_FLOATING_TASK = "<No deadlines>";
 ViewType::ViewType(void) {
 }
 
-ViewType::ViewType(vector<Task*> *taskList, int currentDate) {
+ViewType::ViewType(list<Task*> *taskList, int currentDate) {
     _taskList = taskList;
     _currentDate = currentDate;
 }
@@ -20,7 +20,7 @@ ViewType::~ViewType(void) {
 }
 
 vector<string> ViewType::createDisplayList() {
-    vector<Task*>::iterator taskListIter = (*_taskList).begin();
+    list<Task*>::iterator taskListIter = (*_taskList).begin();
 
     while(taskListIter != (*_taskList).end()) {
         _displayList.push_back(getTaskString(*taskListIter));

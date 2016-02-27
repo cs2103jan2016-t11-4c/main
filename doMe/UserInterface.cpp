@@ -15,6 +15,7 @@ const string MESSAGE_EMPTY = "Your text file \"%s\" is currently empty";
 const string MESSAGE_DELETE = "Deleted \"%s\" from %s";
 const string MESSAGE_CLEAR = "all contents cleared from %s";
 const string MESSAGE_SEARCH = "~Showing result for \"%s\". Type \"exit\" to exit the search module~";
+const string MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared";
 const string MESSAGE_DISPLAY_CONTENTS = "%d. %s";
 const string MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%s)";
 
@@ -92,6 +93,10 @@ void UserInterface::printNotificationViewTypeChange(int newViewType) {
     showToUser(buffer);
 }
 
+void UserInterface::printNotificationClearSearch(string searchTerm) {
+    sprintf_s(buffer, MESSAGE_CLEAR_SEARCH.c_str(), searchTerm.c_str());
+    showToUser(buffer);
+}
 /****************************************************************/
 
 void UserInterface::printNotificationInvalidAdd() {
@@ -129,13 +134,13 @@ void UserInterface::printNotificationEmptySaveFileDirectory() {
 
 /****************************************************************/
 
-void UserInterface::printSearchList(vector<Task*>* taskList, string searchTerm) {
+void UserInterface::printSearchList(list<Task*>* taskList, string searchTerm) {
     printNotificationSearchTerm(searchTerm);
 
     printTaskList(taskList, 0 ,_defaultViewType); //thinking on how to implement 
 }
 
-void UserInterface::printTaskList(vector<Task*> *taskList, int currentDate ,int viewType) {
+void UserInterface::printTaskList(list<Task*> *taskList, int currentDate ,int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {

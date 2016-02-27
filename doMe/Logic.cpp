@@ -195,7 +195,7 @@ void Logic::executeCommand(string command) {
 
 	switch(commandType) {
 	case ADD:
-		add(commandPackage->getTask();
+		add(commandPackage->getTask());
 		break;
 	case DISPLAY:
 		display();
