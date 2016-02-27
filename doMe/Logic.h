@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include <algorithm>
 #include <sys/types.h>
 #include <sys/stat.h>
@@ -16,27 +17,29 @@ using namespace std;
 
 class Logic { 
 private:
-	vector<Task*>* _taskList;
-	vector<Task*>* _prevTaskList;
-	vector<Task*>* _searchTaskList;
-	vector<int>* _searchMappingTable;
+	list<Task*>* _taskList;
+	list<Task*>* _searchTaskList;
+	list<Task*>* _prevTaskList;
+	list<Task*>* _prevSearchTaskList;
 	UserInterface* _UI;
 	Storage* _storage;
 	Settings* _settings;
+
+	static const string EXIT_COMMAND;
+	static const string LIST_DIVIDER;  
 public:
 	Logic();
 	void setEnvironment();
 	void displayWelcomeMessage();
 	void executeCommandsUntilExitCommand();
-//	void executeSearchCommandsUntilExitCommand(string searchTerm);		Still Working on this method, for now you can only do one command after search
+	void executeSearchCommandsUntilExitCommand(string searchTerm);
 
 	void add(Task* task);
 	void display();
 	void displaySearchList(string searchTerm);
-	void del(int index);
-	void edit(int index, Task* task);
-	void clear();
-	void clearSearchList();
+	void del(int index, list<Task*>* taskList);
+	void edit(int index, Task* task, list<Task*>* taskList);
+	void clear(list<Task*>* taskList, string searchTerm);
 	void undo();
 	void sort();
 	void search(string searchTerm);
@@ -46,10 +49,10 @@ public:
 	void saveLastChange();
 
 	void executeCommand(string command);
-	void executeSearchCommand(string command);
+	void executeSearchCommand(string command, string searchTerm);
 	void vectorToTaskList(vector<string>& existingData);
 	vector<string> taskListToVector();
-	bool outOfRange(int index);
+	bool outOfRange(int index, list<Task*>* taskList);
 	bool dateSort(Task* a, Task* b);
 	bool timeSort(Task* a, Task* b);
 	bool foundInTask(Task* task, string searchTerm);
@@ -57,5 +60,6 @@ public:
 	int stringToInteger(string text);
 	string integerToString(int integer);
 	int getCurrentDate();
-	int getSearchIndex(CommandPackage* commandPackage);
+	list<Task*>::iterator indexToListIter(int index, list<Task*>* taskList);
+	void transferBackSearchTasks();
 };
