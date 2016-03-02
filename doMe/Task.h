@@ -24,8 +24,7 @@ private:
 	string _location;
 	
 public:
-	Task(string name, int date1, int date2, int time1, int time2, string location);
-    Task();
+	Task(string name = "", int date1 = 0, int date2 = 0, int time1 = -1, int time2 = -1, string location = "");
 	~Task();
 	string getName();
 	int getDate1();

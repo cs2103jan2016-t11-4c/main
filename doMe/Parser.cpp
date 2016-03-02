@@ -115,6 +115,11 @@ void Parser::findDetailsIfNotSimpleCommandType() {
 }
 
 void Parser::parseAsAddCommandIfStillNotParsed() {
+	removeAddCommand();
+	getDateAndTimeParameters();
+	getLocationParameter();
+	getDescriptionParameter();
+	packAddCommand();
 }
 
 bool Parser::isAdd(std::string s) {
@@ -338,6 +343,99 @@ void Parser::packCommandIfConfirmedViewTypeCommand() {
 	_commandType=ADD;
 }
 
+void Parser::packAddCommand() {
+	if(_description.size() == 0) {
+		return;
+	} else {
+		if(!finalizeDates()) {
+			return;
+		} else if(!finalizeTimes()) {
+			return;
+		} else {
+			string location = combineWords(_location);
+			string description = combineWords(_description);
+			_commandPackage = CommandPackage(ADD, Task(description, _date1, _date2, _time1, _time2, location));
+		}
+	}
+}
+
+void Parser::removeAddCommand() {
+	if(isAdd(_commandParameters[0])) {
+		_commandParameters[0] = "add";
+	}
+	return;
+}
+
+void Parser::getDateAndTimeParameters() {
+	for(int i=0; i < _commandParameters.size(); i++) {
+		if(isInteger(_commandParameters[i])) {
+			int value = stoi(_commandParameters[i]);
+			if(isTime(value)) {
+				_times.push_back(value);
+				_commandParameters[i] = "time";
+			} else if(isDate(value)) {
+				_dates.push_back(value);
+				_commandParameters[i] = "date";
+			}
+		}
+	}
+	return;
+}
+
+bool Parser::finalizeDates() {
+	if(_dates.size() > 2) {
+		return false;
+	} else if(_dates.size() == 0) {
+		_date1 = 0;
+		_date2 = 0;
+	} else if(_dates.size() == 1) {
+		_date1 = _dates[0];
+		_date2 = 0;
+	} else if(_dates.size() == 2) {
+		_date1 = _dates[0];
+		_date2 = _dates[1];
+	}
+	return true;
+}
+
+bool Parser::finalizeTimes() {
+	if(_times.size() > 2) {
+		return false;
+	} else if(_times.size() == 0) {
+		_time1 = 0;
+		_time2 = 0;
+	} else if(_times.size() == 1) {
+		_time1 = _times[0];
+		_time2 = 0;
+	} else if(_dates.size() == 2) {
+		_time1 = _times[0];
+		_time2 = _times[1];
+	}
+	return true;
+}
+
+void Parser::getLocationParameter() {
+	for(int i=0; i < _commandParameters.size(); i++) {
+		if(hasLocationMarker(_commandParameters[i])) {
+			while((_commandParameters[i] < "a") && i < _commandParameters.size()) {
+			_location.push_back(_caseSensitiveCommandParameters[i]);
+			i++;
+			break;
+			}
+		}
+	}
+}
+
+void Parser::getDescriptionParameter() {
+	for(int i=0; i < _commandParameters.size(); i++) {
+		while((_commandParameters[i] < "a") && i < _commandParameters.size()) {
+			_description.push_back(_caseSensitiveCommandParameters[i]);
+			i++;
+			break;
+		}
+	}
+}
+
 vector<string> Parser::splitSentence(string sentence) {
 	istringstream is(sentence);
 	vector<string> wordVector;
@@ -350,6 +448,17 @@ vector<string> Parser::splitSentence(string sentence) {
 	return wordVector;
 }
 
+string Parser::combineWords(vector<string> words) {
+	std::string sentence;
+	for(int i = 0; i < words.size(); i++) {
+		sentence = sentence + words[i];
+		if(i != words.size() - 1) {
+			sentence = sentence + " ";
+		}
+	}
+	return sentence;
+}
+
 string Parser::makeAllCaps(string s) {
 	transform(s.begin(), s.end(), s.begin(), toupper);
 	return s;
@@ -357,4 +466,32 @@ string Parser::makeAllCaps(string s) {
 
 bool Parser::isInteger(string s) {
 	return (s.find_first_not_of("1234567890") == std::string::npos);
+}
+
+bool Parser::isTime(int n) {
+	if(n/10000 == 0) {
+		return true;
+	} else { 
+		return false;
+	}
+}
+
+bool Parser::isDate(int n) {
+	if(n/10000000 == 0) {
+		if(n/10000 != 0) { 
+			return true;
+		} else {
+			return false;
+		}
+	} else { 
+		return false;
+	}
+}
+
+bool Parser::hasLocationMarker(string s) {
+	if(s[0] == '@') {
+		return true;
+	} else {
+		return false;
+	}
 }

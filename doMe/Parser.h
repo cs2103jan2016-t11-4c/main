@@ -46,7 +46,15 @@ private:
 	vector<string> _commandParameters;
 	COMMAND_TYPE _commandType;
 	CommandPackage _commandPackage;
-		
+	vector<int> _times;
+	int _time1;
+	int _time2;
+	vector<int> _dates;
+	int _date2;
+	int _date1;
+	vector<string> _location;
+	vector<string> _description;
+
 	static const int COMMAND_POSITION = 0;
 	static const int INDEX_POSITION = 1;
 	static const int FIRST_PARAMETER_POSITION = 1;
@@ -82,10 +90,21 @@ public:
 	void packCommandIfConfirmedClearCommand();
 	void packCommandIfConfirmedSearchCommand();
 	void packCommandIfConfirmedViewTypeCommand();
+	void packAddCommand();
+	void removeAddCommand();
+	void getDateAndTimeParameters();
+	void getLocationParameter();
+	void getDescriptionParameter();
 
-
+	bool finalizeDates();
+	bool finalizeTimes();
 
 	vector<string> splitSentence(string commandLine);
+	string combineWords(vector<string> stringVector);
 	string makeAllCaps(string s);
+	
 	bool isInteger(string s);
+	bool isTime(int n);
+	bool isDate(int n);
+	bool hasLocationMarker(string s);
 };

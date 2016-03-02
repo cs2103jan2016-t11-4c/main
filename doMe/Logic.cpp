@@ -138,8 +138,8 @@ void Logic::undo() {
 }
 
 void Logic::sort() {
-	_taskList->sort(dateSort);
-	_taskList->sort(timeSort);
+	_taskList->sort(Logic::dateSort);
+	_taskList->sort(Logic::timeSort);
 }
 
 void Logic::search(string searchTerm) {
@@ -207,7 +207,7 @@ void Logic::executeCommand(string command) {
 		edit(commandPackage->getIndex(), commandPackage->getTask(), _taskList);
 		break;
 	case CLEAR:
-		clear(_taskList);
+		clear(_taskList,"lol");
 		break;
 	case UNDO:
 		undo();
