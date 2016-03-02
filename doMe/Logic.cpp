@@ -216,13 +216,13 @@ void Logic::executeCommand(string command) {
 		sort();
 		break;
 	case SEARCH:
-		search(commandPackage->getSearchTerm());
+		search(commandPackage->getDescription());
 		break;
 	case VIEWTYPE:
-		changeViewType(commandPackage->getViewType());
+		changeViewType(commandPackage->getIndex());
 		break;
 	case SAVEDIRECTORY:
-		changeSaveDirectory(commandPackage->getSaveDirectory());
+		changeSaveDirectory(commandPackage->getDescription());
 		break;
 	case EXIT:
 		break;
