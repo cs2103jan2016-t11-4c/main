@@ -1,14 +1,20 @@
 #include "ViewType.h"
+const string ViewType::MESSAGE_DISPLAY_CONTENTS = "%d. %s";
 const string ViewType::MESSAGE_DATE_SEPERATOR = "/";
 const string ViewType::MESSAGE_TIME_SEPERATOR = ":";
 const string ViewType::MESSAGE_TIMING_SEPERATOR = "- ";
 const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
-const string ViewType::MESSAGE_FLOATING_TASK = "<No deadlines>";
+const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline> ";
 
 
 ViewType::ViewType(void) {
+}
+
+ViewType::ViewType(list<Task*> *taskList) {
+    _taskList = taskList;
+    _currentDate = 0;
 }
 
 ViewType::ViewType(list<Task*> *taskList, int currentDate) {
@@ -21,12 +27,40 @@ ViewType::~ViewType(void) {
 
 vector<string> ViewType::createDisplayList() {
     list<Task*>::iterator taskListIter = (*_taskList).begin();
+    int index = 1;
 
     while(taskListIter != (*_taskList).end()) {
-        _displayList.push_back(getTaskString(*taskListIter));
+        _displayList.push_back(createTaskString(*taskListIter,index));
+        index++;
         taskListIter++;
     }
     return _displayList;
+}
+
+vector<string> ViewType::createSearchList() {
+    list<Task*>::iterator taskListIter = (*_taskList).begin();
+    int index = 1;
+
+    while(taskListIter != (*_taskList).end()) {
+        _displayList.push_back(ViewType::createTaskString(*taskListIter,index));
+        index++;
+        taskListIter++;
+    }
+    return _displayList;
+}
+
+
+string ViewType::createTaskString(Task* individualTask, int index) {
+    string taskString;
+    taskString = getTaskString(individualTask);
+
+    sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(),index, taskString.c_str());
+
+    return buffer;
+}
+
+string ViewType::getComplimentaryString(Task* individualTask) {
+    return MESSAGE_VOID_STRING;
 }
 
 string ViewType::getTaskString(Task* individualTask) {
@@ -58,6 +92,7 @@ string ViewType::formatTaskString(string name , string date1 , string date2 , st
     dateString = formateDateString(time1 + date1 , time2 + date2);
     taskString = name + location + dateString;
 
+    taskString.pop_back();
     return taskString;
 }
 
@@ -112,7 +147,7 @@ string ViewType::getTimeTaskString(int time) {
     if(time != 0) {
         oss << time;  
         timeString = oss.str();
-        timeString.insert(2,MESSAGE_TIME_SEPERATOR);
+        timeString.insert(timeString.size() - 2,MESSAGE_TIME_SEPERATOR);
 
         return timeString;
     } else {

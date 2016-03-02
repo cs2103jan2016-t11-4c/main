@@ -13,50 +13,81 @@
 using namespace std;
 
 class UserInterface {
-private:
+#ifndef TESTMODE 
+private: 
+#else 
+public: 
+#endif
+
     int _defaultViewType;
     string _textFileName;
     char buffer[255];
 
-    void showToUser(string string); //core helper
+    static const string DEFAULT_TEXT_FILE_NAME;
+
+    static const string MESSAGE_FIRST_TIME;
+    static const string MESSAGE_SAVE_FILE_NAME;
+    static const string MESSAGE_SET_SAVE_FILE_DIRECTORY;
+    static const string MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT;
+    static const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY;
+    static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
+
+    static const string MESSAGE_COMMAND_PROMPT;
+    static const string MESSAGE_WELCOME;
+    static const string MESSAGE_ADD;
+    static const string MESSAGE_EMPTY;
+    static const string MESSAGE_DELETE;
+    static const string MESSAGE_CLEAR;
+    static const string MESSAGE_SEARCH;
+    static const string MESSAGE_CLEAR_SEARCH;
+    static const string MESSAGE_VIEW_TYPE;
+
+    static const string ERROR_INVALID_ADD;
+    static const string ERROR_INVALID_DELETE;
+    static const string ERROR_INVALID_COMMAND_FORMAT;
+    static const string ERROR_INVALID_COMMAND;
+    static const string ERROR_SET_INVALID_SAVE_FILE_DIRECTORY;
+
+    static const string MESSAGE_HELP_TIPS[];
+
+    //helper
+    void showToUser(string string);
+    void printDisplayList(vector<string> displayList); 
+    string getTaskString(Task* task, int viewType); //incomplete   
 public:
     UserInterface(void);
     UserInterface(string textFileName, int defaultViewType);
     ~UserInterface(void);
 
-    //doing
-    void printSearchList(list<Task*>* taskList, string searchTerm);//thinking on how to implement 
-    void printPromptHelp();
-
     //prompts
-    void printPromptFirstTimeUser(); //complete
-    void printPromptFirstTimeUserDirectory(); //complete
-    void printPromptCommand();	//complete
+    void printPromptFirstTimeUser(); 
+    void printPromptFirstTimeUserDirectory(); 
+    void printPromptCommand();	
 
     //notification
-    void printNotificationWelcome(); //complete
-    void printNotificationAdd(Task* task); //have extra space at the back
-    void printNotificationDelete(Task* task); //complete
-    void printNotificationClear(); //complete
+    void printNotificationWelcome();
+    void printPromptHelp();
+    void printNotificationAdd(Task* task); 
+    void printNotificationDelete(Task* task);
+    void printNotificationClear();
     void printNotificationViewTypeChange(int newViewType);
     void printNotificationEmpty();
-    void printNotificationChangeSaveFileDirectory(string newDirectory); //complete
-    void printNotificationEmptySaveFileDirectory();  //complete
+    void printNotificationChangeSaveFileDirectory(string newDirectory);
+    void printNotificationEmptySaveFileDirectory();
+    void printNotificationSearchTerm(string searchTerm);
     void printNotificationClearSearch(string searchTerm);
 
     //error
-    void printNotificationInvalidCommand(); //complete
-    void printNotificationInvalidAdd(); //complete
-    void printNotificationInvalidDeletion(); //complete
-    void printNotificationInvalidSaveFileDirectory(); //complete
+    void printNotificationInvalidCommand();
+    void printNotificationInvalidAdd();
+    void printNotificationInvalidDeletion();
+    void printNotificationInvalidSaveFileDirectory();
 
     //main printing
-    void printTaskList(list<Task*> *taskList, int currentDate ,int viewType);  //complete view all task not refactored
-    
+    void printTaskList(list<Task*> *taskList, int currentDate ,int viewType); //incomplete   
+    void printSearchList(list<Task*>* taskList, string searchTerm); //incomplete   
 
-    //helper
-    void printDisplayList(vector<string> displayList); //helper
-    string getTaskString(Task* task, int viewType); 
-    void printNotificationSearchTerm(string searchTerm); //helper
+
+
 };
 

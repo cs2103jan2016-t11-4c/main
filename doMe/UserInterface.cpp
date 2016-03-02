@@ -1,39 +1,39 @@
 #include "UserInterface.h"
-const string DEFAULT_TEXT_FILE_NAME = "doMe.txt";
+const string UserInterface::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 
-const string MESSAGE_FIRST_TIME = "This is your first time using this programme";
-const string MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
-const string MESSAGE_SET_SAVE_FILE_DIRECTORY = "New save directory: %s";
-const string MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT = "Set your save file directory: ";
-const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is save at the current directory";
-const string MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later";
+const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
+const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
+const string UserInterface::MESSAGE_SET_SAVE_FILE_DIRECTORY = "New save directory: %s";
+const string UserInterface::MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT = "Set your save file directory: ";
+const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is save at the current directory.";
+const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 
-const string COMMAND_PROMPT = "command: ";
-const string MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use";
-const string MESSAGE_ADD = "Added \"%s\" into %s";
-const string MESSAGE_EMPTY = "Your text file \"%s\" is currently empty";
-const string MESSAGE_DELETE = "Deleted \"%s\" from %s";
-const string MESSAGE_CLEAR = "all contents cleared from %s";
-const string MESSAGE_SEARCH = "~Showing result for \"%s\". Type \"exit\" to exit the search module~";
-const string MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared";
-const string MESSAGE_DISPLAY_CONTENTS = "%d. %s";
-const string MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%s)";
+const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
+const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
+const string UserInterface::MESSAGE_ADD = "Added \"%s\" into %s";
+const string UserInterface::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
+const string UserInterface::MESSAGE_DELETE = "Deleted \"%s\" from %s";
+const string UserInterface::MESSAGE_CLEAR = "All contents cleared from %s";
+const string UserInterface::MESSAGE_SEARCH = "~Showing result for \"%s\". Type \"exit\" to exit the search module~";
+const string UserInterface::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
+const string UserInterface::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%s).";
 
-const string ERROR_INVALID_ADD = "An invalid addition has been inputted. Please try again.";
-const string ERROR_INVALID_DELETE = "An invalid deletion has been inputted. Please try again.";
-const string ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been inputted. Please try again";
-const string ERROR_INVALID_COMMAND = "Invalid command has been inputted. Please try again";
-const string ERROR_SET_INVALID_SAVE_FILE_DIRECTORY = "Invalid inputted file directory";
+const string UserInterface::ERROR_INVALID_ADD = "Invalid addition has been inputted.";
+const string UserInterface::ERROR_INVALID_DELETE = "Invalid deletion has been inputted.";
+const string UserInterface::ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been inputted.";
+const string UserInterface::ERROR_INVALID_COMMAND = "Invalid command has been inputted.";
+const string UserInterface::ERROR_SET_INVALID_SAVE_FILE_DIRECTORY = "Invalid inputted file directory.";
 
-const string MESSAGE_HELP_TIPS[6] = { 
+const string UserInterface::MESSAGE_HELP_TIPS[] = { 
     "add <task description>", 
     "delete <index>",
     "clear",
+    "edit <task description>",
     "search <keyword>",
+    "change <directory>",
     "undo",
-    "edit <task description>"
+    "exit"
 }; 
-
 
 UserInterface::UserInterface(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
@@ -52,16 +52,28 @@ UserInterface::~UserInterface(void) {
 
 void UserInterface::printPromptFirstTimeUser() {
     showToUser(MESSAGE_FIRST_TIME);
-    showToUser(MESSAGE_SAVE_FILE_NAME);
+    cout << MESSAGE_SAVE_FILE_NAME;
 }
 
 void UserInterface::printPromptFirstTimeUserDirectory() {
-    showToUser(MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT);
+    cout << MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT;
 }
 
 void UserInterface::printPromptCommand() {	
-    cout << COMMAND_PROMPT;
+    cout << MESSAGE_COMMAND_PROMPT;
 }
+
+void UserInterface::printPromptHelp() {
+    size_t size = (sizeof(MESSAGE_HELP_TIPS)/sizeof(*MESSAGE_HELP_TIPS));
+    vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
+    vector<string>::iterator helpListIter = helpList.begin();
+   
+    while(helpListIter!= helpList.end()) {
+        showToUser(*helpListIter);
+        helpListIter++;
+    }
+}
+
 
 /****************************************************************/
 
@@ -136,8 +148,21 @@ void UserInterface::printNotificationEmptySaveFileDirectory() {
 
 void UserInterface::printSearchList(list<Task*>* taskList, string searchTerm) {
     printNotificationSearchTerm(searchTerm);
+    ViewType *taskListType;
 
-    printTaskList(taskList, 0 ,_defaultViewType); //thinking on how to implement 
+    switch(_defaultViewType) {
+    case -1:
+        taskListType = new ViewType(taskList);
+        break;
+    case 0:
+        taskListType = new ViewType0(taskList);
+        break;
+    default:
+        break;
+    }
+    printDisplayList(taskListType->createSearchList());
+    delete taskListType;
+
 }
 
 void UserInterface::printTaskList(list<Task*> *taskList, int currentDate ,int viewType) {
@@ -150,8 +175,6 @@ void UserInterface::printTaskList(list<Task*> *taskList, int currentDate ,int vi
     case 0:
         taskListType = new ViewType0(taskList , currentDate);
         break;
-    case 1:
-        break;
     default:
         break;
     }
@@ -161,6 +184,23 @@ void UserInterface::printTaskList(list<Task*> *taskList, int currentDate ,int vi
 }
 
 /****************************************************************/
+
+string UserInterface::getTaskString(Task* task, int viewType) {
+    ViewType *taskListType;
+
+    switch(viewType) {
+    case -1:
+        taskListType = new ViewType();
+        break;
+    case 0:
+        taskListType = new ViewType0();
+        break;
+    default:
+        break;
+    }
+
+    return taskListType->getTaskString(task);
+}
 
 void UserInterface::printDisplayList(vector<string> displayList) {
     vector<string>::iterator displayListIter = displayList.begin();
@@ -174,25 +214,6 @@ void UserInterface::printDisplayList(vector<string> displayList) {
 void UserInterface::printNotificationSearchTerm(string searchTerm) {
     sprintf_s(buffer, MESSAGE_SEARCH.c_str(), searchTerm.c_str());
     showToUser(buffer);
-}
-
-string UserInterface::getTaskString(Task* task, int viewType) {
-    ViewType *taskListType;
-
-    switch(viewType) {
-    case -1:
-        taskListType = new ViewType();
-        break;
-    case 0:
-        taskListType = new ViewType0();
-        break;
-    case 1:
-        break;
-    default:
-        break;
-    }
-
-    return taskListType->getTaskString(task);
 }
 
 void UserInterface::showToUser(string string) {

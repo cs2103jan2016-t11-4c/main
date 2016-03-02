@@ -24,25 +24,28 @@ public:
 	string _saveDirectory;
 	int _viewType; //temporary this first before we finalise naming
  
-	string createTextFileNameString(string textFileName); //helper input test return test.txt
-	bool checkValidityOfDirectory(const string& directory); //helper
-	void openNewSettingFile(); // complete
-	string writeSettingsDetails(string sentence); //helper
-	string loadSettingsDetails(string sentence); //helper 
-	std::string promptForTextName(); // complete
+	string createValidTextFileNameString(string textFileName); //helper input test return test.txt
+    string createValidFileDirectoryString(string directory); //helper input return directory with "/"
+	bool checkValidityOfDirectory(const string& directory); //might remove
+	void openNewSettingFile(); //complete
+	string writeSettingsDetails(string sentence); //helper for writing process
+	string loadSettingsDetails(string sentence); //helper for loading process
+	string promptForTextName(); // complete
 	
 public:
 	Settings(void);
 	~Settings(void);
 
+    //complete
+    void changeSaveDirectory(string directory); //only insert directory without text file name
 	void updateTextFileName(string textFileName);
-	void changeSaveDirectory(string directory);
+    bool checkEmptySaveDirectory(); 
 	bool checkForSettingsFile();
-	string getSaveDirectory(); //getter function to pass to storage
-	void loadSettings(); // complete
-	void saveSettings(); // complete
-	bool checkEmptySaveDirectory(); // complete
+	string getSaveDirectory();
     int getViewType();
     void changeViewType(int newViewType);
+	void loadSettings(); 
+	void saveSettings(); 	
+
 };
 

@@ -8,15 +8,18 @@ private:
 
     static const string MESSAGE_DISPLAY_HEADER;
     static const string MESSAGE_NEW_LINE;
+    static const string ViewType0::MESSAGE_AM;
+    static const string ViewType0::MESSAGE_PM;
+
+    string createTaskString(Task* individualTask, int index); 
+    string getComplimentaryString(Task* individualTask);
+    string getTimeTaskString(int time);
+
 public:
     ViewType0(void);
+    ViewType0(list<Task*> *taskList);
     ViewType0(list<Task*> *taskList, int currentDate);
-    ViewType0(list<Task*> *taskList, int currentDate,int headerMarker); //in progress thinking for removal of header
     ~ViewType0(void);
-
-    string getTaskString(Task* individualTask);
-
-    string createHeaderString(int date);
 
 };
 
