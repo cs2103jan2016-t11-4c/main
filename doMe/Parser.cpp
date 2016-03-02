@@ -386,14 +386,14 @@ bool Parser::finalizeDates() {
 	if(_dates.size() > 2) {
 		return false;
 	} else if(_dates.size() == 0) {
+		_date2 = 0;
 		_date1 = 0;
-		_date2 = 0;
 	} else if(_dates.size() == 1) {
-		_date1 = _dates[0];
-		_date2 = 0;
+		_date2 = _dates[0];
+		_date1 = 0;
 	} else if(_dates.size() == 2) {
-		_date1 = _dates[0];
-		_date2 = _dates[1];
+		_date2 = _dates[0];
+		_date1 = _dates[1];
 	}
 	return true;
 }
@@ -402,14 +402,14 @@ bool Parser::finalizeTimes() {
 	if(_times.size() > 2) {
 		return false;
 	} else if(_times.size() == 0) {
+		_time2 = 0;
 		_time1 = 0;
-		_time2 = 0;
 	} else if(_times.size() == 1) {
-		_time1 = _times[0];
-		_time2 = 0;
+		_time2 = _times[0];
+		_time1 = 0;
 	} else if(_dates.size() == 2) {
-		_time1 = _times[0];
-		_time2 = _times[1];
+		_time2 = _times[0];
+		_time1 = _times[1];
 	}
 	return true;
 }
