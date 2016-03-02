@@ -15,8 +15,8 @@ COMMAND_TYPE CommandPackage::getCommandType() {
 	return _commandType;
 }
 
-Task CommandPackage::getTask() {
-	return _task;
+Task* CommandPackage::getTask() {
+	return &_task;
 }
 
 int CommandPackage::getIndex() {

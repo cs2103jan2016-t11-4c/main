@@ -34,10 +34,10 @@ public:
 	Parser(string commandLine = ""); // string to parse can be put in directly during construction
 	~Parser(void);
 	
-	CommandPackage parse(); // run this method to parse a commandline and recieve the command package
+	CommandPackage* parse(); // run this method to parse a commandline and recieve the command package
 	
 	void setCommandLine(string commandLine); // command line to parse can be set using this method as well
-	CommandPackage getCommandPackage(); // this method can be used to recieve the commandpackage after parsing
+	CommandPackage* getCommandPackage(); // this method can be used to recieve the commandpackage after parsing
 
 	//all attributes and methods below are for internal implementations, do not touch
 private:
@@ -56,6 +56,7 @@ public:
 	void guessCommandType();
 	void findDetailsIfSimpleCommandType();
 	void findDetailsIfNotSimpleCommandType();
+	void parseAsAddCommandIfStillNotParsed();
 
 	bool isAdd(string s);
 	bool isDisplay(string s);
@@ -76,6 +77,13 @@ public:
 	void packCommandIfConfirmedSortCommand();
 	void packCommandIfConfirmedSavedDirectoryCommand();
 	void packCommandIfConfirmedExitCommand();
+
+	void packCommandIfConfirmedEditCommand();
+	void packCommandIfConfirmedClearCommand();
+	void packCommandIfConfirmedSearchCommand();
+	void packCommandIfConfirmedViewTypeCommand();
+
+
 
 	vector<string> splitSentence(string commandLine);
 	string makeAllCaps(string s);

@@ -20,7 +20,7 @@ public:
 	~CommandPackage(void);
 
 	COMMAND_TYPE getCommandType();
-	Task getTask();
+	Task* getTask();
 	int getIndex();
 	string getDescription();
 

@@ -8,14 +8,15 @@ _commandLine(commandLine)
 Parser::~Parser(void) {
 }
 
-CommandPackage Parser::parse() {
+CommandPackage* Parser::parse() {
 
 	getParametersFromCommandLine();
 	guessCommandType();
 	findDetailsIfSimpleCommandType();
 	findDetailsIfNotSimpleCommandType();
+	parseAsAddCommandIfStillNotParsed();
 
-	return _commandPackage;
+	return &_commandPackage;
 }
 
 void Parser::setCommandLine(string commandLine) {
@@ -23,8 +24,8 @@ void Parser::setCommandLine(string commandLine) {
 	return;
 }
 
-CommandPackage Parser::getCommandPackage() {
-	return _commandPackage;
+CommandPackage* Parser::getCommandPackage() {
+	return &_commandPackage;
 }
 
 void Parser::getParametersFromCommandLine() {
@@ -95,14 +96,25 @@ void Parser::findDetailsIfSimpleCommandType() {
 
 void Parser::findDetailsIfNotSimpleCommandType() {
 	switch(_commandType) {
-	case ADD:
-		break;
 	case EDIT:
+		packCommandIfConfirmedEditCommand();
+		break;
+	case CLEAR:
+		packCommandIfConfirmedClearCommand();
+		break;
+	case SEARCH:
+		packCommandIfConfirmedSearchCommand();
+	break;
+	case VIEWTYPE:
+		packCommandIfConfirmedViewTypeCommand();
 		break;
 	default:
 		break;
 	}
 	return;
+}
+
+void Parser::parseAsAddCommandIfStillNotParsed() {
 }
 
 bool Parser::isAdd(std::string s) {
@@ -282,10 +294,48 @@ void Parser::packCommandIfConfirmedSavedDirectoryCommand() {
 void Parser::packCommandIfConfirmedExitCommand() {
 	if(_commandParameters.size() == 1) {
 		_commandPackage = CommandPackage(EXIT);
-	} else if(_commandParameters.size() > 1) {
+	}
+	else {
 		_commandType = ADD;
 	}
 	return;
+}
+
+//yet to be complete
+void Parser::packCommandIfConfirmedEditCommand() {
+	if(_commandParameters.size() == 1) {
+		_commandType = INVALID;
+	} else if(isInteger(_commandParameters[INDEX_POSITION])) {
+		//stuff to do here
+	} else {
+		_commandType = ADD;
+	}
+	return;
+}
+
+void Parser::packCommandIfConfirmedClearCommand() {
+	if(_commandParameters.size() == 1) {
+		_commandPackage = CommandPackage(CLEAR);
+	}
+	else {
+		_commandType = ADD;
+	}
+	return;
+}
+
+//not done
+void Parser::packCommandIfConfirmedSearchCommand() {
+}
+
+void Parser::packCommandIfConfirmedViewTypeCommand() {
+	for(int i = 0; i < _commandParameters.size(); i++)
+	{
+		if(isInteger(_commandParameters[i])) {
+			_commandPackage = CommandPackage(VIEWTYPE, Task(), stoi(_commandParameters[i]));
+			return;
+		}
+	}
+	_commandType=ADD;
 }
 
 vector<string> Parser::splitSentence(string sentence) {
