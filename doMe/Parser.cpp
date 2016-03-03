@@ -115,11 +115,13 @@ void Parser::findDetailsIfNotSimpleCommandType() {
 }
 
 void Parser::parseAsAddCommandIfStillNotParsed() {
+	if(_commandType == ADD) {
 	removeAddCommand();
 	getDateAndTimeParameters();
 	getLocationParameter();
 	getDescriptionParameter();
 	packAddCommand();
+	}
 }
 
 bool Parser::isAdd(std::string s) {
@@ -306,16 +308,31 @@ void Parser::packCommandIfConfirmedExitCommand() {
 	return;
 }
 
-//yet to be complete
 void Parser::packCommandIfConfirmedEditCommand() {
 	if(_commandParameters.size() == 1) {
 		_commandType = INVALID;
 	} else if(isInteger(_commandParameters[INDEX_POSITION])) {
-		//stuff to do here
+	removeEditCommand();
+	getDateAndTimeParameters();
+	getLocationParameter();
+	getDescriptionParameter();
+	packEditCommand();
 	} else {
 		_commandType = ADD;
 	}
 	return;
+}
+
+void Parser::packEditCommand() {
+	if(!finalizeDates()) {
+		return;
+	} else if(!finalizeTimes()) {
+		return;
+	} else {
+		string location = combineWords(_location);
+		string description = combineWords(_description);
+		_commandPackage = CommandPackage(EDIT, Task(description, _date1, _date2, _time1, _time2, location));
+	}
 }
 
 void Parser::packCommandIfConfirmedClearCommand() {
@@ -366,6 +383,16 @@ void Parser::removeAddCommand() {
 	return;
 }
 
+void Parser::removeEditCommand() {
+	if(isEdit(_commandParameters[0])) {
+		_commandParameters[0] = "edit";
+	}
+	if(isInteger(_commandParameters[1])) {
+		_commandParameters[1] = "index";
+	}
+	return;
+}
+
 void Parser::getDateAndTimeParameters() {
 	for(int i=0; i < _commandParameters.size(); i++) {
 		if(isInteger(_commandParameters[i])) {
@@ -402,11 +429,11 @@ bool Parser::finalizeTimes() {
 	if(_times.size() > 2) {
 		return false;
 	} else if(_times.size() == 0) {
-		_time2 = 0;
-		_time1 = 0;
+		_time2 = -1;
+		_time1 = -1;
 	} else if(_times.size() == 1) {
 		_time2 = _times[0];
-		_time1 = 0;
+		_time1 = -1;
 	} else if(_dates.size() == 2) {
 		_time2 = _times[0];
 		_time1 = _times[1];
@@ -477,7 +504,7 @@ bool Parser::isTime(int n) {
 }
 
 bool Parser::isDate(int n) {
-	if(n/10000000 == 0) {
+	if(n/100000000 == 0) {
 		if(n/10000 != 0) { 
 			return true;
 		} else {

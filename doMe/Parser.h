@@ -87,11 +87,13 @@ public:
 	void packCommandIfConfirmedExitCommand();
 
 	void packCommandIfConfirmedEditCommand();
+	void packEditCommand();
 	void packCommandIfConfirmedClearCommand();
 	void packCommandIfConfirmedSearchCommand();
 	void packCommandIfConfirmedViewTypeCommand();
 	void packAddCommand();
 	void removeAddCommand();
+	void removeEditCommand();
 	void getDateAndTimeParameters();
 	void getLocationParameter();
 	void getDescriptionParameter();

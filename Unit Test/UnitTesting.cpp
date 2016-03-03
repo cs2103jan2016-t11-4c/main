@@ -7,6 +7,14 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace UnitTest {		
     TEST_CLASS(SettingTest) {
 public:
+	/*
+	TEST_METHOD(ParserTest) {
+		CommandPackage expectedAddObject(ADD, Task("fly a plane",0,11092001,-1,-1),0,"");
+		Parser sut("fly a plane 11092001");
+
+		Assert::AreEqual(sut.parse(),&expectedAddObject);
+	}
+	*/
     TEST_METHOD(SettingsTextFileNameMakerTest) {
         Settings Settings;
         string input = "text";
