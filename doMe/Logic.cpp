@@ -14,6 +14,8 @@ Logic::Logic() {
 void Logic::setEnvironment() {
 //	vectorToTaskList(_storage->retrieveData());
 	_settings->loadSettings();
+    _UI->updateTextFileName(_settings->getTextFileName());
+    _UI->changeViewType(_settings->getViewType());
 }
 void Logic::displayWelcomeMessage() {
 	_UI->printNotificationWelcome();

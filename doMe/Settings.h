@@ -42,6 +42,7 @@ public:
     bool checkEmptySaveDirectory(); 
 	bool checkForSettingsFile();
 	string getSaveDirectory();
+    string getTextFileName();
     int getViewType();
     void changeViewType(int newViewType);
 	void loadSettings(); 

@@ -9,6 +9,7 @@
 #include "Task.h"
 #include "ViewType.h"
 #include "ViewType0.h"
+#include "ViewType1.h"
 
 using namespace std;
 
@@ -24,6 +25,7 @@ public:
     char buffer[255];
 
     static const string DEFAULT_TEXT_FILE_NAME;
+    static const string MESSAGE_BOX;
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;
@@ -52,12 +54,19 @@ public:
 
     //helper
     void showToUser(string string);
+    void showToUserWithMessage(string string); //special sperator
     void printDisplayList(vector<string> displayList); 
-    string getTaskString(Task* task, int viewType); //incomplete   
+    string getTaskString(Task* task, int viewType); //incomplete
+    
 public:
     UserInterface(void);
+    UserInterface(int defaultViewType);
     UserInterface(string textFileName, int defaultViewType);
     ~UserInterface(void);
+
+    //setter
+    void updateTextFileName(string textFileName);
+    void changeViewType(int newViewType);
 
     //prompts
     void printPromptFirstTimeUser(); 

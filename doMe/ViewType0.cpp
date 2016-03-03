@@ -22,18 +22,6 @@ ViewType0::ViewType0(list<Task*> *taskList, int currentDate) : ViewType(taskList
 ViewType0::~ViewType0(void) {
 }
 
-string ViewType0::createTaskString(Task* individualTask, int index) {
-    string taskString;
-    string complimentaryString;
-    complimentaryString = getComplimentaryString(individualTask);
-    taskString = getTaskString(individualTask);
-
-    sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(),index, taskString.c_str());
-    taskString = buffer;
-
-    return complimentaryString + taskString;
-}
-
 string ViewType0::getComplimentaryString(Task* individualTask) {
     int date;
     date = individualTask->getDate2();
@@ -42,12 +30,12 @@ string ViewType0::getComplimentaryString(Task* individualTask) {
     case 0:
         sprintf_s(buffer, MESSAGE_DISPLAY_HEADER.c_str(), (getDateTaskString(_currentDate)).c_str());
         _headerMarker = 1;
-        return buffer + MESSAGE_NEW_LINE;
+        return buffer;
         break;
     case 1:
         if(_currentDate != date) {    
             _headerMarker = 2;
-            return MESSAGE_NEW_LINE;
+            return MESSAGE_SPACE_STRING;
             break;
         } 
         break;

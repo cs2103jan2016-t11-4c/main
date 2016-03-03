@@ -176,3 +176,7 @@ int Settings::getViewType() {
 void Settings::changeViewType(int newViewType) {
     _viewType = newViewType;
 }
+
+string Settings::getTextFileName() {
+    return _textFileName;
+}

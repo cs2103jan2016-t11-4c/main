@@ -7,7 +7,7 @@ const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
 const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline> ";
-
+const string ViewType::MESSAGE_EMPTY_LIST = "<empty list>";
 
 ViewType::ViewType(void) {
 }
@@ -26,25 +26,39 @@ ViewType::~ViewType(void) {
 }
 
 vector<string> ViewType::createDisplayList() {
-    list<Task*>::iterator taskListIter = ((*_taskList).begin());
-    int index = 1;
+    if((*_taskList).empty()) {
+        _displayList.push_back(MESSAGE_EMPTY_LIST);
+    } else {
+        list<Task*>::iterator taskListIter = ((*_taskList).begin());
+        string complimentaryString;
+        int index = 1;
 
-    while(taskListIter != (*_taskList).end()) {
-        _displayList.push_back(createTaskString(*taskListIter,index));
-        index++;
-        taskListIter++;
+        while(taskListIter != (*_taskList).end()) {
+            complimentaryString = getComplimentaryString(*taskListIter);
+            if(complimentaryString != MESSAGE_VOID_STRING) {
+                _displayList.push_back(complimentaryString);
+            }
+            _displayList.push_back(createTaskString(*taskListIter,index));
+            index++;
+            taskListIter++;
+        }
     }
     return _displayList;
+
 }
 
 vector<string> ViewType::createSearchList() {
-    list<Task*>::iterator taskListIter = (*_taskList).begin();
-    int index = 1;
+    if((*_taskList).empty()) {
+        _displayList.push_back(MESSAGE_EMPTY_LIST);
+    } else {
+        list<Task*>::iterator taskListIter = (*_taskList).begin();
+        int index = 1;
 
-    while(taskListIter != (*_taskList).end()) {
-        _displayList.push_back(ViewType::createTaskString(*taskListIter,index));
-        index++;
-        taskListIter++;
+        while(taskListIter != (*_taskList).end()) {
+            _displayList.push_back(ViewType::createTaskString(*taskListIter,index));
+            index++;
+            taskListIter++;
+        }
     }
     return _displayList;
 }
