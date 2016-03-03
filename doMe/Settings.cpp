@@ -5,6 +5,7 @@ const string Settings::VOID_STRING = "";
 
 
 Settings::Settings(void) {
+    _viewType = -1;
 }
 
 Settings::~Settings(void) {

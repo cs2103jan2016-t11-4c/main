@@ -26,7 +26,7 @@ ViewType::~ViewType(void) {
 }
 
 vector<string> ViewType::createDisplayList() {
-    list<Task*>::iterator taskListIter = (*_taskList).begin();
+    list<Task*>::iterator taskListIter = ((*_taskList).begin());
     int index = 1;
 
     while(taskListIter != (*_taskList).end()) {

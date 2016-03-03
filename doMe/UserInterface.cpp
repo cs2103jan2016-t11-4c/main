@@ -67,7 +67,7 @@ void UserInterface::printPromptHelp() {
     size_t size = (sizeof(MESSAGE_HELP_TIPS)/sizeof(*MESSAGE_HELP_TIPS));
     vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
     vector<string>::iterator helpListIter = helpList.begin();
-   
+
     while(helpListIter!= helpList.end()) {
         showToUser(*helpListIter);
         helpListIter++;
@@ -149,38 +149,43 @@ void UserInterface::printNotificationEmptySaveFileDirectory() {
 void UserInterface::printSearchList(list<Task*>* taskList, string searchTerm) {
     printNotificationSearchTerm(searchTerm);
     ViewType *taskListType;
+    if(!(*taskList).empty()) {
 
-    switch(_defaultViewType) {
-    case -1:
-        taskListType = new ViewType(taskList);
-        break;
-    case 0:
-        taskListType = new ViewType0(taskList);
-        break;
-    default:
-        break;
+        switch(_defaultViewType) {
+        case -1:
+            taskListType = new ViewType(taskList);
+            break;
+        case 0:
+            taskListType = new ViewType0(taskList);
+            break;
+        default:
+            break;
+        }
+        printDisplayList(taskListType->createSearchList());
+        delete taskListType;
+    } else {
+        cout << "empty" << endl;
     }
-    printDisplayList(taskListType->createSearchList());
-    delete taskListType;
-
 }
 
 void UserInterface::printTaskList(list<Task*> *taskList, int currentDate ,int viewType) {
     ViewType *taskListType;
-
-    switch(viewType) {
-    case -1:
-        taskListType = new ViewType(taskList , currentDate);
-        break;
-    case 0:
-        taskListType = new ViewType0(taskList , currentDate);
-        break;
-    default:
-        break;
+    if(!(taskList->empty())) {
+        switch(viewType) {
+        case -1:
+            taskListType = new ViewType(taskList , currentDate);
+            break;
+        case 0:
+            taskListType = new ViewType0(taskList , currentDate);
+            break;
+        default:
+            break;
+        }
+        printDisplayList(taskListType->createDisplayList());
+        delete taskListType;
+    } else {
+        cout << "empty" << endl;
     }
-    printDisplayList(taskListType->createDisplayList());
-    delete taskListType;
-
 }
 
 /****************************************************************/

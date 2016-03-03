@@ -137,8 +137,9 @@ void Logic::add(Task* task) {
 }
 
 void Logic::display(){
-	//_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType()); 
+	_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType()); 
     //error due to logic gave UI invalid task list + current date
+    /*
 int i = 1;
  for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
 		cout << i++ << ". "
@@ -149,6 +150,7 @@ int i = 1;
 		<< (*iter)->getTime2() << " "
 		<< (*iter)->getLocation() << endl;
 	}
+    */
 }
 
 void Logic::displaySearchList(string searchTerm) {
