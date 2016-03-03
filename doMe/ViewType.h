@@ -41,6 +41,8 @@ public:
     string getDay(int date);
     string getMonth(int date);
     string getYear(int date);
+    string integerToString(int integer);
+    string timeToString(string time);
 
     string formatTaskString(string name , string date1 , string date2 , string time1 , string time2 , string location);
     string formateDateString(string s1, string s2);

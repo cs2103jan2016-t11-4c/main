@@ -56,18 +56,19 @@ string ViewType0::getComplimentaryString(Task* individualTask) {
 }
 
 string ViewType0::getTimeTaskString(int time) {
-    ostringstream oss;
     string timeString;
 
-    if(time != 0) {
+    if(time >= 0) {
         if(time >= TIME_MIDDAY) {
             time = time - TIME_MIDDAY;
-            oss << time;  
-            timeString = oss.str();
+            timeString = integerToString(time);
             timeString = timeString + MESSAGE_PM;
         } else {
-            oss << time;  
-            timeString = oss.str();
+            if(time < 100) {
+                time = time + TIME_MIDDAY;
+            } 
+
+            timeString = integerToString(time);
             timeString = timeString + MESSAGE_AM;
         }
         timeString.insert(timeString.size() - 5, MESSAGE_TIME_SEPERATOR);

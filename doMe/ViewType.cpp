@@ -128,7 +128,7 @@ string ViewType::getDateTaskString(int date) {
     string month;
     string year;
 
-    if(date != 0) {
+    if(date >= 0) {
         day = getDay(date);
         month = getMonth(date);
         year = getYear(date);
@@ -141,18 +141,35 @@ string ViewType::getDateTaskString(int date) {
 }
 
 string ViewType::getTimeTaskString(int time) {
-    ostringstream oss;
     string timeString;
 
-    if(time != 0) {
-        oss << time;  
-        timeString = oss.str();
+    if(time >= 0) {
+        timeString = integerToString(time);
+        timeString = timeToString(timeString);
+
         timeString.insert(timeString.size() - 2,MESSAGE_TIME_SEPERATOR);
 
         return timeString;
     } else {
         return MESSAGE_VOID_STRING;
     }
+}
+
+string ViewType::integerToString(int integer) {
+    ostringstream oss;
+    oss << integer;  
+    return oss.str();
+}
+
+string ViewType::timeToString(string time) {
+    string timeString = time;
+    if(time.size() < 3) {
+        timeString.insert(0,"0");
+    }
+    if(time.size()  < 2) {
+        timeString.insert(0,"0");
+    }
+    return timeString;
 }
 
 string ViewType::getDay(int date) {
@@ -173,3 +190,4 @@ string ViewType::getYear(int date) {
     oss << date / 10000;
     return oss.str();
 }
+

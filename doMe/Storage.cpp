@@ -6,7 +6,7 @@ Storage::Storage(string location)
 	_isFileCreated = false;
 }
 
-vector<string> Storage::retrieveData()
+vector<string> Storage::getExistingData()
 {
 	vector<string> dataVector;
 	string tempText;
@@ -29,7 +29,7 @@ vector<string> Storage::retrieveData()
 	return dataVector;
 }
 
-void Storage::saveData(vector<string> updatedData)
+void Storage::saveUpdatedData(vector<string> updatedData)
 {
 	ofstream writeFile;
 

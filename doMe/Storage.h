@@ -26,8 +26,8 @@ private:
 public:
 	Storage(string);
 
-	vector<string> retrieveData();
-	void saveData(vector<string>);
+	vector<string> getExistingData();
+	void saveUpdatedData(vector<string>);
 	void changeLocation(string);
 };
 

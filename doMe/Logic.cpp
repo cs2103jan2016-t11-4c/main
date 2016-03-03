@@ -5,7 +5,7 @@ const string Logic::LIST_DIVIDER = "__________";
 
 Logic::Logic() {
 	_settings = new Settings();
-//	_UI = new UserInterface();
+	_UI = new UserInterface();
 //	_storage = new Storage();
 	_taskList = new list<Task*>;
 	_prevTaskList = new list<Task*>;
@@ -16,8 +16,8 @@ void Logic::setEnvironment() {
 	_settings->loadSettings();
 }
 void Logic::displayWelcomeMessage() {
-//	_UI->printNotificationWelcome();
-	cout << "Welcome" << endl;
+	_UI->printNotificationWelcome();
+	//cout << "Welcome" << endl;
 }
 void Logic::executeCommandsUntilExitCommand() {
 	string command;
@@ -25,8 +25,8 @@ void Logic::executeCommandsUntilExitCommand() {
 	display();
 
 	do {
-//		_UI->printPromptCommand();
-		cout << "command: ";
+		_UI->printPromptCommand();
+		//cout << "command: ";
 		getline(cin, command);
 		executeCommand(command);	
 	} while (command != EXIT_COMMAND);
@@ -83,7 +83,7 @@ void Logic::executeCommand(string command) {
 	case EXIT:
 		break;
 	default:
-//		_UI->printNotificationInvalidCommand();
+		_UI->printNotificationInvalidCommand();
 		break;
 	}
 
@@ -113,7 +113,7 @@ void Logic::executeSearchCommand(string command, string searchTerm) {
 	case EXIT:
 		break;
 	default:
-	//	_UI->printNotificationInvalidCommand();
+		_UI->printNotificationInvalidCommand();
 		break;
 	}
 
@@ -123,21 +123,22 @@ void Logic::executeSearchCommand(string command, string searchTerm) {
 
 void Logic::add(Task* task) {
 	if(task == NULL) {
-//		_UI->printNotificationInvalidAdd();
+		_UI->printNotificationInvalidAdd();
 		return;
 	}
 
 	saveLastChange();
 
 	_taskList->push_back(task);
-//	_UI->printNotificationAdd(task);
+	_UI->printNotificationAdd(task); //some error here (parser + UI issue)
 
 	sort();
 	display();
 }
 
 void Logic::display(){
-//	_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType());
+	//_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType()); 
+    //error due to logic gave UI invalid task list + current date
 int i = 1;
  for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
 		cout << i++ << ". "
@@ -156,7 +157,7 @@ void Logic::displaySearchList(string searchTerm) {
 
 void Logic::del(int index, list<Task*>* taskList) {
 	if(outOfRange(index, taskList)) {
-//		_UI->printNotificationInvalidDeletion();
+		_UI->printNotificationInvalidDeletion();
 		return;
 	}
 
@@ -207,9 +208,9 @@ void Logic::clear(list<Task*>* taskList, string searchTerm) {
 	taskList->clear();
 
 	if(taskList == _taskList) {
-//		_UI->printNotificationClear();
+		_UI->printNotificationClear();
 	}else {
-//		_UI->printNotificationClearSearch(searchTerm);	
+		_UI->printNotificationClearSearch(searchTerm);	
 	}
 }
 
@@ -253,18 +254,18 @@ void Logic::search(string searchTerm) {
 
 void Logic::changeViewType(int newViewType) {
 	_settings->changeViewType(newViewType);
-//	_UI->printNotificationViewTypeChange(newViewType);
+	_UI->printNotificationViewTypeChange(newViewType);
 }
 
 void Logic::changeSaveDirectory(string newSaveDirectory) {
 	if(isNotValidDirectory(newSaveDirectory)) {
-//		_UI->printNotificationInvalidSaveFileDirectory();
+		_UI->printNotificationInvalidSaveFileDirectory();
 		return;
 	}
 
 	_settings->changeSaveDirectory(newSaveDirectory);
 
-//	_UI->printNotificationChangeSaveFileDirectory(newSaveDirectory);
+	_UI->printNotificationChangeSaveFileDirectory(newSaveDirectory);
 }
 
 void Logic::saveToTxtFile() {

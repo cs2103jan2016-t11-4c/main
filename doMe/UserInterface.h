@@ -14,7 +14,7 @@ using namespace std;
 
 class UserInterface {
 #ifndef TESTMODE 
-private: 
+public: 
 #else 
 public: 
 #endif
