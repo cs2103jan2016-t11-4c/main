@@ -56,10 +56,10 @@ void Logic::executeCommand(string commandText) {
 		break;
 	case EDIT:
 		command = new Command_Edit(_taskList, _UI, commandPackage->getIndex(), commandPackage->getTask());
-		return;
+		break;
 	case CLEAR:
-		//command = new Command_Clear();
-		return;
+		command = new Command_Clear(_taskList, _UI);
+		break;
 	case UNDO:
 		undo();
 		return;

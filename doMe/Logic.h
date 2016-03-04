@@ -18,6 +18,7 @@
 #include "Command_Add.h"
 #include "Command_Delete.h"
 #include "Command_Edit.h"
+#include "Command_Clear.h"
 using namespace std;
 
 class Logic { 

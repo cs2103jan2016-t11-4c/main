@@ -63,6 +63,9 @@
     <ClCompile Include="Command_Edit.cpp">
       <Filter>Command Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Command_Clear.cpp">
+      <Filter>Command Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="UserInterface.h">
@@ -105,6 +108,9 @@
       <Filter>Command Classes</Filter>
     </ClInclude>
     <ClInclude Include="Command_Edit.h">
+      <Filter>Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Clear.h">
       <Filter>Command Classes</Filter>
     </ClInclude>
   </ItemGroup>
