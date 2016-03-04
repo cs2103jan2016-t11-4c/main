@@ -4,6 +4,7 @@ const string Logic::EXIT_COMMAND = "exit";
 const string Logic::LIST_DIVIDER = "__________";
 
 Logic::Logic() {
+<<<<<<< HEAD
     _settings = new Settings();
     _UI = new UserInterface();
     //	_storage = new Storage();
@@ -17,6 +18,19 @@ void Logic::setEnvironment() {
     _settings->loadSettings();
     _UI->updateTextFileName(_settings->getTextFileName());
     _UI->changeViewType(_settings->getViewType());
+=======
+	_settings = new Settings();
+	_UI = new UserInterface();
+	//	_storage = new Storage();
+	_taskList = new list<Task*>;
+	_tempTaskList = new list<Task*>;
+	_undoCommandList = new stack<Command*>;
+	_searchState = false;
+}
+void Logic::setEnvironment() {
+	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
+	_settings->loadSettings();
+>>>>>>> d284688e74b07befce621ba279194148d736a51b
 }
 void Logic::displayWelcomeMessage() {
     _UI->printNotificationWelcome();
@@ -34,6 +48,7 @@ void Logic::executeCommandsUntilExitCommand() {
 }
 
 void Logic::executeCommand(string commandText) {
+<<<<<<< HEAD
     Parser* parser = new Parser(commandText);
     parser->parse();
     CommandPackage* commandPackage = parser->getCommandPackage();
@@ -104,6 +119,83 @@ void Logic::display() {
         return;
     }
     _UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType());	
+=======
+	if(commandText == "") {
+		display();
+		return;
+	}
+
+	Parser* parser = new Parser(commandText);
+	parser->parse();
+	CommandPackage* commandPackage = parser->getCommandPackage();
+	COMMAND_TYPE commandType = commandPackage->getCommandType();
+
+	Command* command;
+
+	if(commandText == "endsearch") {
+		endSearch();
+		return;
+	}
+
+	switch(commandType) {
+	case ADD:
+		command = new Command_Add(_taskList, _UI, commandPackage->getTask());
+		break;
+	case DISPLAY:
+		display();
+		return;
+	case DELETE:
+		command = new Command_Delete(_taskList, _UI, commandPackage->getIndex());
+		break;
+	case EDIT:
+		command = new Command_Edit(_taskList, _UI, commandPackage->getIndex(), commandPackage->getTask());
+		break;
+	case CLEAR:
+		command = new Command_Clear(_taskList, _UI);
+		break;
+	case UNDO:
+		undo();
+		return;
+	case SEARCH:
+		search(commandPackage->getDescription());
+		return;
+		//	case ENDSEARCH:
+		//		endSearch();
+		//		return;
+	case VIEWTYPE:
+		command = new Command_ViewType(_settings, commandPackage->getIndex());
+		return;
+	case SAVEDIRECTORY:
+		//		command = new Command_SaveDirectory(commandPackage->getDescription());
+		return;
+	case EXIT:
+		return;
+	default:
+		_UI->printNotificationInvalidCommand();
+		return;
+	}
+
+	command->execute();
+	_undoCommandList->push(command);
+
+	if(_searchState == true) {
+		search(_searchTerm);
+	}
+	sort();
+	display();
+
+
+	//delete parser;
+	//delete commandPackage;
+}
+
+void Logic::display() {
+	if(_searchState == true) {
+		//	_UI->printSearchList(_taskList, getCurrentDate(), _settings->getViewType(), _searchTerm);	
+		return;
+	}
+	_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType());	
+>>>>>>> d284688e74b07befce621ba279194148d736a51b
 }
 
 void Logic::search(string searchTerm) {
@@ -127,10 +219,22 @@ void Logic::endSearch() {
 }
 
 void Logic::undo() {
+<<<<<<< HEAD
     _undoCommandList->top()->undo();
     _undoCommandList->pop();
     sort();
     display();
+=======
+	if(_undoCommandList->empty()) {
+		//		_UI->printNotificationInvalidUndo();
+		cout << "Cannot undo anymore!" <<endl;
+		return;
+	}
+	_undoCommandList->top()->undo();
+	_undoCommandList->pop();
+	sort();
+	display();
+>>>>>>> d284688e74b07befce621ba279194148d736a51b
 }
 
 void Logic::sort() {
@@ -139,7 +243,11 @@ void Logic::sort() {
 }
 
 void Logic::saveToTxtFile() {
+<<<<<<< HEAD
     //	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+=======
+	//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+>>>>>>> d284688e74b07befce621ba279194148d736a51b
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
@@ -255,8 +363,15 @@ int Logic::getCurrentDate() {
 }
 
 void Logic::transferBackSearchTasks() {
+<<<<<<< HEAD
     while(!_tempTaskList->empty()) {
         _taskList->push_back(_tempTaskList->front());
         _tempTaskList->pop_front();
     }
+=======
+	while(!_tempTaskList->empty()) {
+		_taskList->push_back(_tempTaskList->front());
+		_tempTaskList->pop_front();
+	}
+>>>>>>> d284688e74b07befce621ba279194148d736a51b
 }

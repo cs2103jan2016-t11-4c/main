@@ -7,7 +7,7 @@ const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
 const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline> ";
-const string ViewType::MESSAGE_EMPTY_LIST = "<empty list>";
+const string ViewType::MESSAGE_EMPTY_LIST = "<list is empty!>";
 
 ViewType::ViewType(void) {
 }
