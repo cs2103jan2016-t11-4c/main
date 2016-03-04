@@ -1,10 +1,11 @@
 #include "Settings.h"
-const string Settings::FILE_NAME_SETTINGS = "settings.txt";
+const string Settings::FILE_SETTINGS_NAME = "settings.txt";
 const string Settings::VOID_INDICATOR = "-";
 const string Settings::VOID_STRING = "";
-
+const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 
 Settings::Settings(void) {
+    _textFileName = DEFAULT_TEXT_FILE_NAME;
     _viewType = -1;
 }
 
@@ -12,10 +13,10 @@ Settings::~Settings(void) {
 }
 
 void Settings::loadSettings() {
-    ifstream readFile(FILE_NAME_SETTINGS);
+    ifstream readFile(FILE_SETTINGS_NAME);
     string extractedSettings;
 
-
+    if(checkForSettingsFile()) {
     getline(readFile, extractedSettings);
     _textFileName = loadSettingsDetails(extractedSettings);
 
@@ -25,6 +26,10 @@ void Settings::loadSettings() {
     getline(readFile, extractedSettings);
     istringstream iss(loadSettingsDetails(extractedSettings));
     iss >> _viewType;
+
+    } else {
+        saveSettings();
+    }
 }
 
 void Settings::saveSettings() {
@@ -32,7 +37,7 @@ void Settings::saveSettings() {
     stringstream convert;
     string viewType;
     writeFile.close(); //close and reopen file to refresh the data file for overwriting
-    writeFile.open(FILE_NAME_SETTINGS);
+    writeFile.open(FILE_SETTINGS_NAME);
 
     convert << _viewType;
     viewType = convert.str();
@@ -60,11 +65,11 @@ string Settings::loadSettingsDetails(string sentence) {
 void Settings::openNewSettingFile() {
     std::ofstream writeFile;
 
-    writeFile.open(FILE_NAME_SETTINGS);
+    writeFile.open(FILE_SETTINGS_NAME);
 }
 
 bool Settings::checkForSettingsFile() {
-    std::ifstream settingFile(FILE_NAME_SETTINGS);
+    ifstream settingFile(FILE_SETTINGS_NAME);
 
     if (settingFile.is_open()) {
         return true;

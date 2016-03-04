@@ -5,6 +5,7 @@
 #include <sstream>
 #include <vector>
 #include <list>
+#include <windows.h>
 
 #include "Task.h"
 #include "ViewType.h"
@@ -25,7 +26,10 @@ public:
     char buffer[255];
 
     static const string DEFAULT_TEXT_FILE_NAME;
-    static const string MESSAGE_BOX;
+    static const char MESSAGE_BOX_CHARACTER;
+    static const string MESSAGE_VOID_STRING; 
+    static int WINDOWS_WIDTH;
+    static int WINDOWS_LENGTH;
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;
@@ -53,18 +57,19 @@ public:
     static const string MESSAGE_HELP_TIPS[];
 
     //helper
-    void showToUser(string string);
-    void showToUserWithMessage(string string); //special sperator
+    void showToUser(string message);
+    void showToUserWithMessage(string message); //special sperator
+    void setWindowsRowsColumns();
+    vector<string> createDisplayBox(vector<string> &displayList);
     void printDisplayList(vector<string> displayList); 
     string getTaskString(Task* task, int viewType); //incomplete
-    
+
 public:
     UserInterface(void);
-    UserInterface(int defaultViewType);
     UserInterface(string textFileName, int defaultViewType);
     ~UserInterface(void);
 
-    //setter
+    //getter
     void updateTextFileName(string textFileName);
     void changeViewType(int newViewType);
 

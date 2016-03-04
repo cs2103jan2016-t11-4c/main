@@ -26,19 +26,17 @@ string ViewType0::getComplimentaryString(Task* individualTask) {
     int date;
     date = individualTask->getDate2();
 
-    switch (_headerMarker) {
-    case 0:
+    if(_headerMarker == 0) {
         sprintf_s(buffer, MESSAGE_DISPLAY_HEADER.c_str(), (getDateTaskString(_currentDate)).c_str());
         _headerMarker = 1;
         return buffer;
-        break;
-    case 1:
+    }
+    if(_headerMarker == 1) {
+
         if(_currentDate != date) {    
             _headerMarker = 2;
             return MESSAGE_SPACE_STRING;
-            break;
         } 
-        break;
     }
     return MESSAGE_VOID_STRING;
 }

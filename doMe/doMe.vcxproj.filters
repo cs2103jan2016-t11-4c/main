@@ -16,6 +16,9 @@
     <Filter Include="Command Classes">
       <UniqueIdentifier>{98a7eee8-7e70-431a-974b-5eb2dc0f603c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ViewType Classes">
+      <UniqueIdentifier>{35e51aab-dfac-4c56-bdc3-8abfd983e7c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -42,15 +45,6 @@
     <ClCompile Include="Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ViewType.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewType0.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewType1.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>Command Classes</Filter>
     </ClCompile>
@@ -62,6 +56,15 @@
     </ClCompile>
     <ClCompile Include="Command_Edit.cpp">
       <Filter>Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewType1.cpp">
+      <Filter>ViewType Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewType.cpp">
+      <Filter>ViewType Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewType0.cpp">
+      <Filter>ViewType Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
