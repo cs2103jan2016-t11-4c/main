@@ -8,18 +8,16 @@ Logic::Logic() {
 	_UI = new UserInterface();
 //	_storage = new Storage();
 	_taskList = new list<Task*>;
-	_prevTaskList = new list<Task*>;
-	_searchTaskList = new list<Task*>;
+	_tempTaskList = new list<Task*>;
+	_undoCommandList = new stack<Command*>;
+	_searchState = false;
 }
 void Logic::setEnvironment() {
-//	vectorToTaskList(_storage->retrieveData());
+//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
 	_settings->loadSettings();
-    _UI->updateTextFileName(_settings->getTextFileName());
-    _UI->changeViewType(_settings->getViewType());
 }
 void Logic::displayWelcomeMessage() {
 	_UI->printNotificationWelcome();
-	//cout << "Welcome" << endl;
 }
 void Logic::executeCommandsUntilExitCommand() {
 	string command;
@@ -28,257 +26,118 @@ void Logic::executeCommandsUntilExitCommand() {
 
 	do {
 		_UI->printPromptCommand();
-		//cout << "command: ";
 		getline(cin, command);
 		executeCommand(command);	
 	} while (command != EXIT_COMMAND);
 }
 
-void Logic::executeSearchCommandsUntilExitCommand(string searchTerm) {
-	string command;
-
-	displaySearchList(searchTerm);
-
-	do {
-		getline(cin, command);
-		executeSearchCommand(command, searchTerm);
-	}while(command != EXIT_COMMAND);
-}
-
-void Logic::executeCommand(string command) {
-	Parser* parser = new Parser(command);
+void Logic::executeCommand(string commandText) {
+	Parser* parser = new Parser(commandText);
 	parser->parse();
 	CommandPackage* commandPackage = parser->getCommandPackage();
 	COMMAND_TYPE commandType = commandPackage->getCommandType();
 
+	Command* command;
+
+	if(commandText == "endsearch") {
+		endSearch();
+		return;
+	}
+
 	switch(commandType) {
 	case ADD:
-		add(commandPackage->getTask());
+		command = new Command_Add(_taskList, _UI, commandPackage->getTask());
 		break;
 	case DISPLAY:
 		display();
-		break;
+		return;
 	case DELETE:
-		del(commandPackage->getIndex(), _taskList);
+		command = new Command_Delete(_taskList, _UI, commandPackage->getIndex());
 		break;
 	case EDIT:
-		edit(commandPackage->getIndex(), commandPackage->getTask(), _taskList);
-		break;
+		command = new Command_Edit(_taskList, _UI, commandPackage->getIndex(), commandPackage->getTask());
+		return;
 	case CLEAR:
-		clear(_taskList,"lol");
-		break;
+		//command = new Command_Clear();
+		return;
 	case UNDO:
 		undo();
-		break;
-	case SORT:
-		sort();
-		break;
+		return;
 	case SEARCH:
 		search(commandPackage->getDescription());
-		break;
+		return;
+//	case ENDSEARCH:
+//		endSearch();
+//		return;
 	case VIEWTYPE:
-		changeViewType(commandPackage->getIndex());
-		break;
+//		command = new Command_ViewType(commandPackage->getIndex());
+		return;
 	case SAVEDIRECTORY:
-		changeSaveDirectory(commandPackage->getDescription());
-		break;
+//		command = new Command_SaveDirectory(commandPackage->getDescription());
+		return;
 	case EXIT:
-		break;
+		return;
 	default:
 		_UI->printNotificationInvalidCommand();
-		break;
+		return;
 	}
+
+	command->execute();
+	_undoCommandList->push(command);
+
+	if(_searchState == true) {
+		search(_searchTerm);
+	}
+	sort();
+	display();
+
 
 	//delete parser;
 	//delete commandPackage;
 }
 
-void Logic::executeSearchCommand(string command, string searchTerm) {
-	Parser* parser = new Parser(command);
-	parser->parse();
-	CommandPackage* commandPackage = parser->getCommandPackage();
-	COMMAND_TYPE commandType = commandPackage->getCommandType();
-
-	switch(commandType) {
-	case DELETE:
-		del(commandPackage->getIndex(), _searchTaskList);
-		break;
-	case EDIT:	
-		edit(commandPackage->getIndex(), commandPackage->getTask(), _searchTaskList);
-		break;
-	case CLEAR:
-		clear(_searchTaskList, searchTerm);
-		break;
-	case UNDO:
-		undo();
-		break;
-	case EXIT:
-		break;
-	default:
-		_UI->printNotificationInvalidCommand();
-		break;
-	}
-
-	delete parser;
-	//delete commandPackage;
-}
-
-void Logic::add(Task* task) {
-	if(task == NULL) {
-		_UI->printNotificationInvalidAdd();
+void Logic::display() {
+	if(_searchState == true) {
+//	_UI->printSearchList(_taskList, getCurrentDate(), _settings->getViewType(), _searchTerm);	
 		return;
 	}
+	_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType());	
+}
 
-	saveLastChange();
+void Logic::search(string searchTerm) {
+	transferBackSearchTasks();
 
-	_taskList->push_back(task);
-	_UI->printNotificationAdd(task); //some error here (parser + UI issue)
+	for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
+		if(!foundInTask(*iter, searchTerm)) {
+			_tempTaskList->push_back(*iter);
+			_taskList->erase(iter);
+		}                                                                                                                                                                            
+	}
+	_searchTerm = searchTerm;
+	_searchState = true;
+}
 
+void Logic::endSearch() {
+	transferBackSearchTasks();
+	_searchState = false;
 	sort();
 	display();
-}
-
-void Logic::display(){
-	_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType()); 
-    //error due to logic gave UI invalid task list + current date
-    /*
-int i = 1;
- for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
-		cout << i++ << ". "
-		<< (*iter)->getName() << " "
-		<< (*iter)->getDate1() << " "
-		<< (*iter)->getDate2() << " "
-		<< (*iter)->getTime1() << " "
-		<< (*iter)->getTime2() << " "
-		<< (*iter)->getLocation() << endl;
-	}
-    */
-}
-
-void Logic::displaySearchList(string searchTerm) {
-//	_UI->printSearchList(_searchTaskList, searchTerm);
-}
-
-void Logic::del(int index, list<Task*>* taskList) {
-	if(outOfRange(index, taskList)) {
-		_UI->printNotificationInvalidDeletion();
-		return;
-	}
-
-	saveLastChange();
-
-	taskList->erase(indexToListIter(index, taskList));
-
-	display();
-}
-void Logic::edit(int index, Task* task, list<Task*>* taskList) {
-	string name = task->getName();
-	int date1 = task->getDate1();
-	int date2 = task->getDate2();
-	int time1 = task->getTime1();
-	int time2 = task->getTime2();
-	string location = task->getLocation();
-
-	saveLastChange();
-
-	list<Task*>::iterator iter = indexToListIter(index, taskList);
-
-	if(!name.empty()) {
-		(*iter)->setName(name);
-	}
-	if(date1 != 0) {
-		(*iter)->setDate1(date1);
-	}
-	if(date2 != 0) {
-		(*iter)->setDate2(date2);
-	}
-	if(time1 != 0) {
-		(*iter)->setTime1(time1);
-	}
-	if(time2 != 0) {
-		(*iter)->setTime2(time2);
-	}
-	if(!location.empty()) {
-		(*iter)->setLocation(location);
-	}
-
-	sort();
-	display();
-}
-
-void Logic::clear(list<Task*>* taskList, string searchTerm) {
-	saveLastChange();
-
-	taskList->clear();
-
-	if(taskList == _taskList) {
-		_UI->printNotificationClear();
-	}else {
-		_UI->printNotificationClearSearch(searchTerm);	
-	}
 }
 
 void Logic::undo() {
-	list<Task*>* tempPtr;
-
-	tempPtr = _taskList;
-	_taskList = _prevTaskList;
-	_prevTaskList = tempPtr;
-
-	tempPtr = _searchTaskList;
-	_searchTaskList = _prevSearchTaskList;
-	_prevSearchTaskList = tempPtr;
-
+	_undoCommandList->top()->undo();
+	_undoCommandList->pop();
+	sort();
 	display();
 }
 
 void Logic::sort() {
-//	_taskList->sort(dateSort);
-//	_taskList->sort(timeSort);
-}
-
-void Logic::search(string searchTerm) {
-/*	string command;
-
-	for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
-		if(foundInTask(*iter, searchTerm)) {
-			_searchTaskList->push_back(*iter);
-			_taskList->erase(iter);
-		}                                                                                                                                                                            
-	}
-
-	displaySearchList(searchTerm);
-	executeSearchCommandsUntilExitCommand(searchTerm);
-
-	transferBackSearchTasks();
-
-	sort();
-	display();*/
-}
-
-void Logic::changeViewType(int newViewType) {
-	_settings->changeViewType(newViewType);
-	_UI->printNotificationViewTypeChange(newViewType);
-}
-
-void Logic::changeSaveDirectory(string newSaveDirectory) {
-	if(isNotValidDirectory(newSaveDirectory)) {
-		_UI->printNotificationInvalidSaveFileDirectory();
-		return;
-	}
-
-	_settings->changeSaveDirectory(newSaveDirectory);
-
-	_UI->printNotificationChangeSaveFileDirectory(newSaveDirectory);
+	_taskList->sort([](Task* a, Task* b) {return a->getDate1() < b->getDate1();});
+	_taskList->sort([](Task* a, Task* b) {return a->getTime1() < b->getTime2();});
 }
 
 void Logic::saveToTxtFile() {
 //	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
-}
-
-void Logic::saveLastChange() {
-//	*_prevTaskList = *_taskList;
-//	*_prevSearchTaskList = *_searchTaskList;
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
@@ -310,26 +169,44 @@ vector<string> Logic::taskListToVector() {
 	return updatedData;
 }
 
-bool Logic::outOfRange(int index, list<Task*>* taskList) {
-	if(index > taskList->size() || index < 1) {
-		return true;
-	}
-	return false;
-}
-
-bool Logic::dateSort(Task* a, Task* b) {
-	return a->getDate1() < b->getDate1();
-}
-
-bool Logic::timeSort(Task* a, Task* b) {
-	return a->getTime1() < b->getTime2();
-}
-
 bool Logic::foundInTask(Task* task, string searchTerm) {
-	size_t found = (task->getName()).find(searchTerm);
+	string name = task->getName();
+	string location = task->getLocation();
+	string date1 = integerToString(task->getDate1());
+	string date2 = integerToString(task->getDate2());
+	string time1 = integerToString(task->getTime1());
+	string time2 = integerToString(task->getTime2());
+
+	size_t found = name.find(searchTerm);
 	if(found != string::npos) {
 		return true;
 	}
+
+	found = location.find(searchTerm);
+	if(found != string::npos) {
+		return true;
+	}
+
+	found = date1.find(searchTerm);
+	if(found != string::npos) {
+		return true;
+	}
+
+	found = date2.find(searchTerm);
+	if(found != string::npos) {
+		return true;
+	}
+
+	found = time1.find(searchTerm);
+	if(found != string::npos) {
+		return true;
+	}
+
+	found = time2.find(searchTerm);
+	if(found != string::npos) {
+		return true;
+	}
+
 	return false;
 }
 
@@ -375,19 +252,9 @@ int Logic::getCurrentDate() {
 	return date;
 }
 
-list<Task*>::iterator Logic::indexToListIter(int index, list<Task*>* taskList) {
-	list<Task*>::iterator iter = taskList->begin();
-	
-	for(int i = 1; i < index; i++) {
-		iter++;
-	}
-
-	return iter;	
-}
-
 void Logic::transferBackSearchTasks() {
-	while(!_searchTaskList->empty()) {
-	_taskList->push_back(_searchTaskList->front());
-	_searchTaskList->pop_front();
+	while(!_tempTaskList->empty()) {
+	_taskList->push_back(_tempTaskList->front());
+	_tempTaskList->pop_front();
 	}
 }
