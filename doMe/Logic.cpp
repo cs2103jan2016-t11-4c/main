@@ -6,14 +6,14 @@ const string Logic::LIST_DIVIDER = "__________";
 Logic::Logic() {
 	_settings = new Settings();
 	_UI = new UserInterface();
-//	_storage = new Storage();
+	//	_storage = new Storage();
 	_taskList = new list<Task*>;
 	_tempTaskList = new list<Task*>;
 	_undoCommandList = new stack<Command*>;
 	_searchState = false;
 }
 void Logic::setEnvironment() {
-//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
+	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
 	_settings->loadSettings();
 }
 void Logic::displayWelcomeMessage() {
@@ -66,14 +66,14 @@ void Logic::executeCommand(string commandText) {
 	case SEARCH:
 		search(commandPackage->getDescription());
 		return;
-//	case ENDSEARCH:
-//		endSearch();
-//		return;
+		//	case ENDSEARCH:
+		//		endSearch();
+		//		return;
 	case VIEWTYPE:
-//		command = new Command_ViewType(commandPackage->getIndex());
+		//		command = new Command_ViewType(commandPackage->getIndex());
 		return;
 	case SAVEDIRECTORY:
-//		command = new Command_SaveDirectory(commandPackage->getDescription());
+		//		command = new Command_SaveDirectory(commandPackage->getDescription());
 		return;
 	case EXIT:
 		return;
@@ -98,7 +98,7 @@ void Logic::executeCommand(string commandText) {
 
 void Logic::display() {
 	if(_searchState == true) {
-//	_UI->printSearchList(_taskList, getCurrentDate(), _settings->getViewType(), _searchTerm);	
+		//	_UI->printSearchList(_taskList, getCurrentDate(), _settings->getViewType(), _searchTerm);	
 		return;
 	}
 	_UI->printTaskList(_taskList, getCurrentDate(), _settings->getViewType());	
@@ -125,6 +125,11 @@ void Logic::endSearch() {
 }
 
 void Logic::undo() {
+	if(_undoCommandList->empty()) {
+		//		_UI->printNotificationInvalidUndo();
+		cout << "Cannot undo anymore!" <<endl;
+		return;
+	}
 	_undoCommandList->top()->undo();
 	_undoCommandList->pop();
 	sort();
@@ -137,7 +142,7 @@ void Logic::sort() {
 }
 
 void Logic::saveToTxtFile() {
-//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+	//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
@@ -254,7 +259,7 @@ int Logic::getCurrentDate() {
 
 void Logic::transferBackSearchTasks() {
 	while(!_tempTaskList->empty()) {
-	_taskList->push_back(_tempTaskList->front());
-	_tempTaskList->pop_front();
+		_taskList->push_back(_tempTaskList->front());
+		_tempTaskList->pop_front();
 	}
 }
