@@ -32,6 +32,11 @@ void Logic::executeCommandsUntilExitCommand() {
 }
 
 void Logic::executeCommand(string commandText) {
+	if(commandText == "") {
+		display();
+		return;
+	}
+
 	Parser* parser = new Parser(commandText);
 	parser->parse();
 	CommandPackage* commandPackage = parser->getCommandPackage();
@@ -70,7 +75,7 @@ void Logic::executeCommand(string commandText) {
 		//		endSearch();
 		//		return;
 	case VIEWTYPE:
-		//		command = new Command_ViewType(commandPackage->getIndex());
+		command = new Command_ViewType(_settings, commandPackage->getIndex());
 		return;
 	case SAVEDIRECTORY:
 		//		command = new Command_SaveDirectory(commandPackage->getDescription());
