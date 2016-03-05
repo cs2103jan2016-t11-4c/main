@@ -4,10 +4,9 @@
 #include <list>
 #include <stack>
 #include <algorithm>
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <sstream>
 #include <ctime>
+#include <assert.h>
 #include "Task.h"
 #include "Parser.h"
 #include "Storage.h"
@@ -20,6 +19,7 @@
 #include "Command_Edit.h"
 #include "Command_Clear.h"
 #include "Command_ViewType.h"
+#include "Command_SaveDirectory.h"
 using namespace std;
 
 class Logic { 
@@ -43,14 +43,16 @@ private:
 
 	void sort();
 	void display();
+	void displaySuccessfulCommandNotification(CommandPackage* commandPackage);
+	void displayInvalidCommandNotification(CommandPackage* commandPackage);
+
 	void saveToTxtFile();
 	void vectorToTaskList(vector<string>& existingData);
 	vector<string> taskListToVector();
-	bool foundInTask(Task* task, string searchTerm);
-	bool isNotValidDirectory(string newSaveDirectory);
 	int stringToInteger(string text);
 	string integerToString(int integer);
 	int getCurrentDate();
+	bool foundInTask(Task* task, string searchTerm);
 	void transferBackSearchTasks();
 
 public:

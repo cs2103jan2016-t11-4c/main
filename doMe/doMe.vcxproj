@@ -22,6 +22,7 @@
     <ClCompile Include="Command_Edit.cpp" />
     <ClCompile Include="Command_Clear.cpp" />
     <ClCompile Include="Command_ViewType.cpp" />
+    <ClCompile Include="Command_SaveDirectory.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
@@ -37,6 +38,7 @@
     <ClInclude Include="Command_Edit.h" />
     <ClInclude Include="Command_Clear.h" />
     <ClInclude Include="Command_ViewType.h" />
+    <ClInclude Include="Command_SaveDirectory.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Settings.h" />

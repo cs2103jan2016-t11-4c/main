@@ -1,15 +1,16 @@
 #include "Command_Clear.h"
 
-Command_Clear::Command_Clear(list<Task*>* taskList, UserInterface* UI)
-:Command(taskList, UI) {
+Command_Clear::Command_Clear(list<Task*>* taskList)
+:Command(taskList) {
 	_oldTaskList = *taskList;
 }
 
-void Command_Clear::execute() {
+int Command_Clear::execute() {
 	_taskList->clear();
-	_UI->printNotificationClear();
+	return 1;
 }
 
-void Command_Clear::undo(){
+int Command_Clear::undo(){
 	*_taskList = _oldTaskList;
+	return 1;
 }

@@ -1,6 +1,5 @@
 #include "Command.h"
 
-Command::Command(list<Task*>* taskList, UserInterface* UI) {
+Command::Command(list<Task*>* taskList) {
 	_taskList = taskList;
-	_UI = UI;
 }

@@ -1,4 +1,3 @@
-#pragma once
 #include <list>
 #include "Task.h"
 #include "Command.h"
@@ -23,9 +22,10 @@ private:
 	int _oldTime2;
 	string _oldLocation;
 
+	bool outOfRange();
 	list<Task*>::iterator indexToListIter();
 public:
-	Command_Edit(list<Task*>* taskList, UserInterface* UI, int index, Task* task);
-	void execute();
-	void undo();
+	Command_Edit(list<Task*>* taskList, int index, Task* task);
+	int execute();
+	int undo();
 };

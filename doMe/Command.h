@@ -8,9 +8,8 @@ using namespace std;
 class Command {
 protected:
 	list<Task*>* _taskList;
-	UserInterface* _UI;
 public:
-	Command(list<Task*>* taskList, UserInterface* UI);
-	virtual void execute() = 0;
-	virtual void undo() = 0;
+	Command(list<Task*>* taskList);
+	virtual int execute() = 0;
+	virtual int undo() = 0;
 };

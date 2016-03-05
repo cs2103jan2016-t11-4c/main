@@ -1,4 +1,3 @@
-#pragma once
 #include <list>
 #include "Task.h"
 #include "Command.h"
@@ -13,7 +12,7 @@ private:
 	bool outOfRange();
 	list<Task*>::iterator indexToListIter();
 public:
-	Command_Delete(list<Task*>* taskList, UserInterface* UI, int index);
-	void execute();
-	void undo();
+	Command_Delete(list<Task*>* taskList, int index);
+	int execute();
+	int undo();
 };

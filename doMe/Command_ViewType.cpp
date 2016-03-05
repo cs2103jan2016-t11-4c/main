@@ -1,18 +1,18 @@
 #include "Command_ViewType.h"
 
 Command_ViewType::Command_ViewType(Settings* settings, int newViewType)
-:Command(NULL, NULL) {
+:Command(NULL) {
 	_settings = settings;
 	_oldViewType = _settings->getViewType();
 	_newViewType = newViewType;
 }
 
-void Command_ViewType::execute() {
+int Command_ViewType::execute() {
 	_settings->changeViewType(_newViewType);
-	_UI->printNotificationViewTypeChange(_newViewType);
+	return 1;
 }
 
-void Command_ViewType::undo(){
+int Command_ViewType::undo(){
 	_settings->changeViewType(_oldViewType);
-	_UI->printNotificationViewTypeChange(_oldViewType);	
+	return 1;	
 }

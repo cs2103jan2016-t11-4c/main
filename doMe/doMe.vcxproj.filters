@@ -35,46 +35,28 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
-      <Filter>Command</Filter>
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
     <ClCompile Include="Command_Add.cpp">
-      <Filter>Command</Filter>
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
     <ClCompile Include="Command_Clear.cpp">
-      <Filter>Command</Filter>
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
     <ClCompile Include="Command_Delete.cpp">
-      <Filter>Command</Filter>
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
     <ClCompile Include="Command_Edit.cpp">
-      <Filter>Command</Filter>
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
     <ClCompile Include="Command_ViewType.cpp">
-      <Filter>Command</Filter>
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_SaveDirectory.cpp">
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Command.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Add.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Clear.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Delete.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Edit.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_ViewType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPackage.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Logic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -102,6 +84,30 @@
     <ClInclude Include="ViewType1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="CommandPackage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Add.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Clear.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Delete.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Edit.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_ViewType.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_SaveDirectory.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -113,8 +119,11 @@
     <Filter Include="ViewType">
       <UniqueIdentifier>{8656ac5c-44d2-4cde-9882-036442762e22}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Command">
-      <UniqueIdentifier>{c7e094a5-09ab-4047-901f-f8cc4086ec27}</UniqueIdentifier>
+    <Filter Include="Header Files\Command Classes">
+      <UniqueIdentifier>{f45e0532-d8dd-4543-b8af-cae3a72d560a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Command Classes">
+      <UniqueIdentifier>{26fc688c-fc1e-45f3-9c43-8c629bc5debd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

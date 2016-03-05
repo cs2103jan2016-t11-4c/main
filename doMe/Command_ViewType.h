@@ -12,6 +12,6 @@ private:
 	Settings* _settings;
 public:
 	Command_ViewType(Settings* settings, int newViewType);
-	void execute();
-	void undo();
+	int execute();
+	int undo();
 };

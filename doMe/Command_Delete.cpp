@@ -1,23 +1,25 @@
 #include "Command_Delete.h"
 
-Command_Delete::Command_Delete(list<Task*>* taskList, UserInterface* UI, int index)
-:Command(taskList, UI) {
+Command_Delete::Command_Delete(list<Task*>* taskList, int index)
+:Command(taskList) {
 	_index = index;
 }
 
-void Command_Delete::execute() {
+int Command_Delete::execute() {
 	if(outOfRange()) {
-		_UI->printNotificationInvalidDeletion();
-		return;
+		return 0;
 	}
+
 	list<Task*>::iterator deleteIter = indexToListIter();
 	_task = *deleteIter;
 
-	_taskList->erase(deleteIter);					
+	_taskList->erase(deleteIter);
+	return 1;					
 }
 
-void Command_Delete::undo() {
+int Command_Delete::undo() {
 	_taskList->push_back(_task);
+	return 1;
 }
 
 bool Command_Delete::outOfRange() {

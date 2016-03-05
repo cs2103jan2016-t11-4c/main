@@ -1,7 +1,7 @@
 #include "Command_Edit.h"
 
-Command_Edit::Command_Edit(list<Task*>* taskList, UserInterface* UI, int index, Task* oldTask)
-:Command(taskList, UI) {
+Command_Edit::Command_Edit(list<Task*>* taskList, int index, Task* oldTask)
+:Command(taskList) {
 	_index = index;
 	_newName = oldTask->getName();
 	_newDate1 = oldTask->getDate1();
@@ -11,7 +11,11 @@ Command_Edit::Command_Edit(list<Task*>* taskList, UserInterface* UI, int index, 
 	_newLocation = oldTask->getLocation();
 }
 
-void Command_Edit::execute() {
+int Command_Edit::execute() {
+	if(outOfRange()) {
+		return 0;
+	}
+
 	list<Task*>::iterator editIter = indexToListIter();
 
 	_task = *editIter;
@@ -40,15 +44,24 @@ void Command_Edit::execute() {
 		_oldLocation = _task->getLocation();
 		_task->setLocation(_newLocation);
 	}
+	return 1;
 }
 
-void Command_Edit::undo() {
+int Command_Edit::undo() {
 	_task->setName(_oldName);
 	_task->setTime1(_oldTime1);
 	_task->setTime2(_oldTime2);
 	_task->setDate1(_oldDate1);
 	_task->setDate2(_oldDate2);
 	_task->setLocation(_oldLocation);
+	return 1;
+}
+
+bool Command_Edit::outOfRange() {
+	if(_index > _taskList->size() || _index < 1) {
+		return true;
+	}
+	return false;
 }
 
 list<Task*>::iterator Command_Edit::indexToListIter() {
