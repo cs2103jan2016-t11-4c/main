@@ -39,15 +39,12 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
     "exit"
 }; 
 
-
+/*
 UserInterface::UserInterface(void) {
-    _textFileName = DEFAULT_TEXT_FILE_NAME;
-    _defaultViewType = -1;
 }
-
-UserInterface::UserInterface(string textFileName, int defaultViewType) {
-    _textFileName = textFileName;
-    _defaultViewType = defaultViewType;
+*/
+UserInterface::UserInterface(list<Task*> *taskList) {
+    _taskList = taskList;
 }
 
 UserInterface::~UserInterface(void) {
@@ -86,22 +83,22 @@ void UserInterface::printNotificationWelcome() {
     showToUserWithMessage(MESSAGE_WELCOME);
 }
 
-void UserInterface::printNotificationAdd(Task* task) {
+void UserInterface::printNotificationAdd(Task* task, int viewType, string textFileName) {
     string taskString;
-    taskString = getTaskString(task,_defaultViewType);
-    sprintf_s(buffer, MESSAGE_ADD.c_str(),taskString.c_str(), _textFileName.c_str());
+    taskString = getTaskString(task,viewType);
+    sprintf_s(buffer, MESSAGE_ADD.c_str(),taskString.c_str(), textFileName.c_str());
     showToUserWithMessage(buffer);
 }
 
-void UserInterface::printNotificationDelete(Task* task) {
+void UserInterface::printNotificationDelete(Task* task, int viewType, string textFileName) {
     string taskString;
-    taskString = getTaskString(task,_defaultViewType);
-    sprintf_s(buffer, MESSAGE_DELETE.c_str(),taskString.c_str(), _textFileName.c_str());
+    taskString = getTaskString(task,viewType);
+    sprintf_s(buffer, MESSAGE_DELETE.c_str(),taskString.c_str(), textFileName.c_str());
     showToUserWithMessage(buffer);
 }
 
-void UserInterface::printNotificationClear() {
-    sprintf_s(buffer, MESSAGE_CLEAR.c_str(), _textFileName.c_str());
+void UserInterface::printNotificationClear(string textFileName) {
+    sprintf_s(buffer, MESSAGE_CLEAR.c_str(), textFileName.c_str());
     showToUserWithMessage(buffer);
 }
 
@@ -128,8 +125,8 @@ void UserInterface::printNotificationInvalidCommand() {
     showToUserWithMessage(ERROR_INVALID_COMMAND);
 }
 
-void UserInterface::printNotificationEmpty() {
-    sprintf_s(buffer, MESSAGE_EMPTY.c_str(), _textFileName.c_str());
+void UserInterface::printNotificationEmpty(string textFileName) {
+    sprintf_s(buffer, MESSAGE_EMPTY.c_str(), textFileName.c_str());
     showToUserWithMessage(buffer);
 }
 
@@ -151,16 +148,16 @@ void UserInterface::printNotificationEmptySaveFileDirectory() {
 
 /****************************************************************/
 
-void UserInterface::printSearchList(list<Task*>* taskList, string searchTerm) {
+void UserInterface::printSearchList(string searchTerm, int viewType) {
     printNotificationSearchTerm(searchTerm);
     ViewType *taskListType;
 
-    switch(_defaultViewType) {
+    switch(viewType) {
     case -1:
-        taskListType = new ViewType(taskList);
+        taskListType = new ViewType(_taskList);
         break;
     case 0:
-        taskListType = new ViewType0(taskList);
+        taskListType = new ViewType0(_taskList);
         break;
     default:
         break;
@@ -169,20 +166,18 @@ void UserInterface::printSearchList(list<Task*>* taskList, string searchTerm) {
     delete taskListType;
 }
 
-
-
-void UserInterface::printTaskList(list<Task*> *taskList, int currentDate ,int viewType) {
+void UserInterface::printTaskList(int currentDate ,int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
     case -1:
-        taskListType = new ViewType(taskList , currentDate);
+        taskListType = new ViewType(_taskList , currentDate);
         break;
     case 0:
-        taskListType = new ViewType0(taskList , currentDate);
+        taskListType = new ViewType0(_taskList , currentDate);
         break;
     case 1:
-        taskListType = new ViewType1(taskList , currentDate);
+        taskListType = new ViewType1(_taskList , currentDate);
         break;
     default:
         break;
@@ -208,14 +203,6 @@ string UserInterface::getTaskString(Task* task, int viewType) {
     }
 
     return taskListType->getTaskString(task);
-}
-
-void UserInterface::updateTextFileName(string textFileName) {
-    _textFileName = textFileName;
-}
-
-void UserInterface::changeViewType(int newViewType) {
-    _defaultViewType = newViewType;
 }
 
 /****************************************************************/

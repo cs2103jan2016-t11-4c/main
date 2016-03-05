@@ -37,10 +37,10 @@ public:
     virtual string getComplimentaryString(Task* individualTask);
 
     virtual string getTimeTaskString(int time);
-    string getDateTaskString(int date);
+    virtual string getDateTaskString(int date);
 
     string getDay(int date);
-    string getMonth(int date);
+    virtual string getMonth(int date);
     string getYear(int date);
     string integerToString(int integer);
     string timeToString(string time);

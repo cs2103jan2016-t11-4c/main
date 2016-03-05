@@ -1,100 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Command Classes">
-      <UniqueIdentifier>{98a7eee8-7e70-431a-974b-5eb2dc0f603c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ViewType Classes">
-      <UniqueIdentifier>{35e51aab-dfac-4c56-bdc3-8abfd983e7c6}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UserInterface.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Task.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Storage.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="CommandPackage.cpp">
+    <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command.cpp">
-      <Filter>Command Classes</Filter>
+    <ClCompile Include="Settings.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command_Add.cpp">
-      <Filter>Command Classes</Filter>
+    <ClCompile Include="Storage.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command_Delete.cpp">
-      <Filter>Command Classes</Filter>
+    <ClCompile Include="Task.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Command_Edit.cpp">
-      <Filter>Command Classes</Filter>
-    </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="ViewType1.cpp">
-      <Filter>ViewType Classes</Filter>
+    <ClCompile Include="UserInterface.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ViewType.cpp">
-      <Filter>ViewType Classes</Filter>
+      <Filter>ViewType</Filter>
     </ClCompile>
     <ClCompile Include="ViewType0.cpp">
-      <Filter>ViewType Classes</Filter>
-=======
+      <Filter>ViewType</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewType1.cpp">
+      <Filter>ViewType</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandPackage.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Add.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
     <ClCompile Include="Command_Clear.cpp">
-      <Filter>Command Classes</Filter>
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Delete.cpp">
+      <Filter>Command</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Edit.cpp">
+      <Filter>Command</Filter>
     </ClCompile>
     <ClCompile Include="Command_ViewType.cpp">
-      <Filter>Command Classes</Filter>
->>>>>>> d284688e74b07befce621ba279194148d736a51b
+      <Filter>Command</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="UserInterface.h">
+    <ClInclude Include="Command.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Settings.h">
+    <ClInclude Include="Command_Add.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
+    <ClInclude Include="Command_Clear.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Logic.h">
+    <ClInclude Include="Command_Delete.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Storage.h">
+    <ClInclude Include="Command_Edit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_ViewType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CommandPackage.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Logic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Storage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="UserInterface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewType.h">
@@ -106,23 +102,19 @@
     <ClInclude Include="ViewType1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Command.h">
-      <Filter>Command Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Add.h">
-      <Filter>Command Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Delete.h">
-      <Filter>Command Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Edit.h">
-      <Filter>Command Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Clear.h">
-      <Filter>Command Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_ViewType.h">
-      <Filter>Command Classes</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{87d9b1ab-257a-406e-8fb6-b33db3a87de6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{c9e732ff-ef34-4290-acff-7775a0ee3ca9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ViewType">
+      <UniqueIdentifier>{8656ac5c-44d2-4cde-9882-036442762e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Command">
+      <UniqueIdentifier>{c7e094a5-09ab-4047-901f-f8cc4086ec27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

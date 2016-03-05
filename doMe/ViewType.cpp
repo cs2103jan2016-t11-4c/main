@@ -25,6 +25,8 @@ ViewType::ViewType(list<Task*> *taskList, int currentDate) {
 ViewType::~ViewType(void) {
 }
 
+/****************************************************************/
+
 vector<string> ViewType::createDisplayList() {
     if((*_taskList).empty()) {
         _displayList.push_back(MESSAGE_EMPTY_LIST);
@@ -63,7 +65,6 @@ vector<string> ViewType::createSearchList() {
     return _displayList;
 }
 
-
 string ViewType::createTaskString(Task* individualTask, int index) {
     string taskString;
     taskString = getTaskString(individualTask);
@@ -89,6 +90,8 @@ string ViewType::getTaskString(Task* individualTask) {
 
     return taskString;
 }
+
+/****************************************************************/
 
 string ViewType::formatTaskString(string name , string date1 , string date2 , string time1 , string time2 , string location) {
     string taskString;
@@ -136,6 +139,8 @@ string ViewType::formateDateString(string s1, string s2) {
     }
 }
 
+/****************************************************************/
+
 string ViewType::getDateTaskString(int date) {
     string dateString;
     string day;
@@ -169,6 +174,8 @@ string ViewType::getTimeTaskString(int time) {
     }
 }
 
+/****************************************************************/
+
 string ViewType::integerToString(int integer) {
     ostringstream oss;
     oss << integer;  
@@ -185,6 +192,8 @@ string ViewType::timeToString(string time) {
     }
     return timeString;
 }
+
+/****************************************************************/
 
 string ViewType::getDay(int date) {
     ostringstream oss;

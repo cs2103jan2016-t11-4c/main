@@ -15,14 +15,47 @@
 using namespace std;
 
 class UserInterface {
+
+public:
+    //UserInterface(void);
+    UserInterface(list<Task*> *taskList); //.....................................................change//
+    ~UserInterface(void);
+
+    //prompts
+    void printPromptFirstTimeUser(); 
+    void printPromptFirstTimeUserDirectory(); 
+    void printPromptCommand();	
+
+    //notification
+    void printNotificationWelcome();
+    void printPromptHelp();
+    void printNotificationAdd(Task* task, int viewType, string textFileName); //...................change//
+    void printNotificationDelete(Task* task, int viewType, string textFileName); //...................change//
+    void printNotificationClear(string textFileName); //............................................change//
+    void printNotificationViewTypeChange(int newViewType);
+    void printNotificationEmpty(string textFileName); //............................................change//
+    void printNotificationChangeSaveFileDirectory(string newDirectory);
+    void printNotificationEmptySaveFileDirectory();
+    void printNotificationSearchTerm(string searchTerm);
+    void printNotificationClearSearch(string searchTerm);
+
+    //error
+    void printNotificationInvalidCommand();
+    void printNotificationInvalidAdd();
+    void printNotificationInvalidDeletion();
+    void printNotificationInvalidSaveFileDirectory();
+
+    //main printing
+    void printTaskList(int currentDate ,int viewType); //...................................change//
+    void printSearchList(string searchTerm, int viewType); //...................................change// 
+
 #ifndef TESTMODE 
-public: 
+private: 
 #else 
 public: 
 #endif
 
-    int _defaultViewType;
-    string _textFileName;
+    list<Task*> *_taskList;
     char buffer[255];
 
     static const string DEFAULT_TEXT_FILE_NAME;
@@ -63,45 +96,6 @@ public:
     vector<string> createDisplayBox(vector<string> &displayList);
     void printDisplayList(vector<string> displayList); 
     string getTaskString(Task* task, int viewType); //incomplete
-
-public:
-    UserInterface(void);
-    UserInterface(string textFileName, int defaultViewType);
-    ~UserInterface(void);
-
-    //getter
-    void updateTextFileName(string textFileName);
-    void changeViewType(int newViewType);
-
-    //prompts
-    void printPromptFirstTimeUser(); 
-    void printPromptFirstTimeUserDirectory(); 
-    void printPromptCommand();	
-
-    //notification
-    void printNotificationWelcome();
-    void printPromptHelp();
-    void printNotificationAdd(Task* task); 
-    void printNotificationDelete(Task* task);
-    void printNotificationClear();
-    void printNotificationViewTypeChange(int newViewType);
-    void printNotificationEmpty();
-    void printNotificationChangeSaveFileDirectory(string newDirectory);
-    void printNotificationEmptySaveFileDirectory();
-    void printNotificationSearchTerm(string searchTerm);
-    void printNotificationClearSearch(string searchTerm);
-
-    //error
-    void printNotificationInvalidCommand();
-    void printNotificationInvalidAdd();
-    void printNotificationInvalidDeletion();
-    void printNotificationInvalidSaveFileDirectory();
-
-    //main printing
-    void printTaskList(list<Task*> *taskList, int currentDate ,int viewType); //incomplete   
-    void printSearchList(list<Task*>* taskList, string searchTerm); //incomplete   
-
-
 
 };
 
