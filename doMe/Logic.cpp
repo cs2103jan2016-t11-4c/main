@@ -15,14 +15,13 @@ Logic::Logic() {
 void Logic::setEnvironment() {
 	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
 	_settings->loadSettings();
+    display(); //initial display
 }
 void Logic::displayWelcomeMessage() {
 	_UI->printNotificationWelcome();
 }
 void Logic::executeCommandsUntilExitCommand() {
 	string command;
-
-	display();
 
 	do {
 		_UI->printPromptCommand();

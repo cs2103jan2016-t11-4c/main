@@ -4,18 +4,47 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
-namespace UnitTest {		
-    TEST_CLASS(SettingTest) {
+namespace UnitTest {
+    TEST_CLASS(CommandClass) {
 public:
-	/*
-	TEST_METHOD(ParserTest) {
-		CommandPackage expectedAddObject(ADD, Task("fly a plane",0,11092001,-1,-1),0,"");
-		Parser sut("fly a plane 11092001");
+        TEST_METHOD(CommandAdd_Test) {
+            
+            list<Task*> *taskList = new list<Task*>;
+            Task* individualTask;
+            
+            individualTask = new Task("read book" , 20160819 , 20160821 , 1300 , 1600 , "home");
+            
+            Command_Add command(taskList, individualTask);
+            
+            command.execute();
 
-		Assert::AreEqual(sut.parse(),&expectedAddObject);
-	}
-	*/
-    TEST_METHOD(SettingsTextFileNameMakerTest) {
+            list<Task*>::iterator listIter = (*taskList).begin();
+            
+            Assert::AreEqual(individualTask->getName(), (*listIter)->getName());
+            Assert::AreEqual(individualTask->getLocation(), (*listIter)->getLocation());
+            Assert::AreEqual(individualTask->getDate1(), (*listIter)->getDate1());
+            Assert::AreEqual(individualTask->getDate2(), (*listIter)->getDate2());
+            Assert::AreEqual(individualTask->getTime1(), (*listIter)->getTime1());
+            Assert::AreEqual(individualTask->getTime2(), (*listIter)->getTime2());
+
+    }
+    };
+
+    TEST_CLASS(ParserCLASS) {
+public:
+    TEST_METHOD(Parser_Test) {
+        /*
+    CommandPackage expectedAddObject(ADD, Task("fly a plane",0,11092001,-1,-1),0,"");
+    Parser sut("fly a plane 11092001");
+
+    Assert::AreEqual(sut.parse(),&expectedAddObject);
+    */
+    }
+    };
+
+    TEST_CLASS(SettingCLASS) {
+public:
+    TEST_METHOD(Settings_TextFileNameMakerTest) {
         Settings Settings;
         string input = "text";
         string actualTexFileName;
@@ -28,7 +57,7 @@ public:
         Assert::AreEqual(expectedTextFileName, Settings._textFileName);
     }
 
-    TEST_METHOD(SettingsChangeDirectoryTest) {
+    TEST_METHOD(Settings_ChangeDirectoryTest) {
         Settings Settings;
         string input = "C:/Users/PeiChangHong/Documents/NUS Modules 14 I 15/Semester 4/CS2103/Core";
         string inputName = "mytextfile";
@@ -46,7 +75,7 @@ public:
 
     }
 
-    TEST_METHOD(SettingsGetDirectoryTest) {
+    TEST_METHOD(Settings_GetDirectoryTest) {
         Settings Settings;
         Settings._textFileName = "text.txt";
         Settings._saveDirectory = "C:/my documents/";
@@ -55,7 +84,7 @@ public:
         Assert::AreEqual(expectedDirectory, Settings.getSaveDirectory());
     }
 
-    TEST_METHOD(SettingsLoadSaveTest) {
+    TEST_METHOD(Settings_LoadSaveTest) {
         Settings Setting;
         Settings testSetting;
 
@@ -86,7 +115,7 @@ public:
 
     TEST_CLASS(UICLASS) {
 public:
-    TEST_METHOD(UIGetTaskStringTypeDefault) {
+    TEST_METHOD(UI_GetTaskStringTypeDefault) {
         int i = 0;
         string actualString;
         list<Task*> ls;
@@ -106,7 +135,7 @@ public:
         ls.push_back(new Task("read book" , -1 , 20161023 , 100 , 200 , ""));
         ls.push_back(new Task("read book" , -1 , -1 , -1 , -1 , "college"));
         UserInterface UI(&ls);
-        
+
         list<Task*>::iterator listIter = ls.begin();
 
         while(listIter != ls.end()) {
@@ -118,7 +147,7 @@ public:
 
     }
 
-    TEST_METHOD(UIGetTaskStringType0) {
+    TEST_METHOD(UI_GetTaskStringType0) {
         int i = 0;
         string actualString;
         list<Task*> ls;
@@ -155,7 +184,7 @@ public:
 
     TEST_CLASS(ViewTypeCLASS) {
 public:
-    TEST_METHOD(ViewTypeCreateDisplayList) {
+    TEST_METHOD(ViewType_CreateDisplayList) {
         vector<string> actualDisplayList;
         int i = 0;
         ViewType testView;
@@ -189,7 +218,7 @@ public:
 
     }
 
-    TEST_METHOD(ViewTypeCreateSearchList) {
+    TEST_METHOD(ViewType_CreateSearchList) {
         vector<string> actualDisplayList;
         int i = 0;
         ViewType testView;
@@ -226,7 +255,7 @@ public:
 
     TEST_CLASS(ViewType0CLASS) {
 public:
-    TEST_METHOD(ViewType0CreateDisplayList) {
+    TEST_METHOD(ViewType0_CreateDisplayList) {
         vector<string> actualDisplayList;
         int i = 0;
         ViewType *testView;
@@ -263,7 +292,7 @@ public:
 
     }
 
-    TEST_METHOD(ViewType0CreateSearchList) {
+    TEST_METHOD(ViewType0_CreateSearchList) {
         vector<string> actualDisplayList;
         int i = 0;
         ViewType0 testView;
