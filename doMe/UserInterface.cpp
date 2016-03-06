@@ -4,7 +4,7 @@ const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 int UserInterface::WINDOWS_WIDTH = 80;
-int UserInterface::WINDOWS_LENGTH = 40; 
+int UserInterface::WINDOWS_LENGTH = 25; 
 
 const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
 const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
@@ -56,6 +56,31 @@ UserInterface::UserInterface(list<Task*> *taskList) {
 }
 
 UserInterface::~UserInterface(void) {
+}
+
+/****************************************************************/
+
+void UserInterface::printProgramWelcomePage() {
+    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), WINDOWS_WIDTH , WINDOWS_LENGTH);
+    system(buffer);
+    string space = "               ";
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << space; cout << "                   Welcome to" << endl; 
+    cout << space; cout << "      _         __  __                          " << endl;
+    cout << space; cout << "     | |       |  \\/  |                         " << endl;
+    cout << space; cout << "   __| |  ___  | \\  / |  ___     ___ __  __ ___ " << endl;
+    cout << space; cout << "  / _` | / _ \\ | |\\/| | / _ \\   / _ \\  \\/ // _ \\" << endl;
+    cout << space; cout << " | (_| || (_) || |  | ||  __/ _|  __/ >  <|  __/" << endl;
+    cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
+
+    cout << endl;
+    cout << space; cout << "           <Press Enter to continue>" << endl;
+    cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 }
 
 /****************************************************************/
@@ -219,7 +244,7 @@ void UserInterface::printTaskList(int currentDate ,int viewType) {
     default:
         break;
     }
-    
+
     printDisplayList(createDisplayBox(taskListType->createDisplayList()));
     delete taskListType;
 }
@@ -265,15 +290,15 @@ void UserInterface::showToUser(string message) {
 
 void UserInterface::showToUserMessageBox() {
     //if(_defaultViewType == 1) {
-        string messageBox;
-        setWindowsRowsColumns(0);
-        messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
-        messageBox.pop_back();
+    string messageBox;
+    setWindowsRowsColumns(0);
+    messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
+    messageBox.pop_back();
 
-        showToUser(messageBox);
-        /*
+    showToUser(messageBox);
+    /*
     } else {
-        showToUser(message);
+    showToUser(message);
     }
     */
 }
@@ -292,9 +317,9 @@ void UserInterface::setWindowsRowsColumns(int size) {
     WINDOWS_LENGTH = rows - 4;
 
     if(size > WINDOWS_LENGTH) {
-    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
-    system(buffer);
-    WINDOWS_LENGTH++;
+        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
+        system(buffer);
+        WINDOWS_LENGTH++;
     }
 }
 

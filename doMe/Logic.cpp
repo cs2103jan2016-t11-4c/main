@@ -14,28 +14,11 @@ Logic::Logic() {
 }
 void Logic::setEnvironment() {
 	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
-	_settings->loadSettings();
-
-	string space = "               ";
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << endl;
-	cout << space; cout << "                   Welcome to" << endl; 
-	cout << space; cout << "      _         __  __                          " << endl;
-	cout << space; cout << "     | |       |  \\/  |                         " << endl;
-	cout << space; cout << "   __| |  ___  | \\  / |  ___     ___ __  __ ___ " << endl;
-	cout << space; cout << "  / _` | / _ \\ | |\\/| | / _ \\   / _ \\  \\/ // _ \\" << endl;
-	cout << space; cout << " | (_| || (_) || |  | ||  __/ _|  __/ >  <|  __/" << endl;
-	cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
-
-	cout << endl;
-	cout << space; cout << "           <Press Enter to continue>" << endl;
+    _UI->printProgramWelcomePage();
 	string command;
 	getline(cin, command);
 
+    _settings->loadSettings();
 	display(); //initial display
 }
 void Logic::displayWelcomeMessage() {

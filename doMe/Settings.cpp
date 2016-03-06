@@ -3,6 +3,7 @@ const string Settings::FILE_SETTINGS_NAME = "settings.txt";
 const string Settings::VOID_INDICATOR = "-";
 const string Settings::VOID_STRING = "";
 const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
+const string Settings::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 
 Settings::Settings(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
@@ -14,18 +15,34 @@ Settings::~Settings(void) {
 
 void Settings::loadSettings() {
     ifstream readFile(FILE_SETTINGS_NAME);
+    stringstream is;
     string extractedSettings;
+    int columns;
+    int rows;
 
     if(checkForSettingsFile()) {
-    getline(readFile, extractedSettings);
-    _textFileName = loadSettingsDetails(extractedSettings);
+        getline(readFile, extractedSettings);
+        _textFileName = loadSettingsDetails(extractedSettings);
 
-    getline(readFile, extractedSettings);
-    _saveDirectory = loadSettingsDetails(extractedSettings);
+        getline(readFile, extractedSettings);
+        _saveDirectory = loadSettingsDetails(extractedSettings);
 
-    getline(readFile, extractedSettings);
-    istringstream iss(loadSettingsDetails(extractedSettings));
-    iss >> _viewType;
+        getline(readFile, extractedSettings);
+        is << (loadSettingsDetails(extractedSettings));
+        is >> _viewType;
+
+        is.clear();
+        getline(readFile, extractedSettings);
+        is << (loadSettingsDetails(extractedSettings));
+        is >> columns;
+
+        is.clear();
+        getline(readFile, extractedSettings);
+        is << (loadSettingsDetails(extractedSettings));
+        is >> rows;
+
+        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows);
+        system(buffer);
 
     } else {
         saveSettings();
@@ -36,14 +53,33 @@ void Settings::saveSettings() {
     ofstream writeFile;
     stringstream convert;
     string viewType;
+    string c;
+    string r;
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    int columns;
+    int rows;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+
     writeFile.close(); //close and reopen file to refresh the data file for overwriting
     writeFile.open(FILE_SETTINGS_NAME);
 
+    writeFile << writeSettingsDetails(_textFileName) << endl;
+
+    writeFile << writeSettingsDetails(_saveDirectory) << endl;
+
     convert << _viewType;
     viewType = convert.str();
-    writeFile << writeSettingsDetails(_textFileName) << endl;
-    writeFile << writeSettingsDetails(_saveDirectory) << endl;
     writeFile << writeSettingsDetails(viewType) << endl;
+
+    convert << columns;
+    c = convert.str();
+    writeFile << writeSettingsDetails(c) << endl;
+
+    convert << rows;
+    r = convert.str();
+    writeFile << writeSettingsDetails(r) << endl;
 }
 
 string Settings::writeSettingsDetails(string sentence) {

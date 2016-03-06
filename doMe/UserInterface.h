@@ -21,6 +21,9 @@ public:
     UserInterface(list<Task*> *taskList);
     ~UserInterface(void);
 
+    //programme page
+    void printProgramWelcomePage();
+
     //prompts
     void printPromptFirstTimeUser(); 
     void printPromptFirstTimeUserDirectory(); 
