@@ -276,6 +276,8 @@ void Parser::packCommandIfConfirmedUndoCommand() {
 
 //not done
 void Parser::packCommandIfConfirmedSortCommand() {
+	_commandType = SEARCH;
+	return;
 }
 
 void Parser::packCommandIfConfirmedSavedDirectoryCommand() {
@@ -348,6 +350,14 @@ void Parser::packCommandIfConfirmedClearCommand() {
 
 //not done
 void Parser::packCommandIfConfirmedSearchCommand() {
+	if(_commandParameters.size() == 1) {
+		_commandType = INVALID;
+	} else if (_commandParameters.size() == 2) {
+		_commandPackage = CommandPackage(SEARCH, Task(), 0, _caseSensitiveCommandParameters[1]);
+	} else if(_commandParameters.size() == 3) {
+		_commandType = ADD;
+	}
+	return;
 }
 
 void Parser::packCommandIfConfirmedViewTypeCommand() {
@@ -445,9 +455,10 @@ bool Parser::finalizeTimes() {
 void Parser::getLocationParameter() {
 	for(int i=0; i < _commandParameters.size(); i++) {
 		if(hasLocationMarker(_commandParameters[i])) {
-			removeLetter(_commandParameters[i]);
+			removeLetter(&_caseSensitiveCommandParameters[i]);
 			while((i < _commandParameters.size()) && (_commandParameters[i] < "a")) {
 			_location.push_back(_caseSensitiveCommandParameters[i]);
+			_commandParameters[i] = "location";
 			i++;
 			}
 			break;
@@ -496,8 +507,8 @@ string Parser::makeAllCaps(string s) {
 	return s;
 }
 
-void Parser::removeLetter(string s, int n) {
-	s.erase(s.begin()+n);
+void Parser::removeLetter(string* s, int n) {
+	s->erase(s->begin()+n);
 	return;
 }
 
