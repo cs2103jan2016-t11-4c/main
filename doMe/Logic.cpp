@@ -4,7 +4,7 @@ const string Logic::LIST_DIVIDER = "__________";
 
 Logic::Logic() {
 	_settings = new Settings();
-//	_storage = new Storage();
+	//	_storage = new Storage();
 	_taskList = new list<Task*>;
 	_tempTaskList = new list<Task*>;
 	_undoCommandList = new stack<Command*>;
@@ -13,7 +13,7 @@ Logic::Logic() {
 	_UI = new UserInterface(_taskList);
 }
 void Logic::setEnvironment() {
-//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
+	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
 	_settings->loadSettings();
 }
 void Logic::displayWelcomeMessage() {
@@ -27,7 +27,7 @@ void Logic::executeCommandsUntilExitCommand() {
 	do {
 		_UI->printPromptCommand();
 		getline(cin, command);
-	
+
 	} while (executeCommand(command) != EXIT);
 }
 
@@ -78,7 +78,7 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 	case EXIT:
 		if(_searchState == true) {
 			endSearch();
-			cout << "Exited search module!" << endl;
+			_UI->printNotificationExitSearch();
 			return DISPLAY;
 		}
 		return commandType;
@@ -95,7 +95,7 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		display();
 		displaySuccessfulCommandNotification(commandType, command);
 		_undoCommandList->push(command);
-		
+
 		if(_searchState == true) {
 			search(_searchTerm);
 		}
@@ -127,7 +127,7 @@ void Logic::displaySuccessfulCommandNotification(COMMAND_TYPE commandType, Comma
 		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), "doMe.txt");
 		break;
 	case EDIT:
-		cout << "Something was edited lol" << endl;
+		_UI->printNotificationEdit(command->getTask(), _settings->getViewType());
 		break;
 	case CLEAR:
 		_UI->printNotificationClear("doMe.txt");
@@ -154,10 +154,10 @@ void Logic::displayInvalidCommandNotification(COMMAND_TYPE commandType, Command*
 		_UI->printNotificationInvalidDeletion();
 		break;
 	case EDIT:
-//		_UI->printNotificationInvalidEdit();
+		_UI->printNotificationInvalidEdit();
 		break;
 	case VIEWTYPE:
-//		_UI->printNotificationInvalidViewType();
+		_UI->printNotificationInvalidViewtype();
 		break;
 	case SAVEDIRECTORY:
 		_UI->printNotificationInvalidSaveFileDirectory();
@@ -195,9 +195,8 @@ void Logic::endSearch() {
 
 void Logic::undo() {
 	if(_undoCommandList->empty()) {
-//		_UI->printNotificationInvalidUndo();
-		cout << "Cannot undo anymore!" <<endl;
 		display();
+		_UI->printNotificationInvalidUndo();
 		return;
 	}
 	_undoCommandList->top()->undo();
@@ -205,6 +204,7 @@ void Logic::undo() {
 	_undoCommandList->pop();
 	sort();
 	display();
+	_UI->printNotificationUndo();
 }
 
 void Logic::sort() {
@@ -213,7 +213,7 @@ void Logic::sort() {
 }
 
 void Logic::saveToTxtFile() {
-//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+	//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
@@ -319,7 +319,7 @@ int Logic::getCurrentDate() {
 
 void Logic::transferBackSearchTasks() {
 	while(!_tempTaskList->empty()) {
-	_taskList->push_back(_tempTaskList->front());
-	_tempTaskList->pop_front();
+		_taskList->push_back(_tempTaskList->front());
+		_tempTaskList->pop_front();
 	}
 }
