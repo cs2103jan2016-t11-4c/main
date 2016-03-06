@@ -79,7 +79,7 @@ void UserInterface::printProgramWelcomePage() {
     cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
 
     cout << endl;
-    cout << space; cout << "           <Press Enter to continue>" << endl;
+    cout << space; cout << "          <Press any key to continue>" << endl;
     cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
 }
 

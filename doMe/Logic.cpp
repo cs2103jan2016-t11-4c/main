@@ -93,7 +93,7 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		assert(0);
 	}
 
-	if(command->execute() == 1) {
+	if(command->execute() == true) {
 		sort();
 		display();
 		displaySuccessfulCommandNotification(commandType, command);
