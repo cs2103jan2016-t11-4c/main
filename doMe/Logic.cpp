@@ -5,7 +5,7 @@ const string Logic::LIST_DIVIDER = "__________";
 
 Logic::Logic() {
 	_settings = new Settings();
-//	_storage = new Storage();
+	//	_storage = new Storage();
 	_taskList = new list<Task*>;
 	_tempTaskList = new list<Task*>;
 	_undoCommandList = new stack<Command*>;
@@ -14,16 +14,15 @@ Logic::Logic() {
 	_UI = new UserInterface(_taskList);
 }
 void Logic::setEnvironment() {
-//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
+	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
 	_settings->loadSettings();
 }
 void Logic::displayWelcomeMessage() {
+	display();
 	_UI->printNotificationWelcome();
 }
 void Logic::executeCommandsUntilExitCommand() {
 	string command;
-
-	display();
 
 	do {
 		_UI->printPromptCommand();
@@ -67,7 +66,7 @@ void Logic::executeCommand(string commandText) {
 		display();
 		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), "doMe.txt");
 		_undoCommandList->push(command);
-		
+
 		if(_searchState == true) {
 			search(_searchTerm);
 		}
@@ -177,10 +176,10 @@ void Logic::displayInvalidCommandNotification(COMMAND_TYPE commandType, Command*
 		_UI->printNotificationInvalidDeletion();
 		break;
 	case EDIT:
-//		_UI->printNotificationInvalidEdit();
+		//		_UI->printNotificationInvalidEdit();
 		break;
 	case VIEWTYPE:
-//		_UI->printNotificationInvalidViewType();
+		//		_UI->printNotificationInvalidViewType();
 		break;
 	case SAVEDIRECTORY:
 		_UI->printNotificationInvalidSaveFileDirectory();
@@ -221,7 +220,7 @@ void Logic::endSearch() {
 
 void Logic::undo() {
 	if(_undoCommandList->empty()) {
-//		_UI->printNotificationInvalidUndo();
+		//		_UI->printNotificationInvalidUndo();
 		cout << "Cannot undo anymore!" <<endl;
 		display();
 		return;
@@ -239,7 +238,7 @@ void Logic::sort() {
 }
 
 void Logic::saveToTxtFile() {
-//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+	//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
@@ -345,7 +344,7 @@ int Logic::getCurrentDate() {
 
 void Logic::transferBackSearchTasks() {
 	while(!_tempTaskList->empty()) {
-	_taskList->push_back(_tempTaskList->front());
-	_tempTaskList->pop_front();
+		_taskList->push_back(_tempTaskList->front());
+		_tempTaskList->pop_front();
 	}
 }

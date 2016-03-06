@@ -18,7 +18,7 @@ class UserInterface {
 
 public:
     //UserInterface(void);
-    UserInterface(list<Task*> *taskList); //.....................................................change//
+    UserInterface(list<Task*> *taskList);
     ~UserInterface(void);
 
     //prompts
@@ -29,15 +29,16 @@ public:
     //notification
     void printNotificationWelcome();
     void printPromptHelp();
-    void printNotificationAdd(Task* task, int viewType, string textFileName); //...................change//
-    void printNotificationDelete(Task* task, int viewType, string textFileName); //...................change//
-    void printNotificationClear(string textFileName); //............................................change//
+    void printNotificationAdd(Task* task, int viewType, string textFileName);
+    void printNotificationDelete(Task* task, int viewType, string textFileName);
+    void printNotificationClear(string textFileName);
     void printNotificationViewTypeChange(int newViewType);
-    void printNotificationEmpty(string textFileName); //............................................change//
+    void printNotificationEmpty(string textFileName); 
     void printNotificationChangeSaveFileDirectory(string newDirectory);
     void printNotificationEmptySaveFileDirectory();
     void printNotificationSearchTerm(string searchTerm);
     void printNotificationClearSearch(string searchTerm);
+    void printNotificationExitSearch(); //............................................new//
 
     //error
     void printNotificationInvalidCommand();
@@ -46,8 +47,8 @@ public:
     void printNotificationInvalidSaveFileDirectory();
 
     //main printing
-    void printTaskList(int currentDate ,int viewType); //...................................change//
-    void printSearchList(string searchTerm, int viewType); //...................................change// 
+    void printTaskList(int currentDate ,int viewType);
+    void printSearchList(string searchTerm, int viewType);
 
 #ifndef TESTMODE 
 private: 
@@ -79,6 +80,7 @@ public:
     static const string MESSAGE_CLEAR;
     static const string MESSAGE_SEARCH;
     static const string MESSAGE_CLEAR_SEARCH;
+    static const string MESSAGE_EXIT_SEARCH;
     static const string MESSAGE_VIEW_TYPE;
 
     static const string ERROR_INVALID_ADD;
@@ -92,8 +94,8 @@ public:
     //helper
     void showToUser(string message);
     void showToUserWithMessage(string message); //special sperator
-    void setWindowsRowsColumns();
-    vector<string> createDisplayBox(vector<string> &displayList);
+    void setWindowsRowsColumns(int size);
+    vector<string> createDisplayBox(vector<string> displayList);
     void printDisplayList(vector<string> displayList); 
     string getTaskString(Task* task, int viewType); //incomplete
 
