@@ -33,10 +33,9 @@ private:
 	bool _searchState;
 	string _searchTerm;
 
-	static const string EXIT_COMMAND;
 	static const string LIST_DIVIDER;
 
-	void executeCommand(string commandText);
+	COMMAND_TYPE executeCommand(string commandText);
 	void search(string searchTerm);
 	void endSearch();
 	void undo();
