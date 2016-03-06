@@ -32,9 +32,9 @@ void Logic::setEnvironment() {
 	cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
 
 	cout << endl;
-	cout << space; cout << "           <Press Enter to continue>" << endl;
-	string command;
-	getline(cin, command);
+	cout << space; cout << "           <Press any key to continue>" << endl;
+
+	getch();
 
 	display(); //initial display
 }
@@ -110,7 +110,7 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		assert(0);
 	}
 
-	if(command->execute() == true) {
+	if(command->execute() == 1) {
 		sort();
 		display();
 		displaySuccessfulCommandNotification(commandType, command);
