@@ -28,4 +28,5 @@ public:
 	Command_Edit(list<Task*>* taskList, int index, Task* task);
 	int execute();
 	int undo();
+	Task* getTask();
 };

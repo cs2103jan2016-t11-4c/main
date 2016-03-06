@@ -12,4 +12,7 @@ public:
 	Command(list<Task*>* taskList);
 	virtual int execute() = 0;
 	virtual int undo() = 0;
+	virtual Task* getTask() {return NULL;}
+	virtual int getIndex() {return 0;}
+	virtual string getDescription() {return "";}
 };

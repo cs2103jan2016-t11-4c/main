@@ -11,4 +11,5 @@ public:
 	Command_Add(list<Task*>* taskList, Task* task);
 	int execute();
 	int undo();
+	Task* getTask();
 };

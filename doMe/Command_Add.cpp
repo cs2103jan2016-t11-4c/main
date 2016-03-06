@@ -19,3 +19,7 @@ int Command_Add::undo() {
 	}
 	return 0;
 }
+
+Task* Command_Add::getTask() {
+	return _task;
+}

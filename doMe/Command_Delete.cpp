@@ -22,6 +22,10 @@ int Command_Delete::undo() {
 	return 1;
 }
 
+Task* Command_Delete::getTask() {
+	return _task;
+}
+
 bool Command_Delete::outOfRange() {
 	if(_index > _taskList->size() || _index < 1) {
 		return true;

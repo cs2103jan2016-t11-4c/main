@@ -16,3 +16,7 @@ int Command_ViewType::undo(){
 	_settings->changeViewType(_oldViewType);
 	return 1;	
 }
+
+int Command_ViewType::getIndex() {
+	return _newViewType;
+}

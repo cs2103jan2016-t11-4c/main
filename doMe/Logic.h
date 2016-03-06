@@ -43,8 +43,8 @@ private:
 
 	void sort();
 	void display();
-	void displaySuccessfulCommandNotification(CommandPackage* commandPackage);
-	void displayInvalidCommandNotification(CommandPackage* commandPackage);
+	void displaySuccessfulCommandNotification(COMMAND_TYPE commandType, Command* command);
+	void displayInvalidCommandNotification(COMMAND_TYPE commandType, Command* command);
 
 	void saveToTxtFile();
 	void vectorToTaskList(vector<string>& existingData);

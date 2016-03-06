@@ -34,6 +34,7 @@ void Logic::executeCommandsUntilExitCommand() {
 
 void Logic::executeCommand(string commandText) {
 	if(commandText.empty()) {
+		display();
 		return;
 	}
 
@@ -44,13 +45,32 @@ void Logic::executeCommand(string commandText) {
 
 	Command* command;
 
-	if(commandText == "exitsearch") {
+	if(commandText == "exit search" || commandText == "exitsearch") {
 		endSearch();
 		return;
 	}
 
 	if(commandText == "search e") {
 		search("e");
+		return;
+	}
+
+	if(commandText == "search a") {
+		search("a");
+		return;
+	}
+
+	if(commandText == "delete 1") {
+		command = new Command_Delete(_taskList, 1);
+		command->execute();
+		sort();
+		display();
+		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), "doMe.txt");
+		_undoCommandList->push(command);
+		
+		if(_searchState == true) {
+			search(_searchTerm);
+		}
 		return;
 	}
 
@@ -62,7 +82,7 @@ void Logic::executeCommand(string commandText) {
 		display();
 		return;
 	case DELETE:
-		command = new Command_Delete(_taskList, commandPackage->getIndex());
+		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), "doMe.txt");
 		break;
 	case EDIT:
 		command = new Command_Edit(_taskList, commandPackage->getIndex(), commandPackage->getTask());
@@ -87,23 +107,26 @@ void Logic::executeCommand(string commandText) {
 		return;
 	case EXIT:
 		return;
-	default:
+	case INVALID:
+		display();
 		_UI->printNotificationInvalidCommand();
 		return;
+	default:
+		assert(0);
 	}
 
 	if(command->execute() == true) {
-		displaySuccessfulCommandNotification(commandPackage);
+		sort();
+		display();
+		displaySuccessfulCommandNotification(commandType, command);
 		_undoCommandList->push(command);
 		
 		if(_searchState == true) {
 			search(_searchTerm);
 		}
-
-		sort();
-		display();
 	}else {
-		displayInvalidCommandNotification(commandPackage);
+		display();
+		displayInvalidCommandNotification(commandType, command);
 	}
 
 	//delete parser;
@@ -115,18 +138,16 @@ void Logic::display() {
 		_UI->printSearchList(_searchTerm, _settings->getViewType());
 	}else {
 		_UI->printTaskList(getCurrentDate(), _settings->getViewType());
-	}
+	}	
 }
 
-void Logic::displaySuccessfulCommandNotification(CommandPackage* commandPackage) {
-	COMMAND_TYPE commandType = commandPackage->getCommandType();
-
+void Logic::displaySuccessfulCommandNotification(COMMAND_TYPE commandType, Command* command) {
 	switch(commandType) {
 	case ADD:
-		_UI->printNotificationAdd(commandPackage->getTask(), _settings->getViewType(), "doMe.txt");
+		_UI->printNotificationAdd(command->getTask(), _settings->getViewType(), "doMe.txt");
 		break;
 	case DELETE:
-		cout << "Something was deleted lol" << endl;
+		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), "doMe.txt");
 		break;
 	case EDIT:
 		cout << "Something was edited lol" << endl;
@@ -135,10 +156,10 @@ void Logic::displaySuccessfulCommandNotification(CommandPackage* commandPackage)
 		_UI->printNotificationClear("doMe.txt");
 		break;
 	case VIEWTYPE:
-		_UI->printNotificationViewTypeChange(commandPackage->getIndex());
+		_UI->printNotificationViewTypeChange(command->getIndex());
 		break;
 	case SAVEDIRECTORY:
-		_UI->printNotificationChangeSaveFileDirectory(commandPackage->getDescription());
+		_UI->printNotificationChangeSaveFileDirectory(command->getDescription());
 		break;
 	default:
 		assert(0);
@@ -146,8 +167,7 @@ void Logic::displaySuccessfulCommandNotification(CommandPackage* commandPackage)
 	}
 }
 
-void Logic::displayInvalidCommandNotification(CommandPackage* commandPackage) {
-	COMMAND_TYPE commandType = commandPackage->getCommandType();
+void Logic::displayInvalidCommandNotification(COMMAND_TYPE commandType, Command* command) {
 
 	switch(commandType) {
 	case ADD:
@@ -186,6 +206,7 @@ void Logic::search(string searchTerm) {
 
 	_searchTerm = searchTerm;
 	_searchState = true;
+
 	sort();
 	display();
 }
@@ -202,6 +223,7 @@ void Logic::undo() {
 	if(_undoCommandList->empty()) {
 //		_UI->printNotificationInvalidUndo();
 		cout << "Cannot undo anymore!" <<endl;
+		display();
 		return;
 	}
 	_undoCommandList->top()->undo();
@@ -213,7 +235,7 @@ void Logic::undo() {
 
 void Logic::sort() {
 	_taskList->sort([](Task* a, Task* b) {return a->getDate1() < b->getDate1();});
-	_taskList->sort([](Task* a, Task* b) {return a->getTime1() < b->getTime2();});
+	_taskList->sort([](Task* a, Task* b) {return a->getTime1() < b->getTime1();});
 }
 
 void Logic::saveToTxtFile() {
@@ -221,7 +243,7 @@ void Logic::saveToTxtFile() {
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
-	for(int i = 0; i < existingData.size(); i+=7) {
+	for(unsigned int i = 0; i < existingData.size(); i+=7) {
 		string name = existingData[i];
 		int date1 = stringToInteger(existingData[i+1]);
 		int date2 = stringToInteger(existingData[i+2]);

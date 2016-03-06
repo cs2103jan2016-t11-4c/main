@@ -15,4 +15,5 @@ public:
 	Command_Delete(list<Task*>* taskList, int index);
 	int execute();
 	int undo();
+	Task* getTask();
 };

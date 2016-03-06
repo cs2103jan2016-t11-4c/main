@@ -21,6 +21,10 @@ int Command_SaveDirectory::undo(){
 	return 1;	
 }
 
+string Command_SaveDirectory::getDescription() {
+	return _newSaveDirectory;
+}
+
 bool Command_SaveDirectory::isNotValidDirectory() {
 	struct stat info;
 

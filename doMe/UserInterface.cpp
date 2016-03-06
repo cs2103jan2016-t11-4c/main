@@ -18,7 +18,7 @@ const string UserInterface::MESSAGE_ADD = "Added \"%s\" into %s";
 const string UserInterface::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
 const string UserInterface::MESSAGE_DELETE = "Deleted \"%s\" from %s";
 const string UserInterface::MESSAGE_CLEAR = "All contents cleared from %s";
-const string UserInterface::MESSAGE_SEARCH = "~Showing result for \"%s\". Type \"exit\" to exit the search module~";
+const string UserInterface::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit search\" to exit the search module~";
 const string UserInterface::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
 const string UserInterface::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%s).";
 

@@ -57,6 +57,10 @@ int Command_Edit::undo() {
 	return 1;
 }
 
+Task* Command_Edit::getTask() {
+	return _task;
+}
+
 bool Command_Edit::outOfRange() {
 	if(_index > _taskList->size() || _index < 1) {
 		return true;

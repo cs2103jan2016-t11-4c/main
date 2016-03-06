@@ -18,4 +18,5 @@ public:
 	Command_SaveDirectory(Settings* settings, string newSaveDirectory);
 	int execute();
 	int undo();
+	string getDescription();
 };

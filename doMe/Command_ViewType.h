@@ -14,4 +14,5 @@ public:
 	Command_ViewType(Settings* settings, int newViewType);
 	int execute();
 	int undo();
+	int getIndex();
 };
