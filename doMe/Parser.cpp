@@ -41,7 +41,7 @@ void Parser::guessCommandType() {
 	} else if(isDisplay(_commandParameters[COMMAND_POSITION])) {
 		_commandType = DISPLAY;
 	} else if(isDelete(_commandParameters[COMMAND_POSITION])) {
-		_commandType = DELETE;
+		_commandType = DEL;
 	} else if(isEdit(_commandParameters[COMMAND_POSITION])) {
 		_commandType = EDIT;
 	} else if(isClear(_commandParameters[COMMAND_POSITION])) {
@@ -69,7 +69,7 @@ void Parser::findDetailsIfSimpleCommandType() {
 		packCommandIfConfirmedDisplayCommand();
 		break;
 	
-	case DELETE:
+	case DEL:
 		packCommandIfConfirmedDeleteCommand();
 		break;
 	
@@ -261,7 +261,7 @@ void Parser::packCommandIfConfirmedDeleteCommand() {
 		_commandType = INVALID;
 	} else if(isInteger(_commandParameters[INDEX_POSITION])) {
 		int index = stoi(_commandParameters[INDEX_POSITION]);
-		_commandPackage = CommandPackage(DELETE, Task(), index);
+		_commandPackage = CommandPackage(DEL, Task(), index);
 	}
 }
 
@@ -312,11 +312,12 @@ void Parser::packCommandIfConfirmedEditCommand() {
 	if(_commandParameters.size() == 1) {
 		_commandType = INVALID;
 	} else if(isInteger(_commandParameters[INDEX_POSITION])) {
-	removeEditCommand();
-	getDateAndTimeParameters();
-	getLocationParameter();
-	getDescriptionParameter();
-	packEditCommand();
+		_index = stoi(_commandParameters[INDEX_POSITION]);
+		removeEditCommand();
+		getDateAndTimeParameters();
+		getLocationParameter();
+		getDescriptionParameter();
+		packEditCommand();
 	} else {
 		_commandType = ADD;
 	}
@@ -331,7 +332,7 @@ void Parser::packEditCommand() {
 	} else {
 		string location = combineWords(_location);
 		string description = combineWords(_description);
-		_commandPackage = CommandPackage(EDIT, Task(description, _date1, _date2, _time1, _time2, location));
+		_commandPackage = CommandPackage(EDIT, Task(description, _date1, _date2, _time1, _time2, location),_index);
 	}
 }
 
@@ -444,23 +445,27 @@ bool Parser::finalizeTimes() {
 void Parser::getLocationParameter() {
 	for(int i=0; i < _commandParameters.size(); i++) {
 		if(hasLocationMarker(_commandParameters[i])) {
-			while((_commandParameters[i] < "a") && i < _commandParameters.size()) {
+			removeLetter(_commandParameters[i]);
+			while((i < _commandParameters.size()) && (_commandParameters[i] < "a")) {
 			_location.push_back(_caseSensitiveCommandParameters[i]);
 			i++;
-			break;
 			}
+			break;
 		}
 	}
 }
 
 void Parser::getDescriptionParameter() {
 	for(int i=0; i < _commandParameters.size(); i++) {
-		while((_commandParameters[i] < "a") && i < _commandParameters.size()) {
-			_description.push_back(_caseSensitiveCommandParameters[i]);
-			i++;
+		if(_commandParameters[i] < "a") {
+			while((i < _commandParameters.size()) && (_commandParameters[i] < "a")) {
+				_description.push_back(_caseSensitiveCommandParameters[i]);
+				i++;
+			}
 			break;
 		}
 	}
+	return;
 }
 
 vector<string> Parser::splitSentence(string sentence) {
@@ -489,6 +494,11 @@ string Parser::combineWords(vector<string> words) {
 string Parser::makeAllCaps(string s) {
 	transform(s.begin(), s.end(), s.begin(), toupper);
 	return s;
+}
+
+void Parser::removeLetter(string s, int n) {
+	s.erase(s.begin()+n);
+	return;
 }
 
 bool Parser::isInteger(string s) {

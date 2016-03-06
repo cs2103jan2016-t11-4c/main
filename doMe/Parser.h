@@ -54,6 +54,7 @@ private:
 	int _date1;
 	vector<string> _location;
 	vector<string> _description;
+	int _index;
 
 	static const int COMMAND_POSITION = 0;
 	static const int INDEX_POSITION = 1;
@@ -104,6 +105,7 @@ public:
 	vector<string> splitSentence(string commandLine);
 	string combineWords(vector<string> stringVector);
 	string makeAllCaps(string s);
+	void removeLetter(string s, int n = 0);
 	
 	bool isInteger(string s);
 	bool isTime(int n);
