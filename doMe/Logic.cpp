@@ -51,11 +51,15 @@ void Logic::executeCommand(string commandText) {
 
 	if(commandText == "search e") {
 		search("e");
+		sort();
+		display();
 		return;
 	}
 
 	if(commandText == "search a") {
 		search("a");
+		sort();
+		display();
 		return;
 	}
 
@@ -94,6 +98,8 @@ void Logic::executeCommand(string commandText) {
 		return;
 	case SEARCH:
 		search(commandPackage->getDescription());
+		sort();
+		display();
 		return;
 	case ENDSEARCH:
 		endSearch();
@@ -205,9 +211,6 @@ void Logic::search(string searchTerm) {
 
 	_searchTerm = searchTerm;
 	_searchState = true;
-
-	sort();
-	display();
 }
 
 void Logic::endSearch() {
