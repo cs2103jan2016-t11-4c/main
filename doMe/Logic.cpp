@@ -45,20 +45,6 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 
 	Command* command;
 
-	if(commandText == "search e") {
-		search("e");
-		sort();
-		display();
-		return SEARCH;
-	}
-
-	if(commandText == "search a") {
-		search("a");
-		sort();
-		display();
-		return SEARCH;
-	}
-
 	switch(commandType) {
 	case ADD:
 		command = new Command_Add(_taskList, commandPackage->getTask());
@@ -93,7 +79,6 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		if(_searchState == true) {
 			endSearch();
 			cout << "Exited search module!" << endl;
-			cout << "===============================================================================" << endl;
 			return DISPLAY;
 		}
 		return commandType;
