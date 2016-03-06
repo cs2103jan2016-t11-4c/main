@@ -105,7 +105,7 @@ public:
 	vector<string> splitSentence(string commandLine);
 	string combineWords(vector<string> stringVector);
 	string makeAllCaps(string s);
-	void removeLetter(string s, int n = 0);
+	void removeLetter(string* s, int n = 0);
 	
 	bool isInteger(string s);
 	bool isTime(int n);
