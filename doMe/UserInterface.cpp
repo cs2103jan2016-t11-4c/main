@@ -18,9 +18,10 @@ const string UserInterface::MESSAGE_ADD = "Added \"%s\" into %s";
 const string UserInterface::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
 const string UserInterface::MESSAGE_DELETE = "Deleted \"%s\" from %s";
 const string UserInterface::MESSAGE_CLEAR = "All contents cleared from %s";
-const string UserInterface::MESSAGE_SEARCH = "~Showing result for \"%s\". Type \"exit\" to exit the search module~";
+const string UserInterface::MESSAGE_SEARCH = "~Showing result for \"%s\". Type \"exitsearch\" to exit the search module~";
 const string UserInterface::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
 const string UserInterface::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%s).";
+const string UserInterface::MESSAGE_EXIT_SEARCH = "Exited search module.";
 
 const string UserInterface::ERROR_INVALID_ADD = "Invalid addition has been inputted.";
 const string UserInterface::ERROR_INVALID_DELETE = "Invalid deletion has been inputted.";
@@ -111,6 +112,11 @@ void UserInterface::printNotificationClearSearch(string searchTerm) {
     sprintf_s(buffer, MESSAGE_CLEAR_SEARCH.c_str(), searchTerm.c_str());
     showToUserWithMessage(buffer);
 }
+
+void UserInterface::printNotificationExitSearch() {
+    sprintf_s(buffer, MESSAGE_EXIT_SEARCH.c_str());
+    showToUserWithMessage(buffer);
+}
 /****************************************************************/
 
 void UserInterface::printNotificationInvalidAdd() {
@@ -182,6 +188,7 @@ void UserInterface::printTaskList(int currentDate ,int viewType) {
     default:
         break;
     }
+    
     printDisplayList(createDisplayBox(taskListType->createDisplayList()));
     delete taskListType;
 }
@@ -228,7 +235,7 @@ void UserInterface::showToUser(string message) {
 void UserInterface::showToUserWithMessage(string message) {
     //if(_defaultViewType == 1) {
         string messageBox;
-        setWindowsRowsColumns();
+        setWindowsRowsColumns(0);
         messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
         messageBox.pop_back();
 
@@ -241,7 +248,7 @@ void UserInterface::showToUserWithMessage(string message) {
     */
 }
 
-void UserInterface::setWindowsRowsColumns() {
+void UserInterface::setWindowsRowsColumns(int size) {
     //system("mode CON: COLS=120 lines=40");
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     int columns;
@@ -252,14 +259,14 @@ void UserInterface::setWindowsRowsColumns() {
     rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
     WINDOWS_WIDTH = columns;
-    WINDOWS_LENGTH = rows - 4; 
+    WINDOWS_LENGTH = rows - 4;
 }
 
-vector<string> UserInterface::createDisplayBox(vector<string> &displayList) {
+vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     vector<string>::iterator displayListIter;
     string messageBox;
 
-    setWindowsRowsColumns();
+    setWindowsRowsColumns(displayList.size()+3);
     messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 
@@ -268,7 +275,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> &displayList) {
     displayListIter = displayList.begin();
     displayListIter++;
 
-    while(displayList.size() != WINDOWS_LENGTH) {
+    while(displayList.size() < WINDOWS_LENGTH) {
         displayList.push_back(MESSAGE_VOID_STRING);
     }
 

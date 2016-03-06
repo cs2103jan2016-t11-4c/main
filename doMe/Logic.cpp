@@ -18,12 +18,13 @@ void Logic::setEnvironment() {
 	_settings->loadSettings();
 }
 void Logic::displayWelcomeMessage() {
+    display();/****************************************************************add here******/
 	_UI->printNotificationWelcome();
 }
 void Logic::executeCommandsUntilExitCommand() {
 	string command;
 
-	display();
+	//display();
 
 	do {
 		_UI->printPromptCommand();
@@ -88,21 +89,25 @@ void Logic::executeCommand(string commandText) {
 	case EXIT:
 		return;
 	default:
+        display();/****************************************************************add here******/
 		_UI->printNotificationInvalidCommand();
 		return;
 	}
 
 	if(command->execute() == true) {
+        sort();/****************************************************************add here******/
+		display();/****************************************************************add here******/
+
 		displaySuccessfulCommandNotification(commandPackage);
 		_undoCommandList->push(command);
 		
 		if(_searchState == true) {
 			search(_searchTerm);
 		}
-
-		sort();
-		display();
+		//sort();
+		//display();
 	}else {
+		display(); /****************************************************************add here******/
 		displayInvalidCommandNotification(commandPackage);
 	}
 

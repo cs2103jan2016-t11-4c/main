@@ -87,8 +87,6 @@ public:
     TEST_CLASS(UICLASS) {
 public:
     TEST_METHOD(UIGetTaskStringTypeDefault) {
-        UserInterface UI;
-        UI._defaultViewType = -1;
         int i = 0;
         string actualString;
         list<Task*> ls;
@@ -107,11 +105,12 @@ public:
         ls.push_back(new Task("read book" , -1 , 20160922 , 100 , 200 , "college"));
         ls.push_back(new Task("read book" , -1 , 20161023 , 100 , 200 , ""));
         ls.push_back(new Task("read book" , -1 , -1 , -1 , -1 , "college"));
-
+        UserInterface UI(&ls);
+        
         list<Task*>::iterator listIter = ls.begin();
 
         while(listIter != ls.end()) {
-            actualString = UI.getTaskString(*listIter , UI._defaultViewType);
+            actualString = UI.getTaskString(*listIter , -1);
             Assert::AreEqual(expectedString[i], actualString);
             i++;
             listIter++;
@@ -120,8 +119,6 @@ public:
     }
 
     TEST_METHOD(UIGetTaskStringType0) {
-        UserInterface UI;
-        UI._defaultViewType = 0;
         int i = 0;
         string actualString;
         list<Task*> ls;
@@ -141,14 +138,13 @@ public:
         ls.push_back(new Task("read book" , -1 , 20161023 , 100 , 200 , ""));
         ls.push_back(new Task("read book" , -1 , -1 , -1 , -1 , "college"));
 
+        UserInterface UI(&ls);
         list<Task*>::iterator listIter = ls.begin();
-
-        UI._defaultViewType = 0;
 
         listIter = ls.begin();
 
         while(listIter != ls.end()) {
-            actualString = UI.getTaskString(*listIter , UI._defaultViewType);
+            actualString = UI.getTaskString(*listIter , 0);
             Assert::AreEqual(expectedStringType0[i], actualString);
             i++;
             listIter++;
