@@ -39,12 +39,17 @@ public:
     void printNotificationSearchTerm(string searchTerm);
     void printNotificationClearSearch(string searchTerm);
     void printNotificationExitSearch(); //............................................new//
+    void printNotificationUndo(); //............................................new//
+    void printNotificationEdit(Task* task, int viewType); //......................new//
 
     //error
     void printNotificationInvalidCommand();
     void printNotificationInvalidAdd();
     void printNotificationInvalidDeletion();
     void printNotificationInvalidSaveFileDirectory();
+    void printNotificationInvalidViewtype(); //............................................new//
+    void printNotificationInvalidUndo(); //............................................new//
+    void printNotificationInvalidEdit();  //............................................new//
 
     //main printing
     void printTaskList(int currentDate ,int viewType);
@@ -77,23 +82,28 @@ public:
     static const string MESSAGE_ADD;
     static const string MESSAGE_EMPTY;
     static const string MESSAGE_DELETE;
+    static const string MESSAGE_EDIT;
     static const string MESSAGE_CLEAR;
     static const string MESSAGE_SEARCH;
     static const string MESSAGE_CLEAR_SEARCH;
     static const string MESSAGE_EXIT_SEARCH;
     static const string MESSAGE_VIEW_TYPE;
+    static const string MESSAGE_UNDO_COMMAND;
 
     static const string ERROR_INVALID_ADD;
     static const string ERROR_INVALID_DELETE;
     static const string ERROR_INVALID_COMMAND_FORMAT;
     static const string ERROR_INVALID_COMMAND;
+    static const string ERROR_INVALID_VIEWTYPE;
+    static const string ERROR_INVALID_EDIT;
+    static const string ERROR_INVALID_UNDO;
     static const string ERROR_SET_INVALID_SAVE_FILE_DIRECTORY;
 
     static const string MESSAGE_HELP_TIPS[];
 
     //helper
     void showToUser(string message);
-    void showToUserWithMessage(string message); //special sperator
+    void showToUserMessageBox();
     void setWindowsRowsColumns(int size);
     vector<string> createDisplayBox(vector<string> displayList);
     void printDisplayList(vector<string> displayList); 
