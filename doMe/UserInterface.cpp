@@ -1,5 +1,6 @@
 #include "UserInterface.h"
 const string UserInterface::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
+const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 int UserInterface::WINDOWS_WIDTH = 80;
@@ -289,13 +290,19 @@ void UserInterface::setWindowsRowsColumns(int size) {
 
     WINDOWS_WIDTH = columns;
     WINDOWS_LENGTH = rows - 4;
+
+    if(size > WINDOWS_LENGTH) {
+    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
+    system(buffer);
+    WINDOWS_LENGTH++;
+    }
 }
 
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     vector<string>::iterator displayListIter;
     string messageBox;
 
-    setWindowsRowsColumns(displayList.size()+3);
+    setWindowsRowsColumns(displayList.size()+2);
     messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 

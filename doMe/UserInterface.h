@@ -65,6 +65,7 @@ public:
     char buffer[255];
 
     static const string DEFAULT_TEXT_FILE_NAME;
+    static const string SYSTEM_MODE_CON;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
     static int WINDOWS_WIDTH;
