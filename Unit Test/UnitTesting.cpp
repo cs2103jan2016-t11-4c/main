@@ -32,22 +32,104 @@ public:
 
     TEST_CLASS(ParserCLASS) {
 public:
-    TEST_METHOD(Parser_Test) {
-	
-    CommandPackage expectedCommandObject(ADD, Task("fly a plane",0,11092001,-1,-1),0,"");
-    Parser sut("fly a plane 11092001");
-	CommandPackage actualCommandObject = *(sut.parse());
+	//does a full comparison of expected and actual CommandPackage Object
+	void compareCommandPackage(CommandPackage expected, CommandPackage actual) {
+	Assert::AreEqual(expected.getCommandTypeString(), actual.getCommandTypeString());
+	Assert::AreEqual(expected.getTask()->getName(), actual.getTask()->getName());
+	Assert::AreEqual(expected.getTask()->getDate1(), actual.getTask()->getDate1());
+	Assert::AreEqual(expected.getTask()->getDate2(), actual.getTask()->getDate2());
+	Assert::AreEqual(expected.getTask()->getTime1(), actual.getTask()->getTime1());
+	Assert::AreEqual(expected.getTask()->getTime2(), actual.getTask()->getTime2());
+	Assert::AreEqual(expected.getTask()->getLocation(), actual.getTask()->getLocation());
+	Assert::AreEqual(expected.getIndex(), actual.getIndex());
+	Assert::AreEqual(expected.getDescription(), actual.getDescription());
+	return;
+	}
 
-	Assert::AreEqual(actualCommandObject.getCommandTypeString(), expectedCommandObject.getCommandTypeString());
-	Assert::AreEqual(actualCommandObject.getTask()->getName(), expectedCommandObject.getTask()->getName());
-	Assert::AreEqual(actualCommandObject.getTask()->getDate1(), expectedCommandObject.getTask()->getDate1());
-	Assert::AreEqual(actualCommandObject.getTask()->getDate2(), expectedCommandObject.getTask()->getDate2());
-	Assert::AreEqual(actualCommandObject.getTask()->getTime1(), expectedCommandObject.getTask()->getTime1());
-	Assert::AreEqual(actualCommandObject.getTask()->getTime2(), expectedCommandObject.getTask()->getTime2());
-	Assert::AreEqual(actualCommandObject.getTask()->getLocation(), expectedCommandObject.getTask()->getLocation());
-	Assert::AreEqual(actualCommandObject.getIndex(), expectedCommandObject.getIndex());
-	Assert::AreEqual(actualCommandObject.getDescription(), expectedCommandObject.getDescription());
-    }
+    TEST_METHOD(Parser_Add_Test_Simple) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("fly a plane");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test2_1Date) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, 20010911, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("fly a plane 11092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_2Date) {
+    CommandPackage expectedCommandPackage(ADD, Task("get a degree", 20140814, 20180515, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("get a degree 14082014 15052018");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_1Time) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, 800, NO_LOCATION));
+    Parser sut("fly a plane 0800");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_2Time) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, 800, 1200, NO_LOCATION));
+    Parser sut("fly a plane 0800 1200");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_1Date_1Time) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, 20010911, NO_TIME, 800, NO_LOCATION));
+    Parser sut("fly a plane 11092001 0800");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_1Time_1Date) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, 20010911, NO_TIME, 800, NO_LOCATION));
+    Parser sut("fly a plane 0800 11092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_2Time_2Date) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, NO_LOCATION));
+    Parser sut("fly a plane 0800 1200 11092001 12092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+    TEST_METHOD(Parser_Add_Test_Location) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, NO_TIME, "world trade centre"));
+    Parser sut("fly a plane @world trade centre");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_Location_2Time_2Date) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"));
+    Parser sut("fly a plane  @world trade centre 0800 1200 11092001 12092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_2Time_2Date_Location) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"));
+    Parser sut("fly a plane 0800 1200 11092001 12092001 @world trade centre");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_Time_Date_Location_Jumbled) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"));
+    Parser sut("fly a plane 0800 11092001 @world trade centre 1200 12092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
     };
 
     TEST_CLASS(SettingCLASS) {

@@ -108,6 +108,14 @@ public:
 	void getLocationParameter();
 	void getDescriptionParameter();
 
+	bool extractIfIsDate(string s);
+	bool tryExtractDateFormat1(string s);//ddmmyyyy
+	bool tryExtractDateFormat2(string s);//ddmmyy
+	
+	bool extractIfIsTime(string s);
+	bool tryExtractTimeFormat1(string s);//hhmm
+	bool tryExtractTimeFormat2(string s);//hhmm(am/pm)
+
 	//these methods identify starting and ending times from the amount of identified 
 	bool finalizeDates();
 	bool finalizeTimes();
@@ -121,7 +129,7 @@ public:
 	
 	//boolean methods that recognize 
 	bool isInteger(string s);
-	bool isTime(int n);
-	bool isDate(int n);
+	bool isTime(string s);
+	bool isDate(string s);
 	bool isLocationMarker(string s);
 };

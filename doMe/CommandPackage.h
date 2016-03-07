@@ -3,6 +3,9 @@
 #include "Task.h"
 using namespace std;
 
+#define NO_INDEX 0
+#define NO_DESCRIPTION ""
+
 enum COMMAND_TYPE {
 		ADD, DISPLAY, DEL, EDIT, CLEAR, UNDO, SORT, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, INVALID
 	};
@@ -16,7 +19,7 @@ private:
 	string _description;
 
 public:
-	CommandPackage(COMMAND_TYPE commandType = INVALID, Task task = Task(), int index = 0, string description = "");
+	CommandPackage(COMMAND_TYPE commandType = INVALID, Task task = Task(), int index = NO_INDEX, string description = NO_DESCRIPTION);
 	~CommandPackage(void);
 
 	COMMAND_TYPE getCommandType();

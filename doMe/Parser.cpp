@@ -3,6 +3,20 @@
 Parser::Parser(string commandLine) :
 _commandLine(commandLine)
 {
+	_caseSensitiveCommandParameters.clear();
+	_commandParameters.clear();
+	_commandType = INVALID;
+	_commandPackage = CommandPackage();
+	_times.clear();
+	_time1 = NO_TIME;
+	_time2 = NO_TIME;
+	_dates.clear();
+	_date2 = NO_DATE;
+	_date1 = NO_DATE;
+	_location.clear();
+	_description.clear();
+	_index = NO_INDEX;
+	return;
 }
 
 Parser::~Parser(void) {
@@ -21,6 +35,19 @@ CommandPackage* Parser::parse() {
 
 void Parser::setCommandLine(string commandLine) {
 	_commandLine = commandLine;
+	_caseSensitiveCommandParameters.clear();
+	_commandParameters.clear();
+	_commandType = INVALID;
+	_commandPackage = CommandPackage();
+	_times.clear();
+	_time1 = NO_TIME;
+	_time2 = NO_TIME;
+	_dates.clear();
+	_date2 = NO_DATE;
+	_date1 = NO_DATE;
+	_location.clear();
+	_description.clear();
+	_index = NO_INDEX;
 	return;
 }
 
@@ -353,7 +380,7 @@ void Parser::packCommandIfConfirmedSearchCommand() {
 	if(_commandParameters.size() == 1) {
 		_commandType = INVALID;
 	} else if (_commandParameters.size() == 2) {
-		_commandPackage = CommandPackage(SEARCH, Task(), 0, _caseSensitiveCommandParameters[1]);
+		_commandPackage = CommandPackage(SEARCH, Task(), NO_INDEX, _caseSensitiveCommandParameters[1]);
 	} else if(_commandParameters.size() == 3) {
 		_commandType = ADD;
 	}
@@ -374,16 +401,14 @@ void Parser::packCommandIfConfirmedViewTypeCommand() {
 void Parser::packAddCommand() {
 	if(_description.size() == 0) {
 		return;
+	} else if(!finalizeDates()) {
+		return;
+	} else if(!finalizeTimes()) {
+		return;
 	} else {
-		if(!finalizeDates()) {
-			return;
-		} else if(!finalizeTimes()) {
-			return;
-		} else {
-			string location = combineWords(_location);
-			string description = combineWords(_description);
-			_commandPackage = CommandPackage(ADD, Task(description, _date1, _date2, _time1, _time2, location));
-		}
+		string location = combineWords(_location);
+		string description = combineWords(_description);
+		_commandPackage = CommandPackage(ADD, Task(description, _date1, _date2, _time1, _time2, location));
 	}
 }
 
@@ -405,51 +430,14 @@ void Parser::removeEditCommand() {
 }
 
 void Parser::getDateAndTimeParameters() {
-	for(int i=0; i < _commandParameters.size(); i++) {
-		if(isInteger(_commandParameters[i])) {
-			int value = stoi(_commandParameters[i]);
-			if(isTime(value)) {
-				_times.push_back(value);
-				_commandParameters[i] = "time";
-			} else if(isDate(value)) {
-				_dates.push_back(value);
-				_commandParameters[i] = "date";
-			}
+	for(int i = 0; i< _commandParameters.size(); i++) {
+		if(extractIfIsDate(_commandParameters[i])) {
+			_commandParameters[i] = "date";
+		} else if(extractIfIsTime(_commandParameters[i])) {
+			_commandParameters[i] = "time";
 		}
 	}
 	return;
-}
-
-bool Parser::finalizeDates() {
-	if(_dates.size() > 2) {
-		return false;
-	} else if(_dates.size() == 0) {
-		_date2 = 0;
-		_date1 = 0;
-	} else if(_dates.size() == 1) {
-		_date2 = _dates[0];
-		_date1 = 0;
-	} else if(_dates.size() == 2) {
-		_date1 = _dates[0];
-		_date2 = _dates[1];
-	}
-	return true;
-}
-
-bool Parser::finalizeTimes() {
-	if(_times.size() > 2) {
-		return false;
-	} else if(_times.size() == 0) {
-		_time2 = -1;
-		_time1 = -1;
-	} else if(_times.size() == 1) {
-		_time2 = _times[0];
-		_time1 = -1;
-	} else if(_times.size() == 2) {
-		_time1 = _times[0];
-		_time2 = _times[1];
-	}
-	return true;
 }
 
 void Parser::getLocationParameter() {
@@ -477,6 +465,99 @@ void Parser::getDescriptionParameter() {
 		}
 	}
 	return;
+}
+
+bool Parser::extractIfIsDate(string s) {
+	if(tryExtractDateFormat1(s)) {
+		return true;
+	} else if(tryExtractDateFormat2(s)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool Parser::tryExtractDateFormat1(string s) {
+	if(s.size() != 8) {
+		return false;
+	} else if(!isInteger(s)) {
+		return false;
+	} else {
+		//it is identified as a date and changed to standardized form
+		int integerDate = stoi(s);
+		int standardDateFormat;
+
+		standardDateFormat = (integerDate%10000)*10000; //input year value
+		integerDate /= 10000;
+		standardDateFormat += (integerDate%100)*100;
+		integerDate /= 100;
+		standardDateFormat += integerDate;
+
+		_dates.push_back(standardDateFormat);
+		return true;
+	}
+}
+
+bool Parser::tryExtractDateFormat2(string s) {
+	return false;
+}
+
+bool Parser::extractIfIsTime(string s) {
+	if(tryExtractTimeFormat1(s)) {
+		return true;
+	} else if(tryExtractTimeFormat2(s)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool Parser::tryExtractTimeFormat1(string s) {
+	if(s.size() != 4) {
+		return false;
+	} else if(!isInteger(s)) {
+		return false;
+	} else {
+		int standardTimeFormat = stoi(s);
+		_times.push_back(standardTimeFormat);
+		return true;
+	}
+}
+
+bool Parser::tryExtractTimeFormat2(string s) {
+	return false;
+}
+
+bool Parser::finalizeDates() {
+	if(_dates.size() > 2) {
+		return false;
+	} else if(_dates.size() == 0) {
+		_date1 = NO_DATE;
+		_date2 = NO_DATE;
+	} else if(_dates.size() == 1) {
+		_date1 = NO_DATE;
+		_date2 = _dates[0];
+	} else if(_dates.size() == 2) {
+		_date1 = _dates[0];
+		_date2 = _dates[1];
+	}
+	return true;
+}
+
+bool Parser::finalizeTimes() {
+	if(_times.size() > 2) {
+		return false;
+	} else if(_times.size() == 0) {
+		_time2 = NO_TIME;
+		_time1 = NO_TIME;
+	} else if(_times.size() == 1) {
+		_time2 = _times[0];
+		_time1 = NO_TIME;
+	} else if(_times.size() == 2) {
+		_time1 = _times[0];
+		_time2 = _times[1];
+	}
+	return true;
 }
 
 vector<string> Parser::splitSentence(string sentence) {
@@ -514,26 +595,6 @@ void Parser::removeLetter(string* s, int n) {
 
 bool Parser::isInteger(string s) {
 	return (s.find_first_not_of("1234567890") == std::string::npos);
-}
-
-bool Parser::isTime(int n) {
-	if(n/10000 == 0) {
-		return true;
-	} else { 
-		return false;
-	}
-}
-
-bool Parser::isDate(int n) {
-	if(n/100000000 == 0) {
-		if(n/10000 != 0) { 
-			return true;
-		} else {
-			return false;
-		}
-	} else { 
-		return false;
-	}
 }
 
 bool Parser::isLocationMarker(string s) {

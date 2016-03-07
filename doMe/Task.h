@@ -10,9 +10,12 @@
 //example 2: Meeting 11feb 1300-1700
 // task("meeting",1300,20160211,1700) vs task("meeting",20160211,0,1300,1700)
 
-
-
 using namespace std;
+
+#define NO_DATE 0
+#define NO_TIME -1
+#define NO_LOCATION ""
+#define NO_NAME ""
 
 class Task {
 private:
@@ -24,7 +27,7 @@ private:
 	string _location;
 	
 public:
-	Task(string name = "", int date1 = 0, int date2 = 0, int time1 = -1, int time2 = -1, string location = "");
+	Task(string name = NO_NAME, int date1 = NO_DATE, int date2 = NO_DATE, int time1 = NO_TIME, int time2 = NO_TIME, string location = NO_LOCATION);
 	~Task();
 	string getName();
 	int getDate1();
@@ -39,5 +42,4 @@ public:
 	void setTime1(int newTime);
 	void setTime2(int newTime);
 	void setLocation(string newLocation);
-
 };
