@@ -20,6 +20,8 @@ public:
 	~CommandPackage(void);
 
 	COMMAND_TYPE getCommandType();
+	//this method is for unittesting purposes
+	string getCommandTypeString();
 	Task* getTask();
 	int getIndex();
 	string getDescription();

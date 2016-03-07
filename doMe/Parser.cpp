@@ -424,11 +424,11 @@ bool Parser::finalizeDates() {
 	if(_dates.size() > 2) {
 		return false;
 	} else if(_dates.size() == 0) {
-		_date2 = -1;
-		_date1 = -1;
+		_date2 = 0;
+		_date1 = 0;
 	} else if(_dates.size() == 1) {
 		_date2 = _dates[0];
-		_date1 = -1;
+		_date1 = 0;
 	} else if(_dates.size() == 2) {
 		_date1 = _dates[0];
 		_date2 = _dates[1];
@@ -454,7 +454,7 @@ bool Parser::finalizeTimes() {
 
 void Parser::getLocationParameter() {
 	for(int i=0; i < _commandParameters.size(); i++) {
-		if(hasLocationMarker(_commandParameters[i])) {
+		if(isLocationMarker(_commandParameters[i])) {
 			removeLetter(&_caseSensitiveCommandParameters[i]);
 			while((i < _commandParameters.size()) && (_commandParameters[i] < "a")) {
 			_location.push_back(_caseSensitiveCommandParameters[i]);
@@ -536,7 +536,7 @@ bool Parser::isDate(int n) {
 	}
 }
 
-bool Parser::hasLocationMarker(string s) {
+bool Parser::isLocationMarker(string s) {
 	if(s[0] == '@') {
 		return true;
 	} else {

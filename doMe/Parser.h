@@ -61,12 +61,15 @@ private:
 	static const int FIRST_PARAMETER_POSITION = 1;
 
 public:
+
+	//Highest level of abstraction methods
 	void getParametersFromCommandLine();
 	void guessCommandType();
 	void findDetailsIfSimpleCommandType();
 	void findDetailsIfNotSimpleCommandType();
 	void parseAsAddCommandIfStillNotParsed();
 
+	//booleans methods to identify markers of each command
 	bool isAdd(string s);
 	bool isDisplay(string s);
 	bool isDelete(string s);
@@ -80,6 +83,8 @@ public:
 	bool isDirectory(string s);
 	bool isExit(string s);
 
+	//these methods do further checks on the parameters to see if it fits requirements of the commandtype
+	//packs the commandpackage object if it complies and changes the commandtype if it does not
 	void packCommandIfConfirmedDisplayCommand();
 	void packCommandIfConfirmedDeleteCommand();
 	void packCommandIfConfirmedUndoCommand();
@@ -87,6 +92,8 @@ public:
 	void packCommandIfConfirmedSavedDirectoryCommand();
 	void packCommandIfConfirmedExitCommand();
 
+	//methods below for similar function as those above. 
+	//these methods, however deal with commands that are less specific in their format
 	void packCommandIfConfirmedEditCommand();
 	void packEditCommand();
 	void packCommandIfConfirmedClearCommand();
@@ -95,20 +102,26 @@ public:
 	void packAddCommand();
 	void removeAddCommand();
 	void removeEditCommand();
+	
+	//these find the respective parameters from the parameters
 	void getDateAndTimeParameters();
 	void getLocationParameter();
 	void getDescriptionParameter();
 
+	//these methods identify starting and ending times from the amount of identified 
 	bool finalizeDates();
 	bool finalizeTimes();
 
-	vector<string> splitSentence(string commandLine);
+	//methods to manipulate strings
+	vector<string> splitSentence(string sentence);
 	string combineWords(vector<string> stringVector);
 	string makeAllCaps(string s);
+	//removes a letter from a string. If no int value provided, removes the first letter by default.
 	void removeLetter(string* s, int n = 0);
 	
+	//boolean methods that recognize 
 	bool isInteger(string s);
 	bool isTime(int n);
 	bool isDate(int n);
-	bool hasLocationMarker(string s);
+	bool isLocationMarker(string s);
 };

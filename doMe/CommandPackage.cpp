@@ -15,6 +15,65 @@ COMMAND_TYPE CommandPackage::getCommandType() {
 	return _commandType;
 }
 
+string CommandPackage::getCommandTypeString() {
+	switch(_commandType) {
+	case ADD:
+		return "add";
+		break;
+	
+	case DISPLAY:
+		return "display";
+		break;
+	
+	case DEL:
+		return "del";
+		break;
+	
+	case EDIT:
+		return "edit";
+		break;
+
+	case CLEAR:
+		return "clear";
+		break;
+
+	case UNDO:
+		return "undo";
+		break;
+	
+	case SORT:
+		return "sort";
+		break;
+
+	case SEARCH:
+		return "search";
+		break;
+
+	case ENDSEARCH:
+		return "endsearch";
+
+	case VIEWTYPE:
+		return "viewtype";
+
+	case SAVEDIRECTORY:
+		return "savedirectory";
+		break;
+	
+	case EXIT:
+		return "exit";
+		break;
+
+	case INVALID:
+		return "invalid";
+		break;
+
+	default:
+		return "error in getcommandtypestring";
+		break;
+	}
+	return "error in getcommandtypestring";
+}
+
 Task* CommandPackage::getTask() {
 	return &_task;
 }

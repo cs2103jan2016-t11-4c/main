@@ -33,12 +33,20 @@ public:
     TEST_CLASS(ParserCLASS) {
 public:
     TEST_METHOD(Parser_Test) {
-        /*
-    CommandPackage expectedAddObject(ADD, Task("fly a plane",0,11092001,-1,-1),0,"");
+	
+    CommandPackage expectedCommandObject(ADD, Task("fly a plane",0,11092001,-1,-1),0,"");
     Parser sut("fly a plane 11092001");
+	CommandPackage actualCommandObject = *(sut.parse());
 
-    Assert::AreEqual(sut.parse(),&expectedAddObject);
-    */
+	Assert::AreEqual(actualCommandObject.getCommandTypeString(), expectedCommandObject.getCommandTypeString());
+	Assert::AreEqual(actualCommandObject.getTask()->getName(), expectedCommandObject.getTask()->getName());
+	Assert::AreEqual(actualCommandObject.getTask()->getDate1(), expectedCommandObject.getTask()->getDate1());
+	Assert::AreEqual(actualCommandObject.getTask()->getDate2(), expectedCommandObject.getTask()->getDate2());
+	Assert::AreEqual(actualCommandObject.getTask()->getTime1(), expectedCommandObject.getTask()->getTime1());
+	Assert::AreEqual(actualCommandObject.getTask()->getTime2(), expectedCommandObject.getTask()->getTime2());
+	Assert::AreEqual(actualCommandObject.getTask()->getLocation(), expectedCommandObject.getTask()->getLocation());
+	Assert::AreEqual(actualCommandObject.getIndex(), expectedCommandObject.getIndex());
+	Assert::AreEqual(actualCommandObject.getDescription(), expectedCommandObject.getDescription());
     }
     };
 
