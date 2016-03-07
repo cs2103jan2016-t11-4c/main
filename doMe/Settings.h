@@ -23,6 +23,7 @@ public:
     string getTextFileName();
     int getViewType();
     void changeViewType(int newViewType);
+    void resizeWindow(); //............................................new//
     void loadSettings(); 
     void saveSettings(); 	
 
@@ -37,6 +38,8 @@ public:
     static const string VOID_INDICATOR;
     static const string VOID_STRING;
     static const string SYSTEM_MODE_CON;
+    static const int DEFAULT_WINDOWS_WIDTH;
+    static const int DEFAULT_WINDOWS_LENGTH; 
 
     string _textFileName;
     string _saveDirectory;

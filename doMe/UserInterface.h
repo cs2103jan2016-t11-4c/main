@@ -65,6 +65,8 @@ public:
 #endif
 
     list<Task*> *_taskList;
+    int _maxWindowWidth;
+    int _maxWindowLength;
     char buffer[255];
 
     static const string DEFAULT_TEXT_FILE_NAME;

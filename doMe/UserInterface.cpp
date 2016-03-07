@@ -52,6 +52,11 @@ UserInterface::UserInterface(void) {
 }
 */
 UserInterface::UserInterface(list<Task*> *taskList) {
+    COORD windowSize;
+    windowSize = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
+
+    _maxWindowWidth = windowSize.X;
+    _maxWindowLength = windowSize.Y;
     _taskList = taskList;
 }
 
@@ -316,11 +321,12 @@ void UserInterface::setWindowsRowsColumns(int size) {
     WINDOWS_WIDTH = columns;
     WINDOWS_LENGTH = rows - 4;
 
-    if(size > WINDOWS_LENGTH) {
+    if((size > WINDOWS_LENGTH) && (size < _maxWindowLength)){
         sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
         system(buffer);
         WINDOWS_LENGTH++;
     }
+
 }
 
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {

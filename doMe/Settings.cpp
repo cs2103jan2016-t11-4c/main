@@ -4,6 +4,8 @@ const string Settings::VOID_INDICATOR = "-";
 const string Settings::VOID_STRING = "";
 const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string Settings::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
+const int Settings::DEFAULT_WINDOWS_WIDTH = 80;
+const int Settings::DEFAULT_WINDOWS_LENGTH = 25; 
 
 Settings::Settings(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
@@ -220,4 +222,9 @@ void Settings::changeViewType(int newViewType) {
 
 string Settings::getTextFileName() {
     return _textFileName;
+}
+
+void Settings::resizeWindow() {
+        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
+        system(buffer);
 }
