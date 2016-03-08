@@ -22,7 +22,7 @@ const string UserInterface::MESSAGE_EDIT = "Edited inputted task description to 
 const string UserInterface::MESSAGE_CLEAR = "All contents cleared from %s";
 const string UserInterface::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit\" to exit the search module~";
 const string UserInterface::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
-const string UserInterface::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%s).";
+const string UserInterface::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
 const string UserInterface::MESSAGE_EXIT_SEARCH = "Exited search module.";
 const string UserInterface::MESSAGE_UNDO_COMMAND = "Undo previous command.";
 
@@ -219,13 +219,11 @@ void UserInterface::printSearchList(string searchTerm, int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
-    case -1:
-        taskListType = new ViewType(_taskList);
-        break;
     case 0:
         taskListType = new ViewType0(_taskList);
         break;
     default:
+        taskListType = new ViewType(_taskList);
         break;
     }
     printDisplayList(createDisplayBox(taskListType->createDisplayList()));
@@ -237,9 +235,6 @@ void UserInterface::printTaskList(int currentDate ,int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
-    case -1:
-        taskListType = new ViewType(_taskList , currentDate);
-        break;
     case 0:
         taskListType = new ViewType0(_taskList , currentDate);
         break;
@@ -247,6 +242,7 @@ void UserInterface::printTaskList(int currentDate ,int viewType) {
         taskListType = new ViewType1(_taskList , currentDate);
         break;
     default:
+        taskListType = new ViewType(_taskList , currentDate);
         break;
     }
 
@@ -260,13 +256,14 @@ string UserInterface::getTaskString(Task* task, int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
-    case -1:
-        taskListType = new ViewType();
-        break;
     case 0:
         taskListType = new ViewType0();
         break;
+            case 1:
+        taskListType = new ViewType1();
+        break;
     default:
+        taskListType = new ViewType();
         break;
     }
 

@@ -147,7 +147,7 @@ string ViewType::getDateTaskString(int date) {
     string month;
     string year;
 
-    if(date >= 0) {
+    if(date > 0) {
         day = getDay(date);
         month = getMonth(date);
         year = getYear(date);

@@ -50,8 +50,13 @@ string ViewType1::getComplimentaryString(Task* individualTask) {
     case 0:
         sprintf_s(buffer, MESSAGE_DISPLAY_HEADER.c_str(), (getDateTaskString(_currentDate)).c_str());
         _headerMarker = 1;
+        if(_currentDate != date) {
+            _headerMarker = 2;
+             return buffer + MESSAGE_NEW_LINE;
+        } else {
         return buffer;
         break;
+    }
     case 1:
         if(_currentDate != date) {    
             _headerMarker = 2;
@@ -95,7 +100,7 @@ string ViewType1::getDateTaskString(int date) {
     string month;
     string year;
 
-    if(date >= 0) {
+    if(date > 0) {
         day = getDay(date);
         month = getMonth(date);
         //year = getYear(date);

@@ -74,7 +74,8 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		return commandType;
 	case VIEWTYPE:
 		command = new Command_ViewType(_settings, commandPackage->getIndex());
-		return commandType;
+		//return commandType;
+        break;
 	case SAVEDIRECTORY:
 		command = new Command_SaveDirectory(_settings, commandPackage->getDescription());
 		return commandType;
