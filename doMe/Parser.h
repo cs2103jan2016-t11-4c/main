@@ -28,6 +28,7 @@
 #include <sstream>
 #include <algorithm>
 #include <string>
+#include <ctime>
 
 class Parser {
 public:
@@ -109,12 +110,13 @@ public:
 	void getDescriptionParameter();
 
 	bool extractIfIsDate(string s);
-	bool tryExtractDateFormat1(string s);//ddmmyyyy
-	bool tryExtractDateFormat2(string s);//ddmmyy
-	
+	bool tryExtractDateFormat1(string s);// ddmmyyyy
+	bool tryExtractDateFormat2(string s);// ddmmyy
+	bool tryExtractDateFormat3(string s);// dd/mm or d/mm or dd/mm or d/m
+	bool tryExtractDateFormat4(string s);// dd/mm/yy or d/mm/yy or dd/mm/yy or d/m/yy (yy can be replace with yyyy)
+
 	bool extractIfIsTime(string s);
-	bool tryExtractTimeFormat1(string s);//hhmm
-	bool tryExtractTimeFormat2(string s);//hhmm(am/pm)
+	bool tryExtractTimeFormat1(string s);// hhmm (may have hrs at the end)
 
 	//these methods identify starting and ending times from the amount of identified 
 	bool finalizeDates();
@@ -125,11 +127,15 @@ public:
 	string combineWords(vector<string> stringVector);
 	string makeAllCaps(string s);
 	//removes a letter from a string. If no int value provided, removes the first letter by default.
-	void removeLetter(string* s, int n = 0);
+	string removeLetter(string s, int n = 0);
 	
 	//boolean methods that recognize 
 	bool isInteger(string s);
 	bool isTime(string s);
 	bool isDate(string s);
 	bool isLocationMarker(string s);
+	bool isValidDate(int date);
+	bool isLeap(int year);
+
+	int getCurrentDate();
 };

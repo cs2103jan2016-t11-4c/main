@@ -443,7 +443,7 @@ void Parser::getDateAndTimeParameters() {
 void Parser::getLocationParameter() {
 	for(int i=0; i < _commandParameters.size(); i++) {
 		if(isLocationMarker(_commandParameters[i])) {
-			removeLetter(&_caseSensitiveCommandParameters[i]);
+			_caseSensitiveCommandParameters[i].erase(0,1);
 			while((i < _commandParameters.size()) && (_commandParameters[i] < "a")) {
 			_location.push_back(_caseSensitiveCommandParameters[i]);
 			_commandParameters[i] = "location";
@@ -472,6 +472,10 @@ bool Parser::extractIfIsDate(string s) {
 		return true;
 	} else if(tryExtractDateFormat2(s)) {
 		return true;
+	} else if(tryExtractDateFormat3(s)) {
+		return true;
+	} else if(tryExtractDateFormat4(s)) {
+		return true;
 	} else {
 		return false;
 	}
@@ -483,29 +487,117 @@ bool Parser::tryExtractDateFormat1(string s) {
 	} else if(!isInteger(s)) {
 		return false;
 	} else {
-		//it is identified as a date and changed to standardized form
-		int integerDate = stoi(s);
-		int standardDateFormat;
+		int possibleDate = stoi(s);
+		int year = possibleDate%10000;
+		int month = (possibleDate/10000)%100;
+		int day = ((possibleDate/10000)/100);
+		int standardDateForm = year*10000 + month*100 + day;
 
-		standardDateFormat = (integerDate%10000)*10000; //input year value
-		integerDate /= 10000;
-		standardDateFormat += (integerDate%100)*100;
-		integerDate /= 100;
-		standardDateFormat += integerDate;
-
-		_dates.push_back(standardDateFormat);
-		return true;
+		if(!isValidDate(standardDateForm)) {
+			return false;
+		} else {
+			_dates.push_back(standardDateForm);
+			return true;
+		}
 	}
 }
 
 bool Parser::tryExtractDateFormat2(string s) {
-	return false;
+	if(s.size() != 6) {
+		return false;
+	} else if(!isInteger(s)) {
+		return false;
+	} else {
+		int possibleDate = stoi(s);
+		int year = (possibleDate%100) + 2000;
+		int month = (possibleDate/100)%100;
+		int day = ((possibleDate/100)/100);
+		int standardDateForm = year*10000 + month*100 + day;
+		while(getCurrentDate() > standardDateForm) {
+			standardDateForm += ((100)*(10000));
+		}
+
+		if(!isValidDate(standardDateForm)) {
+			return false;
+		} else {
+			_dates.push_back(standardDateForm);
+			return true;
+		}
+	}
+}
+
+bool Parser::tryExtractDateFormat3(string s) {
+	if(s.size() > 5) {
+		return false;
+	} if(s.find("/") == string::npos) {
+		return false;
+	} else if(!isInteger(removeLetter(s,s.find("/")))) {
+		return false;
+	}
+
+	size_t index = s.find("/");
+	if(index == 0 || index == s.size()-1) {
+		return false;
+	}
+
+	int year = getCurrentDate() / 10000;
+	int month = stoi(s.substr(index+1));
+	s.erase(s.begin() + index, s.end());
+	int day = stoi(s);
+	int standardDateForm = year*10000 + month*100 + day;
+	
+	if(!isValidDate(standardDateForm)) {
+		return false;
+	}
+
+	_dates.push_back(standardDateForm);
+	return true;
+}
+
+bool Parser::tryExtractDateFormat4(string s) {
+	if(s.size() > 10) {
+		return false;
+	}
+
+	size_t firstIndex = s.find("/");
+	if(firstIndex == string::npos || firstIndex == 0) {
+		return false;
+	}
+
+	size_t secondIndex = s.find("/", firstIndex + 1);
+	if(secondIndex == string::npos || secondIndex == s.size()-1 || secondIndex == firstIndex+1) {
+		return false;
+	}
+	
+	string possibleDate = removeLetter(s, firstIndex);
+	possibleDate.erase(secondIndex-1,1);
+	if(!isInteger(possibleDate)) {
+		return false;
+	}
+
+	int year = stoi(s.substr(secondIndex+1));
+	if(year < 1000) {
+		year += 2000;
+		while(year < (getCurrentDate()/10000)) {
+			year +=100;
+		}
+	}
+	s.erase(s.begin() + secondIndex, s.end());
+	int month = stoi(s.substr(firstIndex+1));
+	s.erase(s.begin() + firstIndex, s.end());
+	int day = stoi(s);
+	int standardDateForm = year*10000 + month*100 + day;
+	
+	if(!isValidDate(standardDateForm)) {
+		return false;
+	}
+	
+	_dates.push_back(standardDateForm);
+	return true;
 }
 
 bool Parser::extractIfIsTime(string s) {
 	if(tryExtractTimeFormat1(s)) {
-		return true;
-	} else if(tryExtractTimeFormat2(s)) {
 		return true;
 	} else {
 		return false;
@@ -513,19 +605,19 @@ bool Parser::extractIfIsTime(string s) {
 }
 
 bool Parser::tryExtractTimeFormat1(string s) {
+	if((s.size() == 7) && (s.find("HRS") != string::npos)) {
+		s.erase(s.find("HRS"),3);
+	}
+
 	if(s.size() != 4) {
 		return false;
 	} else if(!isInteger(s)) {
 		return false;
 	} else {
-		int standardTimeFormat = stoi(s);
-		_times.push_back(standardTimeFormat);
+		int standardTimeForm = stoi(s);
+		_times.push_back(standardTimeForm);
 		return true;
 	}
-}
-
-bool Parser::tryExtractTimeFormat2(string s) {
-	return false;
 }
 
 bool Parser::finalizeDates() {
@@ -588,13 +680,13 @@ string Parser::makeAllCaps(string s) {
 	return s;
 }
 
-void Parser::removeLetter(string* s, int n) {
-	s->erase(s->begin()+n);
-	return;
+string Parser::removeLetter(string s, int n) {
+	s.erase(s.begin()+n);
+	return s;
 }
 
 bool Parser::isInteger(string s) {
-	return (s.find_first_not_of("1234567890") == std::string::npos);
+	return (s.find_first_not_of("1234567890") == string::npos);
 }
 
 bool Parser::isLocationMarker(string s) {
@@ -603,4 +695,44 @@ bool Parser::isLocationMarker(string s) {
 	} else {
 		return false;
 	}
+}
+
+bool Parser::isValidDate(int date) {
+	int day = date%100;
+	int month = (date/100)%100;
+	int year = date/10000;
+	static const int daysInEachMonth[13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	
+	if(month > 12) {											//month not possible
+		return false;
+	} else if(day > daysInEachMonth[month]) {					//day exceed the month's limit
+		return false;
+	} else if((month == 2 && day == 29) && (!isLeap(year))) {	//leap day not in a leap year
+		return false;
+	} else {
+		return true;								
+	}
+}
+
+bool Parser::isLeap(int year) {
+	if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+int Parser::getCurrentDate() {
+	time_t currentTime;
+	struct tm *localTime;
+
+	time( &currentTime );                 		
+	localTime = localtime( &currentTime );
+	int day    = localTime->tm_mday;
+	int month  = localTime->tm_mon + 1;
+	int year   = localTime->tm_year + 1900;
+
+	int date = day + month * 100 + year * 10000;
+
+	return date;
 }

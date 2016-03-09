@@ -74,6 +74,13 @@ public:
 	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
 
+	TEST_METHOD(Parser_Add_Test_1Time_AlternateFormat) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, 800, NO_LOCATION));
+    Parser sut("fly a plane 0800hrs");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
 	TEST_METHOD(Parser_Add_Test_2Time) {
     CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, 800, 1200, NO_LOCATION));
     Parser sut("fly a plane 0800 1200");
@@ -126,6 +133,55 @@ public:
 	TEST_METHOD(Parser_Add_Test_Time_Date_Location_Jumbled) {
     CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"));
     Parser sut("fly a plane 0800 11092001 @world trade centre 1200 12092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_DateFormat2) {
+    CommandPackage expectedCommandPackage(ADD, Task("graduate", NO_DATE, 20180615, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("graduate 150618");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_DateFormat3) {
+    CommandPackage expectedCommandPackage(ADD, Task("celebrate christmas", NO_DATE, 20161225, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("celebrate christmas 25/12");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_DateFormat3_Invalid) {
+    CommandPackage expectedCommandPackage(ADD, Task("celebrate christmas 2512/", NO_DATE, NO_DATE, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("celebrate christmas 2512/");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_DateFormat4) {
+    CommandPackage expectedCommandPackage(ADD, Task("celebrate christmas", NO_DATE, 20161225, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("celebrate christmas 25/12/16");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_DateFormat4_FullYear) {
+    CommandPackage expectedCommandPackage(ADD, Task("celebrate christmas", NO_DATE, 20161225, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("celebrate christmas 25/12/2016");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_DateFormat4_Invalid) {
+    CommandPackage expectedCommandPackage(ADD, Task("celebrate christmas 25//2008", NO_DATE, NO_DATE, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("celebrate christmas 25//2008");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Add_Test_InvalidDate) {
+    CommandPackage expectedCommandPackage(ADD, Task("celebrate christmas 29022003", NO_DATE, NO_DATE, NO_TIME, NO_TIME, NO_LOCATION));
+    Parser sut("celebrate christmas 29022003");
 	CommandPackage actualCommandPackage = *(sut.parse());
 	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
