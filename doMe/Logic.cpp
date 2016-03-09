@@ -18,7 +18,7 @@ void Logic::setEnvironment() {
 	getline(cin, command);
 
     _settings->loadSettings();
-    vectorToTaskList(_storage->getExistingData(_settings->getSaveDirectory()));
+    vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory()));
 	display(); //initial display
     
 }
@@ -218,7 +218,7 @@ void Logic::sort() {
 }
 
 void Logic::saveToTxtFile() {
-		_storage->saveUpdatedData(taskListToVector(), _settings->getSaveDirectory());
+		_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
