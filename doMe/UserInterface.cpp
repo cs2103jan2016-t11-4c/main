@@ -3,8 +3,10 @@ const string UserInterface::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
-int UserInterface::WINDOWS_WIDTH = 80;
-int UserInterface::WINDOWS_LENGTH = 25; 
+int UserInterface::DISPLAY_WIDTH = 80;
+int UserInterface::DISPLAY_LENGTH = 25;
+const int UserInterface::DEFAULT_WINDOWS_WIDTH = 80;
+const int UserInterface::DEFAULT_WINDOWS_LENGTH = 25; 
 
 const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
 const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
@@ -66,8 +68,7 @@ UserInterface::~UserInterface(void) {
 /****************************************************************/
 
 void UserInterface::printProgramWelcomePage() {
-    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), WINDOWS_WIDTH , WINDOWS_LENGTH);
-    system(buffer);
+    setDefaultWindowsRowsColumns();
     string space = "               ";
     cout << endl;
     cout << endl;
@@ -296,8 +297,8 @@ void UserInterface::showToUser(string message) {
 void UserInterface::showToUserMessageBox() {
     //if(_defaultViewType == 1) {
     string messageBox;
-    setWindowsRowsColumns(0);
-    messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
+    //setWindowsRowsColumns(0);
+    messageBox.assign(DISPLAY_WIDTH,MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 
     showToUser(messageBox);
@@ -318,15 +319,21 @@ void UserInterface::setWindowsRowsColumns(int size) {
     columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
-    WINDOWS_WIDTH = columns;
-    WINDOWS_LENGTH = rows - 4;
+    DISPLAY_WIDTH = columns;
+    DISPLAY_LENGTH = rows - 4;
 
-    if((size > WINDOWS_LENGTH) && (size < _maxWindowLength)){
-        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
-        system(buffer);
-        WINDOWS_LENGTH++;
-    }
+    if(size < _maxWindowLength) {
+        if(size > DISPLAY_LENGTH) {
+            sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
+            system(buffer);
+            DISPLAY_LENGTH++;
+        }
+    } 
+}
 
+void UserInterface::setDefaultWindowsRowsColumns() {
+    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
+    system(buffer);
 }
 
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
@@ -334,7 +341,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     string messageBox;
 
     setWindowsRowsColumns(displayList.size()+2);
-    messageBox.assign(WINDOWS_WIDTH,MESSAGE_BOX_CHARACTER);
+    messageBox.assign(DISPLAY_WIDTH,MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 
     displayList.insert(displayList.begin(),messageBox);
@@ -342,7 +349,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     displayListIter = displayList.begin();
     displayListIter++;
 
-    while(displayList.size() < WINDOWS_LENGTH) {
+    while(displayList.size() < DISPLAY_LENGTH) {
         displayList.push_back(MESSAGE_VOID_STRING);
     }
 

@@ -3,329 +3,329 @@
 const string Logic::LIST_DIVIDER = "__________";
 
 Logic::Logic() {
-	_settings = new Settings();
-		_storage = new Storage();
-	_taskList = new list<Task*>;
-	_tempTaskList = new list<Task*>;
-	_undoCommandList = new stack<Command*>;
-	_searchState = false;
+    _settings = new Settings();
+    _storage = new Storage();
+    _taskList = new list<Task*>;
+    _tempTaskList = new list<Task*>;
+    _undoCommandList = new stack<Command*>;
+    _searchState = false;
 
-	_UI = new UserInterface(_taskList);
+    _UI = new UserInterface(_taskList);
 }
 void Logic::setEnvironment() {	
     _UI->printProgramWelcomePage();
-	string command;
-	getline(cin, command);
+    string command;
+    getline(cin, command);
 
     _settings->loadSettings();
     vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory()));
-	display(); //initial display
-    
+    display(); //initial display
+
 }
 void Logic::displayWelcomeMessage() {
-	_UI->printNotificationWelcome();
+    _UI->printNotificationWelcome();
 }
 void Logic::executeCommandsUntilExitCommand() {
-	string command;
+    string command;
 
-	do {
-		_UI->printPromptCommand();
-		getline(cin, command);
+    do {
+        _UI->printPromptCommand();
+        getline(cin, command);
 
-	} while (executeCommand(command) != EXIT);
+    } while (executeCommand(command) != EXIT);
 }
 
 COMMAND_TYPE Logic::executeCommand(string commandText) {
-	if(commandText.empty()) {
-		display();
-		_UI->printNotificationInvalidCommand();
-		return INVALID;
-	}
+    if(commandText.empty()) {
+        display();
+        _UI->printNotificationInvalidCommand();
+        return INVALID;
+    }
 
-	Parser* parser = new Parser(commandText);
-	parser->parse();
-	CommandPackage* commandPackage = parser->getCommandPackage();
-	COMMAND_TYPE commandType = commandPackage->getCommandType();
+    Parser* parser = new Parser(commandText);
+    parser->parse();
+    CommandPackage* commandPackage = parser->getCommandPackage();
+    COMMAND_TYPE commandType = commandPackage->getCommandType();
 
-	Command* command;
+    Command* command;
 
-	switch(commandType) {
-	case ADD:
-		command = new Command_Add(_taskList, commandPackage->getTask());
-		break;
-	case DISPLAY:
-		endSearch();
-		return commandType;
-	case DEL:
-		command = new Command_Delete(_taskList, commandPackage->getIndex());
-		break;
-	case EDIT:
-		command = new Command_Edit(_taskList, commandPackage->getIndex(), commandPackage->getTask());
-		break;
-	case CLEAR:
-		command = new Command_Clear(_taskList);
-		break;
-	case UNDO:
-		undo();
-		return commandType;
-	case SEARCH:
-		search(commandPackage->getDescription());
-		sort();
-		display();
-		return commandType;
-	case VIEWTYPE:
-		command = new Command_ViewType(_settings, commandPackage->getIndex());
-		//return commandType;
+    switch(commandType) {
+    case ADD:
+        command = new Command_Add(_taskList, commandPackage->getTask());
         break;
-	case SAVEDIRECTORY:
-		command = new Command_SaveDirectory(_settings, commandPackage->getDescription());
-		return commandType;
-	case EXIT:
-		if(_searchState == true) {
-			endSearch();
-			_UI->printNotificationExitSearch();
-			return DISPLAY;
-		}
-		return commandType;
-	case INVALID:
-		display();
-		_UI->printNotificationInvalidCommand();
-		return commandType;
-	default:
-		assert(0);
-	}
+    case DISPLAY:
+        endSearch();
+        return commandType;
+    case DEL:
+        command = new Command_Delete(_taskList, commandPackage->getIndex());
+        break;
+    case EDIT:
+        command = new Command_Edit(_taskList, commandPackage->getIndex(), commandPackage->getTask());
+        break;
+    case CLEAR:
+        command = new Command_Clear(_taskList);
+        break;
+    case UNDO:
+        undo();
+        return commandType;
+    case SEARCH:
+        search(commandPackage->getDescription());
+        sort();
+        display();
+        return commandType;
+    case VIEWTYPE:
+        command = new Command_ViewType(_settings, commandPackage->getIndex());
+        //return commandType;
+        break;
+    case SAVEDIRECTORY:
+        command = new Command_SaveDirectory(_settings, commandPackage->getDescription());
+        return commandType;
+    case EXIT:
+        if(_searchState == true) {
+            endSearch();
+            _UI->printNotificationExitSearch();
+            return DISPLAY;
+        }
+        return commandType;
+    case INVALID:
+        display();
+        _UI->printNotificationInvalidCommand();
+        return commandType;
+    default:
+        assert(0);
+    }
 
-	if(command->execute() == true) {
-		sort();
-		display();
-		displaySuccessfulCommandNotification(commandType, command);
-		_undoCommandList->push(command);
+    if(command->execute() == true) {
+        sort();
+        display();
+        displaySuccessfulCommandNotification(commandType, command);
+        _undoCommandList->push(command);
 
-		if(_searchState == true) {
-			search(_searchTerm);
-		}
-	}else {
-		display();
-		displayInvalidCommandNotification(commandType, command);
-	}
+        if(_searchState == true) {
+            search(_searchTerm);
+        }
+    }else {
+        display();
+        displayInvalidCommandNotification(commandType, command);
+    }
     saveToTxtFile();
     _settings->saveSettings();
-	//delete parser;
-	//delete commandPackage;
+    //delete parser;
+    //delete commandPackage;
 
-	return commandType;
+    return commandType;
 }
 
 void Logic::display() {
-	if(_searchState == true) {
-		_UI->printSearchList(_searchTerm, _settings->getViewType());
-	}else {
-		_UI->printTaskList(getCurrentDate(), _settings->getViewType());
-	}	
+    if(_searchState == true) {
+        _UI->printSearchList(_searchTerm, _settings->getViewType());
+    }else {
+        _UI->printTaskList(getCurrentDate(), _settings->getViewType());
+    }	
 }
 
 void Logic::displaySuccessfulCommandNotification(COMMAND_TYPE commandType, Command* command) {
-	switch(commandType) {
-	case ADD:
-		_UI->printNotificationAdd(command->getTask(), _settings->getViewType(), _settings->getTextFileName());
-		break;
-	case DEL:
-		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), _settings->getTextFileName());
-		break;
-	case EDIT:
-		_UI->printNotificationEdit(command->getTask(), _settings->getViewType());
-		break;
-	case CLEAR:
-		_UI->printNotificationClear(_settings->getTextFileName());
-		break;
-	case VIEWTYPE:
-		_UI->printNotificationViewTypeChange(command->getIndex());
-		break;
-	case SAVEDIRECTORY:
-		_UI->printNotificationChangeSaveFileDirectory(command->getDescription());
-		break;
-	default:
-		assert(0);
-		break;
-	}
+    switch(commandType) {
+    case ADD:
+        _UI->printNotificationAdd(command->getTask(), _settings->getViewType(), _settings->getTextFileName());
+        break;
+    case DEL:
+        _UI->printNotificationDelete(command->getTask(), _settings->getViewType(), _settings->getTextFileName());
+        break;
+    case EDIT:
+        _UI->printNotificationEdit(command->getTask(), _settings->getViewType());
+        break;
+    case CLEAR:
+        _UI->printNotificationClear(_settings->getTextFileName());
+        break;
+    case VIEWTYPE:
+        _UI->printNotificationViewTypeChange(command->getIndex());
+        break;
+    case SAVEDIRECTORY:
+        _UI->printNotificationChangeSaveFileDirectory(command->getDescription());
+        break;
+    default:
+        assert(0);
+        break;
+    }
 }
 
 void Logic::displayInvalidCommandNotification(COMMAND_TYPE commandType, Command* command) {
 
-	switch(commandType) {
-	case ADD:
-		_UI->printNotificationInvalidAdd();
-		break;
-	case DEL:
-		_UI->printNotificationInvalidDeletion();
-		break;
-	case EDIT:
-		_UI->printNotificationInvalidEdit();
-		break;
-	case VIEWTYPE:
-		_UI->printNotificationInvalidViewtype();
-		break;
-	case SAVEDIRECTORY:
-		_UI->printNotificationInvalidSaveFileDirectory();
-		break;
-	default:
-		assert(0);
-		break;
-	}
+    switch(commandType) {
+    case ADD:
+        _UI->printNotificationInvalidAdd();
+        break;
+    case DEL:
+        _UI->printNotificationInvalidDeletion();
+        break;
+    case EDIT:
+        _UI->printNotificationInvalidEdit();
+        break;
+    case VIEWTYPE:
+        _UI->printNotificationInvalidViewtype();
+        break;
+    case SAVEDIRECTORY:
+        _UI->printNotificationInvalidSaveFileDirectory();
+        break;
+    default:
+        assert(0);
+        break;
+    }
 }
 
 void Logic::search(string searchTerm) {
-	transferBackSearchTasks();
+    transferBackSearchTasks();
 
-	list<Task*>::iterator iter = _taskList->begin();
-	while(iter != _taskList->end()) {
-		if(!foundInTask(*iter, searchTerm)) {
-			_tempTaskList->push_back(*iter);
-			iter = _taskList->erase(iter);
-		}else {
-			iter++;
-		}
-	}
+    list<Task*>::iterator iter = _taskList->begin();
+    while(iter != _taskList->end()) {
+        if(!foundInTask(*iter, searchTerm)) {
+            _tempTaskList->push_back(*iter);
+            iter = _taskList->erase(iter);
+        }else {
+            iter++;
+        }
+    }
 
-	_searchTerm = searchTerm;
-	_searchState = true;
+    _searchTerm = searchTerm;
+    _searchState = true;
 }
 
 void Logic::endSearch() {
-	transferBackSearchTasks();
-	_searchState = false;
+    transferBackSearchTasks();
+    _searchState = false;
 
-	sort();
-	display();
+    sort();
+    display();
 }
 
 void Logic::undo() {
-	if(_undoCommandList->empty()) {
-		display();
-		_UI->printNotificationInvalidUndo();
-		return;
-	}
-	_undoCommandList->top()->undo();
-	delete _undoCommandList->top();
-	_undoCommandList->pop();
-	sort();
-	display();
-	_UI->printNotificationUndo();
+    if(_undoCommandList->empty()) {
+        display();
+        _UI->printNotificationInvalidUndo();
+        return;
+    }
+    _undoCommandList->top()->undo();
+    delete _undoCommandList->top();
+    _undoCommandList->pop();
+    sort();
+    display();
+    _UI->printNotificationUndo();
 }
 
 void Logic::sort() {
-	_taskList->sort([](Task* a, Task* b) {return a->getDate1() < b->getDate1();});
-	_taskList->sort([](Task* a, Task* b) {return a->getTime1() < b->getTime1();});
+    _taskList->sort([](Task* a, Task* b) {return a->getDate1() < b->getDate1();});
+    _taskList->sort([](Task* a, Task* b) {return a->getTime1() < b->getTime1();});
 }
 
 void Logic::saveToTxtFile() {
-		_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+    _storage->saveData(taskListToVector(), _settings->getSaveDirectory());
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
-	for(unsigned int i = 0; i < existingData.size(); i+=7) {
-		string name = existingData[i];
-		int date1 = stringToInteger(existingData[i+1]);
-		int date2 = stringToInteger(existingData[i+2]);
-		int time1 = stringToInteger(existingData[i+3]);
-		int time2 = stringToInteger(existingData[i+4]);
-		string location = existingData[i+5];
+    for(unsigned int i = 0; i < existingData.size(); i+=7) {
+        string name = existingData[i];
+        int date1 = stringToInteger(existingData[i+1]);
+        int date2 = stringToInteger(existingData[i+2]);
+        int time1 = stringToInteger(existingData[i+3]);
+        int time2 = stringToInteger(existingData[i+4]);
+        string location = existingData[i+5];
 
-		_taskList->push_back(new Task(name, date1, date2, time1, time2, location));
-	}
-	sort();
+        _taskList->push_back(new Task(name, date1, date2, time1, time2, location));
+    }
+    sort();
 }
 
 vector<string> Logic::taskListToVector() {
-	vector<string> updatedData;
+    vector<string> updatedData;
 
-	for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
-		updatedData.push_back((*iter)->getName());
-		updatedData.push_back(integerToString((*iter)->getDate1()));
-		updatedData.push_back(integerToString((*iter)->getDate2()));
-		updatedData.push_back(integerToString((*iter)->getTime1()));
-		updatedData.push_back(integerToString((*iter)->getTime2()));
-		updatedData.push_back((*iter)->getLocation());
-		updatedData.push_back(LIST_DIVIDER);
-	}
-	return updatedData;
+    for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
+        updatedData.push_back((*iter)->getName());
+        updatedData.push_back(integerToString((*iter)->getDate1()));
+        updatedData.push_back(integerToString((*iter)->getDate2()));
+        updatedData.push_back(integerToString((*iter)->getTime1()));
+        updatedData.push_back(integerToString((*iter)->getTime2()));
+        updatedData.push_back((*iter)->getLocation());
+        updatedData.push_back(LIST_DIVIDER);
+    }
+    return updatedData;
 }
 
 bool Logic::foundInTask(Task* task, string searchTerm) {
-	string name = task->getName();
-	string location = task->getLocation();
-	string date1 = integerToString(task->getDate1());
-	string date2 = integerToString(task->getDate2());
-	string time1 = integerToString(task->getTime1());
-	string time2 = integerToString(task->getTime2());
+    string name = task->getName();
+    string location = task->getLocation();
+    string date1 = integerToString(task->getDate1());
+    string date2 = integerToString(task->getDate2());
+    string time1 = integerToString(task->getTime1());
+    string time2 = integerToString(task->getTime2());
 
-	size_t found = name.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
+    size_t found = name.find(searchTerm);
+    if(found != string::npos) {
+        return true;
+    }
 
-	found = location.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
+    found = location.find(searchTerm);
+    if(found != string::npos) {
+        return true;
+    }
 
-	found = date1.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
+    found = date1.find(searchTerm);
+    if(found != string::npos) {
+        return true;
+    }
 
-	found = date2.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
+    found = date2.find(searchTerm);
+    if(found != string::npos) {
+        return true;
+    }
 
-	found = time1.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
+    found = time1.find(searchTerm);
+    if(found != string::npos) {
+        return true;
+    }
 
-	found = time2.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
+    found = time2.find(searchTerm);
+    if(found != string::npos) {
+        return true;
+    }
 
-	return false;
+    return false;
 }
 
 int Logic::stringToInteger(string text) {
-	stringstream ss(text);
-	int integer;
+    stringstream ss(text);
+    int integer;
 
-	ss >> integer;
+    ss >> integer;
 
-	return integer;
+    return integer;
 }
 
 string Logic::integerToString(int integer) {
-	ostringstream word;
-	word << integer;
-	return word.str();
+    ostringstream word;
+    word << integer;
+    return word.str();
 }
 
 int Logic::getCurrentDate() {
-	time_t currentTime;
-	struct tm *localTime;
+    time_t currentTime;
+    struct tm *localTime;
 
-	time( &currentTime );                 		// Get the current time
-	localTime = localtime( &currentTime );		// Convert the current time to the local time
+    time( &currentTime );                 		// Get the current time
+    localTime = localtime( &currentTime );		// Convert the current time to the local time
 
-	int day    = localTime->tm_mday;
-	int month  = localTime->tm_mon + 1;
-	int year   = localTime->tm_year + 1900;
+    int day    = localTime->tm_mday;
+    int month  = localTime->tm_mon + 1;
+    int year   = localTime->tm_year + 1900;
 
-	int date = day + month * 100 + year * 10000;	//YYYYMMDD
+    int date = day + month * 100 + year * 10000;	//YYYYMMDD
 
-	return date;
+    return date;
 }
 
 void Logic::transferBackSearchTasks() {
-	while(!_tempTaskList->empty()) {
-		_taskList->push_back(_tempTaskList->front());
-		_tempTaskList->pop_front();
-	}
+    while(!_tempTaskList->empty()) {
+        _taskList->push_back(_tempTaskList->front());
+        _tempTaskList->pop_front();
+    }
 }

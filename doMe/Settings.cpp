@@ -15,6 +15,8 @@ Settings::Settings(void) {
 Settings::~Settings(void) {
 }
 
+/****************************************************************/
+
 void Settings::loadSettings() {
     ifstream readFile(FILE_SETTINGS_NAME);
     stringstream is;
@@ -80,6 +82,8 @@ void Settings::saveSettings() {
     writeFile << writeSettingsDetails(r) << endl;
 }
 
+/****************************************************************/
+
 string Settings::writeSettingsDetails(string sentence) {
     if(sentence.empty()) {
         return VOID_INDICATOR;
@@ -95,6 +99,8 @@ string Settings::loadSettingsDetails(string sentence) {
         return sentence;
     }
 }
+
+/****************************************************************/
 
 void Settings::openNewSettingFile() {
     std::ofstream writeFile;
@@ -120,6 +126,16 @@ void Settings::updateTextFileName(string textFileName) {
     _textFileName = newTextFileName;
 }
 
+bool Settings::checkEmptySaveDirectory() {
+    if(_saveDirectory.empty()) {
+        return false;
+    } else {
+        return true;
+    }
+}
+
+/****************************************************************/
+
 string Settings::createValidTextFileNameString(string textFileName) {
     string fileExtension = ".txt";
     if(textFileName.substr(textFileName.find_last_of(".") + 1) == "txt") {
@@ -137,6 +153,8 @@ string Settings::createValidFileDirectoryString(string directory) {
         return directory + fileSeparator;
     }
 }
+
+/****************************************************************/
 /*
 void Settings::changeSaveDirectory(string directory) { //need refactoring
 //delete old text file?
@@ -183,6 +201,29 @@ void Settings::changeSaveDirectory(string directory) {
 
 }
 
+void Settings::changeViewType(int newViewType) {
+    _viewType = newViewType;
+}
+
+/****************************************************************/
+
+string Settings::getSaveDirectory() {
+    return(_saveDirectory+_textFileName);
+}
+
+int Settings::getViewType() {
+    return _viewType;
+}
+
+string Settings::getTextFileName() {
+    return _textFileName;
+}
+
+void Settings::resizeWindow() {
+        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
+        system(buffer);
+}
+
 //https://msdn.microsoft.com/en-us/library/windows/desktop/bb773584(v=vs.85).aspx
 bool Settings::checkValidityOfDirectory(const string& directory) {
     DWORD ftyp = GetFileAttributesA(directory.c_str());
@@ -194,33 +235,4 @@ bool Settings::checkValidityOfDirectory(const string& directory) {
     }
 
     return false;    
-}
-
-string Settings::getSaveDirectory() {
-    return(_saveDirectory+_textFileName);
-}
-
-bool Settings::checkEmptySaveDirectory() {
-    if(_saveDirectory.empty()) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-int Settings::getViewType() {
-    return _viewType;
-}
-
-void Settings::changeViewType(int newViewType) {
-    _viewType = newViewType;
-}
-
-string Settings::getTextFileName() {
-    return _textFileName;
-}
-
-void Settings::resizeWindow() {
-        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
-        system(buffer);
 }
