@@ -76,6 +76,7 @@ void UserInterface::printProgramWelcomePage() {
     cout << endl;
     cout << endl;
     cout << endl;
+	cout << endl;
     cout << space; cout << "                   Welcome to" << endl; 
     cout << space; cout << "      _         __  __                          " << endl;
     cout << space; cout << "     | |       |  \\/  |                         " << endl;
