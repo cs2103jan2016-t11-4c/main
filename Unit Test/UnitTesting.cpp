@@ -53,7 +53,7 @@ public:
 	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
 
-	TEST_METHOD(Parser_Add_Test2_1Date) {
+	TEST_METHOD(Parser_Add_Test_1Date) {
     CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, 20010911, NO_TIME, NO_TIME, NO_LOCATION));
     Parser sut("fly a plane 11092001");
 	CommandPackage actualCommandPackage = *(sut.parse());
@@ -74,12 +74,7 @@ public:
 	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
 
-	TEST_METHOD(Parser_Add_Test_1Time_AlternateFormat) {
-    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, 800, NO_LOCATION));
-    Parser sut("fly a plane 0800hrs");
-	CommandPackage actualCommandPackage = *(sut.parse());
-	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
-	}
+	
 
 	TEST_METHOD(Parser_Add_Test_2Time) {
     CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, 800, 1200, NO_LOCATION));
@@ -186,7 +181,84 @@ public:
 	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
 
-    };
+	TEST_METHOD(Parser_Add_Test_1Time_AlternateFormat) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, 800, NO_LOCATION));
+    Parser sut("fly a plane 0800hrs");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+	
+	TEST_METHOD(Parser_Edit_Test_Simple) {
+    CommandPackage expectedCommandPackage(EDIT, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, NO_TIME, NO_LOCATION),1);
+    Parser sut("e 1 fly a plane");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_1Date_AlternateEditCommand) {
+    CommandPackage expectedCommandPackage(EDIT, Task("fly a plane", NO_DATE, 20010911, NO_TIME, NO_TIME, NO_LOCATION), 2);
+    Parser sut("edit 2 fly a plane 11092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_2Date) {
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, 20140814, 20180515, NO_TIME, NO_TIME, NO_LOCATION), 1);
+    Parser sut("e 1 14082014 15052018");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_1Time) {
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, NO_DATE, NO_DATE, NO_TIME, 800, NO_LOCATION), 1);
+    Parser sut("e 1 0800");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_2Time) {
+    CommandPackage expectedCommandPackage(EDIT, Task(No_NAME, NO_DATE, NO_DATE, 800, 1200, NO_LOCATION), 1);
+    Parser sut("e 1 0800 1200");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_1Date_1Time) {
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, NO_DATE, 20010911, NO_TIME, 800, NO_LOCATION), 1);
+    Parser sut("e 1 11092001 0800");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_1Time_1Date) {
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, NO_DATE, 20010911, NO_TIME, 800, NO_LOCATION), 1);
+    Parser sut("e 1 0800 11092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+    
+	TEST_METHOD(Parser_Edit_Test_2Time_2Date) {
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, 20010911, 20010912, 800, 1200, NO_LOCATION), 1);
+    Parser sut("e 1 0800 1200 11092001 12092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+    TEST_METHOD(Parser_Edit_Test_Location) {
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, NO_DATE, NO_DATE, NO_TIME, NO_TIME, "world trade centre"), 1);
+    Parser sut("e 1 @world trade centre");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+	TEST_METHOD(Parser_Edit_Test_Name_Location_2Time_2Date) {
+    CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"));
+    Parser sut("e 1 fly a plane @world trade centre 0800 1200 11092001 12092001");
+	CommandPackage actualCommandPackage = *(sut.parse());
+	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
+	}
+
+};
 
     TEST_CLASS(SettingCLASS) {
 public:
