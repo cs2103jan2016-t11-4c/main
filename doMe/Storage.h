@@ -21,7 +21,7 @@ using namespace std;
 class Storage {
 private:
 	string _location;
-	string _txtFileName = "todo.txt";
+	/*string _txtFileName = "todo.txt";*/
 	// to check whether file is already created, or physically available, in given directory
 	bool _isFileCreated;
 

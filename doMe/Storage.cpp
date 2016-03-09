@@ -7,7 +7,7 @@ Storage::Storage()
 
 void Storage::setLocation(string directory)
 {
-	_location = directory + _txtFileName;
+	_location = directory + "todo.txt";
 }
 
 vector<string> Storage::retrieveData(string directory)
