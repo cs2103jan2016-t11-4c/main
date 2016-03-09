@@ -24,11 +24,11 @@ int Command_Edit::execute() {
 		_oldName = _task->getName();
 		_task->setName(_newName);
 	}
-	if(_newDate1 != -1) {
+	if(_newDate1 != 0) {
 		_oldDate1 = _task->getDate1();
 		_task->setDate1(_newDate1);
 	}
-	if(_newDate2 != -1) {
+	if(_newDate2 != 0) {
 		_oldDate2 = _task->getDate2();
 		_task->setDate2(_newDate2);
 	}
