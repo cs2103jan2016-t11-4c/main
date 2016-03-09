@@ -1,18 +1,18 @@
 #include "Storage.h"
 
-Storage::Storage(string location)
+Storage::Storage()
 {
-	_location = location;
+	//_location = location;
 	_isFileCreated = false;
 }
 
-vector<string> Storage::getExistingData()
+vector<string> Storage::getExistingData(string saveDirectory)
 {
 	vector<string> dataVector;
 	string tempText;
 	ifstream readFile;
 
-	readFile.open(_location);
+	readFile.open(saveDirectory);
 
 	if (readFile.is_open()) {
 		while (getline(readFile, tempText)) {
@@ -21,7 +21,7 @@ vector<string> Storage::getExistingData()
 	}
 	else {
 		_isFileCreated = true;
-		cerr << "File " << _location << " does not exist yet" << endl;
+		cerr << "File " << saveDirectory << " does not exist yet" << endl;
 	}
 
 	readFile.close();
@@ -29,15 +29,15 @@ vector<string> Storage::getExistingData()
 	return dataVector;
 }
 
-void Storage::saveUpdatedData(vector<string> updatedData)
+void Storage::saveUpdatedData(vector<string> updatedData, string saveDirectory)
 {
 	ofstream writeFile;
 
-	writeFile.open(_location);
+	writeFile.open(saveDirectory);
 
 	if (writeFile.is_open()) {
 		if (_isFileCreated) {
-			cout << _location << " has just been newly created! Your changes will be saved here." << endl;
+			cout << saveDirectory << " has just been newly created! Your changes will be saved here." << endl;
 		}
 
 		for (int i = 0; i != updatedData.size(); i++) {
@@ -45,14 +45,14 @@ void Storage::saveUpdatedData(vector<string> updatedData)
 		}
 	}
 	else {
-		cerr << "There is an error in opening file " << _location << endl;
+		cerr << "There is an error in opening file " << saveDirectory << endl;
 	}
 
 	writeFile.close();
 }
-
+/*
 void Storage::changeLocation(string newLocation)
 {
 	_location = newLocation;
 }
-
+*/

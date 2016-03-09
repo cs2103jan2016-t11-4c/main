@@ -19,15 +19,15 @@ using namespace std;
 
 class Storage {
 private:
-	string _location;
+	//string _location;
 	// to check whether file is already created, or physically available, in given directory
 	bool _isFileCreated;
 
 public:
-	Storage(string);
+	Storage();
 
-	vector<string> getExistingData();
-	void saveUpdatedData(vector<string>);
+	vector<string> getExistingData(string saveDirectory);
+	void saveUpdatedData(vector<string>, string saveDirectory);
 	void changeLocation(string);
 };
 

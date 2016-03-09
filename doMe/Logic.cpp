@@ -4,7 +4,7 @@ const string Logic::LIST_DIVIDER = "__________";
 
 Logic::Logic() {
 	_settings = new Settings();
-	//	_storage = new Storage();
+		_storage = new Storage();
 	_taskList = new list<Task*>;
 	_tempTaskList = new list<Task*>;
 	_undoCommandList = new stack<Command*>;
@@ -12,14 +12,15 @@ Logic::Logic() {
 
 	_UI = new UserInterface(_taskList);
 }
-void Logic::setEnvironment() {
-	//	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory());
+void Logic::setEnvironment() {	
     _UI->printProgramWelcomePage();
 	string command;
 	getline(cin, command);
 
     _settings->loadSettings();
+    vectorToTaskList(_storage->getExistingData(_settings->getSaveDirectory()));
 	display(); //initial display
+    
 }
 void Logic::displayWelcomeMessage() {
 	_UI->printNotificationWelcome();
@@ -107,7 +108,7 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		display();
 		displayInvalidCommandNotification(commandType, command);
 	}
-
+    saveToTxtFile();
 	//delete parser;
 	//delete commandPackage;
 
@@ -217,7 +218,7 @@ void Logic::sort() {
 }
 
 void Logic::saveToTxtFile() {
-	//	_storage->saveData(taskListToVector(), _settings->getSaveDirectory());
+		_storage->saveUpdatedData(taskListToVector(), _settings->getSaveDirectory());
 }
 
 void Logic::vectorToTaskList(vector<string>& existingData) {
