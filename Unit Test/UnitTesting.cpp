@@ -217,7 +217,7 @@ public:
 	}
 
 	TEST_METHOD(Parser_Edit_Test_2Time) {
-    CommandPackage expectedCommandPackage(EDIT, Task(No_NAME, NO_DATE, NO_DATE, 800, 1200, NO_LOCATION), 1);
+    CommandPackage expectedCommandPackage(EDIT, Task(NO_NAME, NO_DATE, NO_DATE, 800, 1200, NO_LOCATION), 1);
     Parser sut("e 1 0800 1200");
 	CommandPackage actualCommandPackage = *(sut.parse());
 	compareCommandPackage(expectedCommandPackage, actualCommandPackage);
