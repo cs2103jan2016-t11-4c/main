@@ -25,12 +25,6 @@
     <ClCompile Include="ViewType.cpp">
       <Filter>ViewType</Filter>
     </ClCompile>
-    <ClCompile Include="ViewType0.cpp">
-      <Filter>ViewType</Filter>
-    </ClCompile>
-    <ClCompile Include="ViewType1.cpp">
-      <Filter>ViewType</Filter>
-    </ClCompile>
     <ClCompile Include="CommandPackage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -55,6 +49,12 @@
     <ClCompile Include="Command_SaveDirectory.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
+    <ClCompile Include="ViewType2.cpp">
+      <Filter>ViewType</Filter>
+    </ClCompile>
+    <ClCompile Include="ViewType1.cpp">
+      <Filter>ViewType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logic.h">
@@ -76,12 +76,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ViewType.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewType0.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ViewType1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CommandPackage.h">
@@ -107,6 +101,12 @@
     </ClInclude>
     <ClInclude Include="Command_SaveDirectory.h">
       <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewType2.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewType1.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

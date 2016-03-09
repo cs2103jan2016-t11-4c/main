@@ -109,6 +109,7 @@ COMMAND_TYPE Logic::executeCommand(string commandText) {
 		displayInvalidCommandNotification(commandType, command);
 	}
     saveToTxtFile();
+    _settings->saveSettings();
 	//delete parser;
 	//delete commandPackage;
 
@@ -126,16 +127,16 @@ void Logic::display() {
 void Logic::displaySuccessfulCommandNotification(COMMAND_TYPE commandType, Command* command) {
 	switch(commandType) {
 	case ADD:
-		_UI->printNotificationAdd(command->getTask(), _settings->getViewType(), "doMe.txt");
+		_UI->printNotificationAdd(command->getTask(), _settings->getViewType(), _settings->getTextFileName());
 		break;
 	case DEL:
-		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), "doMe.txt");
+		_UI->printNotificationDelete(command->getTask(), _settings->getViewType(), _settings->getTextFileName());
 		break;
 	case EDIT:
 		_UI->printNotificationEdit(command->getTask(), _settings->getViewType());
 		break;
 	case CLEAR:
-		_UI->printNotificationClear("doMe.txt");
+		_UI->printNotificationClear(_settings->getTextFileName());
 		break;
 	case VIEWTYPE:
 		_UI->printNotificationViewTypeChange(command->getIndex());

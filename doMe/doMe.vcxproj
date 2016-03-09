@@ -27,8 +27,8 @@
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="ViewType.cpp" />
-    <ClCompile Include="ViewType0.cpp" />
     <ClCompile Include="ViewType1.cpp" />
+    <ClCompile Include="ViewType2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandPackage.h" />
@@ -46,8 +46,8 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="ViewType.h" />
-    <ClInclude Include="ViewType0.h" />
     <ClInclude Include="ViewType1.h" />
+    <ClInclude Include="ViewType2.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{521D8F24-850F-497F-B7E0-CF8940425FB0}</ProjectGuid>

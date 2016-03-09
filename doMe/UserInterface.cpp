@@ -219,8 +219,11 @@ void UserInterface::printSearchList(string searchTerm, int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
-    case 0:
-        taskListType = new ViewType0(_taskList);
+    case 1:
+        taskListType = new ViewType1(_taskList);
+        break;
+    case 2:
+        taskListType = new ViewType2(_taskList);
         break;
     default:
         taskListType = new ViewType(_taskList);
@@ -235,11 +238,11 @@ void UserInterface::printTaskList(int currentDate ,int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
-    case 0:
-        taskListType = new ViewType0(_taskList , currentDate);
-        break;
     case 1:
         taskListType = new ViewType1(_taskList , currentDate);
+        break;
+    case 2:
+        taskListType = new ViewType2(_taskList , currentDate);
         break;
     default:
         taskListType = new ViewType(_taskList , currentDate);
@@ -256,11 +259,11 @@ string UserInterface::getTaskString(Task* task, int viewType) {
     ViewType *taskListType;
 
     switch(viewType) {
-    case 0:
-        taskListType = new ViewType0();
-        break;
-            case 1:
+    case 1:
         taskListType = new ViewType1();
+        break;
+    case 2:
+        taskListType = new ViewType2();
         break;
     default:
         taskListType = new ViewType();

@@ -53,7 +53,6 @@ void Settings::loadSettings() {
 
 void Settings::saveSettings() {
     ofstream writeFile;
-    stringstream convert;
     string viewType;
     string c;
     string r;
@@ -71,16 +70,13 @@ void Settings::saveSettings() {
 
     writeFile << writeSettingsDetails(_saveDirectory) << endl;
 
-    convert << _viewType;
-    viewType = convert.str();
+    viewType =to_string(_viewType);
     writeFile << writeSettingsDetails(viewType) << endl;
 
-    convert << columns;
-    c = convert.str();
+    c = to_string(columns);
     writeFile << writeSettingsDetails(c) << endl;
 
-    convert << rows;
-    r = convert.str();
+    r = to_string(rows);
     writeFile << writeSettingsDetails(r) << endl;
 }
 
