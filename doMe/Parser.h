@@ -83,6 +83,7 @@ public:
 	bool isSaveDirectory(string s);
 	bool isDirectory(string s);
 	bool isExit(string s);
+	bool isAt(string s);
 
 	//these methods do further checks on the parameters to see if it fits requirements of the commandtype
 	//packs the commandpackage object if it complies and changes the commandtype if it does not

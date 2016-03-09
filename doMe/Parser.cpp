@@ -151,7 +151,7 @@ void Parser::parseAsAddCommandIfStillNotParsed() {
 	}
 }
 
-bool Parser::isAdd(std::string s) {
+bool Parser::isAdd(string s) {
 	if(s.compare("ADD") == 0) {
 		return true;
 	} else if(s.compare("A") == 0) {
@@ -161,7 +161,7 @@ bool Parser::isAdd(std::string s) {
 	}
 }
 
-bool Parser::isDisplay(std::string s) {
+bool Parser::isDisplay(string s) {
 	if(s.compare("DISPLAY") == 0) {
 		return true;
 	} else if(s.compare("VIEW") == 0) {
@@ -173,7 +173,7 @@ bool Parser::isDisplay(std::string s) {
 	}
 }
 
-bool Parser::isDelete(std::string s) {
+bool Parser::isDelete(string s) {
 	if(s.compare("DELETE") == 0) {
 		return true;
 	} else if(s.compare("D") == 0) {
@@ -261,10 +261,18 @@ bool Parser::isDirectory(string s) {
 	}
 }
 
-bool Parser::isExit(std::string s) {
+bool Parser::isExit(string s) {
 	if(s.compare("EXIT") == 0) {
 		return true;
 	} else if(s.compare("EX") == 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool Parser::isAt(string s) {
+	if(s.compare("AT") == 0) {
 		return true;
 	} else {
 		return false;
@@ -310,19 +318,20 @@ void Parser::packCommandIfConfirmedSortCommand() {
 void Parser::packCommandIfConfirmedSavedDirectoryCommand() {
 	if((_commandParameters[COMMAND_POSITION].compare("CD") == 0)) {
 		if(_commandParameters.size() == 2) {
-			_commandPackage = CommandPackage(SAVEDIRECTORY,_caseSensitiveCommandParameters[FIRST_PARAMETER_POSITION]);
+			_commandPackage = CommandPackage(SAVEDIRECTORY,Task(), NO_INDEX, _caseSensitiveCommandParameters[FIRST_PARAMETER_POSITION]);
 		} else if(_commandParameters.size() > 2) {
 			_commandType = ADD;
 		}
 	} else if(_commandParameters.size() == 3) {
 		if(isDirectory(_commandParameters[FIRST_PARAMETER_POSITION])) {
-			_commandPackage = CommandPackage(SAVEDIRECTORY,_caseSensitiveCommandParameters[FIRST_PARAMETER_POSITION]);
-		}
-		else if((isViewType(_commandParameters[FIRST_PARAMETER_POSITION])) ||
+			_commandPackage = CommandPackage(SAVEDIRECTORY, Task(), NO_INDEX, _caseSensitiveCommandParameters[2]);
+		} else if((isViewType(_commandParameters[FIRST_PARAMETER_POSITION])) ||
 				(isDisplay(_commandParameters[FIRST_PARAMETER_POSITION]))) {
 			_commandType = VIEWTYPE;
+		} else {
+			_commandType = EDIT;
 		}
-	} else if(_commandParameters.size() < 3) {
+	} else if(_commandParameters.size() > 3) {
 		_commandType = EDIT;
 	}
 }
@@ -340,6 +349,8 @@ void Parser::packCommandIfConfirmedExitCommand() {
 void Parser::packCommandIfConfirmedEditCommand() {
 	if(_commandParameters.size() == 1) {
 		_commandType = INVALID;
+	} else if(_commandParameters.size() == 2) {
+		_commandType = ADD;
 	} else if(isInteger(_commandParameters[INDEX_POSITION])) {
 		_index = stoi(_commandParameters[INDEX_POSITION]);
 		removeEditCommand();
@@ -420,7 +431,7 @@ void Parser::removeAddCommand() {
 }
 
 void Parser::removeEditCommand() {
-	if(isEdit(_commandParameters[0])) {
+	if(isEdit(_commandParameters[0]) || isSaveDirectory(_commandParameters[0])) {
 		_commandParameters[0] = "edit";
 	}
 	if(isInteger(_commandParameters[1])) {
@@ -448,10 +459,21 @@ void Parser::getLocationParameter() {
 			_location.push_back(_caseSensitiveCommandParameters[i]);
 			_commandParameters[i] = "location";
 			i++;
-			}
+			}	
 			break;
 		}
-	}
+
+		if(isAt(_commandParameters[i]) && ((i+1) < _commandParameters.size()) && (_commandParameters[i+1] < "a")) {
+			_commandParameters[i] = "location";
+			i++;
+			while((i < _commandParameters.size()) && (_commandParameters[i] < "a")) {
+			_location.push_back(_caseSensitiveCommandParameters[i]);
+			_commandParameters[i] = "location";
+			i++;
+			}	
+			break;
+		}
+	} 	
 }
 
 void Parser::getDescriptionParameter() {
