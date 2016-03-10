@@ -72,7 +72,7 @@ string ViewType2::getTimeTaskString(int time) {
     string timeString;
 
     if(time >= 0) {
-        if(time >= TIME_MIDDAY) {
+        if(time > TIME_MIDDAY) {
             time = time - TIME_MIDDAY;
             timeString = integerToString(time);
             timeString = timeString + MESSAGE_PM;
