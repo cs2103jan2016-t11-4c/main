@@ -20,8 +20,8 @@ using namespace std;
 
 class Storage {
 private:
-	string _location;
-	/*string _txtFileName = "todo.txt";*/
+	/*string _location;
+	string _txtFileName = "todo.txt";*/
 	// to check whether file is already created, or physically available, in given directory
 	bool _isFileCreated;
 
@@ -32,7 +32,7 @@ public:
 	// concatenate directory with default _txtFileName to get exact target .txt
 	// file destination (_location) such that fstream can open it effectively
 	// also, a setter function for file destination changes
-	void setLocation(string);
+	/*void setLocation(string);*/
 
 	// extract data from target .txt file and return as string vector
 	vector<string> retrieveData(string);
