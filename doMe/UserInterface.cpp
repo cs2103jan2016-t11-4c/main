@@ -67,6 +67,13 @@ UserInterface::~UserInterface(void) {
 
 /****************************************************************/
 
+string UserInterface::getStringCommand() {
+    string command;
+    printPromptCommand();
+    getline(cin, command);
+    return command;
+}
+
 void UserInterface::printProgramWelcomePage() {
     setDefaultWindowsRowsColumns();
     string space = "               ";
@@ -88,6 +95,7 @@ void UserInterface::printProgramWelcomePage() {
     cout << endl;
     cout << space; cout << "          <Press any key to continue>" << endl;
     cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+    _getch();
 }
 
 /****************************************************************/

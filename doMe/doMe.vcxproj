@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClCompile Include="CommandPackage.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="Command_ViewType.h" />
     <ClInclude Include="Command_SaveDirectory.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="Memory.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Storage.h" />

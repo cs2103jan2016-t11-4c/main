@@ -6,6 +6,7 @@
 #include <vector>
 #include <list>
 #include <windows.h>
+#include <conio.h>
 
 #include "Task.h"
 #include "ViewType.h"
@@ -20,6 +21,9 @@ public:
     //UserInterface(void);
     UserInterface(list<Task*> *taskList);
     ~UserInterface(void);
+
+    //command
+    string getStringCommand();
 
     //programme page
     void setDefaultWindowsRowsColumns();

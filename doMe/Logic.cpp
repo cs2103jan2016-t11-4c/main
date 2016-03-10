@@ -14,7 +14,6 @@ Logic::Logic() {
 }
 void Logic::setEnvironment() {	
 	_UI->printProgramWelcomePage();
-	_getch();
 
 	_settings->loadSettings();
 	vectorToTaskList(_storage->retrieveData(_settings->getSaveDirectory()));
@@ -28,8 +27,7 @@ void Logic::executeCommandsUntilExitCommand() {
 	string command;
 
 	do {
-		_UI->printPromptCommand();
-		getline(cin, command);
+		command = _UI->getStringCommand();
 
 	} while (executeCommand(command) != EXIT);
 }

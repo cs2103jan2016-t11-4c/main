@@ -17,7 +17,7 @@ Settings::~Settings(void) {
 
 /****************************************************************/
 
-void Settings::loadSettings() {
+bool Settings::loadSettings() {
     ifstream readFile(FILE_SETTINGS_NAME);
     stringstream is;
     string extractedSettings;
@@ -48,8 +48,10 @@ void Settings::loadSettings() {
         sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows);
         system(buffer);
 
+        return true;
     } else {
         saveSettings();
+        return false;
     }
 }
 
@@ -201,8 +203,9 @@ void Settings::changeSaveDirectory(string directory) {
 
 }
 
-void Settings::changeViewType(int newViewType) {
+bool Settings::changeViewType(int newViewType) {
     _viewType = newViewType;
+    return true;
 }
 
 /****************************************************************/

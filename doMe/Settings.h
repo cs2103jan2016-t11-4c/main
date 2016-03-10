@@ -19,12 +19,12 @@ public:
     void updateTextFileName(string textFileName);
     bool checkEmptySaveDirectory(); 
     bool checkForSettingsFile();
+    bool changeViewType(int newViewType);
     string getSaveDirectory();
     string getTextFileName();
     int getViewType();
-    void changeViewType(int newViewType);
     void resizeWindow(); //............................................new//
-    void loadSettings(); 
+    bool loadSettings(); 
     void saveSettings(); 	
 
 #ifndef TESTMODE 
