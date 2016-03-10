@@ -524,11 +524,11 @@ public:
 
 	}
 
-	TEST_METHOD(UI_GetTaskStringType0) {
+	TEST_METHOD(UI_GetTaskStringType1) {
 		int i = 0;
 		string actualString;
 		list<Task*> ls;
-		string expectedStringType0[6] = { 
+		string expectedStringType1[6] = { 
 			"read book (home) 1:00 pm 21/8/2016", 
 			"read book (home) 1:00 pm 19/8/2016 - 4:00 pm 21/8/2016",             
 			"read book (home) 21/9/2016",
@@ -550,8 +550,8 @@ public:
 		listIter = ls.begin();
 
 		while(listIter != ls.end()) {
-			actualString = UI.getTaskString(*listIter , 0);
-			Assert::AreEqual(expectedStringType0[i], actualString);
+			actualString = UI.getTaskString(*listIter , 1);
+			Assert::AreEqual(expectedStringType1[i], actualString);
 			i++;
 			listIter++;
 		}
@@ -632,7 +632,7 @@ public:
 
 	TEST_CLASS(ViewType0CLASS) {
 public:
-	TEST_METHOD(ViewType0_CreateDisplayList) {
+	TEST_METHOD(ViewType1_CreateDisplayList) {
 		vector<string> actualDisplayList;
 		int i = 0;
 		ViewType *testView;
@@ -655,7 +655,7 @@ public:
 		ls.push_back(new Task("read book" , -1 , 20161023 , 100 , 200 , ""));
 		ls.push_back(new Task("read book" , -1 , -1 , -1 , -1 , "college"));
 
-		testView = new ViewType0(&ls , 20160821); //initiate marker = 0
+		testView = new ViewType1(&ls , 20160821); //initiate marker = 0
 
 		actualDisplayList = testView->createDisplayList();
 
@@ -669,10 +669,10 @@ public:
 
 	}
 
-	TEST_METHOD(ViewType0_CreateSearchList) {
+	TEST_METHOD(ViewType1_CreateSearchList) {
 		vector<string> actualDisplayList;
 		int i = 0;
-		ViewType0 testView;
+		ViewType1 testView;
 		list<Task*> ls;
 		string expectedString[6] = { 
 			"1. read book (home) 1:00 pm 21/8/2016", 

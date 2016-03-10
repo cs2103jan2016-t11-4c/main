@@ -3,8 +3,8 @@
 #else 
 
 #include "ViewType.cpp"
-#include "ViewType0.cpp"
 #include "ViewType1.cpp"
+#include "ViewType2.cpp"
 #include "Task.cpp"
 #include "Parser.cpp"
 #include "Storage.cpp"
