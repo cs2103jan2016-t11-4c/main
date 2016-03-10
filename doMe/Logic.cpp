@@ -212,8 +212,8 @@ void Logic::undo() {
 }
 
 void Logic::sort() {
-	_taskList->sort([](Task* a, Task* b) {return a->getDate1() < b->getDate1();});
-	_taskList->sort([](Task* a, Task* b) {return a->getTime1() < b->getTime1();});
+	_taskList->sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
+	_taskList->sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
 }
 
 void Logic::saveToTxtFile() {
