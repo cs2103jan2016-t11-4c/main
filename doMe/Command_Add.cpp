@@ -10,13 +10,13 @@ bool Command_Add::execute() {
 		return false;
 	}
 
-	_ram->addToTaskList(_task);
+	_ram->add(_task);
 
 	return true;
 }
 
 bool Command_Add::undo() {
-	if(_ram->deleteFromTaskList(_task) == true) {
+	if(_ram->del(_task) == true) {
 		return true;
 	}
 	return false;

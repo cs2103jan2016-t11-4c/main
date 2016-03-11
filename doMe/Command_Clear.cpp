@@ -5,12 +5,12 @@ Command_Clear::Command_Clear(RAM* ram)
 }
 
 bool Command_Clear::execute() {
-	_oldTaskList = _ram->clearTaskList();
+	_oldTaskList = _ram->clear();
 	return true;
 }
 
 bool Command_Clear::undo(){
-	_ram->insertTaskList(_oldTaskList);
+	_ram->insert(_oldTaskList);
 	return true;
 }
 

@@ -6,7 +6,7 @@ Command_Search::Command_Search(RAM* ram, string searchTerm)
 }
 
 bool Command_Search::execute() {
-	return _ram->removeTasksFromTaskList(_searchTerm);
+	return _ram->shiftTasksFromTaskList(_searchTerm);
 	return true;
 }
 

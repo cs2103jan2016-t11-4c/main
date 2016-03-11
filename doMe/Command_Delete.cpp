@@ -10,13 +10,13 @@ bool Command_Delete::execute() {
 		return false;
 	}
 
-	_task = _ram->deleteFromTaskList(_index);
+	_task = _ram->del(_index);
 
 	return true;
 }
 
 bool Command_Delete::undo() {
-	_ram->addToTaskList(_task);
+	_ram->add(_task);
 	return true;
 }
 

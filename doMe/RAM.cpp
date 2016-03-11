@@ -14,13 +14,13 @@ RAM::RAM() {
 //	return &(_rawTaskHeap.back());
 //}
 
-void RAM::addToTaskList(Task* task) {
+void RAM::add(Task* task) {
 	_taskList.push_back(task);
 	_lastAddedTask = task;
 	sort();
 }
 
-Task* RAM::deleteFromTaskList(int index) {		//index must be guranteed to be valid
+Task* RAM::del(int index) {		//index must be guranteed to be valid
 	list<Task*>::iterator deleteIter = indexToTaskListIter(index);
 	Task* deletedTaskPtr = *deleteIter;
 
@@ -29,7 +29,7 @@ Task* RAM::deleteFromTaskList(int index) {		//index must be guranteed to be vali
 	return deletedTaskPtr;
 }
 
-bool RAM::deleteFromTaskList(Task* task) {
+bool RAM::del(Task* task) {
 	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
 		if(*iter == task) {
 			_taskList.erase(iter);
@@ -39,15 +39,19 @@ bool RAM::deleteFromTaskList(Task* task) {
 	return false;
 }
 
-list<Task*> RAM::clearTaskList() {
+list<Task*> RAM::clear() {
 	list<Task*> oldTaskList = _taskList;
 	_taskList.clear();
 
 	return oldTaskList;
 }
 
-void RAM::insertTaskList(list<Task*>& oldTaskList) {
-	_taskList = oldTaskList;
+void RAM::insert(list<Task*>& oldTaskList) {
+	while(!oldTaskList.empty()) {
+		_taskList.push_back(oldTaskList.front());
+		oldTaskList.pop_front();
+	}
+	sort();
 }
 
 void RAM::sort() {
@@ -67,7 +71,7 @@ Task* RAM::getTask(int index) {			//index must be valid
 	return *(indexToTaskListIter(index));
 }
 
-bool RAM::removeTasksFromTaskList(string searchTerm) {
+bool RAM::shiftTasksFromTaskList(string searchTerm) {
 	returnTasksToTaskList();
 
 	list<Task*>::iterator iter = _taskList.begin();
