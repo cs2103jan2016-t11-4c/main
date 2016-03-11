@@ -24,11 +24,17 @@
 //@author: Mohammed Zawadul Farhan
 
 #include "CommandPackage.h"
+#include "CommandArguments.h"
+#include "Parser_Basic.h"
+#include "Parser_Task.h"
 #include <vector>
 #include <sstream>
 #include <algorithm>
 #include <string>
 #include <ctime>
+#include <stack>
+
+#define START_PARAMETER 0
 
 class Parser {
 public:
@@ -69,6 +75,8 @@ public:
 	void findDetailsIfSimpleCommandType();
 	void findDetailsIfNotSimpleCommandType();
 	void parseAsAddCommandIfStillNotParsed();
+
+	bool needsTaskParsing(CommandPackage package);
 
 	//booleans methods to identify markers of each command
 	bool isAdd(string s);

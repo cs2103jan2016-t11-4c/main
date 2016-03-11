@@ -23,14 +23,38 @@ Parser::~Parser(void) {
 }
 
 CommandPackage* Parser::parse() {
-
+	/*
+	CommandArguments arguments(_commandLine);
+	Parser_Basic basicParser(&arguments);
+	_commandPackage = basicParser.parse();
+	if(needsTaskParsing(_commandPackage)) {
+		Parser_Task taskParser(&arguments);
+		_commandPackage = taskParser.parse();
+	}
+	*/
+	
 	getParametersFromCommandLine();
 	guessCommandType();
 	findDetailsIfSimpleCommandType();
 	findDetailsIfNotSimpleCommandType();
 	parseAsAddCommandIfStillNotParsed();
-
+	
 	return &_commandPackage;
+}
+
+bool Parser::needsTaskParsing(CommandPackage package) {
+	stack<COMMAND_TYPE> commands;
+	commands.push(ADD);
+	commands.push(EDIT);
+		
+	while(!commands.empty()) {
+		if(package.getCommandType() == commands.top()) {
+			return true;
+		} else {
+			commands.pop();
+		}
+	}
+	return false;
 }
 
 void Parser::setCommandLine(string commandLine) {
