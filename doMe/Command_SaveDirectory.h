@@ -1,8 +1,5 @@
-#include <list>
-#include "Task.h"
 #include "Command.h"
 #include "Settings.h"
-#include "UserInterface.h"
 #include <sys/types.h>
 #include <sys/stat.h>
 using namespace std;
@@ -16,7 +13,8 @@ private:
 	bool isNotValidDirectory();
 public:
 	Command_SaveDirectory(Settings* settings, string newSaveDirectory);
-	int execute();
-	int undo();
+	bool execute();
+	bool undo();
 	string getDescription();
+//	COMMAND_TYPE getCommandType();
 };

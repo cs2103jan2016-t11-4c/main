@@ -67,6 +67,12 @@
     <ClCompile Include="Parser_Basic.cpp">
       <Filter>Source Files\Parser Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Command_Search.cpp">
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="RAM.cpp">
+      <Filter>Source Files\Memory Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -131,6 +137,12 @@
     </ClInclude>
     <ClInclude Include="Parser_Basic.h">
       <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Search.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="RAM.h">
+      <Filter>Header Files\Memory Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

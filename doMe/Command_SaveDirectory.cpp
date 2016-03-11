@@ -7,18 +7,18 @@ Command_SaveDirectory::Command_SaveDirectory(Settings* settings, string newSaveD
 	_newSaveDirectory = newSaveDirectory;
 }
 
-int Command_SaveDirectory::execute() {
+bool Command_SaveDirectory::execute() {
 	if(isNotValidDirectory()) {
-		return 0;
+		return false;
 	}
 
 	_settings->changeSaveDirectory(_newSaveDirectory);
-	return 1;
+	return true;
 }
 
-int Command_SaveDirectory::undo(){
+bool Command_SaveDirectory::undo(){
 	_settings->changeSaveDirectory(_oldSaveDirectory);
-	return 1;	
+	return true;	
 }
 
 string Command_SaveDirectory::getDescription() {
@@ -35,3 +35,7 @@ bool Command_SaveDirectory::isNotValidDirectory() {
 	}
 	return true;
 }
+
+//COMMAND_TYPE Command_SaveDirectory::getCommandType() {
+//	return SAVEDIRECTORY;
+//}

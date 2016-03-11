@@ -1,8 +1,5 @@
-#include <list>
-#include "Task.h"
 #include "Command.h"
 #include "Settings.h"
-#include "UserInterface.h"
 using namespace std;
 
 class Command_ViewType : public Command {
@@ -12,7 +9,8 @@ private:
 	Settings* _settings;
 public:
 	Command_ViewType(Settings* settings, int newViewType);
-	int execute();
-	int undo();
+	bool execute();
+	bool undo();
 	int getIndex();
+//	COMMAND_TYPE getCommandType();
 };

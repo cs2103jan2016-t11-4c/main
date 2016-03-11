@@ -7,16 +7,20 @@ Command_ViewType::Command_ViewType(Settings* settings, int newViewType)
 	_newViewType = newViewType;
 }
 
-int Command_ViewType::execute() {
+bool Command_ViewType::execute() {
 	_settings->changeViewType(_newViewType);
-	return 1;
+	return true;
 }
 
-int Command_ViewType::undo(){
+bool Command_ViewType::undo(){
 	_settings->changeViewType(_oldViewType);
-	return 1;	
+	return true;	
 }
 
 int Command_ViewType::getIndex() {
 	return _newViewType;
 }
+
+//COMMAND_TYPE Command_ViewType::getCommandType() {
+//	return VIEWTYPE;
+//}

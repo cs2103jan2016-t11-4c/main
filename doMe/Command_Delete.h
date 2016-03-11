@@ -1,19 +1,16 @@
-#include <list>
-#include "Task.h"
 #include "Command.h"
-#include "UserInterface.h"
 using namespace std;
 
 class Command_Delete : public Command {
 private:
-	int _index;
 	Task* _task;
+	int _index;
 
 	bool outOfRange();
-	list<Task*>::iterator indexToListIter();
 public:
-	Command_Delete(list<Task*>* taskList, int index);
-	int execute();
-	int undo();
+	Command_Delete(RAM* ram, int index);
+	bool execute();
+	bool undo();
 	Task* getTask();
+//	COMMAND_TYPE getCommandType();
 };

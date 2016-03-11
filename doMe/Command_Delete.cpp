@@ -1,25 +1,23 @@
 #include "Command_Delete.h"
 
-Command_Delete::Command_Delete(list<Task*>* taskList, int index)
-:Command(taskList) {
+Command_Delete::Command_Delete(RAM* ram, int index)
+:Command(ram) {
 	_index = index;
 }
 
-int Command_Delete::execute() {
+bool Command_Delete::execute() {
 	if(outOfRange()) {
-		return 0;
+		return false;
 	}
 
-	list<Task*>::iterator deleteIter = indexToListIter();
-	_task = *deleteIter;
+	_task = _ram->deleteFromTaskList(_index);
 
-	_taskList->erase(deleteIter);
-	return 1;					
+	return true;
 }
 
-int Command_Delete::undo() {
-	_taskList->push_back(_task);
-	return 1;
+bool Command_Delete::undo() {
+	_ram->addToTaskList(_task);
+	return true;
 }
 
 Task* Command_Delete::getTask() {
@@ -27,17 +25,12 @@ Task* Command_Delete::getTask() {
 }
 
 bool Command_Delete::outOfRange() {
-	if(_index > _taskList->size() || _index < 1) {
+	if(_index > _ram->getSize() || _index < 1) {
 		return true;
 	}
 	return false;
 }
 
-list<Task*>::iterator Command_Delete::indexToListIter() {
-	list<Task*>::iterator iter = _taskList->begin();
-
-	for(int i = 1; i < _index; i++) {
-		iter++;
-	}
-	return iter;	
-}
+//COMMAND_TYPE Command_Delete::getCommandType() {
+//	return DELETE;
+//}

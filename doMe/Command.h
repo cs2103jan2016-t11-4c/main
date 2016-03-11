@@ -1,17 +1,18 @@
 #pragma once
-#include <iostream>
 #include <list>
+#include "RAM.h"
 #include "Task.h"
-#include "UserInterface.h"
 using namespace std;
+
+//enum COMMAND_TYPE { ADD, DISPLAY, DEL, EDIT, CLEAR, UNDO, SORT, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, INVALID};
 
 class Command {
 protected:
-	list<Task*>* _taskList;
+	RAM* _ram;
 public:
-	Command(list<Task*>* taskList);
-	virtual int execute() = 0;
-	virtual int undo() = 0;
+	Command(RAM* ram);
+	virtual bool execute() = 0;
+	virtual bool undo() = 0;
 	virtual Task* getTask() {return NULL;}
 	virtual int getIndex() {return 0;}
 	virtual string getDescription() {return "";}

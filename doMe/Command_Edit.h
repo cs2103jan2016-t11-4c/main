@@ -1,7 +1,4 @@
-#include <list>
-#include "Task.h"
 #include "Command.h"
-#include "UserInterface.h"
 using namespace std;
 
 class Command_Edit : public Command {
@@ -23,10 +20,10 @@ private:
 	string _oldLocation;
 
 	bool outOfRange();
-	list<Task*>::iterator indexToListIter();
 public:
-	Command_Edit(list<Task*>* taskList, int index, Task* task);
-	int execute();
-	int undo();
+	Command_Edit(RAM* ram, int index, Task* oldTask);
+	bool execute();
+	bool undo();
 	Task* getTask();
+//	COMMAND_TYPE getCommandType();
 };
