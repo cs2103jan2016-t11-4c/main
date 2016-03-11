@@ -176,6 +176,8 @@ void Logic::undo() {
 	_commandHistoryList->top()->undo();
 	delete _commandHistoryList->top();		//delete command
 	_commandHistoryList->pop();
+
+	saveToTxtFile();
 	display();
 	_UI->printNotificationUndo();
 }
