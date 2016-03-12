@@ -1,4 +1,4 @@
-#pragma once
+/* #pragma once
 #include <string>
 #include "Task.h"
 using namespace std;
@@ -34,5 +34,5 @@ public:
 	void setIndex(int index);
 	void setDescription(string description);
 
-};
+};*/
 

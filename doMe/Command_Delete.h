@@ -8,9 +8,9 @@ private:
 
 	bool outOfRange();
 public:
-	Command_Delete(RAM* ram, int index);
+	Command_Delete(Memory* memory, int index);
 	bool execute();
 	bool undo();
 	Task* getTask();
-//	COMMAND_TYPE getCommandType();
+	COMMAND_TYPE getCommandType();
 };

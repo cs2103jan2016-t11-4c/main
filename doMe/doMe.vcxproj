@@ -29,6 +29,9 @@
     <ClCompile Include="Command_SaveDirectory.cpp" />
     <ClCompile Include="Command_Search.cpp" />
     <ClCompile Include="RAM.cpp" />
+    <ClCompile Include="Command_Exit.cpp" />
+    <ClCompile Include="Command_Invalid.cpp" />
+    <ClCompile Include="Command_Undo.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
@@ -47,6 +50,9 @@
     <ClInclude Include="Command_ViewType.h" />
     <ClInclude Include="Command_SaveDirectory.h" />
     <ClInclude Include="Command_Search.h" />
+    <ClInclude Include="Command_Exit.h" />
+    <ClInclude Include="Command_Invalid.h" />
+    <ClInclude Include="Command_Undo.h" />
     <ClInclude Include="RAM.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />

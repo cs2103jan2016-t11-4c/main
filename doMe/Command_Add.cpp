@@ -1,7 +1,7 @@
 #include "Command_Add.h"
 
-Command_Add::Command_Add(RAM* ram, Task* task)
-:Command(ram) {
+Command_Add::Command_Add(Memory* memory, Task* task)
+:Command(memory){
 	_task = task;
 }
 
@@ -10,13 +10,13 @@ bool Command_Add::execute() {
 		return false;
 	}
 
-	_ram->add(_task);
+	_memory->ramAdd(_task);
 
 	return true;
 }
 
 bool Command_Add::undo() {
-	if(_ram->del(_task) == true) {
+	if(_memory->ramDel(_task) == true) {
 		return true;
 	}
 	return false;
@@ -26,6 +26,6 @@ Task* Command_Add::getTask() {
 	return _task;
 }
 
-//COMMAND_TYPE Command_Add::getCommandType() {
-//	return ADD;
-//}
+COMMAND_TYPE Command_Add::getCommandType() {
+	return ADD;
+}

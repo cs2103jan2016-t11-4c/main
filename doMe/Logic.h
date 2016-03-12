@@ -1,50 +1,31 @@
 #include <iostream>
 #include <string>
-#include <vector>
 #include <stack>
-#include <ctime>
 #include <assert.h>
 #include <conio.h>
-#include "RAM.h"
-#include "Task.h"
+#include "Memory.h"
 #include "Parser.h"
-#include "Storage.h"
-#include "Settings.h"
-//#include "TimeCommons.h"
-#include "UserInterface.h"
-#include "CommandPackage.h"
+//#include "Commons.h"
 #include "Command.h"
 #include "Command_Add.h"
+#include "Command_Clear.h"
 #include "Command_Delete.h"
 #include "Command_Edit.h"
-#include "Command_Clear.h"
-#include "Command_ViewType.h"
+#include "Command_Exit.h"
+#include "Command_Invalid.h"
 #include "Command_SaveDirectory.h"
 #include "Command_Search.h"
+#include "Command_Undo.h"
+#include "Command_ViewType.h"
 using namespace std;
 
 class Logic { 
 private:
-	RAM* _ram;
-	UserInterface* _UI;
-	Storage* _storage;
-	Settings* _settings;
+	Memory* _memory;
 	stack<Command*>* _commandHistoryList;
 
-	COMMAND_TYPE executeCommand(string commandText);
-	void undo();
-
-	void display();
-	void displaySuccessfulCommandNotification(COMMAND_TYPE commandType, Command* command);
-	void displayInvalidCommandNotification(COMMAND_TYPE commandType, Command* command);
-
-	void saveToTxtFile();
-	int stringToInteger(string text);
-	int getCurrentDate();
-
+	Command* undo();
 public:
-	Logic();
-	void setEnvironment();
-	void displayWelcomeMessage();
-	void executeCommandsUntilExitCommand();
+	Logic(Memory* memory);
+	Command* executeCommand(string commandText, int& commandOutcome);
 };

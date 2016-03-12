@@ -1,5 +1,5 @@
 #include "Command.h"
 
-Command::Command(RAM* ram) {
-	_ram = ram;
+Command::Command(Memory* memory) {
+	_memory = memory;
 }

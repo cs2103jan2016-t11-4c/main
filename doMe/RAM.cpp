@@ -9,70 +9,67 @@ RAM::RAM() {
 }
 
 
-//Task* RAM::addToRawTaskHeap(Task task) {
-//	_rawTaskHeap.push_back(task);
-//	return &(_rawTaskHeap.back());
-//}
+Task* RAM::ramAddToRawTaskHeap(Task task) {
+	_rawTaskHeap.push_back(task);
+	return &(_rawTaskHeap.back());
+}
 
-void RAM::add(Task* task) {
+void RAM::ramAdd(Task* task) {
 	_taskList.push_back(task);
 	_lastAddedTask = task;
+	ramUnsearch();
 	sort();
 }
 
-Task* RAM::del(int index) {		//index must be guranteed to be valid
+void RAM::ramDel(Task* task) {
+	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
+		if(*iter == task) {
+			_taskList.erase(iter);
+			return;
+		}
+	}
+}
+
+Task* RAM::ramDel(int index) {						//index must be guranteed to be valid
 	list<Task*>::iterator deleteIter = indexToTaskListIter(index);
 	Task* deletedTaskPtr = *deleteIter;
 
 	_taskList.erase(deleteIter);
 
+	ramUnsearch();
 	return deletedTaskPtr;
 }
 
-bool RAM::del(Task* task) {
-	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
-		if(*iter == task) {
-			_taskList.erase(iter);
-			return true;
-		}
-	}
-	return false;
-}
-
-list<Task*> RAM::clear() {
+list<Task*> RAM::ramClear() {
 	list<Task*> oldTaskList = _taskList;
 	_taskList.clear();
 
 	return oldTaskList;
 }
 
-void RAM::insert(list<Task*>& oldTaskList) {
+void RAM::ramInsert(list<Task*>& oldTaskList) {
 	while(!oldTaskList.empty()) {
 		_taskList.push_back(oldTaskList.front());
 		oldTaskList.pop_front();
 	}
+	ramUnsearch();
 	sort();
 }
 
-void RAM::sort() {
-	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
-	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
-}
-
-int RAM::getSize() {
+int RAM::ramGetSize() {
 	return _taskList.size();
 }
 
-Task* RAM::getTask(int index) {			//index must be valid
-	if(index == -1) {
+Task* RAM::ramGetTask(int index) {		//index must be valid
+	if(index == 0) {
 		return _lastAddedTask;
 	}
 	
 	return *(indexToTaskListIter(index));
 }
 
-bool RAM::shiftTasksFromTaskList(string searchTerm) {
-	returnTasksToTaskList();
+bool RAM::ramSearch(string searchTerm) {
+	ramUnsearch();
 
 	list<Task*>::iterator iter = _taskList.begin();
 	while(iter != _taskList.end()) {
@@ -85,7 +82,7 @@ bool RAM::shiftTasksFromTaskList(string searchTerm) {
 	}
 
 	if(_tempTaskList.empty()) {
-		return false;		//No entries found containing searchTerm
+		return false;
 	}
 	
 	_searchTerm = searchTerm;
@@ -94,7 +91,7 @@ bool RAM::shiftTasksFromTaskList(string searchTerm) {
 	return true;
 }
 
-void RAM::returnTasksToTaskList() {
+void RAM::ramUnsearch() {
 	while(!_tempTaskList.empty()) {
 		_taskList.push_back(_tempTaskList.front());
 		_tempTaskList.pop_front();
@@ -103,13 +100,71 @@ void RAM::returnTasksToTaskList() {
 	sort();
 }
 
+vector<string> RAM::ramGetVector() {
+	vector<string> updatedData;
+
+	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
+		updatedData.push_back((*iter)->getName());
+		updatedData.push_back(integerToString((*iter)->getDate1()));
+		updatedData.push_back(integerToString((*iter)->getDate2()));
+		updatedData.push_back(integerToString((*iter)->getTime1()));
+		updatedData.push_back(integerToString((*iter)->getTime2()));
+		updatedData.push_back((*iter)->getLocation());
+		updatedData.push_back(LIST_DIVIDER);
+	}
+	for(list<Task*>::iterator iter = _tempTaskList.begin(); iter != _tempTaskList.end(); iter++) {
+		updatedData.push_back((*iter)->getName());
+		updatedData.push_back(integerToString((*iter)->getDate1()));
+		updatedData.push_back(integerToString((*iter)->getDate2()));
+		updatedData.push_back(integerToString((*iter)->getTime1()));
+		updatedData.push_back(integerToString((*iter)->getTime2()));
+		updatedData.push_back((*iter)->getLocation());
+		updatedData.push_back(LIST_DIVIDER);
+	}
+	return updatedData;
+}
+
+void RAM::ramLoadVector(vector<string>& existingData) {
+	for(unsigned int i = 0; i < existingData.size(); i+=7) {
+		string name = existingData[i];
+		int date1 = stringToInteger(existingData[i+1]);
+		int date2 = stringToInteger(existingData[i+2]);
+		int time1 = stringToInteger(existingData[i+3]);
+		int time2 = stringToInteger(existingData[i+4]);
+		string location = existingData[i+5];
+
+		_taskList.push_back(new Task(name, date1, date2, time1, time2, location));
+	}
+	sort();
+}
+
+void RAM::sort() {
+	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
+	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
+}
+
+string RAM::integerToString(int integer) {
+	ostringstream word;
+	word << integer;
+	return word.str();
+}
+
+int RAM::stringToInteger(string text) {
+	stringstream ss(text);
+	int integer;
+
+	ss >> integer;
+
+	return integer;
+}
+
 list<Task*>::iterator RAM::indexToTaskListIter(int index) {
 	list<Task*>::iterator iter = _taskList.begin();
 
 	for(int i = 1; i < index; i++) {
 		iter++;
 	}
-	return iter;	
+	return iter;
 }
 
 bool RAM::foundInTask(Task* task, string searchTerm) {
@@ -151,48 +206,4 @@ bool RAM::foundInTask(Task* task, string searchTerm) {
 	}
 
 	return false;
-}
-
-vector<string> RAM::taskListToVector() {
-	vector<string> updatedData;
-
-	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
-		updatedData.push_back((*iter)->getName());
-		updatedData.push_back(integerToString((*iter)->getDate1()));
-		updatedData.push_back(integerToString((*iter)->getDate2()));
-		updatedData.push_back(integerToString((*iter)->getTime1()));
-		updatedData.push_back(integerToString((*iter)->getTime2()));
-		updatedData.push_back((*iter)->getLocation());
-		updatedData.push_back(LIST_DIVIDER);
-	}
-	return updatedData;
-}
-
-void RAM::vectorToTaskList(vector<string>& existingData) {
-	for(unsigned int i = 0; i < existingData.size(); i+=7) {
-		string name = existingData[i];
-		int date1 = stringToInteger(existingData[i+1]);
-		int date2 = stringToInteger(existingData[i+2]);
-		int time1 = stringToInteger(existingData[i+3]);
-		int time2 = stringToInteger(existingData[i+4]);
-		string location = existingData[i+5];
-
-		_taskList.push_back(new Task(name, date1, date2, time1, time2, location));
-	}
-	sort();
-}
-
-string RAM::integerToString(int integer) {
-	ostringstream word;
-	word << integer;
-	return word.str();
-}
-
-int RAM::stringToInteger(string text) {
-	stringstream ss(text);
-	int integer;
-
-	ss >> integer;
-
-	return integer;
 }

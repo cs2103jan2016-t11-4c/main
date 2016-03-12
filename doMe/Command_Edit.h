@@ -21,9 +21,9 @@ private:
 
 	bool outOfRange();
 public:
-	Command_Edit(RAM* ram, int index, Task* oldTask);
+	Command_Edit(Memory* memory, int index, Task* task);
 	bool execute();
 	bool undo();
 	Task* getTask();
-//	COMMAND_TYPE getCommandType();
+	COMMAND_TYPE getCommandType();
 };

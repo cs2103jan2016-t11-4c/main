@@ -1,20 +1,23 @@
 #include "Command_Search.h"
 
-Command_Search::Command_Search(RAM* ram, string searchTerm)
-:Command(ram) {
+Command_Search::Command_Search(Memory* memory, string searchTerm)
+:Command(memory) {
 	_searchTerm = searchTerm;
 }
 
 bool Command_Search::execute() {
-	return _ram->shiftTasksFromTaskList(_searchTerm);
-	return true;
+	return _memory->ramSearch(_searchTerm);
 }
 
 bool Command_Search::undo() {
-	_ram->returnTasksToTaskList();
+	_memory->ramUnsearch();
 	return true;
 }
 
-//COMMAND_TYPE Command_Search::getCommandType() {
-//	return SEARCH;
-//}
+string Command_Search::getSearchTerm() {
+	return _searchTerm;
+}
+
+COMMAND_TYPE Command_Search::getCommandType() {
+	return SEARCH;
+}

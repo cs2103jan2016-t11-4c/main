@@ -1,19 +1,19 @@
 #include "Command_Clear.h"
 
-Command_Clear::Command_Clear(RAM* ram)
-:Command(ram) {
+Command_Clear::Command_Clear(Memory* memory)
+:Command(memory) {
 }
 
 bool Command_Clear::execute() {
-	_oldTaskList = _ram->clear();
+	_oldTaskList = _memory->ramClear();
 	return true;
 }
 
-bool Command_Clear::undo(){
-	_ram->insert(_oldTaskList);
+bool Command_Clear::undo() {
+	_memory->ramInsert(_oldTaskList);
 	return true;
 }
 
-//COMMAND_TYPE Command_Clear::getCommandType() {
-//	return CLEAR;
-//}
+COMMAND_TYPE Command_Clear::getCommandType() {
+	return CLEAR;
+}

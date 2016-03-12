@@ -1,7 +1,7 @@
 #include "Command_Delete.h"
 
-Command_Delete::Command_Delete(RAM* ram, int index)
-:Command(ram) {
+Command_Delete::Command_Delete(Memory* memory, int index))
+:Command(memory) {
 	_index = index;
 }
 
@@ -10,13 +10,13 @@ bool Command_Delete::execute() {
 		return false;
 	}
 
-	_task = _ram->del(_index);
+	_task = _memory->ramDel(_index);
 
 	return true;
 }
 
 bool Command_Delete::undo() {
-	_ram->add(_task);
+	_memory->ramAdd(_task);
 	return true;
 }
 
@@ -24,13 +24,13 @@ Task* Command_Delete::getTask() {
 	return _task;
 }
 
+COMMAND_TYPE Command_Delete::getCommandType() {
+	return DEL;
+}
+
 bool Command_Delete::outOfRange() {
-	if(_index > _ram->getSize() || _index < 1) {
+	if(_index > _memory->ramGetSize() || _index < 1) {
 		return true;
 	}
 	return false;
 }
-
-//COMMAND_TYPE Command_Delete::getCommandType() {
-//	return DELETE;
-//}

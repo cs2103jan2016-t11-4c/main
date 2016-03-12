@@ -15,6 +15,7 @@ public:
 	string _searchTerm;
 	Task* _lastAddedTask;
 
+	void sort();
 	string integerToString(int integer);
 	int stringToInteger(string text);
 	list<Task*>::iterator indexToTaskListIter(int index);
@@ -24,23 +25,16 @@ public:
 
 public:
 	RAM();
-
-//	Task* addToRawTaskHeap(Task task);
-
-	void add(Task* task);
-	Task* del(int index);		//delete using index
-	bool del(Task* task);		//delete using Task pointer
-	list<Task*> clear();
-	void insert(list<Task*>& oldTaskList);
-
-	void sort();
-
-	int getSize();
-	Task* getTask(int index);	
-
-	bool shiftTasksFromTaskList(string searchTerm);
-	void returnTasksToTaskList();
-
-	vector<string> taskListToVector();
-	void vectorToTaskList(vector<string>& existingData);
+	Task* ramAddToRawTaskHeap(Task task);
+	void ramAdd(Task* task);
+	void ramDel(Task* task);
+	Task* ramDel(int index);
+	list<Task*> ramClear();
+	void ramInsert(list<Task*>& oldTaskList);
+	int ramGetSize();
+	Task* ramGetTask(int index);
+	bool ramSearch(string searchTerm);
+	void ramUnsearch();
+	vector<string> ramGetVector();
+	void ramLoadVector(vector<string>& existingData);
 };
