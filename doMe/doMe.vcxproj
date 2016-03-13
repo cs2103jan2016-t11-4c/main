@@ -32,6 +32,7 @@
     <ClCompile Include="Command_Exit.cpp" />
     <ClCompile Include="Command_Invalid.cpp" />
     <ClCompile Include="Command_Undo.cpp" />
+    <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="Command_Exit.h" />
     <ClInclude Include="Command_Invalid.h" />
     <ClInclude Include="Command_Undo.h" />
+    <ClInclude Include="Commons.h" />
     <ClInclude Include="RAM.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />

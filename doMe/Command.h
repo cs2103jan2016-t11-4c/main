@@ -16,5 +16,7 @@ public:
 	virtual COMMAND_TYPE getCommandType() {return INVALID;}
 	virtual Task* getTask() {return NULL;}
 	virtual int getIndex() {return 0;}
-	virtual string getDescription() {return "";}
+	virtual	string getSearchTerm() {return "";}
+	virtual	string getSaveDirectory() {return "";}
+	virtual	string getSaveDirectory() {return "";}
 };

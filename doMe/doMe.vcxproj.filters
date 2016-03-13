@@ -82,6 +82,9 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Commons.cpp">
+      <Filter>Source Files\Commons Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -161,6 +164,9 @@
     </ClInclude>
     <ClInclude Include="Command_Undo.h">
       <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Commons.h">
+      <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
