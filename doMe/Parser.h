@@ -23,18 +23,15 @@
 //
 //@author: Mohammed Zawadul Farhan
 
+#include "Parser_Algorithms.h"
 #include "CommandPackage.h"
-#include "CommandArguments.h"
-#include "Parser_Basic.h"
-#include "Parser_Task.h"
+#include "CommandTokens.h"
 #include <vector>
 #include <sstream>
 #include <algorithm>
 #include <string>
 #include <ctime>
 #include <stack>
-
-#define START_PARAMETER 0
 
 class Parser {
 public:
@@ -145,6 +142,7 @@ public:
 	bool isLocationMarker(string s);
 	bool isValidDate(int date);
 	bool isLeap(int year);
+	bool isFoundInStack(string item, stack<string>* itemStack);
 
 	int getCurrentDate();
 };

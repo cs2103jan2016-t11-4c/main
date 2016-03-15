@@ -11,13 +11,15 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CommandArguments.cpp" />
+    <ClCompile Include="CommandTokens.cpp" />
     <ClCompile Include="CommandPackage.cpp" />
+    <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Parser.cpp" />
-    <ClCompile Include="Parser_Basic.cpp" />
-    <ClCompile Include="Parser_Task.cpp" />
+    <ClCompile Include="Parser_Algorithms.cpp" />
+    <ClCompile Include="Parser_Chrono.cpp" />
+    <ClCompile Include="Parser_Tasks.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Command.cpp" />
@@ -28,6 +30,7 @@
     <ClCompile Include="Command_ViewType.cpp" />
     <ClCompile Include="Command_SaveDirectory.cpp" />
     <ClCompile Include="Storage.cpp" />
+    <ClCompile Include="SynonymList.cpp" />
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="ViewType.cpp" />
@@ -35,7 +38,7 @@
     <ClCompile Include="ViewType2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommandArguments.h" />
+    <ClInclude Include="CommandTokens.h" />
     <ClInclude Include="CommandPackage.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />
@@ -44,13 +47,16 @@
     <ClInclude Include="Command_Clear.h" />
     <ClInclude Include="Command_ViewType.h" />
     <ClInclude Include="Command_SaveDirectory.h" />
+    <ClInclude Include="Dictionary.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="Parser_Basic.h" />
-    <ClInclude Include="Parser_Task.h" />
+    <ClInclude Include="Parser_Algorithms.h" />
+    <ClInclude Include="Parser_Chrono.h" />
+    <ClInclude Include="Parser_Tasks.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Storage.h" />
+    <ClInclude Include="SynonymList.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="ViewType.h" />

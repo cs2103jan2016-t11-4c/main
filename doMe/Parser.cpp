@@ -23,22 +23,18 @@ Parser::~Parser(void) {
 }
 
 CommandPackage* Parser::parse() {
-	/*
-	CommandArguments arguments(_commandLine);
-	Parser_Basic basicParser(&arguments);
-	_commandPackage = basicParser.parse();
-	if(needsTaskParsing(_commandPackage)) {
-		Parser_Task taskParser(&arguments);
-		_commandPackage = taskParser.parse();
-	}
-	*/
 	
+	CommandTokens tokens(_commandLine);
+	Parser_Algorithms parserAlgorithms(&tokens);
+	_commandPackage = parserAlgorithms.parse();
+	
+	/*
 	getParametersFromCommandLine();
 	guessCommandType();
 	findDetailsIfSimpleCommandType();
 	findDetailsIfNotSimpleCommandType();
 	parseAsAddCommandIfStillNotParsed();
-	
+	*/
 	return &_commandPackage;
 }
 
@@ -186,15 +182,12 @@ bool Parser::isAdd(string s) {
 }
 
 bool Parser::isDisplay(string s) {
-	if(s.compare("DISPLAY") == 0) {
-		return true;
-	} else if(s.compare("VIEW") == 0) {
-		return true;
-	} else if(s.compare("V") == 0) {
-		return true;
-	} else {
-		return false;
-	}
+	stack<string> wordStack;
+	wordStack.push("V");
+	wordStack.push("DISPLAY");
+	wordStack.push("VIEW");
+
+	return isFoundInStack(s, &wordStack);
 }
 
 bool Parser::isDelete(string s) {
@@ -781,4 +774,14 @@ int Parser::getCurrentDate() {
 	int date = day + month * 100 + year * 10000;
 
 	return date;
+}
+
+bool Parser::isFoundInStack(string word, stack<string>* wordStack) {
+	while(!wordStack->empty()) {	
+		if(word.compare(wordStack->top()) == 0) {
+			return true;
+		}
+		wordStack->pop();
+	}
+	return false;
 }

@@ -43,9 +43,6 @@
     <ClCompile Include="CommandPackage.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
-    <ClCompile Include="CommandArguments.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files\Logic Classes</Filter>
     </ClCompile>
@@ -61,10 +58,22 @@
     <ClCompile Include="UserInterface.cpp">
       <Filter>Source Files\UserInterface Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Parser_Task.cpp">
+    <ClCompile Include="CommandTokens.cpp">
       <Filter>Source Files\Parser Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Parser_Basic.cpp">
+    <ClCompile Include="Parser_Algorithms.cpp">
+      <Filter>Source Files\Parser Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Dictionary.cpp">
+      <Filter>Source Files\Parser Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="SynonymList.cpp">
+      <Filter>Source Files\Parser Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser_Tasks.cpp">
+      <Filter>Source Files\Parser Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser_Chrono.cpp">
       <Filter>Source Files\Parser Classes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -99,12 +108,6 @@
     <ClInclude Include="Task.h">
       <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Parser_Task.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandArguments.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Header Files\Memory Classes</Filter>
     </ClInclude>
@@ -129,7 +132,22 @@
     <ClInclude Include="Logic.h">
       <Filter>Header Files\Logic Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Parser_Basic.h">
+    <ClInclude Include="CommandTokens.h">
+      <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser_Algorithms.h">
+      <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="SynonymList.h">
+      <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Dictionary.h">
+      <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser_Tasks.h">
+      <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser_Chrono.h">
       <Filter>Header Files\Parser Classes</Filter>
     </ClInclude>
   </ItemGroup>

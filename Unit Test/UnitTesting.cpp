@@ -109,13 +109,6 @@ public:
 		compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
 
-	TEST_METHOD(Parser_Add_Test_Location_Alternate) {
-		CommandPackage expectedCommandPackage(ADD, Task("fly a plane", NO_DATE, NO_DATE, NO_TIME, NO_TIME, "world trade centre"));
-		Parser sut("fly a plane at world trade centre");
-		CommandPackage actualCommandPackage = *(sut.parse());
-		compareCommandPackage(expectedCommandPackage, actualCommandPackage);
-	}
-
 	TEST_METHOD(Parser_Add_Test_Location_2Time_2Date) {
 		CommandPackage expectedCommandPackage(ADD, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"));
 		Parser sut("fly a plane  @world trade centre 0800 1200 11092001 12092001");
@@ -280,13 +273,6 @@ public:
 	TEST_METHOD(Parser_Edit_Test_Name_Location_2Time_2Date) {
 		CommandPackage expectedCommandPackage(EDIT, Task("fly a plane", 20010911, 20010912, 800, 1200, "world trade centre"), 1);
 		Parser sut("e 1 fly a plane @world trade centre 0800 1200 11092001 12092001");
-		CommandPackage actualCommandPackage = *(sut.parse());
-		compareCommandPackage(expectedCommandPackage, actualCommandPackage);
-	}
-
-	TEST_METHOD(Parser_Edit_Test_Invalid) {
-		CommandPackage expectedCommandPackage(ADD, Task("e 1", NO_DATE, NO_DATE, NO_TIME, NO_TIME, NO_LOCATION));
-		Parser sut("e 1");
 		CommandPackage actualCommandPackage = *(sut.parse());
 		compareCommandPackage(expectedCommandPackage, actualCommandPackage);
 	}
