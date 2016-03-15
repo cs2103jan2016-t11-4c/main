@@ -1,5 +1,5 @@
 #include "Command.h"
 
-Command::Command(list<Task*>* taskList) {
-	_taskList = taskList;
+Command::Command(Memory* memory) {
+	_memory = memory;
 }

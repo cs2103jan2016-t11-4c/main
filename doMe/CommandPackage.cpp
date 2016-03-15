@@ -1,4 +1,4 @@
-#include "CommandPackage.h"
+/*#include "CommandPackage.h"
 
 CommandPackage::CommandPackage(COMMAND_TYPE commandType, Task task, int index, string description) :
 	_commandType(commandType),

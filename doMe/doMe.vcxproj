@@ -29,6 +29,12 @@
     <ClCompile Include="Command_Clear.cpp" />
     <ClCompile Include="Command_ViewType.cpp" />
     <ClCompile Include="Command_SaveDirectory.cpp" />
+    <ClCompile Include="Command_Search.cpp" />
+    <ClCompile Include="RAM.cpp" />
+    <ClCompile Include="Command_Exit.cpp" />
+    <ClCompile Include="Command_Invalid.cpp" />
+    <ClCompile Include="Command_Undo.cpp" />
+    <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="SynonymList.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -47,7 +53,16 @@
     <ClInclude Include="Command_Clear.h" />
     <ClInclude Include="Command_ViewType.h" />
     <ClInclude Include="Command_SaveDirectory.h" />
+<<<<<<< HEAD
     <ClInclude Include="Dictionary.h" />
+=======
+    <ClInclude Include="Command_Search.h" />
+    <ClInclude Include="Command_Exit.h" />
+    <ClInclude Include="Command_Invalid.h" />
+    <ClInclude Include="Command_Undo.h" />
+    <ClInclude Include="Commons.h" />
+    <ClInclude Include="RAM.h" />
+>>>>>>> 769674ce7157801b80a42fc28f89a1effcc3b521
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Parser.h" />

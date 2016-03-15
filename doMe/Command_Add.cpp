@@ -1,25 +1,31 @@
 #include "Command_Add.h"
 
-Command_Add::Command_Add(list<Task*>* taskList, Task* task)
-:Command(taskList) {
+Command_Add::Command_Add(Memory* memory, Task* task)
+:Command(memory){
 	_task = task;
 }
 
-int Command_Add::execute() {
-	_taskList->push_back(_task);
-	return 1;		
+bool Command_Add::execute() {
+	if(_task == NULL) {
+		return false;
+	}
+
+	_memory->ramAdd(_task);
+
+	return true;
 }
 
-int Command_Add::undo() {
-	for(list<Task*>::iterator iter = _taskList->begin(); iter != _taskList->end(); iter++) {
-		if(*iter == _task) {
-			_taskList->erase(iter);
-			return 1;
-		}
+bool Command_Add::undo() {
+	if(_memory->ramDel(_task) == true) {
+		return true;
 	}
-	return 0;
+	return false;
 }
 
 Task* Command_Add::getTask() {
 	return _task;
+}
+
+COMMAND_TYPE Command_Add::getCommandType() {
+	return ADD;
 }

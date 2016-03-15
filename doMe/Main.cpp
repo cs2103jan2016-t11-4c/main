@@ -1,11 +1,10 @@
 #include "Logic.h"
 
 int main() {
-	Logic doMeLogic = Logic();
+	UserInterface doMeUI = UserInterface();
 
-	doMeLogic.setEnvironment();
-	doMeLogic.displayWelcomeMessage();
-	doMeLogic.executeCommandsUntilExitCommand();
+	doMeUI.setEnvironment();
+	doMeUI.executeCommandUntilExit();
 
 	return 0;
 }

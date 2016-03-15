@@ -1,11 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="ViewType.cpp">
-      <Filter>ViewType</Filter>
+      <Filter>Source Files\UserInterface Classes\ViewType</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
       <Filter>Source Files\Command Classes</Filter>
@@ -29,10 +26,10 @@
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
     <ClCompile Include="ViewType2.cpp">
-      <Filter>ViewType</Filter>
+      <Filter>Source Files\UserInterface Classes\ViewType</Filter>
     </ClCompile>
     <ClCompile Include="ViewType1.cpp">
-      <Filter>ViewType</Filter>
+      <Filter>Source Files\UserInterface Classes\ViewType</Filter>
     </ClCompile>
     <ClCompile Include="Parser.cpp">
       <Filter>Source Files\Parser Classes</Filter>
@@ -75,6 +72,27 @@
     </ClCompile>
     <ClCompile Include="Parser_Chrono.cpp">
       <Filter>Source Files\Parser Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Search.cpp">
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="RAM.cpp">
+      <Filter>Source Files\Memory Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Exit.cpp">
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Invalid.cpp">
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Undo.cpp">
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Commons.cpp">
+      <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,6 +168,24 @@
     <ClInclude Include="Parser_Chrono.h">
       <Filter>Header Files\Parser Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Command_Search.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="RAM.h">
+      <Filter>Header Files\Memory Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Exit.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Invalid.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Undo.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Commons.h">
+      <Filter>Header Files\Commons Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -157,9 +193,6 @@
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{c9e732ff-ef34-4290-acff-7775a0ee3ca9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ViewType">
-      <UniqueIdentifier>{8656ac5c-44d2-4cde-9882-036442762e22}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Command Classes">
       <UniqueIdentifier>{f45e0532-d8dd-4543-b8af-cae3a72d560a}</UniqueIdentifier>
@@ -196,6 +229,9 @@
     </Filter>
     <Filter Include="Source Files\UserInterface Classes">
       <UniqueIdentifier>{4492a758-4f3d-4076-8ae2-3172aca944d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\UserInterface Classes\ViewType">
+      <UniqueIdentifier>{8656ac5c-44d2-4cde-9882-036442762e22}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
