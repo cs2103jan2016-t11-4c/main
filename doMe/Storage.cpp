@@ -9,50 +9,47 @@ Storage::Storage()
     _location = directory + "todo.txt";
 }*/
 
-vector<string> Storage::retrieveData(string directory) {
-    vector<string> dataVector;
+bool Storage::retrieveData(vector<string>& data, string directory) {
     string tempText;
     ifstream readFile;
-
-    /*setLocation(directory);*/
 
     readFile.open(directory);
 
     if (readFile.is_open()) {
         while (getline(readFile, tempText)) {
-            dataVector.push_back(tempText);
+            data.push_back(tempText);
         }
+        readFile.close();
+        return true;
     }
     else {
         _isFileCreated = true;
-        cerr << "File " << directory << " does not exist yet" << endl; //let UI print
+        /*cerr << "File " << directory << " does not exist yet" << endl;*/ //let UI print
+        return false;
     }
 
-    readFile.close();
-
-    return dataVector;
 }
 
-void Storage::saveData(vector<string> updatedData, string directory) {
+bool Storage::saveData(vector<string> updatedData, string directory) {
     ofstream writeFile;
-
-    /*setLocation(directory);*/
+    bool canFileOpen;
 
     writeFile.open(directory);
 
     if (writeFile.is_open()) {
-        if (_isFileCreated) {
+        /*if (_isFileCreated) {
             cout << directory << " has just been newly created! Your changes will be saved here." << endl; //let UI print
-        }
-
+        }*/
         for (int i = 0; i != updatedData.size(); i++) {
             writeFile << updatedData[i] << endl;
         }
+        writeFile.close();
+        return true;
     }
     else {
-        cerr << "There is an error in opening file " << directory << endl; //let UI print
+        /*cerr << "There is an error in opening file " << directory << endl; //let UI print*/
+        return false;
     }
 
-    writeFile.close();
 }
 

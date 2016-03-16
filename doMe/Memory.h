@@ -8,16 +8,20 @@ class Memory {
 public:
     Memory(void);
     ~Memory(void);
-
+	
+	//function calling Settings class
     bool loadSettings(); //complete
     void saveSettings(); //complete
     bool changeViewType(int viewType); //complete
     bool changeSaveDirectory(string saveDirectory);//complete
-    bool getExistingData(); //complete
-    void saveUpdatedData();//complete
     string getTextFileName();//complete
     int getViewType();//complete
     string getSaveDirectory();//complete
+    
+    //functions calling Storage class
+	bool getExistingData(); //complete 
+    bool saveUpdatedData();//complete
+
     list<Task*>* getTaskList();//complete
 
 private:

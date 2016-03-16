@@ -39,21 +39,21 @@ bool Memory::changeSaveDirectory(string saveDirectory) {
 
 bool Memory::getExistingData() {
     vector<string> stringData;
-    /*
+
     if(_storage->retrieveData(stringData, _settings->getSaveDirectory())) {
     return false;
     } else {
     vectorToTaskList(stringData);
     return true;
     }
-    */
+
     return true; //tem
 }
 
-void Memory::saveUpdatedData() {
+bool Memory::saveUpdatedData() {
     vector<string> stringData;
     stringData = taskListToVector();
-    _storage->saveData(stringData, _settings->getSaveDirectory());
+    return _storage->saveData(stringData, _settings->getSaveDirectory());
 }
 
 void Memory::vectorToTaskList(vector<string>& existingData) {
