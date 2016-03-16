@@ -1,4 +1,6 @@
 #pragma once
+#include <list>
+#include "Task.h"
 #include "Settings.h"
 #include "Storage.h"
 
