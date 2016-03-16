@@ -117,3 +117,51 @@ list<Task*>* Memory::getTaskList() {
     return _taskList;
 }
 
+void Memory::ramAddToRawTaskHeap(Task task) {
+	_ram->AddToRawTaskHeap(task);
+}
+
+void Memory::ramAdd(Task* task) {
+	_ram->ramAdd(task);
+}
+
+void Memory::ramDel(Task* task) {
+	_ram->ramDel(task);
+}
+
+Task* Memory::ramDel(int index) {
+	return _ram->ramDel(index);
+}
+
+void Memory::ramClear() {
+	_ram->ramClear();
+}
+
+void Memory::ramInsert(list<Task*>& oldTaskList) {
+	_ram->ramInsert(oldTaskList);
+}
+
+int Memory::ramGetSize() {
+	return _ram->ramGetSize();
+}
+
+Task* Memory::ramGetTask(int index) {
+	return _ram->ramGetTask(index);
+}
+
+bool Memory::ramSearch(string searchTerm) {
+	return _ram->ramSearch(searchTerm);
+}
+
+string Memory::ramUnsearch() {
+	return _ram->ramUnsearch();
+}
+
+vector<string> Memory::ramGetVector() {
+	return _ram->ramGetVector();
+}
+
+void Memory::ramLoadVector(vector<string>& existingData) {
+	_ram->ramLoadVector(existingData);
+}
+

@@ -1,13 +1,16 @@
 #pragma once
 #include <list>
-#include "Task.h"
+#include "RAM.h"
 #include "Settings.h"
 #include "Storage.h"
+#include "Task.h"
 
 class Memory {
 public:
     Memory(void);
     ~Memory(void);
+
+	static Memory* getInstance();
 	
 	//function calling Settings class
     bool loadSettings(); //complete
@@ -22,12 +25,28 @@ public:
 	bool getExistingData(); //complete 
     bool saveUpdatedData();//complete
 
+	//functions calling RAM class
+	void ramAddToRawTaskHeap(Task task);
+	void ramAdd(Task* task);
+	void ramDel(Task* task);
+	Task* ramDel(int index);
+	void ramClear();
+	void ramInsert(list<Task*>& oldTaskList);
+	int ramGetSize();
+	Task* ramGetTask(int index);
+	bool ramSearch(string searchTerm);
+	string ramUnsearch();
+	vector<string> ramGetVector();
+	void ramLoadVector(vector<string>& existingData);
+		
     list<Task*>* getTaskList();//complete
 
 private:
     list<Task*>* _taskList;
     Settings* _settings;
     Storage* _storage;
+	RAM* _ram;
+	Memory* _instance;
 
     void vectorToTaskList(vector<string>& existingData);//complete
     vector<string> taskListToVector();//complete
