@@ -1,11 +1,20 @@
+//@@author A0125290M
 #include "Command_Clear.h"
 
-Command_Clear::Command_Clear(Memory* memory)
-:Command(memory) {
+Command_Clear::Command_Clear(vector<int>& deleteList)
+:Command() {
+	_deleteList = deleteList;
 }
 
 bool Command_Clear::execute() {
-	_oldTaskList = _memory->ramClear();
+	if(_deleteList.empty()) {
+		_oldTaskList = _memory->ramClear();
+	}
+
+	for(int i = 0; i < _deleteList.size(); i++) {
+		_oldTaskList.push_back(_memory->ramDel(_deleteList[i]));
+	}
+
 	return true;
 }
 

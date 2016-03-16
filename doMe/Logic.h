@@ -1,11 +1,10 @@
+//@@author A0125290M
 #include <iostream>
 #include <string>
 #include <stack>
 #include <assert.h>
 #include <conio.h>
-#include "Memory.h"
 #include "Parser.h"
-//#include "Commons.h"
 #include "Command.h"
 #include "Command_Add.h"
 #include "Command_Clear.h"
@@ -21,11 +20,10 @@ using namespace std;
 
 class Logic { 
 private:
-	Memory* _memory;
 	stack<Command*>* _commandHistoryList;
 
 	Command* undo();
 public:
-	Logic(Memory* memory);
+	Logic();
 	Command* executeCommand(string commandText, int& commandOutcome);
 };

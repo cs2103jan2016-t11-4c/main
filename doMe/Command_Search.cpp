@@ -1,7 +1,8 @@
+//@@author A0125290M
 #include "Command_Search.h"
 
-Command_Search::Command_Search(Memory* memory, string searchTerm)
-:Command(memory) {
+Command_Search::Command_Search(string searchTerm)
+:Command() {
 	_searchTerm = searchTerm;
 }
 

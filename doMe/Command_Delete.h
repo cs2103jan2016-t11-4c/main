@@ -1,3 +1,4 @@
+//@@author A0125290M
 #include "Command.h"
 using namespace std;
 
@@ -8,7 +9,7 @@ private:
 
 	bool outOfRange();
 public:
-	Command_Delete(Memory* memory, int index);
+	Command_Delete(int index);
 	bool execute();
 	bool undo();
 	Task* getTask();
