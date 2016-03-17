@@ -23,26 +23,31 @@
 //
 //@author: Mohammed Zawadul Farhan
 
+#include "Parser_Interface.h"
 #include "Parser_Algorithms.h"
-#include "CommandPackage.h"
+#include "Command.h"
 #include "CommandTokens.h"
-#include <vector>
-#include <sstream>
-#include <algorithm>
 #include <string>
-#include <ctime>
-#include <stack>
+#include <assert.h>
 
-class Parser {
-public:
-	Parser(string commandLine = ""); // string to parse can be put in directly during construction
+using namespace std;
+
+class Parser : public Parser_Interface
+{
+public:	
 	~Parser(void);
-	
-	CommandPackage* parse(); // run this method to parse a commandline and recieve the command package
-	
-	void setCommandLine(string commandLine); // command line to parse can be set using this method as well
-	CommandPackage* getCommandPackage(); // this method can be used to recieve the commandpackage after parsing
+	static Parser* getInstance();
+	void setCommandLine(string newCommandLine);
+	Command* getCommand();
 
+private:
+	Parser(void);
+
+	static Parser* _theOne;
+	Command* _command;
+};
+	
+	/*
 	//all attributes and methods below are for internal implementations, do not touch
 private:
 	string _commandLine;
@@ -145,4 +150,4 @@ public:
 	bool isFoundInStack(string item, stack<string>* itemStack);
 
 	int getCurrentDate();
-};
+	*/

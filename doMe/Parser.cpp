@@ -1,80 +1,38 @@
 #include "Parser.h"
 
-Parser::Parser(string commandLine) :
-_commandLine(commandLine)
-{
-	_caseSensitiveCommandParameters.clear();
-	_commandParameters.clear();
-	_commandType = INVALID;
-	_commandPackage = CommandPackage();
-	_times.clear();
-	_time1 = NO_TIME;
-	_time2 = NO_TIME;
-	_dates.clear();
-	_date2 = NO_DATE;
-	_date1 = NO_DATE;
-	_location.clear();
-	_description.clear();
-	_index = NO_INDEX;
-	return;
+Parser* Parser::_theOne = NULL;
+
+Parser::Parser(void) {
 }
 
 Parser::~Parser(void) {
 }
 
-CommandPackage* Parser::parse() {
-	
-	CommandTokens tokens(_commandLine);
-	Parser_Algorithms parserAlgorithms(&tokens);
-	_commandPackage = parserAlgorithms.parse();
-	
-	/*
-	getParametersFromCommandLine();
-	guessCommandType();
-	findDetailsIfSimpleCommandType();
-	findDetailsIfNotSimpleCommandType();
-	parseAsAddCommandIfStillNotParsed();
-	*/
-	return &_commandPackage;
-}
-
-bool Parser::needsTaskParsing(CommandPackage package) {
-	stack<COMMAND_TYPE> commands;
-	commands.push(ADD);
-	commands.push(EDIT);
-		
-	while(!commands.empty()) {
-		if(package.getCommandType() == commands.top()) {
-			return true;
-		} else {
-			commands.pop();
-		}
+Parser* Parser::getInstance() {
+	if(_theOne == NULL) {
+		_theOne = new Parser;
 	}
-	return false;
+
+	return _theOne;
 }
 
-void Parser::setCommandLine(string commandLine) {
-	_commandLine = commandLine;
-	_caseSensitiveCommandParameters.clear();
-	_commandParameters.clear();
-	_commandType = INVALID;
-	_commandPackage = CommandPackage();
-	_times.clear();
-	_time1 = NO_TIME;
-	_time2 = NO_TIME;
-	_dates.clear();
-	_date2 = NO_DATE;
-	_date1 = NO_DATE;
-	_location.clear();
-	_description.clear();
-	_index = NO_INDEX;
+void Parser::setCommandLine(string newCommandLine) {
+	assert(newCommandLine.size() != 0);
+	
+	CommandTokens* tokens = new CommandTokens(newCommandLine);
+	
+	Parser_Algorithms parserAlgorithms(tokens);
+	_command = parserAlgorithms.parse();
+	
+	delete tokens;
 	return;
 }
 
-CommandPackage* Parser::getCommandPackage() {
-	return &_commandPackage;
+Command* Parser::getCommand() {
+	return _command;
 }
 
+/*
 void Parser::getParametersFromCommandLine() {
 	_caseSensitiveCommandParameters = splitSentence(_commandLine);
 	_commandLine = makeAllCaps(_commandLine);
@@ -784,4 +742,4 @@ bool Parser::isFoundInStack(string word, stack<string>* wordStack) {
 		wordStack->pop();
 	}
 	return false;
-}
+	*/

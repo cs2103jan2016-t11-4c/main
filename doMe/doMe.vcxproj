@@ -19,6 +19,7 @@
     <ClCompile Include="Parser.cpp" />
     <ClCompile Include="Parser_Algorithms.cpp" />
     <ClCompile Include="Parser_Chrono.cpp" />
+    <ClCompile Include="Parser_Interface.cpp" />
     <ClCompile Include="Parser_Tasks.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -59,6 +60,7 @@
     <ClInclude Include="Command_Invalid.h" />
     <ClInclude Include="Command_Undo.h" />
     <ClInclude Include="Commons.h" />
+    <ClInclude Include="Parser_Interface.h" />
     <ClInclude Include="RAM.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />

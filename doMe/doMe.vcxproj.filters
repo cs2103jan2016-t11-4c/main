@@ -94,6 +94,7 @@
     <ClCompile Include="Commons.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Parser_Interface.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -185,6 +186,9 @@
     </ClInclude>
     <ClInclude Include="Commons.h">
       <Filter>Header Files\Commons Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser_Interface.h">
+      <Filter>Header Files\Parser Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

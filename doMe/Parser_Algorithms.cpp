@@ -1,21 +1,29 @@
 #include "Parser_Algorithms.h"
 
-
 Parser_Algorithms::Parser_Algorithms(CommandTokens* tokens) :
 	_tokens(tokens)
 {
-	packInvalidCommand();
+	initializeAttributes();
 }
 
 Parser_Algorithms::~Parser_Algorithms(void)
 {
 }
 
-CommandPackage Parser_Algorithms::parse() {
+void Parser_Algorithms::initializeAttributes() {
+	_singleIndex = NO_VALUE;
+	_description = NO_STRING;
+	_task = NO_TASK;
+
+	return;
+}
+
+Command* Parser_Algorithms::parse() {
 	
 	branchToNodes(START_INDEX);
 	return _commandPackage;
 }
+
 
 void Parser_Algorithms::branchToNodes(int index) {
 	assert(!_tokens->isOutOfBounds(index));
@@ -42,7 +50,8 @@ void Parser_Algorithms::branchToNodes(int index) {
 	}
 	return;
 }
-//done
+
+
 void Parser_Algorithms::nodeOneOfDisplayCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packDisplayCommand();
@@ -51,12 +60,8 @@ void Parser_Algorithms::nodeOneOfDisplayCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packDisplayCommand() {
-	_commandPackage = CommandPackage(DISPLAY);
-	return;
-}
-//done
+
+
 void Parser_Algorithms::nodeOneOfChangeDirectoryCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
@@ -67,7 +72,7 @@ void Parser_Algorithms::nodeOneOfChangeDirectoryCommand(int index) {
 	}
 	return;
 }
-//done
+
 void Parser_Algorithms::nodeTwoOfChangeDirectoryCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
@@ -77,7 +82,7 @@ void Parser_Algorithms::nodeTwoOfChangeDirectoryCommand(int index) {
 	}
 	return;
 }
-//done
+
 void Parser_Algorithms::nodeThreeOfChangeDirectoryCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packChangeDirectoryCommand();
@@ -86,12 +91,8 @@ void Parser_Algorithms::nodeThreeOfChangeDirectoryCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packChangeDirectoryCommand() {
-	_commandPackage = CommandPackage(SAVEDIRECTORY, Task(), NO_INDEX, _description);
-	return;
-}
-//i think is done
+
+
 void Parser_Algorithms::nodeOneOfChangeViewTypeCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
@@ -102,7 +103,7 @@ void Parser_Algorithms::nodeOneOfChangeViewTypeCommand(int index) {
 	}
 	return;
 }
-//done
+
 void Parser_Algorithms::nodeTwoOfChangeViewTypeCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
@@ -114,7 +115,7 @@ void Parser_Algorithms::nodeTwoOfChangeViewTypeCommand(int index) {
 	}
 	return;
 }
-//dome
+
 void Parser_Algorithms::nodeThreeOfChangeViewTypeCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packChangeViewTypeCommand();
@@ -123,12 +124,8 @@ void Parser_Algorithms::nodeThreeOfChangeViewTypeCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packChangeViewTypeCommand() {
-	_commandPackage = CommandPackage(VIEWTYPE, Task(), _index);
-	return;
-}
-//done
+
+
 void Parser_Algorithms::nodeOneOfDeleteCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
@@ -140,7 +137,7 @@ void Parser_Algorithms::nodeOneOfDeleteCommand(int index) {
 	}
 	return;
 }
-//done
+
 void Parser_Algorithms::nodeTwoOfDeleteCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packDeleteCommand();
@@ -149,12 +146,8 @@ void Parser_Algorithms::nodeTwoOfDeleteCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packDeleteCommand() {
-	_commandPackage = CommandPackage(DEL, Task(), _index);
-	return;
-}
-//done
+
+
 void Parser_Algorithms::nodeOneOfUndoCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packUndoCommand();
@@ -163,12 +156,8 @@ void Parser_Algorithms::nodeOneOfUndoCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packUndoCommand() {
-	_commandPackage = CommandPackage(UNDO);
-	return;
-}
-//done
+
+
 void Parser_Algorithms::nodeOneOfExitCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packExitCommand();
@@ -177,12 +166,8 @@ void Parser_Algorithms::nodeOneOfExitCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packExitCommand() {
-	_commandPackage = CommandPackage(EXIT);
-	return;
-}
-//done
+
+
 void Parser_Algorithms::nodeOneOfClearCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packClearCommand();
@@ -191,12 +176,8 @@ void Parser_Algorithms::nodeOneOfClearCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packClearCommand() {
-	_commandPackage = CommandPackage(CLEAR);
-	return;
-}
-//done
+
+
 void Parser_Algorithms::nodeOneOfSearchCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
@@ -206,7 +187,7 @@ void Parser_Algorithms::nodeOneOfSearchCommand(int index) {
 	}
 	return;
 }
-//done
+
 void Parser_Algorithms::nodeTwoOfSearchCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packSearchCommand();
@@ -215,16 +196,7 @@ void Parser_Algorithms::nodeTwoOfSearchCommand(int index) {
 	}
 	return;
 }
-//done
-void Parser_Algorithms::packSearchCommand() {
-	_commandPackage = CommandPackage(SEARCH, Task(), NO_INDEX, _description);
-	return;
-}
-//done
-void Parser_Algorithms::packInvalidCommand() {
-	_commandPackage = CommandPackage(INVALID);
-	return;
-}
+
 
 void Parser_Algorithms::nodeOneOfAddCommand(int index) {
 	Parser_Tasks taskParser(_tokens);
@@ -233,10 +205,6 @@ void Parser_Algorithms::nodeOneOfAddCommand(int index) {
 	return;
 }
 
-void Parser_Algorithms::packAddCommand() {
-	_commandPackage = CommandPackage(ADD, _task);
-	return;
-}
 
 void Parser_Algorithms::nodeOneOfEditCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
@@ -261,8 +229,58 @@ void Parser_Algorithms::nodeTwoOfEditCommand(int index) {
 	}
 	return;
 }
+//not integrated
+void Parser_Algorithms::packDisplayCommand() {
+	_commandPackage = CommandPackage(DISPLAY);
+	return;
+}
+
+void Parser_Algorithms::packChangeDirectoryCommand() {
+	_command = Command_SaveDirectory(_description);
+	return;
+}
+
+void Parser_Algorithms::packChangeViewTypeCommand() {
+	_command = Command_ViewType(_index);
+	return;
+}
+
+void Parser_Algorithms::packDeleteCommand() {
+	_command = Command_Delete(_index);
+	return;
+}
+
+void Parser_Algorithms::packUndoCommand() {
+	_command = Command_Undo();
+	return;
+}
+
+void Parser_Algorithms::packExitCommand() {
+	_command = Command_Exit();
+	return;
+}
+
+void Parser_Algorithms::packClearCommand() {
+	_command = Command_Clear(_indexes);
+	return;
+}
+
+void Parser_Algorithms::packSearchCommand() {
+	_command = Command_Search(_description);
+	return;
+}
+
+void Parser_Algorithms::packAddCommand() {
+	_command = Command_Add(&_task);
+	return;
+}
 
 void Parser_Algorithms::packEditCommand() {
-	_commandPackage = CommandPackage(EDIT, _task, _index);
+	_commandPackage = Command_Edit(_index, &_task);
+	return;
+}
+//not integrated
+void Parser_Algorithms::packInvalidCommand() {
+	_commandPackage = CommandPackage(INVALID);
 	return;
 }
