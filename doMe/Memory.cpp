@@ -47,7 +47,6 @@ bool Memory::getExistingData() {
     return true;
     }
 
-    return true; //tem
 }
 
 bool Memory::saveUpdatedData() {
