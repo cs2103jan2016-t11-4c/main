@@ -186,6 +186,7 @@
     </ClInclude>
     <ClInclude Include="Parser_Interface.h">
       <Filter>Header Files\Parser Classes</Filter>
+    </ClInclude>
     <ClInclude Include="Logic.h">
       <Filter>Header Files</Filter>
     </ClInclude>
