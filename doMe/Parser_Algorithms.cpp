@@ -108,7 +108,7 @@ void Parser_Algorithms::nodeTwoOfChangeViewTypeCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
-		_index = stoi(_tokens->getToken(index));
+		_singleIndex = stoi(_tokens->getToken(index));
 		nodeThreeOfChangeViewTypeCommand(index+1);
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
@@ -130,7 +130,7 @@ void Parser_Algorithms::nodeOneOfDeleteCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
-		_index = stoi(_tokens->getToken(index));
+		_singleIndex = stoi(_tokens->getToken(index));
 		nodeTwoOfDeleteCommand(index+1);
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
@@ -210,10 +210,10 @@ void Parser_Algorithms::nodeOneOfEditCommand(int index) {
 	if(_tokens->noMoreTokens(index)) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
-		_index = stoi(_tokens->getToken(index));
+		_singleIndex = stoi(_tokens->getToken(index));
 		nodeTwoOfEditCommand(index+1);
 	} else {
-		_index = LAST_INDEX;
+		_singleIndex = LAST_INDEX;
 		nodeTwoOfEditCommand(index);
 	}
 	return;
@@ -231,7 +231,7 @@ void Parser_Algorithms::nodeTwoOfEditCommand(int index) {
 }
 //not integrated
 void Parser_Algorithms::packDisplayCommand() {
-	_commandPackage = CommandPackage(DISPLAY);
+	_command = Command_Display();
 	return;
 }
 
@@ -241,12 +241,12 @@ void Parser_Algorithms::packChangeDirectoryCommand() {
 }
 
 void Parser_Algorithms::packChangeViewTypeCommand() {
-	_command = Command_ViewType(_index);
+	_command = Command_ViewType(_singleIndex);
 	return;
 }
 
 void Parser_Algorithms::packDeleteCommand() {
-	_command = Command_Delete(_index);
+	_command = Command_Delete(_singleIndex);
 	return;
 }
 
@@ -276,11 +276,11 @@ void Parser_Algorithms::packAddCommand() {
 }
 
 void Parser_Algorithms::packEditCommand() {
-	_commandPackage = Command_Edit(_index, &_task);
+	_command = Command_Edit(_singleIndex, &_task);
 	return;
 }
-//not integrated
+
 void Parser_Algorithms::packInvalidCommand() {
-	_commandPackage = CommandPackage(INVALID);
+	_command = Command_Invalid();
 	return;
 }
