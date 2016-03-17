@@ -7,8 +7,9 @@
 #include <list>
 #include <windows.h>
 #include <conio.h>
+#include <ctime>
 
-#include "Logic.h"
+//#include "Logic.h"
 #include "Memory.h"
 #include "Command.h"
 #include "Task.h"

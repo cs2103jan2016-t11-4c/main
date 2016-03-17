@@ -1,43 +1,41 @@
+//@@author A0125290M
 #include "Logic.h"
 
-Logic::Logic(Memory* memory) {
-	_memory = memory;
+Logic::Logic() {
 	_commandHistoryList = new stack<Command*>;
 }
 
 Command* Logic::executeCommand(string commandText, int& commandOutcome) {
-	if(commandText.empty()) {
-		Command_Invalid* commandInvalid = new Command_Invalid();
-		return commandInvalid;
-	}
+//	if(commandText.empty()) {
+//		Command_Invalid* commandInvalid = new Command_Invalid();
+//		return commandInvalid;
+//	}
 
 	Parser* parser = new Parser(commandText);
 	parser->parse();
 	Command* command = parser->getCommand();
-	delete parser;
+	assert(command != NULL);
+	//delete parser;
 
-	COMMAND_TYPE commandType = command->getCommandType();
-
-	if(commandType == EXIT) {
-		commandOutcome = 1;
-		return command;
-	}
-
-	if(commandType == UNDO ) {
+	if(command->getCommandType() == UNDO ) {
 		commandOutcome = -1;
 		return undo();
 	}
 
-	command->execute();
-	_commandHistoryList->push(command);
+	if(command->execute() == true) {
+		_commandHistoryList->push(command);
+		commandOutcome = 1;
+	}else {
+		commandOutcome = 0;
+	}
 
 	return command;
 }
 
 Command* Logic::undo() {
 	if(_commandHistoryList->empty()) {
-		Command_Undo* commandUndo = new Command_Undo();
-		return commandUndo;
+		Command_Invalid* commandInvalid = new Command_Invalid();
+		return commandInvalid;
 	}
 
 	_commandHistoryList->top()->undo();

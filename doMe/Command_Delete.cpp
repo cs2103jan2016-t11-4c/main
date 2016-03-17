@@ -1,7 +1,8 @@
+//@@author A0125290M
 #include "Command_Delete.h"
 
-Command_Delete::Command_Delete(Memory* memory, int index))
-:Command(memory) {
+Command_Delete::Command_Delete(int index))
+:Command() {
 	_index = index;
 }
 
@@ -25,7 +26,7 @@ Task* Command_Delete::getTask() {
 }
 
 COMMAND_TYPE Command_Delete::getCommandType() {
-	return DEL;
+	return DELETE;
 }
 
 bool Command_Delete::outOfRange() {

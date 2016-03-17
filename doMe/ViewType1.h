@@ -8,8 +8,8 @@ private:
 
     static const string MESSAGE_DISPLAY_HEADER;
     static const string MESSAGE_NEW_LINE;
-    static const string ViewType1::MESSAGE_AM;
-    static const string ViewType1::MESSAGE_PM;
+    static const string MESSAGE_AM;
+    static const string MESSAGE_PM;
 
     string createTaskString(Task* individualTask, int index); 
     string getComplimentaryString(Task* individualTask);

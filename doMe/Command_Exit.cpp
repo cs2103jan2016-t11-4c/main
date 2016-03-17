@@ -1,7 +1,20 @@
+//@@author A0125290M
 #include "Command_Exit.h"
 
 Command_Exit::Command_Exit()
-:Command(NULL) {
+:Command() {
+}
+
+bool Command_Exit::execute() {
+	if(_memory->ramGetSearchState == true) {
+		_searchTerm = _memory->ramUnsearch();
+		return true;
+	}
+	return false;
+}
+
+bool Command_Exit::undo() {
+	return _memory->ramSearch(_searchTerm);
 }
 
 COMMAND_TYPE Command_Exit::getCommandType() {

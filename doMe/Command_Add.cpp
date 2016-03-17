@@ -1,7 +1,8 @@
+//@@author A0125290M
 #include "Command_Add.h"
 
-Command_Add::Command_Add(Memory* memory, Task* task)
-:Command(memory){
+Command_Add::Command_Add(Task* task)
+:Command(){
 	_task = task;
 }
 

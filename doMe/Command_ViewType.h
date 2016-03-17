@@ -1,3 +1,4 @@
+//@@author A0125290M
 #include "Command.h"
 using namespace std;
 
@@ -6,7 +7,7 @@ private:
 	int _oldViewType;
 	int _newViewType;
 public:
-	Command_ViewType(Memory* memory, int newViewType);
+	Command_ViewType(int newViewType);
 	bool execute();
 	bool undo();
 	int getViewType();

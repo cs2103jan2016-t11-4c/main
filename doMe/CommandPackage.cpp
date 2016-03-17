@@ -105,3 +105,5 @@ void CommandPackage::setDescription(string description) {
 	_description = description;
 	return;
 }
+
+*/

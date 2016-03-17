@@ -1,3 +1,4 @@
+//@@author A0125290M
 #include "RAM.h"
 
 const string RAM::LIST_DIVIDER = "__________";
@@ -68,6 +69,10 @@ Task* RAM::ramGetTask(int index) {		//index must be valid
 	return *(indexToTaskListIter(index));
 }
 
+bool RAM::ramGetSearchState() {
+	return _searchState;
+}
+
 bool RAM::ramSearch(string searchTerm) {
 	ramUnsearch();
 
@@ -91,13 +96,15 @@ bool RAM::ramSearch(string searchTerm) {
 	return true;
 }
 
-void RAM::ramUnsearch() {
+string RAM::ramUnsearch() {
 	while(!_tempTaskList.empty()) {
 		_taskList.push_back(_tempTaskList.front());
 		_tempTaskList.pop_front();
 	}
 	_searchState = false;
 	sort();
+
+	return _searchTerm;
 }
 
 vector<string> RAM::ramGetVector() {

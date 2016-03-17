@@ -1,7 +1,8 @@
+//@@author A0125290M
 #include "Command_ViewType.h"
 
-Command_ViewType::Command_ViewType(Memory* memory, int newViewType)
-:Command(memory) {
+Command_ViewType::Command_ViewType(int newViewType)
+:Command() {
 	_oldViewType = _memory->getViewType();
 	_newViewType = newViewType;
 }

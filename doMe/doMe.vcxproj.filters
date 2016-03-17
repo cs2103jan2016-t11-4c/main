@@ -40,9 +40,6 @@
     <ClCompile Include="CommandPackage.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Logic.cpp">
-      <Filter>Source Files\Logic Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Memory.cpp">
       <Filter>Source Files\Memory Classes</Filter>
     </ClCompile>
@@ -95,6 +92,12 @@
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
     <ClCompile Include="Parser_Interface.cpp" />
+    <ClCompile Include="Logic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\Commons Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -124,9 +127,6 @@
     <ClInclude Include="CommandPackage.h">
       <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Task.h">
-      <Filter>Header Files\Commons Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Header Files\Memory Classes</Filter>
     </ClInclude>
@@ -147,9 +147,6 @@
     </ClInclude>
     <ClInclude Include="ViewType1.h">
       <Filter>Header Files\UserInterface Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Logic.h">
-      <Filter>Header Files\Logic Classes</Filter>
     </ClInclude>
     <ClInclude Include="CommandTokens.h">
       <Filter>Header Files\Parser Classes</Filter>
@@ -189,6 +186,14 @@
     </ClInclude>
     <ClInclude Include="Parser_Interface.h">
       <Filter>Header Files\Parser Classes</Filter>
+    <ClInclude Include="Logic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>Header Files\Commons Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -221,12 +226,6 @@
     </Filter>
     <Filter Include="Header Files\UserInterface Classes">
       <UniqueIdentifier>{25153218-e599-4368-8f13-af083407d73e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Logic Classes">
-      <UniqueIdentifier>{ff734f9a-9803-4397-a36d-ca46d70b21a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Logic Classes">
-      <UniqueIdentifier>{4e48fd48-f7bd-4e9b-a5a7-758728a8ddb9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Memory Classes">
       <UniqueIdentifier>{46e4b635-86fe-4775-a598-ef375db45983}</UniqueIdentifier>

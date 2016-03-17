@@ -1,3 +1,4 @@
+//@@author A0125290M
 #pragma once
 #include <vector>
 #include <list>
@@ -21,7 +22,7 @@ public:
 	list<Task*>::iterator indexToTaskListIter(int index);
 	bool foundInTask(Task* task, string searchTerm);
 
-	static const string LIST_DIVIDER;
+	const string LIST_DIVIDER;
 
 public:
 	RAM();
@@ -33,8 +34,9 @@ public:
 	void ramInsert(list<Task*>& oldTaskList);
 	int ramGetSize();
 	Task* ramGetTask(int index);
+	bool ramGetSearchState();
 	bool ramSearch(string searchTerm);
-	void ramUnsearch();
+	string ramUnsearch();
 	vector<string> ramGetVector();
 	void ramLoadVector(vector<string>& existingData);
 };
