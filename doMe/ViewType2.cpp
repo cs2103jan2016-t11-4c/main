@@ -116,6 +116,8 @@ string ViewType2::getMonth(int date) {
     int month;
     date = date / 100;
     month = date % 100;
+    assert((month <= 12) && (month > 0));
+
     return MESSAGE_MONTH[month-1];
 }
 

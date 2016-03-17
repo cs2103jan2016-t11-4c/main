@@ -9,7 +9,7 @@ const int Settings::DEFAULT_WINDOWS_LENGTH = 25;
 
 Settings::Settings(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
-    _viewType = -1;
+    _viewType = 0;
 }
 
 Settings::~Settings(void) {
@@ -45,6 +45,7 @@ bool Settings::loadSettings() {
         is << (loadSettingsDetails(extractedSettings));
         is >> rows;
 
+        //change window size
         sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows);
         system(buffer);
 
@@ -85,7 +86,7 @@ void Settings::saveSettings() {
 }
 
 /****************************************************************/
-
+//helper functions
 string Settings::writeSettingsDetails(string sentence) {
     if(sentence.empty()) {
         return VOID_INDICATOR;
@@ -103,41 +104,7 @@ string Settings::loadSettingsDetails(string sentence) {
 }
 
 /****************************************************************/
-
-void Settings::openNewSettingFile() {
-    std::ofstream writeFile;
-
-    writeFile.open(FILE_SETTINGS_NAME);
-}
-
-bool Settings::checkForSettingsFile() {
-    ifstream settingFile(FILE_SETTINGS_NAME);
-
-    if (settingFile.is_open()) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-void Settings::updateTextFileName(string textFileName) {
-    string newTextFileName;
-
-    newTextFileName = createValidTextFileNameString(textFileName);
-
-    _textFileName = newTextFileName;
-}
-
-bool Settings::checkEmptySaveDirectory() {
-    if(_saveDirectory.empty()) {
-        return false;
-    } else {
-        return true;
-    }
-}
-
-/****************************************************************/
-
+//helper function to make correct format of textfile name
 string Settings::createValidTextFileNameString(string textFileName) {
     string fileExtension = ".txt";
     if(textFileName.substr(textFileName.find_last_of(".") + 1) == "txt") {
@@ -147,6 +114,7 @@ string Settings::createValidTextFileNameString(string textFileName) {
     }
 }
 
+//helper function to make correct format of save directory
 string Settings::createValidFileDirectoryString(string directory) {
     string fileSeparator= "/";
     if(directory.find_last_of("/\\")+1 == directory.size()) {
@@ -208,6 +176,15 @@ bool Settings::changeViewType(int newViewType) {
     return true;
 }
 
+//might want to change name to suit 
+void Settings::updateTextFileName(string textFileName) {
+    string newTextFileName;
+
+    newTextFileName = createValidTextFileNameString(textFileName);
+
+    _textFileName = newTextFileName;
+}
+
 /****************************************************************/
 
 string Settings::getSaveDirectory() {
@@ -225,6 +202,32 @@ string Settings::getTextFileName() {
 void Settings::resizeWindow() {
         sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
         system(buffer);
+}
+
+/****************************************************************/
+//all may be redundant / remove if necessary
+void Settings::openNewSettingFile() {
+    std::ofstream writeFile;
+
+    writeFile.open(FILE_SETTINGS_NAME);
+}
+
+bool Settings::checkForSettingsFile() {
+    ifstream settingFile(FILE_SETTINGS_NAME);
+
+    if (settingFile.is_open()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool Settings::checkEmptySaveDirectory() {
+    if(_saveDirectory.empty()) {
+        return false;
+    } else {
+        return true;
+    }
 }
 
 //https://msdn.microsoft.com/en-us/library/windows/desktop/bb773584(v=vs.85).aspx

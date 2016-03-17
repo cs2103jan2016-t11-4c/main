@@ -13,8 +13,7 @@ public:
     Settings(void);
     ~Settings(void);
 
-    //complete
-    void changeSaveDirectory(string directory); //only insert directory without text file name
+    void changeSaveDirectory(string directory); 
     void updateTextFileName(string textFileName);
     bool checkEmptySaveDirectory(); 
     bool checkForSettingsFile();
@@ -22,7 +21,7 @@ public:
     string getSaveDirectory();
     string getTextFileName();
     int getViewType();
-    void resizeWindow(); //............................................new//
+    void resizeWindow(); 
     bool loadSettings(); 
     void saveSettings(); 	
 

@@ -29,6 +29,7 @@ private:
 
     static const string MESSAGE_MONTH[];
 
+    //overiding functions
     string getComplimentaryString(Task* individualTask);
     string getTimeTaskString(int time);
 

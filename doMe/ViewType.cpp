@@ -49,6 +49,7 @@ vector<string> ViewType::createDisplayList() {
 
 }
 
+//search list without complimentary string
 vector<string> ViewType::createSearchList() {
     if((*_taskList).empty()) {
         _displayList.push_back(MESSAGE_EMPTY_LIST);
@@ -65,6 +66,7 @@ vector<string> ViewType::createSearchList() {
     return _displayList;
 }
 
+//create task string with index
 string ViewType::createTaskString(Task* individualTask, int index) {
     string taskString;
     taskString = getTaskString(individualTask);
@@ -72,10 +74,6 @@ string ViewType::createTaskString(Task* individualTask, int index) {
     sprintf_s(buffer, MESSAGE_DISPLAY_CONTENTS.c_str(),index, taskString.c_str());
 
     return buffer;
-}
-
-string ViewType::getComplimentaryString(Task* individualTask) {
-    return MESSAGE_VOID_STRING;
 }
 
 string ViewType::getTaskString(Task* individualTask) {
@@ -90,9 +88,28 @@ string ViewType::getTaskString(Task* individualTask) {
 
     return taskString;
 }
-
 /****************************************************************/
 
+string ViewType::integerToString(int integer) {
+    ostringstream oss;
+    oss << integer;  
+    return oss.str();
+}
+
+string ViewType::timeToString(string time) {
+    string timeString = time;
+    if(time.size() < 3) {
+        timeString.insert(0,"0");
+    }
+    if(time.size()  < 2) {
+        timeString.insert(0,"0");
+    }
+    return timeString;
+}
+
+
+/****************************************************************/
+//default format of ordering: name - (location) time1 date1 - time2 date2
 string ViewType::formatTaskString(string name , string date1 , string date2 , string time1 , string time2 , string location) {
     string taskString;
     string dateString;
@@ -140,6 +157,12 @@ string ViewType::formateDateString(string s1, string s2) {
 }
 
 /****************************************************************/
+/*Overriding functions*/
+/****************************************************************/
+//headers + additional lines to compliment to viewtype (default void)
+string ViewType::getComplimentaryString(Task* individualTask) {
+    return MESSAGE_VOID_STRING;
+}
 
 string ViewType::getDateTaskString(int date) {
     string dateString;
@@ -174,24 +197,6 @@ string ViewType::getTimeTaskString(int time) {
     }
 }
 
-/****************************************************************/
-
-string ViewType::integerToString(int integer) {
-    ostringstream oss;
-    oss << integer;  
-    return oss.str();
-}
-
-string ViewType::timeToString(string time) {
-    string timeString = time;
-    if(time.size() < 3) {
-        timeString.insert(0,"0");
-    }
-    if(time.size()  < 2) {
-        timeString.insert(0,"0");
-    }
-    return timeString;
-}
 
 /****************************************************************/
 

@@ -11,7 +11,7 @@ private:
     static const string MESSAGE_AM;
     static const string MESSAGE_PM;
 
-    string createTaskString(Task* individualTask, int index); 
+    //overiding functions
     string getComplimentaryString(Task* individualTask);
     string getTimeTaskString(int time);
 

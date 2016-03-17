@@ -4,6 +4,7 @@
 #include <vector>
 #include <iostream>
 #include <list>
+#include <assert.h>
 
 #include "Task.h"
 
@@ -34,14 +35,15 @@ public:
     static const string MESSAGE_EMPTY_LIST;
 
     string createTaskString(Task* individualTask, int index);
-    virtual string getComplimentaryString(Task* individualTask);
 
+    //overiding functions
+    virtual string getComplimentaryString(Task* individualTask);
     virtual string getTimeTaskString(int time);
     virtual string getDateTaskString(int date);
-
-    string getDay(int date);
+    virtual string getDay(int date);
     virtual string getMonth(int date);
-    string getYear(int date);
+    virtual string getYear(int date);
+
     string integerToString(int integer);
     string timeToString(string time);
 
@@ -57,7 +59,6 @@ public:
     ~ViewType(void);
 
     virtual vector<string> createDisplayList();
-    //vector<string> createDisplayList();
     vector<string> createSearchList();
     string getTaskString(Task* individualTask);
 };
