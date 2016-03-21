@@ -1,3 +1,4 @@
+//@@author A0130475L
 #pragma once
 #include "ViewType.h"
 

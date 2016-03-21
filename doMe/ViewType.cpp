@@ -1,4 +1,6 @@
+//@@author A0130475L
 #include "ViewType.h"
+
 const string ViewType::MESSAGE_DISPLAY_CONTENTS = "%d. %s";
 const string ViewType::MESSAGE_DATE_SEPERATOR = "/";
 const string ViewType::MESSAGE_TIME_SEPERATOR = ":";

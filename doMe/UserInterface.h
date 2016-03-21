@@ -1,3 +1,4 @@
+//@@author A0130475L
 #pragma once
 #include <string>
 #include <fstream>
@@ -19,6 +20,10 @@
 
 using namespace std;
 
+enum COMMAND_OUTCOME {
+    VALID_MESSAGE, INVALID_MESSAGE, UNDO_MESSAGE
+};
+
 class UserInterface {
 
 public:
@@ -26,69 +31,10 @@ public:
     UserInterface();
     ~UserInterface(void);
 
-    //in the process of changing
+
     void setEnvironment();
-    int getCurrentDate();
     void executeCommandUntilExit();
-    void printBeforeMessageDisplay();
-    void printExecutionMessage(Command* executionMessage);
-
-    void printNotificationUndo(Command* executionMessage);
-    void printNotificationAdd(Command* executionMessage);
-    void printNotificationDelete(Command* executionMessage);
-    void printNotificationEdit(Command* executionMessage);
-    void printNotificationClear(Command* executionMessage);
-    void printNotificationSearchTerm(Command* executionMessage);
-    void printNotificationEndSearch(Command* executionMessage);
-    void printNotificationViewType(Command* executionMessage);
-    void printNotificationChangeSaveFileDirectory(Command* executionMessage);
-    void printNotificationInvalidCommand(Command* executionMessage);
-
-    //command
-    string getStringCommand();
-
-    //programme page
-    void setDefaultWindowsRowsColumns();
-    void printProgramWelcomePage();
-
-    //prompts
-    void printPromptFirstTimeUser(); 
-    void printPromptFirstTimeUserDirectory(); 
-    void printPromptCommand();	
-
-    //notification
-    void printNotificationWelcome();
-    void printPromptHelp();
-
-    void validNotificationAdd(Task* task, int viewType, string textFileName); //.............................complete
-    void validNotificationDelete(Task* task, int viewType, string textFileName);//.............................complete
-    void validNotificationEdit(Task* task, int viewType);//.............................complete
-    void validNotificationClear(string textFileName);//.............................complete
-    void validNotificationSearchTerm(string searchTerm);//.............................complete
-    void validNotificationExitSearch(); //.............................complete
-    void validNotificationViewType(int newViewType);//.............................complete
-    void validNotificationChangeSaveFileDirectory(string newDirectory);//.............................complete
-
-    //additional valid notification (Havent change name)
-    void printNotificationEmpty(string textFileName); 
-    void printNotificationEmptySaveFileDirectory();
-    void printNotificationClearSearch(string searchTerm);
-
-    //Invalid notification
-    void invalidNotificationCommand();
-
-    void invalidNotificationAdd();//.............................complete
-    void invalidNotificationEdit(); //.............................complete
-    void invalidNotificationDelete();//.............................complete
-    void invalidNotificationViewtype();//.............................complete
-    void invalidNotificationSaveFileDirectory();//.............................complete
-    void invalidNotificationUndo(); //.............................complete
     
-
-    //main printing
-    void printTaskList(int currentDate ,int viewType);
-    void printSearchList(string searchTerm, int viewType);
-
 #ifndef TESTMODE 
 private: 
 #else 
@@ -99,7 +45,8 @@ public:
     Memory* _memory;
     list<Task*>* _taskList;
 
-    int _commandOutcome;
+    //int _commandOutcome;
+
     int _maxWindowWidth;
     int _maxWindowLength;
     char buffer[255];
@@ -143,6 +90,66 @@ public:
     static const string ERROR_SET_INVALID_SAVE_FILE_DIRECTORY;
 
     static const string MESSAGE_HELP_TIPS[];
+
+    //in the process of changing
+    int getCurrentDate();
+    void printBeforeMessageDisplay();
+    void printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+
+    void printNotificationUndo(Command* executionMessage);
+    void printNotificationAdd(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationDelete(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationEdit(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationClear(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationSearchTerm(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationEndSearch(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationViewType(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationChangeSaveFileDirectory(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printNotificationInvalidCommand(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+
+    //command
+    string getStringCommand();
+
+    //programme page
+    void setDefaultWindowsRowsColumns();
+    void printProgramWelcomePage();
+
+    //prompts
+    void printPromptFirstTimeUser(); 
+    void printPromptFirstTimeUserDirectory(); 
+    void printPromptCommand();	
+
+    //notification
+    void printNotificationWelcome();
+    void printPromptHelp();
+
+    void validNotificationAdd(Task* task, int viewType, string textFileName); 
+    void validNotificationDelete(Task* task, int viewType, string textFileName);
+    void validNotificationEdit(Task* task, int viewType);
+    void validNotificationClear(string textFileName);
+    void validNotificationSearchTerm(string searchTerm);
+    void validNotificationExitSearch(); 
+    void validNotificationViewType(int newViewType);
+    void validNotificationChangeSaveFileDirectory(string newDirectory);
+
+    //additional valid notification (Havent change name)
+    void printNotificationEmpty(string textFileName); 
+    void printNotificationEmptySaveFileDirectory();
+    void printNotificationClearSearch(string searchTerm);
+
+    //Invalid notification
+    void invalidNotificationCommand();
+
+    void invalidNotificationAdd();
+    void invalidNotificationEdit(); 
+    void invalidNotificationDelete();
+    void invalidNotificationViewtype();
+    void invalidNotificationSaveFileDirectory();
+    void invalidNotificationUndo();
+
+    //main printing
+    void printTaskList(int currentDate ,int viewType);
+    void printSearchList(string searchTerm, int viewType);
 
     //helper
     void showToUser(string message);

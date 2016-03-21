@@ -1,4 +1,6 @@
+//@@author A0130475L
 #include "ViewType2.h"
+
 const string ViewType2::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
 const string ViewType2::MESSAGE_NEW_LINE = "\n";
 const string ViewType2::MESSAGE_AM = " am";
