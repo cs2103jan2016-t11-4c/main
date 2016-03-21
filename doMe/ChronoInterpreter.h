@@ -1,26 +1,31 @@
 #pragma once
-#include "CommandTokens.h"
+#include "InputTokens.h"
 #include <assert.h>
 
 #define NO_VALUE 0
 #define TIME_MARKER "time"
 #define DATE_MARKER "date"
 
-class Parser_Chrono
+class ChronoInterpreter
 {
 public:
-	Parser_Chrono(CommandTokens* tokens);
-	~Parser_Chrono(void);
-	void interpretDateAndTime(int index);
+	~ChronoInterpreter(void);
+	static ChronoInterpreter* getInstance();
+	void interpretDateAndTime(InputTokens* tokens, int index);
+
 private:
-	CommandTokens* _tokens;
+	ChronoInterpreter();
+	static ChronoInterpreter* _theOne;
+
+	InputTokens* _tokens;
 	int _day;
 	int _month;
 	int _year;
 	int _hour;
 	int _minute;
 
-
+	void setTokens(InputTokens* tokens);
+	void traverseTokens(int index);
 
 	void integerNode(int index);
 	
@@ -43,6 +48,5 @@ private:
 	bool isLeap(int year);
 
 	void clearCache();
-
 };
 

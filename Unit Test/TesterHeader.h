@@ -13,12 +13,12 @@
 #include "CommandPackage.cpp"
 #include "Command.cpp"
 #include "Command_Add.cpp"
-#include "Parser_Tasks.cpp"
-#include "CommandTokens.cpp"
+#include "TaskPacker.cpp"
+#include "InputTokens.cpp"
 #include "Dictionary.cpp"
-#include "Parser_Algorithms.cpp"
+#include "CommandPacker.cpp"
 #include "SynonymList.cpp"
-#include "Parser_Chrono.cpp"
+#include "ChronoInterpreter.cpp"
 
 /*
 #include "Command_Delete.cpp"

@@ -1,7 +1,7 @@
 #pragma once
 #include "Task.h"
-#include "CommandTokens.h"
-#include "Parser_Chrono.h"
+#include "InputTokens.h"
+#include "ChronoInterpreter.h"
 #include <string>
 #include <assert.h>
 
@@ -11,14 +11,20 @@
 
 using namespace std;
 
-class Parser_Tasks
+class TaskPacker
 {
 public:
-	Parser_Tasks(CommandTokens* tokens);
-	~Parser_Tasks(void);
+	~TaskPacker(void);
+	static TaskPacker* getInstance();
+	Task* packTask(InputTokens* tokens, int index);
+
 private:
-	CommandTokens* _tokens;
-	Task _task;
+	TaskPacker(void);
+	static TaskPacker* _theOne;
+	
+	InputTokens* _tokens;
+	ChronoInterpreter* _chronoInterpreter;
+
 	string _name;
 	vector<int> _dates;
 	vector<int> _times;
@@ -28,15 +34,20 @@ private:
 	int _time2;
 	string _location;
 
-public:
-	Task getTask(int index);
-private:
+	void setAttributes(InputTokens* tokens);
+	void findTaskDetails(int index);
+
 	void findDateAndTime(int index);
 	void findLocation(int index);
 	void findName(int index);
-	void packTask();
 
+
+	void findDate(int index);
+	void extractDates(int index);
 	void finalizeDates();
+	
+	void findTime(int index);
+	void extractTimes(int index);
 	void finalizeTimes();
 
 	void extractLocation(int index);

@@ -1,32 +1,50 @@
-#include "Parser_Chrono.h"
+#include "ChronoInterpreter.h"
 
+ChronoInterpreter* _theOne = NULL;
 
-Parser_Chrono::Parser_Chrono(CommandTokens* tokens) :
-	_tokens(tokens)
-{
-	clearCache();
-}
-
-
-Parser_Chrono::~Parser_Chrono(void)
+ChronoInterpreter::ChronoInterpreter()
 {
 }
 
-void Parser_Chrono::interpretDateAndTime(int index) {
+ChronoInterpreter::~ChronoInterpreter(void)
+{
+}
+
+ChronoInterpreter* ChronoInterpreter::getInstance() {
+	if(_theOne == NULL) {
+		_theOne = new ChronoInterpreter;
+	}
+
+	return _theOne;
+}
+
+void ChronoInterpreter::interpretDateAndTime(InputTokens* tokens, int index) {
+	setTokens(tokens);
+	traverseTokens(index);
+	return;
+}
+
+void ChronoInterpreter::setTokens(InputTokens* tokens) {
+	_tokens = tokens;
+	return;
+}
+
+void ChronoInterpreter::traverseTokens(int index) {
 	for(int i = index; i < _tokens->getSize(); i++) {
 		if(_tokens->isInteger(i)) {
 			integerNode(i);
 		}
 	}
+	return;
 }
 
-void Parser_Chrono::integerNode(int index) {
+void ChronoInterpreter::integerNode(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
 	int size = _tokens->getSize(index);
 	if(size == 8 || size == 6) {
 		dateFormatANodeOne(index, size);
-	} else if(size == 4 && !_tokens->isBlank(index)) {
+	} else if(size == 4 && !_tokens->isExtensionOfAWord(index)) {
 		timeFormatANodeOne(index);
 	} else if(size < 3) {
 		dateFormatBNodeOne(index);
@@ -34,7 +52,7 @@ void Parser_Chrono::integerNode(int index) {
 	return;
 }
 
-void Parser_Chrono::timeFormatANodeOne(int index) {
+void ChronoInterpreter::timeFormatANodeOne(int index) {
 	int number = _tokens->getInteger(index);
 	_minute = number % 100;
 	_hour = number/100;
@@ -46,14 +64,14 @@ void Parser_Chrono::timeFormatANodeOne(int index) {
 	return;
 }
 
-void Parser_Chrono::timeFormatANodeTwo(int index) {
+void ChronoInterpreter::timeFormatANodeTwo(int index) {
 	if(!_tokens->isOutOfBounds(index) && _tokens->hasMeaning("HRS", index)) {
 		_tokens->remove(index);
 	}
 	return;
 }
 
-void Parser_Chrono::dateFormatANodeOne(int index, int size) {
+void ChronoInterpreter::dateFormatANodeOne(int index, int size) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
 	assert(size == 8 || size == 6);
@@ -76,7 +94,7 @@ void Parser_Chrono::dateFormatANodeOne(int index, int size) {
 	return;
 }
 
-void Parser_Chrono::dateFormatBNodeOne(int index) {
+void ChronoInterpreter::dateFormatBNodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
 	_day = _tokens->getInteger(index);
@@ -85,7 +103,7 @@ void Parser_Chrono::dateFormatBNodeOne(int index) {
 	}
 }
 
-bool Parser_Chrono::dateFormatBNodeTwo(int index) {
+bool ChronoInterpreter::dateFormatBNodeTwo(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		return false;
 	}
@@ -97,7 +115,7 @@ bool Parser_Chrono::dateFormatBNodeTwo(int index) {
 	}
 }
 
-bool Parser_Chrono::dateFormatBNodeThree(int index) {
+bool ChronoInterpreter::dateFormatBNodeThree(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		return false;
 	}
@@ -111,7 +129,7 @@ bool Parser_Chrono::dateFormatBNodeThree(int index) {
 	return false;
 }
 
-bool Parser_Chrono::dateFormatBNodeFour(int index) {
+bool ChronoInterpreter::dateFormatBNodeFour(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		_year = 2016;
 		if(isValidDate()) {
@@ -131,7 +149,7 @@ bool Parser_Chrono::dateFormatBNodeFour(int index) {
 	}
 }
 
-bool Parser_Chrono::dateFormatBNodeFive(int index) {
+bool ChronoInterpreter::dateFormatBNodeFive(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		return false;
 	}
@@ -150,23 +168,19 @@ bool Parser_Chrono::dateFormatBNodeFive(int index) {
 	return false;
 }
 
-void Parser_Chrono::insertTime(int index) {
-	_tokens->markAs(TIME_MARKER, index);
-	
+void ChronoInterpreter::insertTime(int index) {
 	string time = to_string(_hour*100 + _minute);
-	_tokens->replaceWith(time, index);
+	_tokens->markAs(TIME_MARKER, time, index);
 	clearCache();
 }
 
-void Parser_Chrono::insertDate(int index) {
-	_tokens->markAs(DATE_MARKER, index);
-	
+void ChronoInterpreter::insertDate(int index) {
 	string date = to_string(_year*10000 + _month*100 + _day);
-	_tokens->replaceWith(date, index);
+	_tokens->markAs(DATE_MARKER, date, index);
 	clearCache();
 }
 
-bool Parser_Chrono::isValidTime() {
+bool ChronoInterpreter::isValidTime() {
 	if (_hour >= 24 || _hour < 0) {
 		return false;
 	}
@@ -177,7 +191,7 @@ bool Parser_Chrono::isValidTime() {
 	return true;
 }
 
-bool Parser_Chrono::isValidDate() {
+bool ChronoInterpreter::isValidDate() {
 	static const int daysInEachMonth[13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
 	if(_month > 12) {												//month not possible
@@ -191,7 +205,7 @@ bool Parser_Chrono::isValidDate() {
 	}
 }
 
-bool Parser_Chrono::isLeap(int year) {
+bool ChronoInterpreter::isLeap(int year) {
 	if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
 		return true;
 	} else {
@@ -199,7 +213,7 @@ bool Parser_Chrono::isLeap(int year) {
 	}
 }
 
-void Parser_Chrono::clearCache() {
+void ChronoInterpreter::clearCache() {
 	_day = NO_VALUE;
 	_month = NO_VALUE;
 	_year = NO_VALUE;

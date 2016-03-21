@@ -52,24 +52,6 @@
     <ClCompile Include="UserInterface.cpp">
       <Filter>Source Files\UserInterface Classes</Filter>
     </ClCompile>
-    <ClCompile Include="CommandTokens.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Parser_Algorithms.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Dictionary.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="SynonymList.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Parser_Tasks.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Parser_Chrono.cpp">
-      <Filter>Source Files\Parser Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Command_Search.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
@@ -91,12 +73,32 @@
     <ClCompile Include="Commons.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Parser_Interface.cpp" />
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Source Files\Commons Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="InputTokens.cpp">
+      <Filter>Source Files\Parser Classes\Lexer/Interpreters</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandPacker.cpp">
+      <Filter>Source Files\Parser Classes\Packers</Filter>
+    </ClCompile>
+    <ClCompile Include="TaskPacker.cpp">
+      <Filter>Source Files\Parser Classes\Packers</Filter>
+    </ClCompile>
+    <ClCompile Include="Dictionary.cpp">
+      <Filter>Source Files\Parser Classes\Dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="SynonymList.cpp">
+      <Filter>Source Files\Parser Classes\Dictionary</Filter>
+    </ClCompile>
+    <ClCompile Include="ChronoInterpreter.cpp">
+      <Filter>Source Files\Parser Classes\Lexer/Interpreters</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser_Interface.cpp">
+      <Filter>Source Files\Parser Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -148,24 +150,6 @@
     <ClInclude Include="ViewType1.h">
       <Filter>Header Files\UserInterface Classes</Filter>
     </ClInclude>
-    <ClInclude Include="CommandTokens.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser_Algorithms.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="SynonymList.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Dictionary.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser_Tasks.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Parser_Chrono.h">
-      <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Command_Search.h">
       <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
@@ -195,6 +179,24 @@
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Header Files\Commons Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Dictionary.h">
+      <Filter>Header Files\Parser Classes\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="SynonymList.h">
+      <Filter>Header Files\Parser Classes\Dictionary</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandPacker.h">
+      <Filter>Header Files\Parser Classes\Packers</Filter>
+    </ClInclude>
+    <ClInclude Include="TaskPacker.h">
+      <Filter>Header Files\Parser Classes\Packers</Filter>
+    </ClInclude>
+    <ClInclude Include="InputTokens.h">
+      <Filter>Header Files\Parser Classes\Lexer/Intepreters</Filter>
+    </ClInclude>
+    <ClInclude Include="ChronoInterpreter.h">
+      <Filter>Header Files\Parser Classes\Lexer/Intepreters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -236,6 +238,24 @@
     </Filter>
     <Filter Include="Source Files\UserInterface Classes\ViewType">
       <UniqueIdentifier>{8656ac5c-44d2-4cde-9882-036442762e22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser Classes\Dictionary">
+      <UniqueIdentifier>{76ceaeeb-032e-4eb8-9415-37f5d3b06384}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser Classes\Packers">
+      <UniqueIdentifier>{f77b4103-3623-4918-b92f-b5591ddfd0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Parser Classes\Lexer/Intepreters">
+      <UniqueIdentifier>{e90f5fbe-95c2-4d57-82eb-fb42063e219a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser Classes\Dictionary">
+      <UniqueIdentifier>{149b81a2-be8b-47fd-aef5-d19993a566d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser Classes\Lexer/Interpreters">
+      <UniqueIdentifier>{d4e11959-59c0-4501-991d-c86ff450a8c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Parser Classes\Packers">
+      <UniqueIdentifier>{c2b5bd80-dfd7-4183-a6a5-aa5562bbcd15}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

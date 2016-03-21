@@ -2,17 +2,6 @@
 
 Dictionary* Dictionary::_theOne = NULL;
 
-bool Dictionary::hasMeaning(string meaning, string s) {
-	vector<string>* synonyms = getSynonyms(meaning);
-	return isFoundInVector(synonyms, s);
-}
-
-vector<string>* Dictionary::getSynonyms(string s) {
-	map<string, vector<string>*>::iterator found = _wordMap.find(s);
-	assert(found != _wordMap.end());
-	return found->second;
-}
-
 Dictionary::Dictionary(void)
 {
 	generateVocabulary();
@@ -20,8 +9,9 @@ Dictionary::Dictionary(void)
 
 Dictionary::~Dictionary(void)
 {
-	for(int i=0; i < _vocabulary.size(); i++) {
-		delete _vocabulary[i];
+	map<string, SynonymList*>::iterator it;
+		for(it = _wordMap.begin(); it != _wordMap.end(); it++) {
+		delete it->second;
 	}
 }
 
@@ -32,7 +22,12 @@ Dictionary* Dictionary::getInstance() {
 	return _theOne;
 }
 
-void Dictionary::generateVocabulary() {
+bool Dictionary::hasMeaning(string meaning, string s) {
+	vector<string>* synonyms = getSynonyms(meaning);
+	return isFoundInVector(synonyms, s);
+}
+
+void Dictionary::generateVocabulary() { 
 	addDisplay();
 	addDirectory();
 	addDelete();
@@ -117,7 +112,7 @@ void Dictionary::addExit() {
 
 void Dictionary::addView() {
 	SynonymList* list = new SynonymList("VIEW");
-	list->add(_wordMap.find("DISPLAY")->second);
+	list->add(getSynonyms("DISPLAY"));
 	list->add("VIEWTYPE");
 	list->add("DISPLAYTYPE");
 	list->add("DISPTYPE");
@@ -127,7 +122,7 @@ void Dictionary::addView() {
 
 void Dictionary::addChangeDirectory() {
 	SynonymList* list = new SynonymList("CHANGEDIRECTORY");
-	list->add(_wordMap.find("DIRECTORY")->second);
+	list->add(getSynonyms("DIRECTORY"));
 	list->add("CD");
 	list->add("CDIRECTORY");
 	list->add("CDIR");
@@ -172,26 +167,22 @@ void Dictionary::addDivider() {
 }
 
 void Dictionary::addToDictionary(SynonymList* list) {
-	addToVocabulary(list);
-	addToMap(list);
+		_wordMap.insert(pair<string, SynonymList*>(
+						list->getMeaning(), 
+						list));
 	return;
 }
 
-void Dictionary::addToVocabulary(SynonymList* list) {
-	_vocabulary.push_back(list);
-	return;
-}
-
-void Dictionary::addToMap(SynonymList* list) {
-	_wordMap.insert(pair<string, vector<string>*>(
-					list->getMeaning(), 
-					list->getSynonyms()));
-	return;
-}
+vector<string>* Dictionary::getSynonyms(string s) {
+	map<string, SynonymList*>::iterator found = _wordMap.find(s);
+	assert(found != _wordMap.end());
+	return found->second->getSynonyms();
+}	 
 
 bool Dictionary::isFoundInVector(vector<string>* vector, string s) {
-	for(int i=0; i < vector->size(); i++) {
-		if(s.compare((*vector)[i])==0) {
+	assert(vector);
+	for(unsigned int i = 0; i < vector->size(); i++) {
+		if(s.compare((*vector)[i]) == 0) {
 			return true;
 		}
 	}

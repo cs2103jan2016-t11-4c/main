@@ -3,9 +3,11 @@
 Parser* Parser::_theOne = NULL;
 
 Parser::Parser(void) {
+	_commandPacker = CommandPacker::getInstance();
 }
 
 Parser::~Parser(void) {
+
 }
 
 Parser* Parser::getInstance() {
@@ -16,20 +18,14 @@ Parser* Parser::getInstance() {
 	return _theOne;
 }
 
-void Parser::setCommandLine(string newCommandLine) {
-	assert(newCommandLine.size() != 0);
-	
-	CommandTokens* tokens = new CommandTokens(newCommandLine);
-	
-	Parser_Algorithms parserAlgorithms(tokens);
-	_command = parserAlgorithms.parse();
+Command* Parser::parse(string userInput) {
+	assert(userInput.size() != 0);
+
+	InputTokens* tokens = new InputTokens(userInput);
+	Command* command = _commandPacker->packCommand(tokens);
 	
 	delete tokens;
-	return;
-}
-
-Command* Parser::getCommand() {
-	return _command;
+	return command;
 }
 
 /*

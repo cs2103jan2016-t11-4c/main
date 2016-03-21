@@ -11,8 +11,8 @@
 #include "Command_Search.h"
 #include "Command_Undo.h"
 #include "Command_ViewType.h"
-#include "CommandTokens.h"
-#include "Parser_Tasks.h"
+#include "InputTokens.h"
+#include "TaskPacker.h"
 #include "Task.h"
 #include <string>
 #include <assert.h>
@@ -20,29 +20,32 @@
 
 #define LAST_INDEX -1
 #define NO_STRING ""
-#define NO_TASK Task()
 
 using namespace std;
 
-class Parser_Algorithms
+class CommandPacker
 {
 public:
-	Parser_Algorithms(CommandTokens* tokens);
-	~Parser_Algorithms(void);
-	
-	Command* parse();
+	~CommandPacker(void);
+	static CommandPacker* getInstance();
+	Command* packCommand(InputTokens* tokens);
 
 private:
-	CommandTokens* _tokens;
-	int _singleIndex;
-	vector<int> _indexes;
+	CommandPacker(void);
+	static CommandPacker* _theOne;
+	TaskPacker* _taskPacker;
+
+	
+	InputTokens* _tokens;
 	string _description;
-	Task _task;
-	Command _command;
+	int _singleIndex;
+	vector<int>* _indexes;
+	Task* _task;
+	Command* _command;
 
 public:
-	void initializeAttributes();
-	void branchToNodes(int index);
+	void initializeAttributes(InputTokens* tokens);
+	void branchToNode(int index);
 
 	void nodeOneOfDisplayCommand(int index);
 	void nodeTwoOfDisplayCommand(int index);

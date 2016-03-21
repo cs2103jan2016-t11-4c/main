@@ -1,14 +1,12 @@
 #include "SynonymList.h"
 
-
 SynonymList::SynonymList(string meaning) :
 _meaning(meaning)
 {
 	_synonyms = new vector<string>;
-	_synonyms->push_back(meaning);
 }
 
-SynonymList::~SynonymList(void) {
+SynonymList::~SynonymList() {
 	delete _synonyms;
 }
 
@@ -21,6 +19,7 @@ vector<string>* SynonymList::getSynonyms() {
 }
 
 void SynonymList::add(string synonym)  {
+	assert(synonym.compare("") != 0);
 	_synonyms->push_back(synonym);
 	return;
 }
@@ -29,7 +28,7 @@ void SynonymList::add(vector<string>* synonyms) {
 	assert(synonyms);
 	vector<string>& synonymsRef = *synonyms;
 	
-	for(int i = 0; i < synonyms->size(); i++) {
+	for(unsigned int i = 0; i < synonyms->size(); i++) {
 		_synonyms->push_back(synonymsRef[i]);
 	}
 	return;

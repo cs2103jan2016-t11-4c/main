@@ -24,9 +24,9 @@
 //@author: Mohammed Zawadul Farhan
 
 #include "Parser_Interface.h"
-#include "Parser_Algorithms.h"
+#include "CommandPacker.h"
 #include "Command.h"
-#include "CommandTokens.h"
+#include "InputTokens.h"
 #include <string>
 #include <assert.h>
 
@@ -37,14 +37,12 @@ class Parser : public Parser_Interface
 public:	
 	~Parser(void);
 	static Parser* getInstance();
-	void setCommandLine(string newCommandLine);
-	Command* getCommand();
+	Command* parse(string userInput);
 
 private:
 	Parser(void);
-
 	static Parser* _theOne;
-	Command* _command;
+	CommandPacker* _commandPacker;
 };
 	
 	/*

@@ -1,44 +1,80 @@
-#include "Parser_Tasks.h"
+#include "TaskPacker.h"
 
-Parser_Tasks::Parser_Tasks(CommandTokens* tokens) :
-_tokens(tokens)
+TaskPacker* TaskPacker::_theOne = NULL;
+
+TaskPacker::TaskPacker(void)
 {
+	_chronoInterpreter = ChronoInterpreter::getInstance();
+}
+
+TaskPacker::~TaskPacker(void)
+{
+}
+
+TaskPacker* TaskPacker::getInstance() {
+	if(_theOne == NULL) {
+		_theOne = new TaskPacker;
+	}
+
+	return _theOne;
+}
+
+
+Task* TaskPacker::packTask(InputTokens* tokens, int index) {
+	setAttributes(tokens);
+	findTaskDetails(index);
+	
+	return new Task(_name, _date1, _date2, _time1, _time2, _location);
+}
+
+
+void TaskPacker::setAttributes(InputTokens* tokens) {
+	_tokens = tokens;
 	_name = NO_NAME;
 	_date1 = NO_DATE;
 	_date2 = NO_DATE;
 	_time1 = NO_TIME;
 	_time2 = NO_TIME;
 	_location = NO_LOCATION;
+
+	return;
 }
 
-Parser_Tasks::~Parser_Tasks(void)
-{
-}
-
-Task Parser_Tasks::getTask(int index) {
+void TaskPacker::findTaskDetails(int index) {
 	findDateAndTime(index);
 	findLocation(index);
 	findName(index);
-	packTask();
-	return _task;
+
+	return;
 }
 
-void Parser_Tasks::findDateAndTime(int index) {
-	Parser_Chrono chronoParser = Parser_Chrono(_tokens);
-	chronoParser.interpretDateAndTime(index);
+
+void TaskPacker::findDateAndTime(int index) {
+	_chronoInterpreter->interpretDateAndTime(_tokens, index);
+	findTime(index);
+	findDate(index);
+	
+	return;
+}
+
+
+void TaskPacker::findDate(int index) {
+	extractDates(index);
+	finalizeDates();
+	return;
+}
+
+void TaskPacker::extractDates(int index) {
 	for(int i = index; i < _tokens->getSize(); i++) {
-		if(_tokens->isMarkedAs(TIME_MARKER, i)) {
-			_times.push_back(stoi(_tokens->getOriginalToken(i)));
-		}
 		if(_tokens->isMarkedAs(DATE_MARKER, i)) {
 			_dates.push_back(stoi(_tokens->getOriginalToken(i)));
 		}
 	}
-	finalizeDates();
-	finalizeTimes();
+
+	return;
 }
 
-void Parser_Tasks::finalizeDates() {
+void TaskPacker::finalizeDates() {
 	if(_dates.size() == 0) {
 		_date1 = NO_DATE;
 		_date2 = NO_DATE;
@@ -50,9 +86,25 @@ void Parser_Tasks::finalizeDates() {
 		_date2 = _dates[1];
 	}
 	return;
+}	
+
+
+void TaskPacker::findTime(int index) {
+	extractTimes(index);
+	finalizeTimes();
+	return;
 }
 
-void Parser_Tasks::finalizeTimes() {
+void TaskPacker::extractTimes(int index) {
+	for(int i = index; i < _tokens->getSize(); i++) {
+		if(_tokens->isMarkedAs(TIME_MARKER, i)) {
+			_times.push_back(stoi(_tokens->getOriginalToken(i)));
+		}
+	}
+		return;
+}
+
+void TaskPacker::finalizeTimes() {
 	if(_times.size() == 0) {
 		_time2 = NO_TIME;
 		_time1 = NO_TIME;
@@ -66,7 +118,8 @@ void Parser_Tasks::finalizeTimes() {
 	return;
 }
 
-void Parser_Tasks::findLocation(int index) {
+
+void TaskPacker::findLocation(int index) {
 	for(int i = index; i < _tokens->getSize(); i++) {
 		if(hasLocationMarker(_tokens->getToken(i))) {
 			extractLocation(i);
@@ -75,20 +128,20 @@ void Parser_Tasks::findLocation(int index) {
 	}
 }
 
-void Parser_Tasks::extractLocation(int index) {
+void TaskPacker::extractLocation(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	string location = extractStringToBreakPoint(LOCATION_MARKER, index);
 	_location = removeLocationMarker(location);
 	return;
 }
 
-string Parser_Tasks::removeLocationMarker(string s) {
+string TaskPacker::removeLocationMarker(string s) {
 	assert(s[START_INDEX] == '@');
 	s.erase(s.begin());
 	return s;
 }
 
-bool Parser_Tasks::hasLocationMarker(string s) {
+bool TaskPacker::hasLocationMarker(string s) {
 	if(s[START_INDEX] == '@') {
 		return true;
 	} else {
@@ -96,7 +149,8 @@ bool Parser_Tasks::hasLocationMarker(string s) {
 	}
 }
 
-void Parser_Tasks::findName(int index) {
+
+void TaskPacker::findName(int index) {
 	for(int i = index; i < _tokens->getSize(); i++) {
 		if(!_tokens->isParsed(i)) {
 			extractName(i);
@@ -105,24 +159,20 @@ void Parser_Tasks::findName(int index) {
 	}
 }
 
-void Parser_Tasks::extractName(int index) {
+void TaskPacker::extractName(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	string name = extractStringToBreakPoint(NAME_MARKER, index);
 	_name = name;
 	return;
 }
 
-void Parser_Tasks::packTask() {
-	_task = Task(_name, _date1, _date2, _time1, _time2, _location);
-	return;
-}
 
-string Parser_Tasks::extractStringToBreakPoint(string marker, int index) {
+string TaskPacker::extractStringToBreakPoint(string marker, int index) {
 	assert(!(_tokens->isOutOfBounds(index)));
 	string s = _tokens->getOriginalToken(index);
 	_tokens->markAs(marker, index);
 	for(index++; !_tokens->isBreakPoint(index); index++) {
-	if(!_tokens->isBlank(index)) {
+	if(!_tokens->isExtensionOfAWord(index)) {
 	s += BLANK_SPACE;
 	}
 	s += _tokens->getOriginalToken(index);

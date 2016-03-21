@@ -11,16 +11,16 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CommandTokens.cpp" />
+    <ClCompile Include="InputTokens.cpp" />
     <ClCompile Include="CommandPackage.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Memory.cpp" />
     <ClCompile Include="Parser.cpp" />
-    <ClCompile Include="Parser_Algorithms.cpp" />
-    <ClCompile Include="Parser_Chrono.cpp" />
+    <ClCompile Include="CommandPacker.cpp" />
+    <ClCompile Include="ChronoInterpreter.cpp" />
     <ClCompile Include="Parser_Interface.cpp" />
-    <ClCompile Include="Parser_Tasks.cpp" />
+    <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Command.cpp" />
@@ -46,7 +46,7 @@
     <ClCompile Include="ViewType2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CommandTokens.h" />
+    <ClInclude Include="InputTokens.h" />
     <ClInclude Include="CommandPackage.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />
@@ -67,9 +67,9 @@
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />
     <ClInclude Include="Parser.h" />
-    <ClInclude Include="Parser_Algorithms.h" />
-    <ClInclude Include="Parser_Chrono.h" />
-    <ClInclude Include="Parser_Tasks.h" />
+    <ClInclude Include="CommandPacker.h" />
+    <ClInclude Include="ChronoInterpreter.h" />
+    <ClInclude Include="TaskPacker.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Storage.h" />
     <ClInclude Include="SynonymList.h" />
