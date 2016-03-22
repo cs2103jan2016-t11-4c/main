@@ -10,7 +10,7 @@
 using namespace std;
 
 class RAM {
-public:
+public: //is this supposed to be private? -joan
 	list<Task*> _taskList;
 	list<Task*> _tempTaskList;
 	bool _searchState;
@@ -18,7 +18,7 @@ public:
 	Task* _lastAddedTask;
 
 	void sort();
-	void loadData();
+	void loadData(); //in constructor of RAM
 	void saveData();
 	vector<string> ramGetVector();
 	void ramLoadVector(vector<string>& existingData);
@@ -32,6 +32,7 @@ public:
 
 public:
 	RAM();
+	//are ALL these ought to be API of Memory component? -joan
 	Task* ramAddToRawTaskHeap(Task* task);
 	Command* ramAddToRawCommandHeap(Command* command);
 	void ramAdd(Task* task);
