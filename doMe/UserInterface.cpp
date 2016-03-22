@@ -62,8 +62,7 @@ UserInterface::UserInterface(void) {
     _maxWindowWidth = windowSize.X;
     _maxWindowLength = windowSize.Y;
 
-    _memory = new Memory;
-    _logic = new Logic(_memory);
+    _logic = _logic->getInstance();
 
 }
 
@@ -108,7 +107,7 @@ void UserInterface::executeCommandUntilExit() {
             executionMessage = _logic->executeCommand(command);
             printExecutionMessage(executionMessage, VALID_MESSAGE);
         } catch(Exception_InvalidCommand e) {
-            printExecutionMessage(e, INVALID_MESSAGE);
+            printExecutionMessage(e.getCommand(), INVALID_MESSAGE);
         }
     } while(executionMessage->getCommandType != EXIT);      
 }

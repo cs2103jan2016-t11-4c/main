@@ -6,5 +6,6 @@ private:
 	COMMAND_TYPE _commandType;
 public:
 	Exception_InvalidCommand(COMMAND_TYPE commandType);
-	COMMAND_TYPE getCommandType();	
+	COMMAND_TYPE getCommandType();
+    Command* getCommand();
 };

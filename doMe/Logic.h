@@ -21,13 +21,17 @@ using namespace std;
 
 class Logic { 
 private:
+    static Logic* _instance;
+    Logic();
+
 	stack<Command*>* _commandHistoryList;
 	Parser* _parser;
 	Memory* _memory;
 
 	Command* undo();
+
 public:
-	Logic();
 	~Logic();
+    static Logic* getInstance();
 	Command* executeCommand(string commandText);
 };

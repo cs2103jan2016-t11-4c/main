@@ -1,6 +1,8 @@
 //@@author A0125290M
 #include "Logic.h"
 
+Logic* Logic::_instance = NULL;
+
 Logic::Logic() {
 	_parser = Parser::getInstance();
 	_memory = Memory::getInstance();
@@ -9,6 +11,14 @@ Logic::Logic() {
 
 Logic::~Logic() {
 	delete _commandHistoryList;
+}
+
+Logic* Logic::getInstance() {
+	if(_instance == NULL) {
+		_instance = new Logic;
+	}
+
+	return _instance;
 }
 
 Command* Logic::executeCommand(string commandText) {
