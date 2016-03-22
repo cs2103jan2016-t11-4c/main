@@ -1,9 +1,9 @@
-#include "Commons.h"
+#include "Chrono.h"
 
-Commons::Commons() {
+Chrono::Chrono() {
 }
 
-int Commons::getCurrentDate() {
+int Chrono::getCurrentDate() {
 	time_t currentTime;
 	struct tm *localTime;
 
@@ -19,7 +19,7 @@ int Commons::getCurrentDate() {
 	return date;
 }
 
-int Commons::getCurrentDay() {
+int Chrono::getCurrentDay() {
 	time_t currentTime;
 	struct tm *localTime;
 

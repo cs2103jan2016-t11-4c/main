@@ -3,10 +3,11 @@
 
 Command_Add::Command_Add(Task* task)
 :Command(){
-	_task = task;
+	_task = _memory->addToRawTaskHeap(task);
 }
 
 bool Command_Add::execute() {
+
 	if(_task == NULL) {
 		return false;
 	}

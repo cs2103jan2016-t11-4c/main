@@ -10,6 +10,7 @@ Command_Edit::Command_Edit(int index, Task* task)
 	_newTime1 = task->getTime1();
 	_newTime2 = task->getTime2();
 	_newLocation = task->getLocation();
+//	_newDoneStatus = task->getDoneStatus();
 }
 
 bool Command_Edit::execute() {
@@ -42,6 +43,10 @@ bool Command_Edit::execute() {
 	if(!_newLocation.empty()) {
 		_oldLocation = _task->getLocation();
 		_task->setLocation(_newLocation);
+	}
+	if(!_newDoneStatus != -1) {
+		_oldDoneStatus = _task->getDoneStatus();
+		_task->setDoneStatus(_newDoneStatus);
 	}
 	_ram->sort();
 	return true;

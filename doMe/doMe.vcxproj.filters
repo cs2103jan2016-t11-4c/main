@@ -37,9 +37,6 @@
     <ClCompile Include="Task.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
-    <ClCompile Include="CommandPackage.cpp">
-      <Filter>Source Files\Commons Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Memory.cpp">
       <Filter>Source Files\Memory Classes</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Commons.cpp">
-      <Filter>Source Files\Commons Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -100,6 +94,12 @@
     <ClCompile Include="Parser_Interface.cpp">
       <Filter>Source Files\Parser Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Chrono.cpp">
+      <Filter>Source Files\Commons Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Exception_InvalidCommand.cpp">
+      <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -125,9 +125,6 @@
     </ClInclude>
     <ClInclude Include="Parser.h">
       <Filter>Header Files\Parser Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="CommandPackage.h">
-      <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
     <ClInclude Include="Memory.h">
       <Filter>Header Files\Memory Classes</Filter>
@@ -165,9 +162,6 @@
     <ClInclude Include="Command_Undo.h">
       <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Commons.h">
-      <Filter>Header Files\Commons Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Parser_Interface.h">
       <Filter>Header Files\Parser Classes</Filter>
     </ClInclude>
@@ -197,6 +191,12 @@
     </ClInclude>
     <ClInclude Include="ChronoInterpreter.h">
       <Filter>Header Files\Parser Classes\Lexer/Intepreters</Filter>
+    </ClInclude>
+    <ClInclude Include="Chrono.h">
+      <Filter>Header Files\Commons Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception_InvalidCommand.h">
+      <Filter>Header Files\Exception Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,6 +256,12 @@
     </Filter>
     <Filter Include="Source Files\Parser Classes\Packers">
       <UniqueIdentifier>{c2b5bd80-dfd7-4183-a6a5-aa5562bbcd15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Exception Classes">
+      <UniqueIdentifier>{2eb4ad97-b360-404d-9499-8b7c1772270c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Exception Classes">
+      <UniqueIdentifier>{01cf6619-ff55-4d4b-8176-32ec00ee5d86}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

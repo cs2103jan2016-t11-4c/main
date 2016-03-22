@@ -4,5 +4,7 @@ using namespace std;
 
 class Command_Undo : public Command {
 	Command_Undo();
+	bool execute();
+	bool undo();
 	COMMAND_TYPE getCommandType();
 };

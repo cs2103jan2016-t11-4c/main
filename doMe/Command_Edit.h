@@ -12,6 +12,7 @@ private:
 	int _newTime1;
 	int _newTime2;
 	string _newLocation;
+//	int _newDoneStatus;
 
 	string _oldName;
 	int _oldDate1;
@@ -19,6 +20,7 @@ private:
 	int _oldTime1;
 	int _oldTime2;
 	string _oldLocation;
+//	int _oldDoneStatus;
 
 	bool outOfRange();
 public:

@@ -7,12 +7,23 @@ RAM::RAM() {
 	_searchState = false;
 	_searchTerm = "";
 	_lastAddedTask = NULL;
+	_storage = Storage::getInstance();
+
+	loadData();
 }
 
+Task* RAM::ramAddToRawTaskHeap(Task* task) {
+	Task* _task = new Task();
+	*_task = *task;
 
-Task* RAM::ramAddToRawTaskHeap(Task task) {
-	_rawTaskHeap.push_back(task);
-	return &(_rawTaskHeap.back());
+	return _task;
+}
+
+Command* RAM::ramAddToRawCommandHeap(Command* command) {
+	Command* _command = new Command();
+	*_command = *command;
+
+	return _command;
 }
 
 void RAM::ramAdd(Task* task) {
@@ -20,12 +31,14 @@ void RAM::ramAdd(Task* task) {
 	_lastAddedTask = task;
 	ramUnsearch();
 	sort();
+	saveData();
 }
 
 void RAM::ramDel(Task* task) {
 	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
 		if(*iter == task) {
 			_taskList.erase(iter);
+			saveData();
 			return;
 		}
 	}
@@ -38,12 +51,17 @@ Task* RAM::ramDel(int index) {						//index must be guranteed to be valid
 	_taskList.erase(deleteIter);
 
 	ramUnsearch();
+
+	saveData();
+
 	return deletedTaskPtr;
 }
 
 list<Task*> RAM::ramClear() {
 	list<Task*> oldTaskList = _taskList;
 	_taskList.clear();
+
+	saveData();
 
 	return oldTaskList;
 }
@@ -55,6 +73,8 @@ void RAM::ramInsert(list<Task*>& oldTaskList) {
 	}
 	ramUnsearch();
 	sort();
+
+	saveData();
 }
 
 int RAM::ramGetSize() {
@@ -107,6 +127,24 @@ string RAM::ramUnsearch() {
 	return _searchTerm;
 }
 
+list<Task*>* RAM::getTaskList() {
+	return &_taskList;
+}
+
+void RAM::sort() {
+	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
+	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
+	//_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() < b->getDoneStatus();});
+}
+
+void RAM::loadData() {
+	ramLoadVector(_storage->retrieveData(_settings->getSaveDirectory()));
+}
+
+void RAM::saveData() {
+	_storage->saveData(ramGetVector() ,_settings->getSaveDirectory());
+}
+
 vector<string> RAM::ramGetVector() {
 	vector<string> updatedData;
 
@@ -143,11 +181,6 @@ void RAM::ramLoadVector(vector<string>& existingData) {
 		_taskList.push_back(new Task(name, date1, date2, time1, time2, location));
 	}
 	sort();
-}
-
-void RAM::sort() {
-	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
-	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
 }
 
 string RAM::integerToString(int integer) {

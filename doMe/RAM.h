@@ -5,28 +5,34 @@
 #include <string>
 #include <sstream>
 #include "Task.h"
+#include "Storage.h"
+#include "Command.h"
 using namespace std;
 
 class RAM {
 public:
 	list<Task*> _taskList;
 	list<Task*> _tempTaskList;
-	vector<Task> _rawTaskHeap;
 	bool _searchState;
 	string _searchTerm;
 	Task* _lastAddedTask;
 
 	void sort();
+	void loadData();
+	void saveData();
+	vector<string> ramGetVector();
+	void ramLoadVector(vector<string>& existingData);
 	string integerToString(int integer);
 	int stringToInteger(string text);
 	list<Task*>::iterator indexToTaskListIter(int index);
 	bool foundInTask(Task* task, string searchTerm);
 
-	const string LIST_DIVIDER;
+	static const string LIST_DIVIDER;
 
 public:
 	RAM();
-	Task* ramAddToRawTaskHeap(Task task);
+	Task* ramAddToRawTaskHeap(Task* task);
+	Command* ramAddToRawCommandHeap(Command* command);
 	void ramAdd(Task* task);
 	void ramDel(Task* task);
 	Task* ramDel(int index);
@@ -37,6 +43,5 @@ public:
 	bool ramGetSearchState();
 	bool ramSearch(string searchTerm);
 	string ramUnsearch();
-	vector<string> ramGetVector();
-	void ramLoadVector(vector<string>& existingData);
+	list<Task*>* getTaskList();
 };

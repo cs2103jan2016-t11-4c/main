@@ -2,45 +2,52 @@
 #include "Logic.h"
 
 Logic::Logic() {
+	_parser = Parser::getInstance();
+	_memory = Memory::getInstance();
 	_commandHistoryList = new stack<Command*>;
 }
 
-Command* Logic::executeCommand(string commandText, int& commandOutcome) {
-//	if(commandText.empty()) {
-//		Command_Invalid* commandInvalid = new Command_Invalid();
-//		return commandInvalid;
-//	}
+Logic::~Logic() {
+	delete _commandHistoryList;
+}
 
-	Parser* parser = new Parser(commandText);
-	parser->parse();
-	Command* command = parser->getCommand();
+Command* Logic::executeCommand(string commandText) {
+	if(commandText.empty()) {
+		Exception_InvalidCommand e(INVALID);
+		throw e;
+	}
+
+	_parser->setCommandLine(commandText);
+	Command* command = _parser->getCommand();
 	assert(command != NULL);
-	//delete parser;
 
-	if(command->getCommandType() == UNDO ) {
-		commandOutcome = -1;
-		return undo();
+	command = _memory->addToRawCommandHeap(command);
+
+	if(command->getCommandType() == UNDO) {
+//		Exception_Undo e(undo());
+//		throw e;
+		undo();
+		return command;
+	}
+		
+	if(command->execute() == false) {
+		Exception_InvalidCommand e(command->getCommandType());
+		throw e;
 	}
 
-	if(command->execute() == true) {
-		_commandHistoryList->push(command);
-		commandOutcome = 1;
-	}else {
-		commandOutcome = 0;
-	}
+	_commandHistoryList->push(command);
 
 	return command;
 }
 
 Command* Logic::undo() {
 	if(_commandHistoryList->empty()) {
-		Command_Invalid* commandInvalid = new Command_Invalid();
-		return commandInvalid;
+		Exception_InvalidCommand e(UNDO);
+		throw e;
 	}
 
-	_commandHistoryList->top()->undo();
 	Command* command = _commandHistoryList->top();
-	delete _commandHistoryList->top();
+	command->undo();
 	_commandHistoryList->pop();
 
 	return command;
