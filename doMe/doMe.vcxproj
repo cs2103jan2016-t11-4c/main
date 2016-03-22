@@ -20,6 +20,7 @@
     <ClCompile Include="ChronoInterpreter.cpp" />
     <ClCompile Include="Parser_Interface.cpp" />
     <ClCompile Include="Exception_InvalidCommand.cpp" />
+    <ClCompile Include="Exception_Undo.cpp" />
     <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -47,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Exception_InvalidCommand.h" />
+    <ClInclude Include="Exception_Undo.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />

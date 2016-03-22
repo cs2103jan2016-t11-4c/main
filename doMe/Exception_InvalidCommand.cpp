@@ -1,14 +1,10 @@
+//@@author A0125290M
 #include "Exception_InvalidCommand.h"
 
-Exception_InvalidCommand::Exception_InvalidCommand(COMMAND_TYPE commandType) {
-	_commandType = commandType;
-}
-
-COMMAND_TYPE Exception_InvalidCommand::getCommandType() {
-	return _commandType;
+Exception_InvalidCommand::Exception_InvalidCommand(Command* command) {
+	_command = command;
 }
 
 Command* Exception_InvalidCommand::getCommand() {
-    //tem still thinking @PCH
-    return &Command();
+	return _command;
 }

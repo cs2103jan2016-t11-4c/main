@@ -100,6 +100,9 @@
     <ClCompile Include="Exception_InvalidCommand.cpp">
       <Filter>Source Files\Exception Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Exception_Undo.cpp">
+      <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -196,6 +199,9 @@
       <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
     <ClInclude Include="Exception_InvalidCommand.h">
+      <Filter>Header Files\Exception Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception_Undo.h">
       <Filter>Header Files\Exception Classes</Filter>
     </ClInclude>
   </ItemGroup>

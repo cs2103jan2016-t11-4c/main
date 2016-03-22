@@ -2,10 +2,10 @@
 #include "Command.h"
 using namespace std;
 
-class Exception_InvalidCommand {
+class Exception_Undo {
 private:
 	Command* _command;
 public:
-	Exception_InvalidCommand(Command* command);
+	Exception_Undo(Command* command);
 	Command* getCommand();	
 };
