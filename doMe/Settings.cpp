@@ -188,7 +188,7 @@ void Settings::updateTextFileName(string textFileName) {
 /****************************************************************/
 
 string Settings::getSaveDirectory() {
-    return(_saveDirectory+_textFileName);
+    return(_saveDirectory+_textFileName); //should remove +_textFileName so that memory class can get the global directory -joan
 }
 
 int Settings::getViewType() {
