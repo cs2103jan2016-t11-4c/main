@@ -10,6 +10,7 @@ const int Settings::DEFAULT_WINDOWS_LENGTH = 25;
 Settings::Settings(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
     _viewType = 0;
+    loadSettings(); //easier for constructor of Memory class -joan
 }
 
 Settings::~Settings(void) {
@@ -75,7 +76,7 @@ void Settings::saveSettings() {
 
     writeFile << writeSettingsDetails(_saveDirectory) << endl;
 
-    viewType =to_string(_viewType);
+    viewType = to_string(_viewType);
     writeFile << writeSettingsDetails(viewType) << endl;
 
     c = to_string(columns);
@@ -168,11 +169,12 @@ void Settings::changeSaveDirectory(string directory) {
     string newDirectory;
     newDirectory = createValidFileDirectoryString(directory);
     _saveDirectory = newDirectory;
-
+	saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan
 }
 
 bool Settings::changeViewType(int newViewType) {
     _viewType = newViewType;
+    saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan
     return true;
 }
 
@@ -183,12 +185,16 @@ void Settings::updateTextFileName(string textFileName) {
     newTextFileName = createValidTextFileNameString(textFileName);
 
     _textFileName = newTextFileName;
+    
+    saveSettings(); //adding saveSettings() to all setter functions in Settings class, some redundancy may need further refactoring -joan
 }
 
 /****************************************************************/
 
 string Settings::getSaveDirectory() {
-    return(_saveDirectory/*+_textFileName*/);
+    return(_saveDirectory/*+_textFileName*/);   //getSaveDirectory() should return the main directory w/o specific txt filename so that 
+												//it can be generalised for settings.txt & doMe.txt & logs.txt etc etc
+												//pre-condition: all these .txt files must be in same directory
 }
 
 int Settings::getViewType() {

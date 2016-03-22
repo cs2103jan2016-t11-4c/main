@@ -13,18 +13,22 @@ public:
     Settings(void);
     ~Settings(void);
 
-    void changeSaveDirectory(string directory); 
-    void updateTextFileName(string textFileName);
-    bool checkEmptySaveDirectory(); 
-    bool checkForSettingsFile();
-    bool changeViewType(int newViewType);
-    string getSaveDirectory();
+    //setter
+	void changeSaveDirectory(string directory); //API for Memory component
+	void updateTextFileName(string textFileName);
+    bool changeViewType(int newViewType); //API for Memory compoent
+    //getter
+	string getSaveDirectory();
     string getTextFileName();
     int getViewType();
-    void resizeWindow(); 
-    bool loadSettings(); 
-    void saveSettings(); 	
+    
+    void resizeWindow(); //API for Memory component
+    bool loadSettings(); //placed in constructor of Settings; boolean return value to be reconsidered
+    void saveSettings(); //placed in every setter function, in order save changes to settings.txt	
 
+	bool checkEmptySaveDirectory(); 
+    bool checkForSettingsFile();
+    
 #ifndef TESTMODE 
 private: 
 #else 
