@@ -1,8 +1,18 @@
 #include "Storage.h"
 
-Storage::Storage()
-{
+Storage* Storage::_instance = 0;
+
+Storage* Storage::getInstance() {
+	if (_instance == 0) {
+		_instance = new Storage;
+	}
+	return _instance;	
 }
+
+Storage::Storage() {
+
+}
+
 
 vector<string> Storage::retrieveData(string directory) {
     vector<string> dataVector;

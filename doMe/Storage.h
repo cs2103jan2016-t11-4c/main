@@ -16,9 +16,11 @@ using namespace std;
 
 class Storage {
 private:
-
-public:
+	static Storage* _instance;
 	Storage();
+	
+public:
+	static Storage* getInstance();
 
 	// extract data from directory and returns data as a string vector
 	// throw exception when ifstream .txt file cannot be opened
