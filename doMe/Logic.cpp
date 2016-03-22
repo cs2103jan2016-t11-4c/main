@@ -17,8 +17,7 @@ Command* Logic::executeCommand(string commandText) {
 		throw e;
 	}
 
-	_parser->setCommandLine(commandText);
-	Command* command = _parser->getCommand();
+	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 
 	command = _memory->addToRawCommandHeap(command);
