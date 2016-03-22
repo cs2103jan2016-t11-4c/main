@@ -9,9 +9,13 @@ using namespace std;
 
 
 class Settings {
+private:
+	static Settings* _instance;
+	Settings(void);
 public:
-    Settings(void);
-    ~Settings(void);
+    /*Settings(void);
+    ~Settings(void);*/
+    static Settings* getInstance();
 
     //setter
 	void changeSaveDirectory(string directory); //API for Memory component

@@ -7,6 +7,15 @@ const string Settings::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const int Settings::DEFAULT_WINDOWS_WIDTH = 80;
 const int Settings::DEFAULT_WINDOWS_LENGTH = 25; 
 
+Settings* Settings::_instance = 0;
+
+Settings* Settings::getInstance() {
+	if (_instance == 0) {
+		_instance = new Settings;
+	}
+	return _instance;
+}
+
 Settings::Settings(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
     _viewType = 0;
