@@ -4,6 +4,15 @@
 const string RAM::LIST_DIVIDER = "__________";
 const string RAM::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 
+RAM* RAM::_instance = 0;
+
+RAM* RAM::getInstance() {
+	if (_instance == 0) {
+		_instance = new RAM;
+	}
+	return _instance;
+}
+
 RAM::RAM() {
 	_searchState = false;
 	_searchTerm = "";

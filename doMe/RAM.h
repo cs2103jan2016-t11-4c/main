@@ -10,6 +10,10 @@
 using namespace std;
 
 class RAM {
+private:
+	static RAM* _instance;
+	RAM();
+
 public: //is this supposed to be private? -joan
 	list<Task*> _taskList;
 	list<Task*> _tempTaskList;
@@ -31,7 +35,8 @@ public: //is this supposed to be private? -joan
 	static const string DEFAULT_TEXT_FILE_NAME; //unsure about the visibility -joan
 
 public:
-	RAM();
+	static RAM* getInstance();
+	/*RAM();*/
 	//are ALL these ought to be API of Memory component? -joan
 	Task* ramAddToRawTaskHeap(Task* task);
 	Command* ramAddToRawCommandHeap(Command* command);
