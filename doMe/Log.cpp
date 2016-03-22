@@ -1,8 +1,11 @@
 #include "Log.h"
 
 Log* Log::_instance = 0;
+const string Log::LOG_FILE_NAME = "doMeLog.txt";
 
 Log::Log() {
+	_storage = Storage::getInstance();
+	_logText = _storage->retrieveData(LOG_FILE_NAME);
 }
 
 Log* Log::getInstance() {
@@ -13,9 +16,7 @@ Log* Log::getInstance() {
 }
 
 void Log::record(string entry) {
-	ofstream writeFile("doMeLog.txt");
+	_logText.push_back(entry);
 
-	writeFile << entry << endl;
-
-	writeFile.close();
+	_storage->saveData(_logText, LOG_FILE_NAME);
 }

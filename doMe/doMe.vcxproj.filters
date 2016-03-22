@@ -70,9 +70,6 @@
     <ClCompile Include="Logic.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Source Files\Commons Classes</Filter>
-    </ClCompile>
     <ClCompile Include="InputTokens.cpp">
       <Filter>Source Files\Parser Classes\Lexer/Interpreters</Filter>
     </ClCompile>
@@ -102,6 +99,9 @@
     </ClCompile>
     <ClCompile Include="Exception_Undo.cpp">
       <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Source Files\Memory Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -174,9 +174,6 @@
     <ClInclude Include="Task.h">
       <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Header Files\Commons Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Dictionary.h">
       <Filter>Header Files\Parser Classes\Dictionary</Filter>
     </ClInclude>
@@ -203,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="Exception_Undo.h">
       <Filter>Header Files\Exception Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Header Files\Memory Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
