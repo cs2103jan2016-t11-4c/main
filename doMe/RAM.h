@@ -28,6 +28,7 @@ public:
 	bool foundInTask(Task* task, string searchTerm);
 
 	static const string LIST_DIVIDER;
+	static const string DEFAULT_TEXT_FILE_NAME; //unsure about the visibility -joan
 
 public:
 	RAM();

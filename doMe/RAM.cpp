@@ -2,6 +2,7 @@
 #include "RAM.h"
 
 const string RAM::LIST_DIVIDER = "__________";
+const string RAM::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 
 RAM::RAM() {
 	_searchState = false;
@@ -138,11 +139,11 @@ void RAM::sort() {
 }
 
 void RAM::loadData() {
-	ramLoadVector(_storage->retrieveData(_settings->getSaveDirectory()));
+	ramLoadVector(_storage->retrieveData(_settings->getSaveDirectory() + DEFAULT_TEXT_FILE_NAME));
 }
 
 void RAM::saveData() {
-	_storage->saveData(ramGetVector() ,_settings->getSaveDirectory());
+	_storage->saveData(ramGetVector() ,_settings->getSaveDirectory() + DEFAULT_TEXT_FILE_NAME);
 }
 
 vector<string> RAM::ramGetVector() {

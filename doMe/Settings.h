@@ -32,7 +32,7 @@ public:
 #endif
 
     static const string FILE_SETTINGS_NAME;
-    static const string DEFAULT_TEXT_FILE_NAME;
+    /*static const string DEFAULT_TEXT_FILE_NAME;*/
     static const string VOID_INDICATOR;
     static const string VOID_STRING;
     static const string SYSTEM_MODE_CON;

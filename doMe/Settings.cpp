@@ -2,7 +2,7 @@
 const string Settings::FILE_SETTINGS_NAME = "settings.txt";
 const string Settings::VOID_INDICATOR = "-";
 const string Settings::VOID_STRING = "";
-const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
+/*const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";*/
 const string Settings::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const int Settings::DEFAULT_WINDOWS_WIDTH = 80;
 const int Settings::DEFAULT_WINDOWS_LENGTH = 25; 
@@ -188,7 +188,7 @@ void Settings::updateTextFileName(string textFileName) {
 /****************************************************************/
 
 string Settings::getSaveDirectory() {
-    return(_saveDirectory+_textFileName); //should remove +_textFileName so that memory class can get the global directory -joan
+    return(_saveDirectory/*+_textFileName*/);
 }
 
 int Settings::getViewType() {
