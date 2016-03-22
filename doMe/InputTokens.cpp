@@ -18,8 +18,7 @@ string InputTokens::getToken(int index) {
 }
 
 string InputTokens::getOriginalToken(int index) {
-	assert(index < _tokens.size());
-	assert(index >= 0);
+	assert(!isOutOfBounds(index));
 	return _tokensOriginal[index];
 }
 
@@ -41,7 +40,9 @@ int InputTokens::getSize(int index) {
 bool InputTokens::isOutOfBounds(int index) {
 	if(index < 0) {
 		return true;
-	} else if(index >= _tokens.size()) {
+	}
+	unsigned int positiveIndex = index;
+	if(positiveIndex < _tokens.size()) {
 		return true;
 	} else {
 		return false;
@@ -56,8 +57,7 @@ bool InputTokens::hasNoMoreWord(int index) {
 }
 
 bool InputTokens::hasMeaning(string meaning, int index) {
-	assert(index < _tokens.size());
-	assert(index >= 0);
+	assert(!isOutOfBounds(index));
 	return _dictionary->hasMeaning(meaning, _tokens[index]);
 }
 
@@ -129,9 +129,6 @@ void InputTokens::remove(int index) {
 	return;
 }
 
-
-
-
 void InputTokens::generateTokensFromCommandLine() {
 	assert(_commandLine.size() > 0);
 	istringstream is(_commandLine);
@@ -140,7 +137,7 @@ void InputTokens::generateTokensFromCommandLine() {
 		vector<string> tokens = getTokensFromChunk(makeAllCaps(chunk));
 		_tokens.push_back(tokens[START_INDEX]);
 		_tokensOriginal.push_back(chunk);
-		for(int i = 1; i < tokens.size(); i++) {
+		for(unsigned int i = 1; i < tokens.size(); i++) {
 			_tokens.push_back(tokens[i]);
 			_tokensOriginal.push_back("");
 		}

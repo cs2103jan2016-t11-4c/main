@@ -2,7 +2,7 @@
 #include "Command_Undo.h"
 
 Command_Undo::Command_Undo()
-:Command(NULL) {
+:Command() {
 }
 
 bool Command_Undo::execute() {
