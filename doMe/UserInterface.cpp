@@ -98,18 +98,19 @@ int UserInterface::getCurrentDate() {
 }
 
 void UserInterface::executeCommandUntilExit() {
-    string command;
-    Command* executionMessage;
+    string stringCommand;
+    Command* command;
 
     do {
         try {
-            command = getStringCommand();
-            executionMessage = _logic->executeCommand(command);
-            printExecutionMessage(executionMessage, VALID_MESSAGE);
+            stringCommand = getStringCommand();
+            command = _logic->executeCommand(stringCommand);
+            printExecutionMessage(command, VALID_MESSAGE);
         } catch(Exception_InvalidCommand e) {
             printExecutionMessage(e.getCommand(), INVALID_MESSAGE);
+            executeCommandUntilExit();
         }
-    } while(executionMessage->getCommandType() != EXIT);      
+    } while(command->getCommandType() != EXIT);      
 }
 
 void UserInterface::printBeforeMessageDisplay() {
