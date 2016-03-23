@@ -16,6 +16,14 @@ Memory::Memory()
 	_ram = RAM::getInstance();			 //main functionality from RAM constructor
 }
 
+string Memory::getTextFileName() {
+    return _settings->getTextFileName();
+}
+
+int Memory::getViewType() {
+    return _settings->getViewType();
+}
+
 void Memory::changeSaveDirectory(string newDirectory)
 {
 	_settings->changeSaveDirectory(newDirectory);

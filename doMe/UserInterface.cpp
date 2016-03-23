@@ -109,7 +109,7 @@ void UserInterface::executeCommandUntilExit() {
         } catch(Exception_InvalidCommand e) {
             printExecutionMessage(e.getCommand(), INVALID_MESSAGE);
         }
-    } while(executionMessage->getCommandType != EXIT);      
+    } while(executionMessage->getCommandType() != EXIT);      
 }
 
 void UserInterface::printBeforeMessageDisplay() {

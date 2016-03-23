@@ -12,6 +12,7 @@ class Settings {
 private:
 	static Settings* _instance;
 	Settings(void);
+    ~Settings(void);
 public:
     /*Settings(void);
     ~Settings(void);*/

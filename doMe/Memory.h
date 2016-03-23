@@ -26,8 +26,9 @@ public:
 	//I need these - Michael
 	// if only RAM need these, don't need to be API. RAM calls these fns directly from the singleton Settings object
 	// unless other outside classes need these from Memory component
-	/* string getSaveDirectory(); 
-	int getViewType(); */
+	string getSaveDirectory(); 
+	int getViewType(); 
+    string getTextFileName();//complete
 
 	//accessing RAM class object
 	Task* ramAddToRawTaskHeap(Task* task);
