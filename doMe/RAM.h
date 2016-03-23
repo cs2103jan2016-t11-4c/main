@@ -22,6 +22,9 @@ private:
 public: //is this supposed to be private? -joan
 	list<Task*> _taskList;
 	list<Task*> _tempTaskList;
+	list<Task> _rawTaskList;
+	list<Command> _rawCommandList;
+
 	bool _searchState;
 	string _searchTerm;
 	Task* _lastAddedTask;

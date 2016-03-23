@@ -31,10 +31,9 @@ Task* RAM::ramAddToRawTaskHeap(Task* task) {
 }
 
 Command* RAM::ramAddToRawCommandHeap(Command* command) {
-	Command* _command = new Command();
-	*_command = *command;
+	Command _command = *command;
 
-	return _command;
+	return command;
 }
 
 void RAM::ramAdd(Task* task) {

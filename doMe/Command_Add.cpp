@@ -3,7 +3,7 @@
 
 Command_Add::Command_Add(Task* task)
 :Command(){
-	_task = _memory->ramAddToRawTaskHeap(task);
+	_task = task;
 }
 
 bool Command_Add::execute() {

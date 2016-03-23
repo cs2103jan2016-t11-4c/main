@@ -28,8 +28,6 @@ Command* Logic::executeCommand(string commandText) {
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 
-	command = _memory->ramAddToRawCommandHeap(command);
-
 	if(command->getCommandType() == UNDO) {
 //		Exception_Undo e(undo());
 //		throw e;
