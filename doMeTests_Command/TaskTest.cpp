@@ -10,7 +10,7 @@ namespace doMeTests_Command
 	{
 	public:
 		
-		TEST_METHOD(Task_Info_Test)
+/*		TEST_METHOD(Task_Info_Test)
 		{
 			Task* tsk1("",0,0,-1,1500,"");
 			Task* tsk2("",0,0,1300,1500,"");
@@ -23,7 +23,7 @@ namespace doMeTests_Command
 			Assert::AreEqual(tsk2->getTime1(), 1300);
 			Assert::AreEqual(tsk3->getDate2(), 20160326);
 			Assert::AreEqual(tsk5->getName(), "readbook");
-		}
+		}*/
 
 	};
 }

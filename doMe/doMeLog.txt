@@ -66,3 +66,40 @@ User enters: " fonaf"
 Parser parses it to be ADD command
 User enters: " exit"
 Parser parses it to be  command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " "
+User enters: " viewtype 2"
+Parser parses it to be VIEWTYPE command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " ers"
+Parser parses it to be ADD command
+User enters: " r"
+Parser parses it to be ADD command
+User enters: " ser"
+Parser parses it to be ADD command
+User enters: " ser"
+Parser parses it to be ADD command
+User enters: " ser"
+Parser parses it to be ADD command
+User enters: " u"
+Parser parses it to be UNDO command
