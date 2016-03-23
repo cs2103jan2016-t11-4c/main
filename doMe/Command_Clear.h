@@ -7,7 +7,7 @@ private:
 	list<Task*> _oldTaskList;
 	vector<int> _deleteList;
 public:
-	Command_Clear(vector<int>& deleteList);
+	Command_Clear(vector<int>* deleteList);
 	bool execute();
 	bool undo();
 	COMMAND_TYPE getCommandType();

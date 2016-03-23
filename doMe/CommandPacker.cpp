@@ -247,7 +247,7 @@ void CommandPacker::nodeTwoOfEditCommand(int index) {
 }
 
 void CommandPacker::packDisplayCommand() {
-	_command = new Command_Display();
+	_command = new Command_Exit();
 	return;
 }
 

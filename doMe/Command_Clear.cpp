@@ -1,9 +1,9 @@
 //@@author A0125290M
 #include "Command_Clear.h"
 
-Command_Clear::Command_Clear(vector<int>& deleteList)
+Command_Clear::Command_Clear(vector<int>* deleteList)
 :Command() {
-	_deleteList = deleteList;
+	_deleteList = *deleteList;
 }
 
 bool Command_Clear::execute() {
