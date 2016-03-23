@@ -9,4 +9,5 @@ public:
 	bool execute();
 	bool undo();
 	COMMAND_TYPE getCommandType();
+	string getStringForm();
 };

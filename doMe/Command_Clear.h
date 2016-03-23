@@ -1,4 +1,5 @@
 //@@author A0125290M
+#pragma once
 #include "Command.h"
 using namespace std;
 
@@ -13,4 +14,5 @@ public:
 	bool execute();
 	bool undo();
 	COMMAND_TYPE getCommandType();
+	string getStringForm();
 };

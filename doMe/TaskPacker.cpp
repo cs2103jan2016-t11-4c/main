@@ -36,6 +36,8 @@ void TaskPacker::setAttributes(InputTokens* tokens) {
 	_time1 = NO_TIME;
 	_time2 = NO_TIME;
 	_location = NO_LOCATION;
+	_dates.clear();
+	_times.clear();
 
 	return;
 }

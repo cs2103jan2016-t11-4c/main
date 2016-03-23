@@ -12,7 +12,7 @@
 
 using namespace std;
 
-#define NO_DATE 0
+#define NO_DATE -1
 #define NO_TIME -1
 #define NO_LOCATION ""
 #define NO_NAME ""

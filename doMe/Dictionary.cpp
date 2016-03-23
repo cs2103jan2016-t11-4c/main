@@ -78,10 +78,10 @@ void Dictionary::addChronoVocabularyPackage() {
 	addPM();
 	addAM();
 	addMeridiem();
-	void addFirst();
-	void addSecond();
-	void addThird();
-	void addFourth();
+	addFirst();
+	addSecond();
+	addThird();
+	addFourth();
 }
 
 void Dictionary::addDisplay() {
@@ -265,6 +265,7 @@ void Dictionary::addAugust() {
 void Dictionary::addSeptember() {
 	SynonymList* list = new SynonymList("SEPTEMBER");
 	list->add("SEP");
+	list->add("SEPT");
 	list->add("SEPTEMBER");
 	addToDictionary(list);
 }
@@ -407,7 +408,7 @@ void Dictionary::addPM() {
 }
 
 void Dictionary::addMeridiem() {
-		SynonymList* list = new SynonymList("PM");
+		SynonymList* list = new SynonymList("MERIDIEM");
 		list->add(getSynonyms("AM"));
 		list->add(getSynonyms("PM"));
 		addToDictionary(list);
@@ -415,24 +416,24 @@ void Dictionary::addMeridiem() {
 
 void Dictionary::addFirst() {
 		SynonymList* list = new SynonymList("FIRST");
-		list->add(getSynonyms("ST"));
+		list->add("ST");
 		addToDictionary(list);
 }
 void Dictionary::addSecond() {
 		SynonymList* list = new SynonymList("SECOND");
-		list->add(getSynonyms("ND"));
+		list->add("ND");
 		addToDictionary(list);
 }
 
 void Dictionary::addThird() {
 		SynonymList* list = new SynonymList("THIRD");
-		list->add(getSynonyms("RD"));
+		list->add("RD");
 		addToDictionary(list);
 }
 
 void Dictionary::addFourth() {
 		SynonymList* list = new SynonymList("FOURTH");
-		list->add(getSynonyms("TH"));
+		list->add("TH");
 		addToDictionary(list);
 }
 

@@ -51,3 +51,7 @@ bool Command_Clear::outOfRange() {
 
 	return false;
 }
+
+string Command_Clear::getStringForm() {
+	return "clear";
+}

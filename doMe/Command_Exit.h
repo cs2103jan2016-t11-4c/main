@@ -11,4 +11,5 @@ public:
 	COMMAND_TYPE getCommandType();
 	bool execute();
 	bool undo();
+	string getStringForm();
 };

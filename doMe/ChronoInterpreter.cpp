@@ -62,8 +62,12 @@ void ChronoInterpreter::integerNode(int index) {
 }
 
 void ChronoInterpreter::twoDigitIntegerNode(int index) {
-	if(!timeFormatBNodeOne(index)) {
-	dateFormatBNodeOne(index);
+	if(timeFormatBNodeOne(index)) {
+		return;
+	} else if(dateFormatBNodeOne(index)) {
+		return;
+	} else {
+		dateFormatDNodeOne(index);
 	}
 }
 
@@ -130,9 +134,14 @@ bool ChronoInterpreter::timeFormatBNodeOne(int index) {
 }
 
 bool ChronoInterpreter::timeFormatBNodeTwo(int index) {
-	if(!_tokens->isOutOfBounds(index) && _tokens->hasMeaning("MERIDIEM", index)) {
-		if(_tokens->hasMeaning("PM", index)) {
+	if(_hour > 12 || !isValidTime()) {
+		return false;
+	} else if(!_tokens->isOutOfBounds(index) && _tokens->hasMeaning("MERIDIEM", index)) {
+		if(_tokens->hasMeaning("PM", index) && _hour != 12) {
 			_hour+=12;
+		}
+		if(_tokens->hasMeaning("AM", index) && _hour == 12) {
+			_hour = 0;
 		}
 		_tokens->remove(index);
 		return true;
@@ -248,13 +257,16 @@ bool ChronoInterpreter::dateFormatBNodeFive(int index) {
 }
 
 bool ChronoInterpreter::dateFormatCNodeOne(int index) {
-	if(_tokens->isInteger(index) && _tokens->getSize() <= 2) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	}
+	if(_tokens->isInteger(index) && _tokens->getSize(index) <= 2) {
 		Chrono chrono;
 		_day = _tokens->getInteger(index);
 		_year = chrono.getYear((chrono.getCurrentDate()));
 
 		if(isValidDate()) {
-			dateFormatCNodeOne(index);
+			dateFormatCNodeTwo(index+1);
 			_tokens->remove(index);
 			return true;
 		}
@@ -264,6 +276,9 @@ bool ChronoInterpreter::dateFormatCNodeOne(int index) {
 }
 
 void ChronoInterpreter::dateFormatCNodeTwo(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return;
+	}
 	if(_day%10 == 1 && _tokens->hasMeaning("FIRST", index)) {
 		_tokens->remove(index);
 	} else if(_day%10 == 2 && _tokens->hasMeaning("SECOND", index)) {
@@ -276,6 +291,7 @@ void ChronoInterpreter::dateFormatCNodeTwo(int index) {
 }
 
 bool ChronoInterpreter::dateFormatDNodeOne(int index) {
+	assert(_tokens->isInteger(index));
 	_day = _tokens->getInteger(index);
 
 	if(dateFormatDNodeTwo(index+1)) {
@@ -289,9 +305,29 @@ bool ChronoInterpreter::dateFormatDNodeOne(int index) {
 bool ChronoInterpreter::dateFormatDNodeTwo(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		return false;
+	}
+
+	if((_day%10 == 1 && _tokens->hasMeaning("FIRST", index)) ||
+       (_day%10 == 2 && _tokens->hasMeaning("SECOND", index)) ||
+	   (_day%10 == 3 && _tokens->hasMeaning("THIRD", index)) ||
+	   (_day%10 > 3 && _tokens->hasMeaning("FOURTH", index))) {
+		if(dateFormatDNodeThree(index+1)) {
+			_tokens->remove(index);
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return dateFormatDNodeThree(index);
+	}
+}
+
+bool ChronoInterpreter::dateFormatDNodeThree(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
 	} else if(_tokens->hasMeaning("MONTHSOFTHEYEAR", index)) {
 		_month = getMonthFromWord(index);
-		if(dateFormatDNodeThree(index+1)) {
+		if(dateFormatDNodeFour(index+1)) {
 			_tokens->remove(index);
 			return true;
 		} else {
@@ -302,23 +338,32 @@ bool ChronoInterpreter::dateFormatDNodeTwo(int index) {
 	}
 }
 
-bool ChronoInterpreter::dateFormatDNodeThree(int index) {
-	if(_tokens->isOutOfBounds(index) || 
-		!(_tokens->isInteger(index) && 
-		(_tokens->getSize() == 2 || _tokens->getSize() == 4))) {
+bool ChronoInterpreter::dateFormatDNodeFour(int index) {
+	bool yearFound = false;
+	if(_tokens->isOutOfBounds(index)) { 
 		_year = _chrono.getYear(_chrono.getCurrentDate());
-	} else {
+	} else if ((_tokens->isInteger(index)) && 
+			  (_tokens->getSize(index) == 2) &&
+			  (_tokens->isOutOfBounds(index+1) || 
+			  (!_tokens->hasMeaning("MERIDIEM", index+1) && 
+			  !_tokens->hasMeaning("MONTHSOFTHEYEAR", index+1) &&
+			  !_tokens->isExtensionOfAWord(index+1)))) {
 		_year = _tokens->getInteger(index);
+		yearFound = true;
 		if(_year<100) {
 			_year += 2000;
-			if((_chrono.getYear(_chrono.getCurrentDate()) - 10) > _year) {
+			while((_chrono.getYear(_chrono.getCurrentDate()) - 10) > _year) {
 				_year +=100;
 			}
 		}
+	} else {
+		_year = _chrono.getYear(_chrono.getCurrentDate());
 	}
 
 	if(isValidDate()) {
+		if(yearFound) {
 		_tokens->remove(index);
+		}
 		return true;
 	}
 	return false;

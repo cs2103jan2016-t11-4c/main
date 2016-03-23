@@ -35,3 +35,9 @@ bool Command_Delete::outOfRange() {
 	}
 	return false;
 }
+
+string Command_Delete::getStringForm() {
+	string s;
+	s = "delete index: " + to_string(_index);
+	return s;
+}

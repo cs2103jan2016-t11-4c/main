@@ -57,7 +57,8 @@ private:
 	bool dateFormatDNodeOne(int index);
 	bool dateFormatDNodeTwo(int index);
 	bool dateFormatDNodeThree(int index);
-	
+	bool dateFormatDNodeFour(int index);
+
 	int getMonthFromWord(int index);
 
 	void insertTime(int index);
