@@ -8,17 +8,13 @@ Command_SaveDirectory::Command_SaveDirectory(string newSaveDirectory)
 }
 
 bool Command_SaveDirectory::execute() {
-	_errorType = _memory->changeSaveDirectory(_newSaveDirectory);
-
-	if(_errorType == 1) {
-		return true;
-	}
-
-	return false;
+	_memory->changeSaveDirectory(_newSaveDirectory);
+	return true;
 }
 
 bool Command_SaveDirectory::undo() {
-	return _memory->changeSaveDirectory(_oldSaveDirectory);
+	_memory->changeSaveDirectory(_oldSaveDirectory);
+	return true;
 }
 
 string Command_SaveDirectory::getSaveDirectory() {

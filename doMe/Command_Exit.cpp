@@ -6,7 +6,7 @@ Command_Exit::Command_Exit()
 }
 
 bool Command_Exit::execute() {
-	if(_memory->ramGetSearchState == true) {
+	if(_memory->ramGetSearchState() == true) {
 		_searchTerm = _memory->ramUnsearch();
 		return true;
 	}

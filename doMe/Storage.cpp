@@ -13,7 +13,6 @@ Storage::Storage() {
 
 }
 
-
 vector<string> Storage::retrieveData(string directory) {
     vector<string> dataVector;
 	string tempText;
@@ -23,7 +22,7 @@ vector<string> Storage::retrieveData(string directory) {
 
     if (readFile.is_open()) {
         while (getline(readFile, tempText)) {
-            data.push_back(tempText);
+            dataVector.push_back(tempText);
         }
         readFile.close();
     }

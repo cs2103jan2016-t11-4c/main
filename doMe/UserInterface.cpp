@@ -62,8 +62,8 @@ UserInterface::UserInterface(void) {
     _maxWindowWidth = windowSize.X;
     _maxWindowLength = windowSize.Y;
 
-    _logic = _logic->getInstance();
-
+    _logic = Logic::getInstance();
+	_memory = Memory::getInstance();
 }
 
 UserInterface::~UserInterface(void) {
@@ -73,9 +73,9 @@ UserInterface::~UserInterface(void) {
 
 void UserInterface::setEnvironment() {
     printProgramWelcomePage();
-    _memory->loadSettings();
-    _memory->getExistingData();
-    _taskList = _memory->getTaskList();
+//    _memory->loadSettings();
+ //   _memory->getExistingData();
+    _taskList = _memory->ramGetTaskList();
 
     printNotificationWelcome();
 

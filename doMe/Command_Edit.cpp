@@ -18,7 +18,7 @@ bool Command_Edit::execute() {
 		return false;
 	}
 
-	_task = _memory->getTask(_index);
+	_task = _memory->ramGetTask(_index);
 
 	if(!_newName.empty()) {
 		_oldName = _task->getName();
@@ -44,11 +44,11 @@ bool Command_Edit::execute() {
 		_oldLocation = _task->getLocation();
 		_task->setLocation(_newLocation);
 	}
-	if(!_newDoneStatus != -1) {
+/*	if(!_newDoneStatus != -1) {
 		_oldDoneStatus = _task->getDoneStatus();
 		_task->setDoneStatus(_newDoneStatus);
-	}
-	_ram->sort();
+	}*/
+	_memory->ramSort();
 	return true;
 }
 
@@ -59,7 +59,7 @@ bool Command_Edit::undo() {
 	_task->setDate1(_oldDate1);
 	_task->setDate2(_oldDate2);
 	_task->setLocation(_oldLocation);
-	_ram->sort();
+	_memory->ramSort();
 	return true;
 }
 

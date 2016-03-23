@@ -3,7 +3,7 @@
 
 Command_Add::Command_Add(Task* task)
 :Command(){
-	_task = _memory->addToRawTaskHeap(task);
+	_task = _memory->ramAddToRawTaskHeap(task);
 }
 
 bool Command_Add::execute() {
@@ -18,10 +18,8 @@ bool Command_Add::execute() {
 }
 
 bool Command_Add::undo() {
-	if(_memory->ramDel(_task) == true) {
-		return true;
-	}
-	return false;
+	_memory->ramDel(_task);
+	return true;
 }
 
 Task* Command_Add::getTask() {

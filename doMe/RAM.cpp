@@ -18,6 +18,7 @@ RAM::RAM() {
 	_searchTerm = "";
 	_lastAddedTask = NULL;
 	_storage = Storage::getInstance();
+	_settings = Settings::getInstance();
 
 	loadData();
 }
@@ -137,8 +138,12 @@ string RAM::ramUnsearch() {
 	return _searchTerm;
 }
 
-list<Task*>* RAM::getTaskList() {
+list<Task*>* RAM::ramGetTaskList() {
 	return &_taskList;
+}
+
+void RAM::ramSort() {
+	sort();
 }
 
 void RAM::sort() {

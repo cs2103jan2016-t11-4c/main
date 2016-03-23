@@ -5,6 +5,8 @@
 #include "Task.h"
 using namespace std;
 
+class Memory;
+
 enum COMMAND_TYPE { ADD, DISPLAY, DEL, EDIT, CLEAR, UNDO, SORT, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, INVALID};
 
 class Command {

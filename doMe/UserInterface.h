@@ -42,6 +42,7 @@ public:
 #endif
 
     Logic* _logic;
+	Memory* _memory;
     list<Task*>* _taskList;
 
     //int _commandOutcome;

@@ -11,7 +11,7 @@ bool Command_Clear::execute() {
 		_oldTaskList = _memory->ramClear();
 	}
 
-	for(int i = 0; i < _deleteList.size(); i++) {
+	for(unsigned int i = 0; i < _deleteList.size(); i++) {
 		_oldTaskList.push_back(_memory->ramDel(_deleteList[i]));
 	}
 

@@ -7,11 +7,16 @@
 #include "Task.h"
 #include "Storage.h"
 #include "Command.h"
+#include "Settings.h"
 using namespace std;
+
+class Command;
 
 class RAM {
 private:
 	static RAM* _instance;
+	Settings* _settings;
+	Storage* _storage;
 	RAM();
 
 public: //is this supposed to be private? -joan
@@ -36,7 +41,6 @@ public: //is this supposed to be private? -joan
 
 public:
 	static RAM* getInstance();
-	/*RAM();*/
 	//are ALL these ought to be API of Memory component? -joan
 	Task* ramAddToRawTaskHeap(Task* task);
 	Command* ramAddToRawCommandHeap(Command* command);
@@ -50,5 +54,6 @@ public:
 	bool ramGetSearchState();
 	bool ramSearch(string searchTerm);
 	string ramUnsearch();
-	list<Task*>* getTaskList();
+	list<Task*>* ramGetTaskList();
+	void ramSort();
 };

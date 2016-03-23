@@ -2,7 +2,7 @@
 #include "Command_Invalid.h"
 
 Command_Invalid::Command_Invalid()
-:Command(NULL) {
+:Command() {
 }
 
 bool Command_Invalid::execute() {

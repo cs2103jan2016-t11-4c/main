@@ -1,8 +1,6 @@
 //@@author A0125290M
 #include "Logic.h"
 
-Logic* Logic::_instance = NULL;
-
 Logic::Logic() {
 	_parser = Parser::getInstance();
 	_memory = Memory::getInstance();
@@ -13,24 +11,16 @@ Logic::~Logic() {
 	delete _commandHistoryList;
 }
 
-Logic* Logic::getInstance() {
-	if(_instance == NULL) {
-		_instance = new Logic;
-	}
-
-	return _instance;
-}
-
 Command* Logic::executeCommand(string commandText) {
 	if(commandText.empty()) {
-		Exception_InvalidCommand e(INVALID);
+		Exception_InvalidCommand e(new Command_Invalid());
 		throw e;
 	}
 
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 
-	command = _memory->addToRawCommandHeap(command);
+	command = _memory->ramAddToRawCommandHeap(command);
 
 	if(command->getCommandType() == UNDO) {
 //		Exception_Undo e(undo());
@@ -40,7 +30,7 @@ Command* Logic::executeCommand(string commandText) {
 	}
 		
 	if(command->execute() == false) {
-		Exception_InvalidCommand e(command->getCommandType());
+		Exception_InvalidCommand e(command);
 		throw e;
 	}
 
@@ -51,7 +41,7 @@ Command* Logic::executeCommand(string commandText) {
 
 Command* Logic::undo() {
 	if(_commandHistoryList->empty()) {
-		Exception_InvalidCommand e(UNDO);
+		Exception_InvalidCommand e(new Command_Undo());
 		throw e;
 	}
 
