@@ -24,11 +24,12 @@ public:
 	void resizeWindow();
 
 	//I need these - Michael
-	string getSaveDirectory();
-	int getViewType();
+	// if only RAM need these, don't need to be API. RAM calls these fns directly from the singleton Settings object
+	// unless other outside classes need these from Memory component
+	/* string getSaveDirectory(); 
+	int getViewType(); */
 
 	//accessing RAM class object
-	//... pending API decisions
 	Task* ramAddToRawTaskHeap(Task* task);
 	Command* ramAddToRawCommandHeap(Command* command);
 	void ramAdd(Task* task);
