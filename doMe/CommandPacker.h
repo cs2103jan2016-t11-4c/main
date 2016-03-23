@@ -39,7 +39,7 @@ private:
 	InputTokens* _tokens;
 	string _description;
 	int _singleIndex;
-	vector<int>* _indexes;
+	vector<int> _indexes;
 	Task* _task;
 	Command* _command;
 

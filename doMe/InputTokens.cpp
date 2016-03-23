@@ -42,7 +42,7 @@ bool InputTokens::isOutOfBounds(int index) {
 		return true;
 	}
 	unsigned int positiveIndex = index;
-	if(positiveIndex < _tokens.size()) {
+	if(positiveIndex >= _tokens.size()) {
 		return true;
 	} else {
 		return false;

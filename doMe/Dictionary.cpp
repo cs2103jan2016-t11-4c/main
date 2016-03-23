@@ -78,6 +78,10 @@ void Dictionary::addChronoVocabularyPackage() {
 	addPM();
 	addAM();
 	addMeridiem();
+	void addFirst();
+	void addSecond();
+	void addThird();
+	void addFourth();
 }
 
 void Dictionary::addDisplay() {
@@ -406,6 +410,29 @@ void Dictionary::addMeridiem() {
 		SynonymList* list = new SynonymList("PM");
 		list->add(getSynonyms("AM"));
 		list->add(getSynonyms("PM"));
+		addToDictionary(list);
+}
+
+void Dictionary::addFirst() {
+		SynonymList* list = new SynonymList("FIRST");
+		list->add(getSynonyms("ST"));
+		addToDictionary(list);
+}
+void Dictionary::addSecond() {
+		SynonymList* list = new SynonymList("SECOND");
+		list->add(getSynonyms("ND"));
+		addToDictionary(list);
+}
+
+void Dictionary::addThird() {
+		SynonymList* list = new SynonymList("THIRD");
+		list->add(getSynonyms("RD"));
+		addToDictionary(list);
+}
+
+void Dictionary::addFourth() {
+		SynonymList* list = new SynonymList("FOURTH");
+		list->add(getSynonyms("TH"));
 		addToDictionary(list);
 }
 

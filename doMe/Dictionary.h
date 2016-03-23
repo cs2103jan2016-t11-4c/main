@@ -75,6 +75,10 @@ private:
 	void addAM();
 	void addPM();
 	void addMeridiem();
+	void addFirst();
+	void addSecond();
+	void addThird();
+	void addFourth();
 
 	void addToDictionary(SynonymList* list);
 	

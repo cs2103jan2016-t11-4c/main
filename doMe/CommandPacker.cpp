@@ -33,12 +33,7 @@ void CommandPacker::initializeAttributes(InputTokens* tokens) {
 	
 	_description = NO_STRING;
 	_singleIndex = NO_VALUE;
-	if(_indexes != NULL) {
-	delete _indexes;
-	}
-	if(_task != NULL) {
-	delete _task;
-	}
+	_indexes.clear();
 
 	return;
 }
@@ -277,7 +272,7 @@ void CommandPacker::packExitCommand() {
 }
 
 void CommandPacker::packClearCommand() {
-	_command = new Command_Clear(_indexes);
+	_command = new Command_Clear(&_indexes);
 	return;
 }
 

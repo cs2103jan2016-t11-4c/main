@@ -50,7 +50,7 @@ void ChronoInterpreter::integerNode(int index) {
 
 	int size = _tokens->getSize(index);
 	if(size == 8 || size == 6) {
-		dateFormatANodeOne(index, size);
+		sixDigitIntegerNode(index, size);
 	} else if(size == 4) {
 		fourDigitIntegerNode(index);		
 	} else if(size == 3) {
@@ -207,7 +207,7 @@ bool ChronoInterpreter::dateFormatBNodeThree(int index) {
 
 bool ChronoInterpreter::dateFormatBNodeFour(int index) {
 	if(_tokens->isOutOfBounds(index)) {
-		_year = 2016;
+		_year = _chrono.getYear(_chrono.getCurrentDate());
 		if(isValidDate()) {
 			return true;
 		}
@@ -217,7 +217,7 @@ bool ChronoInterpreter::dateFormatBNodeFour(int index) {
 		_tokens->remove(index);
 		return true;
 	} else {
-		_year = 2016;
+		_year = _chrono.getYear(_chrono.getCurrentDate());
 		if(isValidDate()) {
 			return true;
 		}
@@ -234,7 +234,7 @@ bool ChronoInterpreter::dateFormatBNodeFive(int index) {
 		_year = _tokens->getInteger(index);
 		if(size == 2) {
 			_year += 2000;
-			if((_chrono.getYear(_chrono.getCurrentDate()) - 10) > _year) {
+			while((_chrono.getYear(_chrono.getCurrentDate()) - 10) > _year) {
 				_year +=100;
 			}
 		}
@@ -252,13 +252,27 @@ bool ChronoInterpreter::dateFormatCNodeOne(int index) {
 		Chrono chrono;
 		_day = _tokens->getInteger(index);
 		_year = chrono.getYear((chrono.getCurrentDate()));
+
 		if(isValidDate()) {
+			dateFormatCNodeOne(index);
 			_tokens->remove(index);
 			return true;
 		}
 		return false;
 	}
 	return false;
+}
+
+void ChronoInterpreter::dateFormatCNodeTwo(int index) {
+	if(_day%10 == 1 && _tokens->hasMeaning("FIRST", index)) {
+		_tokens->remove(index);
+	} else if(_day%10 == 2 && _tokens->hasMeaning("SECOND", index)) {
+		_tokens->remove(index);
+	} else if(_day%10 == 3 && _tokens->hasMeaning("THIRD", index)) {
+		_tokens->remove(index);
+	} else if(_day%10 > 3 && _tokens->hasMeaning("FOURTH", index)) {
+		_tokens->remove(index);
+	}
 }
 
 bool ChronoInterpreter::dateFormatDNodeOne(int index) {

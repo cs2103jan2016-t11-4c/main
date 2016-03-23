@@ -52,6 +52,7 @@ private:
 	bool dateFormatBNodeFive(int index);
 
 	bool dateFormatCNodeOne(int index);
+	void dateFormatCNodeTwo(int index);
 
 	bool dateFormatDNodeOne(int index);
 	bool dateFormatDNodeTwo(int index);
