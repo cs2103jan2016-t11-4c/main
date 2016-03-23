@@ -1,0 +1,68 @@
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " Buy a book 111111"
+Parser parses it to be ADD command
+User enters: " e die"
+Parser parses it to be EDIT command
+User enters: " boook"
+Parser parses it to be ADD command
+User enters: " ds"
+Parser parses it to be ADD command
+User enters: " f"
+Parser parses it to be ADD command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " sf"
+Parser parses it to be ADD command
+User enters: " dsf"
+Parser parses it to be ADD command
+User enters: " ds"
+Parser parses it to be ADD command
+User enters: " f"
+Parser parses it to be ADD command
+User enters: " sdf"
+Parser parses it to be ADD command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " erer"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " search 1"
+Parser parses it to be SEARCH command
+User enters: " search f"
+Parser parses it to be SEARCH command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " erere"
+Parser parses it to be ADD command
+User enters: " re"
+Parser parses it to be ADD command
+User enters: " rer"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " are"
+Parser parses it to be ADD command
+User enters: " you "
+Parser parses it to be ADD command
+User enters: " a"
+Parser parses it to be ADD command
+User enters: " fonaf"
+Parser parses it to be ADD command
+User enters: " exit"
+Parser parses it to be  command
