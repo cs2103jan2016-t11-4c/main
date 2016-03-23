@@ -1,4 +1,5 @@
 //@@author A0125290M
+#pragma once
 #include "Command.h"
 using namespace std;
 

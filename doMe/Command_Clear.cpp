@@ -15,7 +15,7 @@ bool Command_Clear::execute() {
 	if(_deleteList.empty()) {
 		_oldTaskList = _memory->ramClear();
 	}else {
-		for(int i = 0; i < _deleteList.size(); i++) {
+		for(unsigned int i = 0; i < _deleteList.size(); i++) {
 			_oldTaskList.push_back(_memory->ramDel(_deleteList[i]));
 		}
 	}
@@ -36,7 +36,7 @@ bool Command_Clear::outOfRange() {
 	int biggestInteger = 0;
 	int smallestInteger = 1;
 
-	for(int i = 0; i < _deleteList.size(); i++) {
+	for(unsigned int i = 0; i < _deleteList.size(); i++) {
 		if(_deleteList[i] > biggestInteger) {
 			biggestInteger = _deleteList[i];
 		}

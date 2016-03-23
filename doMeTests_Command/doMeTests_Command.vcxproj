@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{05F980C0-F118-4B78-8816-B825E338B749}</ProjectGuid>
+    <ProjectGuid>{3F6586A4-831C-4E71-A7FD-FF6596405E5F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>doMeTests_Command</RootNamespace>
   </PropertyGroup>
@@ -90,7 +90,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="unittest1.cpp" />
+    <ClCompile Include="CommandTests.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\doMe\doMe.vcxproj">

@@ -8,8 +8,7 @@ Command_Exit::Command_Exit()
 bool Command_Exit::execute() {
 	if(_memory->ramGetSearchState() == true) {
 		_searchTerm = _memory->ramUnsearch();
-		_commandType = UNDO;
-//		_commandType = ENDSEARCH;
+		_commandType = ENDSEARCH;
 		return true;
 	}
 	_commandType = EXIT;
