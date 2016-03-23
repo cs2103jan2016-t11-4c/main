@@ -120,7 +120,8 @@ void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUT
         printNotificationClear(executionMessage, commandOutcome);
         break;
     case UNDO:
-        showToUser("no undo");
+        printBeforeMessageDisplay();
+        showToUser(MESSAGE_UNDO_COMMAND);
         break;
     case SORT:
         showToUser("auto sort?");
@@ -153,6 +154,7 @@ void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUT
 
 void UserInterface::printNotificationUndo(Command* executionMessage) {
     COMMAND_TYPE commandType = executionMessage->getCommandType();
+    printBeforeMessageDisplay();
     switch(commandType) {
     case ADD:
         showToUser(MESSAGE_UNDO_COMMAND);
@@ -170,7 +172,8 @@ void UserInterface::printNotificationUndo(Command* executionMessage) {
         showToUser(MESSAGE_UNDO_COMMAND);
         break;
     case UNDO:
-        invalidNotificationUndo();
+        showToUser(MESSAGE_UNDO_COMMAND);
+        //invalidNotificationUndo();
         break;
     case SORT:
         showToUser("auto sort?");
@@ -262,7 +265,7 @@ void UserInterface::printNotificationClear(Command* executionMessage, COMMAND_OU
 
 void UserInterface::printNotificationSearchTerm(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
     string searchTerm;
-    //searchTerm = executionMessage->getSearchTerm();
+    searchTerm = executionMessage->getSearchTerm();
     printSearchList(searchTerm, _memory->getViewType());
     switch(commandOutcome) {
     case VALID_MESSAGE:
