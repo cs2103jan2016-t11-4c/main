@@ -5,9 +5,10 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace UnitTest {
+/*  
 	TEST_CLASS(CommandClass) {
 public:
-	/*
+	
 	TEST_METHOD(CommandAdd_Test) {
 
 		list<Task*> *taskList = new list<Task*>;
@@ -30,7 +31,7 @@ public:
 
 	}
 	};
-
+    
 	TEST_CLASS(ParserCLASS) {
 public:
 	//does a full comparison of expected and actual CommandPackage Object
@@ -405,78 +406,71 @@ public:
 	}
 
 	};
-
+*/
 	TEST_CLASS(SettingCLASS) {
 public:
 	TEST_METHOD(Settings_TextFileNameMakerTest) {
-		Settings Settings;
+		Settings* _settings;
+        _settings = Settings::getInstance();
 		string input = "text";
 		string actualTexFileName;
 		string expectedTextFileName = "text.txt";
 
-		actualTexFileName = Settings.createValidTextFileNameString(input);
-		Settings.updateTextFileName(input);
+		actualTexFileName = _settings->createValidTextFileNameString(input);
+		_settings->updateTextFileName(input);
 
 		Assert::AreEqual(expectedTextFileName,actualTexFileName);
-		Assert::AreEqual(expectedTextFileName, Settings._textFileName);
+		Assert::AreEqual(expectedTextFileName, _settings->_textFileName);
 	}
 
 	TEST_METHOD(Settings_ChangeDirectoryTest) {
-		Settings Settings;
+		Settings* _settings;
+        _settings = Settings::getInstance();
 		string input = "C:/Users/PeiChangHong/Documents/NUS Modules 14 I 15/Semester 4/CS2103/Core";
 		string inputName = "mytextfile";
 		string actualTexFileName;
 		string expectedTextFileName = "mytextfile.txt";
 		string expectedDirectory = "C:/Users/PeiChangHong/Documents/NUS Modules 14 I 15/Semester 4/CS2103/Core/";
 
-		Assert::AreEqual(true,Settings.checkValidityOfDirectory(input));
+		Assert::AreEqual(true,_settings->checkValidityOfDirectory(input));
 
-		Settings.changeSaveDirectory(input);
-		Settings.updateTextFileName(inputName);
+		_settings->changeSaveDirectory(input);
+		_settings->updateTextFileName(inputName);
 
-		Assert::AreEqual(expectedTextFileName, Settings._textFileName);
-		Assert::AreEqual(expectedDirectory, Settings._saveDirectory);
+		Assert::AreEqual(expectedTextFileName, _settings->_textFileName);
+		Assert::AreEqual(expectedDirectory, _settings->_saveDirectory);
 
-	}
-
-	TEST_METHOD(Settings_GetDirectoryTest) {
-		Settings Settings;
-		Settings._textFileName = "text.txt";
-		Settings._saveDirectory = "C:/my documents/";
-		string expectedDirectory = "C:/my documents/text.txt";
-
-		Assert::AreEqual(expectedDirectory, Settings.getSaveDirectory());
 	}
 
 	TEST_METHOD(Settings_LoadSaveTest) {
-		Settings Setting;
-		Settings testSetting;
+		Settings* _settings;
+        _settings = Settings::getInstance();
 
-		Setting._textFileName = "text.txt";
-		Setting._saveDirectory = "C:/user/";
+		_settings->_textFileName = "text.txt";
+		_settings->_saveDirectory = "C:/user/";
 		string expectedTextFileName = "text.txt";
 		string expectedDirectory = "C:/user/";
 
-		Setting.openNewSettingFile();
-		Setting.saveSettings();
+		_settings->openNewSettingFile();
+		_settings->saveSettings();
 
-		testSetting.loadSettings();
+		_settings->loadSettings();
 
-		Assert::AreEqual(expectedTextFileName, testSetting._textFileName);
-		Assert::AreEqual(expectedDirectory, testSetting._saveDirectory);
+		Assert::AreEqual(expectedTextFileName, _settings->_textFileName);
+		Assert::AreEqual(expectedDirectory, _settings->_saveDirectory);
 
-		Setting._textFileName = Setting.VOID_STRING;
-		Setting._saveDirectory = "C:/user/";
+		_settings->_textFileName = _settings->VOID_STRING;
+		_settings->_saveDirectory = "C:/user/";
 		expectedTextFileName = "";
 
-		Setting.saveSettings();
-		testSetting.loadSettings();
+		_settings->saveSettings();
+		_settings->loadSettings();
 
-		Assert::AreEqual(expectedTextFileName, testSetting._textFileName);
-		Assert::AreEqual(expectedDirectory, testSetting._saveDirectory);
+		Assert::AreEqual(expectedTextFileName, _settings->_textFileName);
+		Assert::AreEqual(expectedDirectory, _settings->_saveDirectory);
 	}
 	};
-
+/*
 	TEST_CLASS(UICLASS) {
 public:
 	TEST_METHOD(UI_GetTaskStringTypeDefault) {
@@ -545,7 +539,7 @@ public:
 
 	}
 	};
-
+    */
 	TEST_CLASS(ViewTypeCLASS) {
 public:
 	TEST_METHOD(ViewType_CreateDisplayList) {
@@ -655,7 +649,7 @@ public:
 		}
 
 	}
-
+    
 	TEST_METHOD(ViewType1_CreateSearchList) {
 		vector<string> actualDisplayList;
 		int i = 0;
@@ -689,6 +683,6 @@ public:
 		}
 
 	}
-	*/
+	
 	};
 }

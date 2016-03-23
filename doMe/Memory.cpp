@@ -12,8 +12,6 @@ Memory* Memory::getInstance() {
 Memory::Memory() {
 	_settings = Settings::getInstance(); //main functionality from Settings constructor
 	_ram = RAM::getInstance();			 //main functionality from RAM constructor
-    _settings->loadSettings();
-    _ram->loadData();
 }
 
 string Memory::getSaveDirectory() {

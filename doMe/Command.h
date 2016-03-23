@@ -21,4 +21,5 @@ public:
 	virtual int getIndex() {return 0;}
 	virtual	string getSearchTerm() {return "";}
 	virtual	string getSaveDirectory() {return "";}
+    virtual int getViewType() {return 0;}
 };

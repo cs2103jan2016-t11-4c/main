@@ -1,6 +1,8 @@
 #ifndef TESTMODE 
 
-#else 
+#else
+#pragma once
+/*
 #include "Chrono.h"
 #include "ViewType.h"
 #include "ViewType1.h"
@@ -24,11 +26,12 @@
 #include "CommandPacker.h"
 #include "TaskPacker.h"
 #include "Parser.h"
-#include "Chrono.cpp"
-#include "ViewType.cpp"
-#include "ViewType1.cpp"
-#include "ViewType2.cpp"
+*/
+
 #include "Task.cpp"
+#include "Chrono.cpp"
+
+//#include "Logic.cpp"
 #include "Command.cpp"
 #include "Command_Add.cpp"
 #include "Command_Delete.cpp"
@@ -36,17 +39,36 @@
 #include "Command_Clear.cpp"
 #include "Command_ViewType.cpp"
 #include "Command_SaveDirectory.cpp"
-#include "Parser_Interface.cpp"
+#include "Command_Exit.cpp"
+#include "Command_Invalid.cpp"
+#include "Command_Search.cpp"
+#include "Command_Undo.cpp"
+
 #include "Storage.cpp"
 #include "Settings.cpp"
-#include "UserInterface.cpp"
+
+#include "Memory.cpp"
+#include "Log.cpp"
+#include "RAM.cpp"
+
+//#include "UserInterface.cpp"
+#include "ViewType.cpp"
+#include "ViewType1.cpp"
+#include "ViewType2.cpp"
+#include "Exception_InvalidCommand.cpp"
+#include "Exception_Undo.cpp"
+
+
+#include "Parser_Interface.cpp"
+//#include "Parser.cpp"
+//#include "CommandPacker.cpp"
+#include "TaskPacker.cpp"
+
+#include "ChronoInterpreter.cpp"
 #include "InputTokens.cpp"
 #include "Dictionary.cpp"
 #include "SynonymList.cpp"
-#include "ChronoInterpreter.cpp"
-#include "CommandPacker.cpp"
-#include "TaskPacker.cpp"
-#include "Parser.cpp"
+
 #endif
 
 
