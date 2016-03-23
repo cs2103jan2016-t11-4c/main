@@ -30,3 +30,19 @@ int Chrono::getCurrentDay() {
 
 	return day;
 }
+
+int Chrono::getDay(int date) {
+	return date%100;
+}
+
+int Chrono::getMonth(int date) {
+	return (date/100)%100;
+}
+
+int Chrono::getYear(int date) {
+	return date/10000;
+}
+
+int Chrono::generateDate(int day, int month, int year) {
+	return (day+month*100+year*10000);
+}

@@ -31,6 +31,9 @@ private:
 
 	void generateVocabulary();	//new vocabulary to be added through this method
 
+	void addV1VocabularyPackage();
+	void addChronoVocabularyPackage();
+
 	void addDirectory();		//methods that add vocabulary to the dictionary
 	void addDisplay();
 	void addDelete();
@@ -43,8 +46,36 @@ private:
 	void addChangeDirectory();
 	void addChangeViewType();	
 	void addHrs();
-	void addDivider();	
-	
+	void addDivider();
+
+	void addJanuary();
+	void addFebruary();
+	void addMarch();
+	void addApril();
+	void addMay();
+	void addJune();
+	void addJuly();
+	void addAugust();
+	void addSeptember();
+	void addOctober();
+	void addNovember();
+	void addDecember();
+	void addMonthsOfTheYear();
+	void addMonday();
+	void addTuesday();
+	void addWednesday();
+	void addThursday();
+	void addFridary();
+	void addSaturday();
+	void addSunday();
+	void addDaysOfTheWeek();
+	void addTomorrow();
+	void addToday();
+	void addYesterday();
+	void addAM();
+	void addPM();
+	void addMeridiem();
+
 	void addToDictionary(SynonymList* list);
 	
 	vector<string>* getSynonyms(string s);					//string must be present in dictionary

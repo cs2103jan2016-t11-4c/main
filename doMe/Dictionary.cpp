@@ -28,6 +28,11 @@ bool Dictionary::hasMeaning(string meaning, string s) {
 }
 
 void Dictionary::generateVocabulary() { 
+	addV1VocabularyPackage();
+	addChronoVocabularyPackage();
+}
+
+void Dictionary::addV1VocabularyPackage() {
 	addDisplay();
 	addDirectory();
 	addDelete();
@@ -40,7 +45,39 @@ void Dictionary::generateVocabulary() {
 	addChangeDirectory();
 	addChangeViewType();
 	addHrs();
-	addDivider();	
+	addDivider();
+
+	return;
+}
+
+void Dictionary::addChronoVocabularyPackage() {
+	addJanuary();
+	addFebruary();
+	addMarch();
+	addApril();
+	addMay();
+	addJune();
+	addJuly();
+	addAugust();
+	addSeptember();
+	addOctober();
+	addNovember();
+	addDecember();
+	addMonthsOfTheYear();
+	addMonday();
+	addTuesday();
+	addWednesday();
+	addThursday();
+	addFridary();
+	addSaturday();
+	addSunday();
+	addDaysOfTheWeek();
+	addTomorrow();
+	addToday();
+	addYesterday();
+	addPM();
+	addAM();
+	addMeridiem();
 }
 
 void Dictionary::addDisplay() {
@@ -164,6 +201,212 @@ void Dictionary::addDivider() {
 	list->add("/");
 	list->add("-");
 	addToDictionary(list);
+}
+
+void Dictionary::addJanuary() {
+	SynonymList* list = new SynonymList("JANUARY");
+	list->add("JAN");
+	list->add("JANUARY");
+	addToDictionary(list);
+}
+
+void Dictionary::addFebruary()  {
+	SynonymList* list = new SynonymList("FEBRUARY");
+	list->add("FEB");
+	list->add("FEBRUARY");
+	addToDictionary(list);
+}
+
+void Dictionary::addMarch() {
+	SynonymList* list = new SynonymList("MARCH");
+	list->add("MARCH");
+	list->add("MAR");
+	addToDictionary(list);
+}
+
+void Dictionary::addApril() {
+	SynonymList* list = new SynonymList("APRIL");
+	list->add("APR");
+	list->add("APRIL");
+	addToDictionary(list);
+}
+
+void Dictionary::addMay() {
+	SynonymList* list = new SynonymList("MAY");
+	list->add("MAY");
+	addToDictionary(list);
+}
+
+void Dictionary::addJune() {
+	SynonymList* list = new SynonymList("JUNE");
+	list->add("JUNE");
+	list->add("JUN");
+	addToDictionary(list);
+}
+
+void Dictionary::addJuly() {
+	SynonymList* list = new SynonymList("JULY");
+	list->add("JUL");
+	list->add("JULY");
+	addToDictionary(list);
+}
+
+void Dictionary::addAugust() {
+	SynonymList* list = new SynonymList("AUGUST");
+	list->add("AUG");
+	list->add("AUGUST");
+	addToDictionary(list);
+}
+
+void Dictionary::addSeptember() {
+	SynonymList* list = new SynonymList("SEPTEMBER");
+	list->add("SEP");
+	list->add("SEPTEMBER");
+	addToDictionary(list);
+}
+
+void Dictionary::addOctober() {
+	SynonymList* list = new SynonymList("OCTOBER");
+	list->add("OCTOBER");
+	list->add("OCT");
+	addToDictionary(list);
+}
+
+void Dictionary::addNovember() {
+	SynonymList* list = new SynonymList("NOVEMBER");
+	list->add("NOVEMBER");
+	list->add("NOV");
+	addToDictionary(list);
+}
+
+void Dictionary::addDecember() {
+	SynonymList* list = new SynonymList("DECEMBER");
+	list->add("DEC");
+	list->add("DECEMBER");
+	addToDictionary(list);
+}
+
+void Dictionary::addMonthsOfTheYear() {
+	SynonymList* list = new SynonymList("MONTHSOFTHEYEAR");
+	list->add(getSynonyms("JANUARY"));
+	list->add(getSynonyms("FEBRUARY"));
+	list->add(getSynonyms("MARCH"));
+	list->add(getSynonyms("APRIL"));
+	list->add(getSynonyms("MAY"));
+	list->add(getSynonyms("JUNE"));
+	list->add(getSynonyms("JULY"));
+	list->add(getSynonyms("AUGUST"));
+	list->add(getSynonyms("SEPTEMBER"));
+	list->add(getSynonyms("OCTOBER"));
+	list->add(getSynonyms("NOVEMBER"));
+	list->add(getSynonyms("DECEMBER"));
+	addToDictionary(list);
+}
+
+void Dictionary::addMonday() {
+	SynonymList* list = new SynonymList("MONDAY");
+	list->add("MON");
+	list->add("MONDAY");
+	addToDictionary(list);
+}
+
+void Dictionary::addTuesday() {
+	SynonymList* list = new SynonymList("TUESDAY");
+	list->add("TUESDAY");
+	list->add("TUE");
+	list->add("TUES");
+	addToDictionary(list);
+}
+
+void Dictionary::addWednesday() {
+	SynonymList* list = new SynonymList("WEDNESDAY");
+	list->add("WED");
+	list->add("WEDNESDAY");
+	addToDictionary(list);
+}
+
+void Dictionary::addThursday() {
+	SynonymList* list = new SynonymList("THURSDAY");
+	list->add("THUR");
+	list->add("THU");
+	list->add("THURSDAY");
+	list->add("THURS");
+	addToDictionary(list);
+}
+
+void Dictionary::addFridary() {
+	SynonymList* list = new SynonymList("FRIDAY");
+	list->add("FRI");
+	list->add("FRIDAY");
+	addToDictionary(list);
+}
+
+void Dictionary::addSaturday() {
+	SynonymList* list = new SynonymList("SATURDAY");
+	list->add("SAT");
+	list->add("SATURDAY");
+	addToDictionary(list);
+}
+
+void Dictionary::addSunday() {
+	SynonymList* list = new SynonymList("SUNDAY");
+	list->add("SUN");
+	list->add("SUNDAY");
+	addToDictionary(list);
+}
+
+void Dictionary::addDaysOfTheWeek() {
+	SynonymList* list = new SynonymList("DAYSOFTHEWEEK");
+	list->add(getSynonyms("MONDAY"));
+	list->add(getSynonyms("TUESDAY"));
+	list->add(getSynonyms("WEDNESDAY"));
+	list->add(getSynonyms("THURSDAY"));
+	list->add(getSynonyms("FRIDAY"));
+	list->add(getSynonyms("SATURDAY"));
+	list->add(getSynonyms("SUNDAY"));
+	addToDictionary(list);
+}
+
+void Dictionary::addTomorrow() {
+	SynonymList* list = new SynonymList("TOMORROW");
+	list->add("TMR");
+	list->add("TOMORROW");
+	addToDictionary(list);
+}
+
+void Dictionary::addToday() {
+	SynonymList* list = new SynonymList("TODAY");
+	list->add("TDAY");
+	list->add("TODAY");
+	list->add("TDY");
+	addToDictionary(list);
+}
+
+void Dictionary::addYesterday() {
+	SynonymList* list = new SynonymList("YESTERDAY");
+	list->add("YSTRDAY");
+	list->add("YESTERDAY");
+	list->add("YEST");
+	addToDictionary(list);
+}
+
+void Dictionary::addAM() {
+	SynonymList* list = new SynonymList("AM");
+	list->add("AM");
+	addToDictionary(list);
+}
+
+void Dictionary::addPM() {
+	SynonymList* list = new SynonymList("PM");
+	list->add("PM");
+	addToDictionary(list);
+}
+
+void Dictionary::addMeridiem() {
+		SynonymList* list = new SynonymList("PM");
+		list->add(getSynonyms("AM"));
+		list->add(getSynonyms("PM"));
+		addToDictionary(list);
 }
 
 void Dictionary::addToDictionary(SynonymList* list) {
