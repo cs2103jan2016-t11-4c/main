@@ -27,7 +27,7 @@ vector<string> Storage::retrieveData(string directory) {
         readFile.close();
     }
     else {
-    	throw string("An error has occurred when reading " + directory);
+//    	throw string("An error has occurred when reading " + directory);
     }
 	
 	return dataVector;
