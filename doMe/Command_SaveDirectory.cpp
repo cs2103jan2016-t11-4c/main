@@ -21,10 +21,6 @@ string Command_SaveDirectory::getSaveDirectory() {
 	return _newSaveDirectory;
 }
 
-int Command_SaveDirectory::getErrorType() {
-	return _errorType;
-}
-
 COMMAND_TYPE Command_SaveDirectory::getCommandType() {
 	return SAVEDIRECTORY;
 }
