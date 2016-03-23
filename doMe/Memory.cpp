@@ -1,19 +1,19 @@
 #include "Memory.h"
 
-Memory* Memory::_instance = 0;
+Memory* Memory::_instance = NULL;
 
-Memory* Memory::getInstance()
-{
-	if (_instance == 0) {
+Memory* Memory::getInstance() {
+	if (_instance == NULL) {
 		_instance = new Memory;
 	}
 	return _instance;
 }
 
-Memory::Memory() 
-{
+Memory::Memory() {
 	_settings = Settings::getInstance(); //main functionality from Settings constructor
 	_ram = RAM::getInstance();			 //main functionality from RAM constructor
+    _settings->loadSettings();
+    _ram->loadData();
 }
 
 string Memory::getSaveDirectory() {

@@ -73,8 +73,8 @@ UserInterface::~UserInterface(void) {
 
 void UserInterface::setEnvironment() {
     printProgramWelcomePage();
-//    _memory->loadSettings();
- //   _memory->getExistingData();
+    //_memory->loadSettings();
+    //_memory->getExistingData();
     _taskList = _memory->ramGetTaskList();
 
     printNotificationWelcome();

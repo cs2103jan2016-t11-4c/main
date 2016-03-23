@@ -201,7 +201,7 @@ void Settings::updateTextFileName(string textFileName) {
 /****************************************************************/
 
 string Settings::getSaveDirectory() {
-    return(_saveDirectory+_textFileName);   //getSaveDirectory() should return the main directory w/o specific txt filename so that 
+    return (_saveDirectory /*+ _textFileName*/);   //getSaveDirectory() should return the main directory w/o specific txt filename so that 
 												//it can be generalised for settings.txt & doMe.txt & logs.txt etc etc
 												//pre-condition: all these .txt files must be in same directory
 }
