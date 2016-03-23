@@ -23,8 +23,8 @@ TaskPacker* TaskPacker::getInstance() {
 Task* TaskPacker::packTask(InputTokens* tokens, int index) {
 	setAttributes(tokens);
 	findTaskDetails(index);
-	
-	return new Task(_name, _date1, _date2, _time1, _time2, _location);
+	Task* task = new Task(_name, _date1, _date2, _time1, _time2, _location);
+	return task;
 }
 
 

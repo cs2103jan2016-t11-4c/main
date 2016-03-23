@@ -1,6 +1,6 @@
 #include "ChronoInterpreter.h"
 
-ChronoInterpreter* _theOne = NULL;
+ChronoInterpreter* ChronoInterpreter::_theOne = NULL;
 
 ChronoInterpreter::ChronoInterpreter()
 {

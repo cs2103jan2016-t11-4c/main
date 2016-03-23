@@ -7,6 +7,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace UnitTest {
 	TEST_CLASS(CommandClass) {
 public:
+	/*
 	TEST_METHOD(CommandAdd_Test) {
 
 		list<Task*> *taskList = new list<Task*>;
@@ -688,5 +689,6 @@ public:
 		}
 
 	}
+	*/
 	};
 }
