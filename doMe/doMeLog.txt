@@ -1,0 +1,208 @@
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " Buy a book 111111"
+Parser parses it to be ADD command
+User enters: " e die"
+Parser parses it to be EDIT command
+User enters: " boook"
+Parser parses it to be ADD command
+User enters: " ds"
+Parser parses it to be ADD command
+User enters: " f"
+Parser parses it to be ADD command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " sf"
+Parser parses it to be ADD command
+User enters: " dsf"
+Parser parses it to be ADD command
+User enters: " ds"
+Parser parses it to be ADD command
+User enters: " f"
+Parser parses it to be ADD command
+User enters: " sdf"
+Parser parses it to be ADD command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " erer"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " search 1"
+Parser parses it to be SEARCH command
+User enters: " search f"
+Parser parses it to be SEARCH command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " erere"
+Parser parses it to be ADD command
+User enters: " re"
+Parser parses it to be ADD command
+User enters: " rer"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " are"
+Parser parses it to be ADD command
+User enters: " you "
+Parser parses it to be ADD command
+User enters: " a"
+Parser parses it to be ADD command
+User enters: " fonaf"
+Parser parses it to be ADD command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " "
+User enters: " viewtype 2"
+Parser parses it to be VIEWTYPE command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " ers"
+Parser parses it to be ADD command
+User enters: " r"
+Parser parses it to be ADD command
+User enters: " ser"
+Parser parses it to be ADD command
+User enters: " ser"
+Parser parses it to be ADD command
+User enters: " ser"
+Parser parses it to be ADD command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " view 1"
+Parser parses it to be VIEWTYPE command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " view"
+Parser parses it to be  command
+User enters: " viewtype 0"
+Parser parses it to be VIEWTYPE command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " add me"
+Parser parses it to be ADD command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " k"
+Parser parses it to be ADD command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " add me"
+Parser parses it to be ADD command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " view 0"
+Parser parses it to be VIEWTYPE command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " view"
+Parser parses it to be  command
+User enters: " view"
+Parser parses it to be  command
+User enters: " view"
+Parser parses it to be  command
+User enters: " view 1"
+Parser parses it to be VIEWTYPE command
+User enters: " view 0"
+Parser parses it to be VIEWTYPE command
+User enters: " view 4"
+Parser parses it to be VIEWTYPE command
+User enters: " update 1 meme"
+User enters: " edit 1 me"
+Parser parses it to be EDIT command
+User enters: " delete 3"
+Parser parses it to be DEL command
+User enters: " save dome.xt"
+Parser parses it to be ADD command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " search e"
+Parser parses it to be SEARCH command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " search e"
+Parser parses it to be SEARCH command
+User enters: " add e"
+Parser parses it to be ADD command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " search r"
+Parser parses it to be SEARCH command
+User enters: " maihime"
+Parser parses it to be ADD command
+User enters: " search me"
+Parser parses it to be SEARCH command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " view 1"
+Parser parses it to be VIEWTYPE command
+User enters: " savedirectory me.txt"
+Parser parses it to be ADD command
+User enters: " undo"
+Parser parses it to be UNDO command
+User enters: " get @home "
+Parser parses it to be ADD command
+User enters: " 2359"
+Parser parses it to be ADD command
+User enters: " view 0"
+Parser parses it to be VIEWTYPE command
+User enters: " view 2"
+Parser parses it to be VIEWTYPE command
+User enters: " exit"
+Parser parses it to be  command
+User enters: " sort"
+Parser parses it to be ADD command
+User enters: " cd text.txt"
+Parser parses it to be SAVEDIRECTORY command
+User enters: " me"
+Parser parses it to be ADD command

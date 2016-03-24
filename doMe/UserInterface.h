@@ -10,6 +10,7 @@
 #include <conio.h>
 #include <ctime>
 
+#include "Chrono.h"
 #include "Logic.h"
 #include "Memory.h"
 #include "Command.h"
@@ -92,7 +93,6 @@ public:
     static const string MESSAGE_HELP_TIPS[];
 
     //in the process of changing
-    int getCurrentDate();
     void printBeforeMessageDisplay();
     void printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
 

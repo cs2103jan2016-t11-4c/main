@@ -73,28 +73,10 @@ UserInterface::~UserInterface(void) {
 
 void UserInterface::setEnvironment() {
     printProgramWelcomePage();
-    //_memory->loadSettings();
-    //_memory->getExistingData();
     _taskList = _memory->ramGetTaskList();
 
     printNotificationWelcome();
 
-}
-
-//repeated? u want push to commons?
-int UserInterface::getCurrentDate() {
-    time_t currentTime;
-    struct tm *localTime;
-
-    time( &currentTime );                 		
-    localTime = localtime( &currentTime );
-    int day    = localTime->tm_mday;
-    int month  = localTime->tm_mon + 1;
-    int year   = localTime->tm_year + 1900;
-
-    int date = day + month * 100 + year * 10000;
-
-    return date;
 }
 
 void UserInterface::executeCommandUntilExit() {
@@ -114,7 +96,8 @@ void UserInterface::executeCommandUntilExit() {
 }
 
 void UserInterface::printBeforeMessageDisplay() {
-    printTaskList(getCurrentDate(),_memory->getViewType());
+    Chrono time;
+    printTaskList(time.getCurrentDate(),_memory->getViewType());
 }
 
 void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
@@ -137,7 +120,8 @@ void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUT
         printNotificationClear(executionMessage, commandOutcome);
         break;
     case UNDO:
-        showToUser("no undo");
+        printBeforeMessageDisplay();
+        showToUser(MESSAGE_UNDO_COMMAND);
         break;
     case SORT:
         showToUser("auto sort?");
@@ -170,6 +154,7 @@ void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUT
 
 void UserInterface::printNotificationUndo(Command* executionMessage) {
     COMMAND_TYPE commandType = executionMessage->getCommandType();
+    printBeforeMessageDisplay();
     switch(commandType) {
     case ADD:
         showToUser(MESSAGE_UNDO_COMMAND);
@@ -187,7 +172,8 @@ void UserInterface::printNotificationUndo(Command* executionMessage) {
         showToUser(MESSAGE_UNDO_COMMAND);
         break;
     case UNDO:
-        invalidNotificationUndo();
+        showToUser(MESSAGE_UNDO_COMMAND);
+        //invalidNotificationUndo();
         break;
     case SORT:
         showToUser("auto sort?");
@@ -279,7 +265,7 @@ void UserInterface::printNotificationClear(Command* executionMessage, COMMAND_OU
 
 void UserInterface::printNotificationSearchTerm(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
     string searchTerm;
-    //searchTerm = executionMessage->getSearchTerm();
+    searchTerm = executionMessage->getSearchTerm();
     printSearchList(searchTerm, _memory->getViewType());
     switch(commandOutcome) {
     case VALID_MESSAGE:
@@ -313,8 +299,7 @@ void UserInterface::printNotificationViewType(Command* executionMessage, COMMAND
     printBeforeMessageDisplay();
     switch(commandOutcome) {
     case VALID_MESSAGE:
-        showToUser("Unable to get viewtype from Command");
-        //validNotificationViewType(executionMessage->getViewType());
+        validNotificationViewType(executionMessage->getViewType());
         break;
     case INVALID_MESSAGE:
         invalidNotificationViewtype();
@@ -329,8 +314,7 @@ void UserInterface::printNotificationChangeSaveFileDirectory(Command* executionM
     printBeforeMessageDisplay();
     switch(commandOutcome) {
     case VALID_MESSAGE:
-        showToUser("Unable to get savedirectory from Command");
-        //validNotificationChangeSaveFileDirectory(executionMessage->getSaveDirectory());
+        validNotificationChangeSaveFileDirectory(executionMessage->getSaveDirectory());
         break;
     case INVALID_MESSAGE:
         invalidNotificationSaveFileDirectory();
@@ -546,18 +530,12 @@ void UserInterface::showToUser(string message) {
 }
 
 void UserInterface::showToUserMessageBox() {
-    //if(_defaultViewType == 1) {
     string messageBox;
     //setWindowsRowsColumns(0);
     messageBox.assign(DISPLAY_WIDTH,MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 
     showToUser(messageBox);
-    /*
-    } else {
-    showToUser(message);
-    }
-    */
 }
 
 void UserInterface::setWindowsRowsColumns(int size) {

@@ -22,4 +22,5 @@ public:
 	virtual	string getSearchTerm() {return "";}
 	virtual	string getSaveDirectory() {return "";}
 	virtual string getStringForm() { return "";}
+    virtual int getViewType() {return 0;}
 };

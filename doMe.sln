@@ -4,6 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doMe", "doMe\doMe.vcxproj", "{521D8F24-850F-497F-B7E0-CF8940425FB0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserTest", "ParserTest\ParserTest.vcxproj", "{DA373B9D-EE9D-4B48-8AC4-755E9A06770F}"
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doMeTests_Command", "doMeTests_Command\doMeTests_Command.vcxproj", "{3F6586A4-831C-4E71-A7FD-FF6596405E5F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,6 +21,10 @@ Global
 		{DA373B9D-EE9D-4B48-8AC4-755E9A06770F}.Debug|Win32.Build.0 = Debug|Win32
 		{DA373B9D-EE9D-4B48-8AC4-755E9A06770F}.Release|Win32.ActiveCfg = Release|Win32
 		{DA373B9D-EE9D-4B48-8AC4-755E9A06770F}.Release|Win32.Build.0 = Release|Win32
+		{3F6586A4-831C-4E71-A7FD-FF6596405E5F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F6586A4-831C-4E71-A7FD-FF6596405E5F}.Debug|Win32.Build.0 = Debug|Win32
+		{3F6586A4-831C-4E71-A7FD-FF6596405E5F}.Release|Win32.ActiveCfg = Release|Win32
+		{3F6586A4-831C-4E71-A7FD-FF6596405E5F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
