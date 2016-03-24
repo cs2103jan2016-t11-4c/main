@@ -429,9 +429,9 @@ bool ChronoInterpreter::isValidTime() {
 bool ChronoInterpreter::isValidDate() {
 	static const int daysInEachMonth[13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
-	if(_month > 12) {												//month not possible
+	if(_month > 12 || _month < 1) {												//month not possible
 		return false;
-	} else if(_day > daysInEachMonth[_month]) {						//day exceed the month's limit
+	} else if(_day > daysInEachMonth[_month] || _day < 1) {						//day exceed the month's limit
 		return false;
 	} else if((_month == 2 && _day == 29) && (!isLeap(_year))) {	//leap day not in a leap year
 		return false;

@@ -4,7 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doMe", "doMe\doMe.vcxproj", "{521D8F24-850F-497F-B7E0-CF8940425FB0}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ParserTest", "ParserTest\ParserTest.vcxproj", "{DA373B9D-EE9D-4B48-8AC4-755E9A06770F}"
-
+EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "doMeTests_Command", "doMeTests_Command\doMeTests_Command.vcxproj", "{3F6586A4-831C-4E71-A7FD-FF6596405E5F}"
 EndProject
 Global

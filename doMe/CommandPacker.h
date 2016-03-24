@@ -14,6 +14,7 @@
 #include "InputTokens.h"
 #include "TaskPacker.h"
 #include "Task.h"
+#include "Exception_ExceededParameterLimit.h"
 #include <string>
 #include <assert.h>
 #include <vector>

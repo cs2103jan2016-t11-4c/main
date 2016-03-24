@@ -103,6 +103,9 @@
     <ClCompile Include="Log.cpp">
       <Filter>Source Files\Memory Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Exception_ExceededParameterLimit.cpp">
+      <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="Log.h">
       <Filter>Header Files\Memory Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception_ExceededParameterLimit.h">
+      <Filter>Header Files\Exception Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

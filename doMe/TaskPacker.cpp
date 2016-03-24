@@ -86,6 +86,8 @@ void TaskPacker::finalizeDates() {
 	} else if(_dates.size() == 2) {
 		_date1 = _dates[0];
 		_date2 = _dates[1];
+	} else if(_dates.size() > 2) {
+		throw new Exception_ExceededParameterLimit();
 	}
 	return;
 }	
