@@ -7,6 +7,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Exception_FileCannotOpen.h"
 
 using namespace std;
 

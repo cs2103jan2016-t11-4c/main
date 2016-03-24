@@ -27,7 +27,7 @@ vector<string> Storage::retrieveData(string directory) {
         readFile.close();
     }
     else {
-//    	throw string("An error has occurred when reading " + directory);
+    	throw Exception_FileCannotOpen(directory + " file does not exist yet and will be created after first save.");
     }
 	
 	return dataVector;
@@ -44,7 +44,7 @@ void Storage::saveData(vector<string> updatedData, string directory) {
         writeFile.close();
     }
     else {
-//    	throw string("An error has occurred when saving to " + directory);
+    	throw Exception_FileCannotOpen("Error opening " + directory);
     }
 }
 
