@@ -268,3 +268,99 @@ User enters: " u"
 Parser parses it to be UNDO command
 User enters: " exit"
 Parser parses it to be EXIT command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " add water monday"
+Parser parses it to be ADD command
+User enters: " add water on monday"
+Parser parses it to be ADD command
+User enters: " as"
+Parser parses it to be ADD command
+User enters: " d"
+Parser parses it to be INVALID command
+User enters: " asd"
+Parser parses it to be ADD command
+User enters: " dg"
+Parser parses it to be ADD command
+User enters: " sg"
+Parser parses it to be ADD command
+User enters: " g"
+Parser parses it to be ADD command
+User enters: " f"
+Parser parses it to be ADD command
+User enters: " dh"
+Parser parses it to be ADD command
+User enters: " dh"
+Parser parses it to be ADD command
+User enters: " dg"
+Parser parses it to be ADD command
+User enters: " as"
+Parser parses it to be ADD command
+User enters: " da"
+Parser parses it to be ADD command
+User enters: " sda"
+Parser parses it to be ADD command
+User enters: " sd"
+Parser parses it to be ADD command
+User enters: " afasdada"
+Parser parses it to be ADD command
+User enters: " fgs"
+Parser parses it to be ADD command
+User enters: " gs"
+Parser parses it to be ADD command
+User enters: " g"
+Parser parses it to be ADD command
+User enters: " s a"
+Parser parses it to be SEARCH command
+User enters: " clear"
+Parser parses it to be CLEAR command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " uu"
+Parser parses it to be ADD command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " s e"
+Parser parses it to be SEARCH command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " s e"
+Parser parses it to be SEARCH command
+User enters: " wxit"
+Parser parses it to be ADD command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " exit"
+Parser parses it to be EXIT command

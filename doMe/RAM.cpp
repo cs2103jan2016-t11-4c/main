@@ -48,6 +48,7 @@ void RAM::ramDel(Task* task) {
 	for(list<Task*>::iterator iter = _taskList.begin(); iter != _taskList.end(); iter++) {
 		if(*iter == task) {
 			_taskList.erase(iter);
+			ramUnsearch();
 			saveData();
 			return;
 		}
@@ -70,7 +71,7 @@ Task* RAM::ramDel(int index) {						//index must be guranteed to be valid
 list<Task*> RAM::ramClear() {
 	list<Task*> oldTaskList = _taskList;
 	_taskList.clear();
-
+	ramUnsearch();
 	saveData();
 
 	return oldTaskList;
