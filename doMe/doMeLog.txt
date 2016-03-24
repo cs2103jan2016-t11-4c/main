@@ -206,3 +206,65 @@ User enters: " cd text.txt"
 Parser parses it to be SAVEDIRECTORY command
 User enters: " me"
 Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " r"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " rr"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " re"
+Parser parses it to be ADD command
+User enters: " r"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " re"
+Parser parses it to be ADD command
+User enters: " r"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " er"
+Parser parses it to be ADD command
+User enters: " e"
+Parser parses it to be INVALID command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " u"
+Parser parses it to be UNDO command
+User enters: " exit"
+Parser parses it to be EXIT command

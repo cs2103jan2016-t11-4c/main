@@ -44,7 +44,7 @@ void Storage::saveData(vector<string> updatedData, string directory) {
         writeFile.close();
     }
     else {
-    	throw string("An error has occurred when saving to " + directory);
+//    	throw string("An error has occurred when saving to " + directory);
     }
 }
 
