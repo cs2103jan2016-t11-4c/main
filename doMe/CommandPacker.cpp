@@ -212,8 +212,13 @@ void CommandPacker::nodeTwoOfSearchCommand(int index) {
 
 
 void CommandPacker::nodeOneOfAddCommand(int index) {
-	_task = _taskPacker->packTask(_tokens, index);
-	packAddCommand();
+	
+	try {
+		_task = _taskPacker->packTask(_tokens, index);
+		packAddCommand();
+	} catch (Exception_ExceededParameterLimit e) {
+		packInvalidCommand();
+	}
 	return;
 }
 
@@ -235,8 +240,12 @@ void CommandPacker::nodeTwoOfEditCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
 	} else {
-		_task = _taskPacker->packTask(_tokens, index);
-		packEditCommand();
+		try {
+			_task = _taskPacker->packTask(_tokens, index);
+			packEditCommand();
+		} catch (Exception_ExceededParameterLimit e) {
+			packInvalidCommand();
+		}
 	}
 	return;
 }

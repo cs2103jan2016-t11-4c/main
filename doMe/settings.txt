@@ -1,5 +1,0 @@
-doMe.txt
-text.txt/
-2
-80
-27

@@ -21,6 +21,8 @@
 #include "Command_Search.cpp"
 #include "Command_Undo.cpp"
 #include "Command_ViewType.cpp"
+#include "Exception_ExceededParameterLimit.h"
+#include "Exception_ExceededParameterLimit.cpp"
 #include "Chrono.h"
 #include "Chrono.cpp"
 #include "SynonymList.h"
