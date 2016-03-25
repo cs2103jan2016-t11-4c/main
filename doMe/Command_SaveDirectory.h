@@ -13,5 +13,4 @@ public:
 	bool undo();
 	string getSaveDirectory();
 	COMMAND_TYPE getCommandType();
-	string getStringForm();
 };

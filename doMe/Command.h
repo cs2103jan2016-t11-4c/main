@@ -17,10 +17,14 @@ public:
 	virtual bool execute() {return false;}
 	virtual bool undo() {return false;}
 	virtual COMMAND_TYPE getCommandType() {return INVALID;}
+	string getCommandTypeStr();
+
 	virtual Task* getTask() {return NULL;}
 	virtual int getIndex() {return 0;}
 	virtual	string getSearchTerm() {return "";}
 	virtual	string getSaveDirectory() {return "";}
-	virtual string getStringForm() { return "";}
-    virtual int getViewType() {return 0;}
+	virtual int getViewType() {return 0;}
+
+	virtual void setUndoneCommand(Command* command){}
+	virtual Command* getUndoneCommand(){return NULL;}
 };

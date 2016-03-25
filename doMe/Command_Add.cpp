@@ -29,11 +29,3 @@ Task* Command_Add::getTask() {
 COMMAND_TYPE Command_Add::getCommandType() {
 	return ADD;
 }
-
-string Command_Add::getStringForm() {
-	string s;
-	s = "Add Task~~ Name: " + _task->getName() + ", Date1: " + to_string(_task->getDate1()) + 
-		", Date2: " + to_string(_task->getDate2()) + ", Time1: " + to_string(_task->getTime1()) + 
-		", Time2: " + to_string(_task->getTime2()) + ", Location: " + _task->getLocation();
-	return s;
-}

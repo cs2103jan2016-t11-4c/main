@@ -5,7 +5,6 @@ Logic* Logic::_instance = NULL;
 Logic::Logic() {
 	_parser = Parser::getInstance();
 	_memory = Memory::getInstance();
-	_log = Log::getInstance();
 	_commandHistoryList = new stack<Command*>;
 }
 
@@ -26,17 +25,15 @@ Command* Logic::executeCommand(string commandText) {
 		throw e;
 	}
 
-	_log->record("User enters: \" " + commandText + "\"");
+	LOG(__FILE__,"User enters: \" " + commandText + "\"");
 
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 
-	_log->record("Parser parses it to be ", command->getCommandType());
+	LOG(__FILE__, "Parser parses it to be " + command->getCommandTypeStr());
 
 	if(command->getCommandType() == UNDO) {
-		//		Exception_Undo e(undo());
-		//		throw e;
-		undo();
+		command->setUndoneCommand(undo());
 		return command;
 	}
 

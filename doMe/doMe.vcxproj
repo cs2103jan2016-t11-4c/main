@@ -11,6 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Exception_ExceededParameterLimit.cpp" />
     <ClCompile Include="Exception_FileCannotOpen.cpp" />
     <ClCompile Include="InputTokens.cpp" />
@@ -22,7 +23,6 @@
     <ClCompile Include="ChronoInterpreter.cpp" />
     <ClCompile Include="Parser_Interface.cpp" />
     <ClCompile Include="Exception_InvalidCommand.cpp" />
-    <ClCompile Include="Exception_Undo.cpp" />
     <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -38,8 +38,6 @@
     <ClCompile Include="Command_Exit.cpp" />
     <ClCompile Include="Command_Invalid.cpp" />
     <ClCompile Include="Command_Undo.cpp" />
-    <ClCompile Include="Chrono.cpp" />
-    <ClCompile Include="Log.cpp" />
     <ClCompile Include="Storage.cpp" />
     <ClCompile Include="SynonymList.cpp" />
     <ClCompile Include="Task.cpp" />
@@ -49,10 +47,10 @@
     <ClCompile Include="ViewType2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Commons.h" />
     <ClInclude Include="Exception_ExceededParameterLimit.h" />
     <ClInclude Include="Exception_FileCannotOpen.h" />
     <ClInclude Include="Exception_InvalidCommand.h" />
-    <ClInclude Include="Exception_Undo.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />
@@ -66,9 +64,7 @@
     <ClInclude Include="Command_Exit.h" />
     <ClInclude Include="Command_Invalid.h" />
     <ClInclude Include="Command_Undo.h" />
-    <ClInclude Include="Chrono.h" />
     <ClInclude Include="Parser_Interface.h" />
-    <ClInclude Include="Log.h" />
     <ClInclude Include="RAM.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Memory.h" />

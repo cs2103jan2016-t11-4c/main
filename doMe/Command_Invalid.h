@@ -8,5 +8,4 @@ public:
 	Command_Invalid();
 	COMMAND_TYPE getCommandType();
 	bool execute();
-	string getStringForm();
 };

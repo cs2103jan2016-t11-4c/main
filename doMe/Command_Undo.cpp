@@ -13,10 +13,14 @@ bool Command_Undo::undo() {
 	return true;
 }
 
-COMMAND_TYPE Command_Undo::getCommandType() {
-	return UNDO;
+void Command_Undo::setUndoneCommand(Command* command) {
+	_undoneCommand = command;
 }
 
-string Command_Undo::getStringForm() {
-	return "Undo";
+Command* Command_Undo::getUndoneCommand() {
+	return _undoneCommand;
+}
+
+COMMAND_TYPE Command_Undo::getCommandType() {
+	return UNDO;
 }

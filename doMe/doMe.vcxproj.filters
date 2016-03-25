@@ -91,23 +91,17 @@
     <ClCompile Include="Parser_Interface.cpp">
       <Filter>Source Files\Parser Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Chrono.cpp">
-      <Filter>Source Files\Commons Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Exception_InvalidCommand.cpp">
       <Filter>Source Files\Exception Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Exception_Undo.cpp">
-      <Filter>Source Files\Exception Classes</Filter>
-    </ClCompile>
-    <ClCompile Include="Log.cpp">
-      <Filter>Source Files\Memory Classes</Filter>
     </ClCompile>
     <ClCompile Include="Exception_ExceededParameterLimit.cpp">
       <Filter>Source Files\Exception Classes</Filter>
     </ClCompile>
     <ClCompile Include="Exception_FileCannotOpen.cpp">
       <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Commons.cpp">
+      <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -198,23 +192,17 @@
     <ClInclude Include="ChronoInterpreter.h">
       <Filter>Header Files\Parser Classes\Lexer/Intepreters</Filter>
     </ClInclude>
-    <ClInclude Include="Chrono.h">
-      <Filter>Header Files\Commons Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Exception_InvalidCommand.h">
       <Filter>Header Files\Exception Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Exception_Undo.h">
-      <Filter>Header Files\Exception Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Log.h">
-      <Filter>Header Files\Memory Classes</Filter>
     </ClInclude>
     <ClInclude Include="Exception_ExceededParameterLimit.h">
       <Filter>Header Files\Exception Classes</Filter>
     </ClInclude>
     <ClInclude Include="Exception_FileCannotOpen.h">
       <Filter>Header Files\Exception Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Commons.h">
+      <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

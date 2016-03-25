@@ -12,5 +12,4 @@ public:
 	bool undo();
 	Task* getTask();
 	COMMAND_TYPE getCommandType();
-	string getStringForm();
 };

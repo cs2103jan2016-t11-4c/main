@@ -22,9 +22,3 @@ string Command_Search::getSearchTerm() {
 COMMAND_TYPE Command_Search::getCommandType() {
 	return SEARCH;
 }
-
-string Command_Search::getStringForm() {
-	string s;
-	s = "Search word: " + _searchTerm;
-	return s;
-}
