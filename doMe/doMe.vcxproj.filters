@@ -103,6 +103,9 @@
     <ClCompile Include="Commons.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Chrono.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="Commons.h">
       <Filter>Header Files\Commons Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Chrono.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

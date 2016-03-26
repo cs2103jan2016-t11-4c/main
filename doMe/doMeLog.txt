@@ -1,0 +1,60 @@
+26/3/2016 10:12:1 [logic] : User enters: " er"
+26/3/2016 10:12:1 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:2 [logic] : User enters: " er"
+26/3/2016 10:12:2 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:2 [logic] : User enters: " er"
+26/3/2016 10:12:2 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:2 [logic] : User enters: " er"
+26/3/2016 10:12:2 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:3 [logic] : User enters: " er"
+26/3/2016 10:12:3 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:3 [logic] : User enters: " er"
+26/3/2016 10:12:3 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:3 [logic] : User enters: " er"
+26/3/2016 10:12:3 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:3 [logic] : User enters: " er"
+26/3/2016 10:12:3 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:4 [logic] : User enters: " er"
+26/3/2016 10:12:4 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:6 [logic] : User enters: " u"
+26/3/2016 10:12:6 [logic] : Parser parses it to be UNDO
+26/3/2016 10:12:10 [logic] : User enters: " search e"
+26/3/2016 10:12:10 [logic] : Parser parses it to be SEARCH
+26/3/2016 10:12:21 [logic] : User enters: " search r"
+26/3/2016 10:12:21 [logic] : Parser parses it to be SEARCH
+26/3/2016 10:12:26 [logic] : User enters: " truyr"
+26/3/2016 10:12:26 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:27 [logic] : User enters: " ur"
+26/3/2016 10:12:27 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:27 [logic] : User enters: " fj"
+26/3/2016 10:12:27 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:27 [logic] : User enters: " fh"
+26/3/2016 10:12:27 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:27 [logic] : User enters: " f"
+26/3/2016 10:12:27 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:28 [logic] : User enters: " jf"
+26/3/2016 10:12:28 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:28 [logic] : User enters: " gjf"
+26/3/2016 10:12:28 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:28 [logic] : User enters: " h"
+26/3/2016 10:12:28 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:28 [logic] : User enters: " f"
+26/3/2016 10:12:28 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:28 [logic] : User enters: " jfg"
+26/3/2016 10:12:28 [logic] : Parser parses it to be ADD
+26/3/2016 10:12:31 [logic] : User enters: " search e"
+26/3/2016 10:12:31 [logic] : Parser parses it to be SEARCH
+26/3/2016 10:12:45 [logic] : User enters: " exit"
+26/3/2016 10:12:45 [logic] : Parser parses it to be EXIT
+26/3/2016 10:14:0 [logic] : User enters: " clear"
+26/3/2016 10:14:0 [logic] : Parser parses it to be CLEAR
+26/3/2016 10:14:2 [logic] : User enters: " help"
+26/3/2016 10:14:2 [logic] : Parser parses it to be ADD
+26/3/2016 10:14:6 [logic] : User enters: " help"
+26/3/2016 10:14:6 [logic] : Parser parses it to be ADD
+26/3/2016 10:14:7 [logic] : User enters: " help"
+26/3/2016 10:14:7 [logic] : Parser parses it to be ADD
+26/3/2016 10:14:7 [logic] : User enters: " help"
+26/3/2016 10:14:7 [logic] : Parser parses it to be ADD
+26/3/2016 10:14:12 [logic] : User enters: " exit"
+26/3/2016 10:14:12 [logic] : Parser parses it to be EXIT

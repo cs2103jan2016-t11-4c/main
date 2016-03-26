@@ -11,23 +11,33 @@
 #include "Exception_FileCannotOpen.h"
 using namespace std;
 
-#define	CURRENT_TIME getCurrentTime()
-#define	CURRENT_DATE getCurrentDate()
-#define CURRENT_DAY getCurrentDay()
+#define WEEK_DAY getWeek_Day()
+#define DATE_DAY getDate_Day()
+#define DATE_MONTH getDate_Month()
+#define DATE_YEAR getDate_Year()
+#define TIME_HOUR getTime_Hour()
+#define TIME_MINUTE getTime_Minute()
+#define TIME_SECOND getTime_Second()
 #define LOG(file, message) Commons::log(file, message)
 
 class Commons {
 public:
-	static void log(string file, string message);
 	Commons();
 
 	static const string LOG_FILE_NAME;
 	static const string LOG_ENTRY;
 	static const string TIME_DIVIDER;
 
-	static string getCurrentTime();		//HH:MM:SS Format
-	static int getCurrentDate();		//YYYYMMDD Format
-	static int getCurrentDay();		//MON = 1, TUE = 2 etc.
+	static void log(string file, string message);
+
+	static int getWeek_Day();		//eg. 2 = Tuesday
+	static int getDate_Day();		//eg. 2, 14, 30
+	static int getDate_Month();		//eg. 2, 14, 30
+	static int getDate_Year();		//eg. 2016
+	static int getTime_Hour();		//eg. 2, 14, 23
+	static int getTime_Minute();	//eg. 2, 14, 56
+	static int getTime_Second();	//eg. 2, 14, 56
+
 	static string integerToString(int integer);
 	static string trim(string file);
 };

@@ -3,7 +3,7 @@
 
 const string Commons::LOG_FILE_NAME = "doMeLog.txt";
 const string Commons::TIME_DIVIDER = ":";
-const string Commons::LOG_ENTRY = "%d %s [%s] : %s";
+const string Commons::LOG_ENTRY = "%d/%d/%d %d:%d:%d [%s] : %s";
 
 Commons::Commons() {
 }
@@ -12,49 +12,71 @@ void Commons::log(string file, string message) {
 	char buffer[255];
 	ofstream writeFile(LOG_FILE_NAME, fstream::app);
 
-	sprintf_s(buffer, LOG_ENTRY.c_str(), CURRENT_DATE, CURRENT_TIME.c_str(), trim(file).c_str(), message.c_str());
+	sprintf_s(buffer, LOG_ENTRY.c_str(), DATE_DAY, DATE_MONTH, DATE_YEAR, TIME_HOUR, TIME_MINUTE, TIME_SECOND, trim(file).c_str(), message.c_str());
 	writeFile << buffer << endl;
 }
 
-string Commons::getCurrentTime() {
+int Commons::getWeek_Day() {
 	time_t currentTime;
 	struct tm *localTime;
-	time( &currentTime );                 		// Get the current time
-	localTime = localtime( &currentTime );		// Convert the current time
+	time( &currentTime );
+	localTime = localtime( &currentTime );
 
-	int hour = localTime->tm_hour;
-	int min = localTime->tm_min;
-	int sec = localTime->tm_sec;
-
-	string time = integerToString(hour) + TIME_DIVIDER + integerToString(min) + TIME_DIVIDER + integerToString(sec);
-
-	return time;
+	return localTime->tm_mday;
 }
 
-int Commons::getCurrentDate() {
+int Commons::getDate_Day() {
 	time_t currentTime;
 	struct tm *localTime;
-	time( &currentTime );                 		// Get the current time
-	localTime = localtime( &currentTime );		// Convert the current time to the local time
+	time( &currentTime );
+	localTime = localtime( &currentTime );
 
-	int day    = localTime->tm_mday;
-	int month  = localTime->tm_mon + 1;
-	int year   = localTime->tm_year + 1900;
-
-	int date = day + month * 100 + year * 10000;	//YYYYMMDD
-
-	return date;
+	return localTime->tm_mday;
 }
 
-int Commons::getCurrentDay() {
+int Commons::getDate_Month() {
 	time_t currentTime;
 	struct tm *localTime;
-	time( &currentTime );                 		// Get the current time
-	localTime = localtime( &currentTime );		// Convert the current time to the local time
+	time( &currentTime );
+	localTime = localtime( &currentTime );
 
-	int day = localTime->tm_wday;
+	return localTime->tm_mon + 1;
+}
 
-	return day;
+int Commons::getDate_Year() {
+	time_t currentTime;
+	struct tm *localTime;
+	time( &currentTime );
+	localTime = localtime( &currentTime );
+
+	return localTime->tm_year + 1900;
+}
+
+int Commons::getTime_Hour() {
+	time_t currentTime;
+	struct tm *localTime;
+	time( &currentTime );
+	localTime = localtime( &currentTime );
+
+	return localTime->tm_hour;
+}
+
+int Commons::getTime_Minute() {
+	time_t currentTime;
+	struct tm *localTime;
+	time( &currentTime );
+	localTime = localtime( &currentTime );
+
+	return localTime->tm_min;
+}
+
+int Commons::getTime_Second() {
+	time_t currentTime;
+	struct tm *localTime;
+	time( &currentTime );
+	localTime = localtime( &currentTime );
+
+	return localTime->tm_sec;
 }
 
 string Commons::integerToString(int integer) {
