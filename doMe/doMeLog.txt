@@ -167,3 +167,15 @@
 27/3/2016 17:24:35 [logic] : User enters: " add me"
 27/3/2016 17:34:3 [logic] : User enters: " undo"
 27/3/2016 17:34:3 [logic] : Parser parses it to be UNDO
+27/3/2016 18:47:15 [logic] : User enters: " exit"
+27/3/2016 18:47:55 [logic] : User enters: " exit"
+27/3/2016 18:48:21 [logic] : User enters: " add me"
+27/3/2016 18:48:21 [logic] : Parser parses it to be ADD
+27/3/2016 18:48:22 [logic] : User enters: " exit"
+27/3/2016 18:48:22 [logic] : Parser parses it to be EXIT
+27/3/2016 18:48:27 [logic] : User enters: " clear"
+27/3/2016 18:48:27 [logic] : Parser parses it to be CLEAR
+27/3/2016 18:48:29 [logic] : User enters: " exit"
+27/3/2016 18:48:29 [logic] : Parser parses it to be EXIT
+27/3/2016 18:48:40 [logic] : User enters: " exit"
+27/3/2016 18:49:13 [logic] : User enters: " exit"

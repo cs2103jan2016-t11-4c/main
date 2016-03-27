@@ -31,6 +31,7 @@ public:
 	// throw exception when ofstream .txt file cannot be opened
 	void saveData(vector<string>, string);
 
+    void openDefaultNewFile(string fileName); 
 };
 
 #endif

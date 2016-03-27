@@ -5,6 +5,7 @@ const string UserInterface::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
+string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 int UserInterface::DISPLAY_WIDTH = 80;
 int UserInterface::DISPLAY_LENGTH = 25;
 const int UserInterface::DEFAULT_WINDOWS_WIDTH = 80;
@@ -17,7 +18,6 @@ const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is sa
 const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
-const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 const string UserInterface::MESSAGE_ADD = "Added \"%s\" into %s";
 const string UserInterface::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
 const string UserInterface::MESSAGE_DELETE = "Deleted \"%s\" from %s";
@@ -71,11 +71,11 @@ UserInterface::UserInterface(void) {
 
     try {
     _logic = Logic::getInstance();
+    } catch (Exception_FileCannotOpen e){
+        MESSAGE_WELCOME = e.getString();
+    }
     _memory = Memory::getInstance();
     _taskList = _memory->ramGetTaskList();
-    } catch (Exception_FileCannotOpen e){
-        showToUser(e.getString());
-    }
 }
 
 UserInterface::~UserInterface(void) {

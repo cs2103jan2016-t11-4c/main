@@ -55,6 +55,7 @@ public:
 
     static const string DEFAULT_TEXT_FILE_NAME;
     static const string SYSTEM_MODE_CON;
+    static string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
     static int DISPLAY_WIDTH;
@@ -70,7 +71,6 @@ public:
     static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
 
     static const string MESSAGE_COMMAND_PROMPT;
-    static const string MESSAGE_WELCOME;
     static const string MESSAGE_ADD;
     static const string MESSAGE_EMPTY;
     static const string MESSAGE_DELETE;

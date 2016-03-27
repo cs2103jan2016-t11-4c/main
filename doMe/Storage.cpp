@@ -48,3 +48,8 @@ void Storage::saveData(vector<string> updatedData, string directory) {
     }
 }
 
+void Storage::openDefaultNewFile(string fileName) {
+    std::ofstream writeFile;
+    writeFile.open(fileName);
+}
+
