@@ -165,6 +165,7 @@ public:
     //helper
     void showToUser(string message);
     void showToUserMessageBox();
+    void resizeWindow(int width, int length);
     void setWindowsRowsColumns(int size);
     vector<string> createDisplayBox(vector<string> displayList);
     void printDisplayList(vector<string> displayList); 

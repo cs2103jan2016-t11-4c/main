@@ -30,47 +30,47 @@ int Memory::getViewType() {
     return _settings->getViewType();
 }
 
-void Memory::changeSaveDirectory(string newDirectory)
-{
-	_settings->changeSaveDirectory(newDirectory);
+void Memory::getWindowSize(int& width, int& length) {
+    _settings->getWindowSize(width,length);
 }
 
-bool Memory::changeViewType(int newViewType)
-{
+bool Memory::changeSaveDirectory(string newDirectory) {
+	return _settings->changeSaveDirectory(newDirectory);
+}
+
+bool Memory::changeViewType(int newViewType) {
 	return _settings->changeViewType(newViewType);
 }
 
-void Memory::resizeWindow()
-{
-	_settings->resizeWindow();
+void Memory::changeWindowSize(int width,int length) {
+    _settings->changeWindowSize(width,length);
+}
+
+void Memory::loadRam() {
+    _ram->loadRAM();
 }
 
 void Memory::ramAdd(Task* task) {
 	_ram->ramAdd(task);
-    _settings->saveSettings();
 }
 
 void Memory::ramDel(Task* task) {
 	_ram->ramDel(task);
-    _settings->saveSettings();
 
 }
 
 Task* Memory::ramDel(int index) {
 	return _ram->ramDel(index);
-    _settings->saveSettings();
 
 }
 
 list<Task*> Memory::ramClear() {
 	return _ram->ramClear();
-    _settings->saveSettings();
 
 }
 
 void Memory::ramInsert(list<Task*>& oldTaskList) {
 	_ram->ramInsert(oldTaskList);
-    _settings->saveSettings();
 
 }
 
@@ -81,7 +81,6 @@ int Memory::ramGetSize() {
 
 Task* Memory::ramGetTask(int index) {
 	return _ram->ramGetTask(index);
-    _settings->saveSettings();
 
 }
 

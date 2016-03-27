@@ -19,22 +19,17 @@ public:
     static Settings* getInstance();
 
     //setter
-    void changeSaveDirectory(string directory); //API for Memory component
-    void changeTextFileName(string textFileName);
+    bool changeSaveDirectory(string directory); //API for Memory component
     bool changeViewType(int newViewType); //API for Memory compoent
+    void changeWindowSize(int column, int row);
     //getter
     string getSaveDirectory();
     string getTextFileName();
     int getViewType();
+    void getWindowSize(int& width, int& length);
 
-    void resizeWindow(); //API for Memory component
     void loadSettings(); //placed in constructor of Settings; boolean return value to be reconsidered
-    void saveSettings(); //placed in every setter function, in order save changes to settings.txt	
 
-    void settingsLoadVector(vector<string> &existingData);
-    vector<string> settingsGetVector();
-    string integerToString(int integer);
-    int stringToInteger(string& text);
 
     bool checkEmptySaveDirectory(); 
     bool checkForSettingsFile();
@@ -53,14 +48,21 @@ public:
 
     string _textFileName;
     string _saveDirectory;
-    int _viewType; //temporary this first before we finalise naming
+    int _viewType; 
+    int _width;
+    int _length;
     char buffer[255];
 
-    string createValidTextFileNameString(string textFileName); //helper input test return test.txt
+    void settingsLoadVector(vector<string> &existingData);
+    vector<string> settingsGetVector();
+
     string createValidFileDirectoryString(string directory); //helper input return directory with "/"
     bool checkValidityOfDirectory(const string& directory); //might remove
-    void openNewSettingFile(); //complete
-    string promptForTextName(); // complete
+
+    string integerToString(int integer);
+    int stringToInteger(string& text);
+
+    void saveSettings(); //placed in every setter function, in order save changes to settings.txt	
 
 };
 

@@ -67,7 +67,7 @@ UserInterface::UserInterface(void) {
     _maxWindowLength = windowSize.Y;
 
     try {
-    _logic = Logic::getInstance();
+        _logic = Logic::getInstance();
     } catch (Exception_FileCannotOpen e){
         MESSAGE_WELCOME = e.getString();
     }
@@ -82,8 +82,58 @@ UserInterface::~UserInterface(void) {
 
 void UserInterface::setEnvironment() {
     printProgramWelcomePage();
-    printNotificationWelcome();
+    _memory->loadSettings();
+    _memory->loadRam();
 
+
+    int length,width;
+    _memory->getWindowSize(width,length);
+    resizeWindow(width,length);
+
+    printNotificationWelcome();
+}
+
+void UserInterface::printProgramWelcomePage() {
+    resizeWindow(DISPLAY_WIDTH,DISPLAY_LENGTH);
+    string space = "               ";
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << endl;
+    cout << space; cout << "                   Welcome to" << endl; 
+    cout << space; cout << "      _         __  __                          " << endl;
+    cout << space; cout << "     | |       |  \\/  |                         " << endl;
+    cout << space; cout << "   __| |  ___  | \\  / |  ___     ___ __  __ ___ " << endl;
+    cout << space; cout << "  / _` | / _ \\ | |\\/| | / _ \\   / _ \\  \\/ // _ \\" << endl;
+    cout << space; cout << " | (_| || (_) || |  | ||  __/ _|  __/ >  <|  __/" << endl;
+    cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
+
+    cout << endl;
+    cout << space; cout << "          <Press any key to continue>" << endl;
+    cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+    _getch();
+}
+
+void UserInterface::printNotificationWelcome() {
+    printBeforeMessageDisplay();
+    showToUser(MESSAGE_WELCOME);
+}
+
+/****************************************************************/
+
+void UserInterface::printPromptCommand() {
+    showToUserMessageBox();
+    cout << MESSAGE_COMMAND_PROMPT;
+}
+
+string UserInterface::getStringCommand() {
+    string command;
+    printPromptCommand();
+    getline(cin, command);
+    return command;
 }
 
 void UserInterface::executeCommandUntilExit() {
@@ -359,52 +409,6 @@ void UserInterface::printNotificationInvalidCommand(Command* executionMessage, C
 
 /****************************************************************/
 
-string UserInterface::getStringCommand() {
-    string command;
-    printPromptCommand();
-    getline(cin, command);
-    return command;
-}
-
-void UserInterface::printProgramWelcomePage() {
-    _memory->resizeWindow();
-    string space = "               ";
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << space; cout << "                   Welcome to" << endl; 
-    cout << space; cout << "      _         __  __                          " << endl;
-    cout << space; cout << "     | |       |  \\/  |                         " << endl;
-    cout << space; cout << "   __| |  ___  | \\  / |  ___     ___ __  __ ___ " << endl;
-    cout << space; cout << "  / _` | / _ \\ | |\\/| | / _ \\   / _ \\  \\/ // _ \\" << endl;
-    cout << space; cout << " | (_| || (_) || |  | ||  __/ _|  __/ >  <|  __/" << endl;
-    cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
-
-    cout << endl;
-    cout << space; cout << "          <Press any key to continue>" << endl;
-    cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
-    _getch();
-}
-
-void UserInterface::printNotificationWelcome() {
-    _memory->loadSettings();
-    printBeforeMessageDisplay();
-    showToUser(MESSAGE_WELCOME);
-}
-
-/****************************************************************/
-
-void UserInterface::printPromptCommand() {
-    showToUserMessageBox();
-    cout << MESSAGE_COMMAND_PROMPT;
-}
-
-/****************************************************************/
-
 void UserInterface::validNotificationAdd(Task* task, int viewType, string textFileName) {
     string taskString;
     taskString = getTaskString(task,viewType);
@@ -465,7 +469,6 @@ void UserInterface::invalidNotificationDelete() {
 void UserInterface::invalidNotificationEdit() {
     showToUser(ERROR_INVALID_EDIT);
 }
-
 
 void UserInterface::invalidNotificationViewtype() {
     showToUser(ERROR_INVALID_VIEWTYPE);
@@ -567,26 +570,32 @@ void UserInterface::showToUserMessageBox() {
     showToUser(messageBox);
 }
 
+void UserInterface::resizeWindow(int width, int length) {
+    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), width, length);
+    system(buffer);
+}
+
 void UserInterface::setWindowsRowsColumns(int size) {
-    //system("mode CON: COLS=120 lines=40");
     CONSOLE_SCREEN_BUFFER_INFO csbi;
-    int columns;
-    int rows;
+    int width;
+    int length;
 
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-    rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+    length = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
-    DISPLAY_WIDTH = columns;
-    DISPLAY_LENGTH = rows - 4;
+    DISPLAY_WIDTH = width;
+    DISPLAY_LENGTH = length - 4;
 
-    if(size < _maxWindowLength) {
-        if(size > DISPLAY_LENGTH) {
-            sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows+1);
-            system(buffer);
-            DISPLAY_LENGTH++;
-        }
-    } 
+    while((size < _maxWindowLength) && (size > DISPLAY_LENGTH)) {
+        if(size < _maxWindowLength) {
+            if(size > DISPLAY_LENGTH) {
+                resizeWindow(width,length+1);
+                DISPLAY_LENGTH++;
+            }
+        } 
+    }
+    _memory->changeWindowSize(DISPLAY_WIDTH,DISPLAY_LENGTH + 4);
 }
 
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {

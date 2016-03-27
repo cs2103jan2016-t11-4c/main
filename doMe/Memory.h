@@ -20,15 +20,17 @@ public:
 
 	//accessing Settings class object
     void loadSettings();
-	void changeSaveDirectory(string);
+	bool changeSaveDirectory(string);
 	bool changeViewType(int);
-	void resizeWindow();
+    void changeWindowSize(int width,int length);
 
 	string getSaveDirectory(); 
 	int getViewType(); 
     string getTextFileName();
+    void getWindowSize(int& width, int& length);
 
 	//accessing RAM class object
+    void loadRam();
 	void ramAdd(Task* task);
 	void ramDel(Task* task);
 	Task* ramDel(int index);
