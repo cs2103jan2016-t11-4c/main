@@ -4,6 +4,7 @@
 #include <list>
 #include <string>
 #include <sstream>
+#include <locale>
 #include "Task.h"
 #include "Storage.h"
 #include "Command.h"
@@ -14,39 +15,33 @@ class Command;
 
 class RAM {
 private:
+	RAM();
 	static RAM* _instance;
+
 	Settings* _settings;
 	Storage* _storage;
-	RAM();
-
-public: //is this supposed to be private? -joan
 	list<Task*> _taskList;
 	list<Task*> _tempTaskList;
-	list<Task> _rawTaskList;
-	list<Command> _rawCommandList;
-
 	bool _searchState;
 	string _searchTerm;
 	Task* _lastAddedTask;
 
+	static const string LIST_DIVIDER;
+	static const string DEFAULT_TEXT_FILE_NAME;
+
 	void sort();
-	void loadData(); //in constructor of RAM
+	void loadData();
 	void saveData();
 	vector<string> ramGetVector();
 	void ramLoadVector(vector<string>& existingData);
 	string integerToString(int integer);
-	int stringToInteger(string text);
+	int stringToInteger(string& text);
 	list<Task*>::iterator indexToTaskListIter(int index);
 	bool foundInTask(Task* task, string searchTerm);
-
-	static const string LIST_DIVIDER;
-	static const string DEFAULT_TEXT_FILE_NAME; //unsure about the visibility -joan
-
+	string convertToLowerCase(string sentence);
+	
 public:
 	static RAM* getInstance();
-	//are ALL these ought to be API of Memory component? -joan
-	Task* ramAddToRawTaskHeap(Task* task);
-	Command* ramAddToRawCommandHeap(Command* command);
 	void ramAdd(Task* task);
 	void ramDel(Task* task);
 	Task* ramDel(int index);
@@ -55,7 +50,7 @@ public:
 	int ramGetSize();
 	Task* ramGetTask(int index);
 	bool ramGetSearchState();
-	bool ramSearch(string searchTerm);
+	bool ramSearch(string& searchTerm);
 	string ramUnsearch();
 	list<Task*>* ramGetTaskList();
 	void ramSort();

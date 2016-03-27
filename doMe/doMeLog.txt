@@ -179,3 +179,67 @@
 27/3/2016 18:48:29 [logic] : Parser parses it to be EXIT
 27/3/2016 18:48:40 [logic] : User enters: " exit"
 27/3/2016 18:49:13 [logic] : User enters: " exit"
+27/3/2016 18:23:54 [logic] : User enters: " lol"
+27/3/2016 18:23:54 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:55 [logic] : User enters: " asd"
+27/3/2016 18:23:55 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:55 [logic] : User enters: " a"
+27/3/2016 18:23:55 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:55 [logic] : User enters: " das"
+27/3/2016 18:23:55 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:55 [logic] : User enters: " d"
+27/3/2016 18:23:55 [logic] : Parser parses it to be INVALID
+27/3/2016 18:23:55 [logic] : User enters: " sa"
+27/3/2016 18:23:55 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:56 [logic] : User enters: " da"
+27/3/2016 18:23:56 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:56 [logic] : User enters: " sd"
+27/3/2016 18:23:56 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:56 [logic] : User enters: " as"
+27/3/2016 18:23:56 [logic] : Parser parses it to be ADD
+27/3/2016 18:23:56 [logic] : User enters: " d"
+27/3/2016 18:23:56 [logic] : Parser parses it to be INVALID
+27/3/2016 18:24:0 [logic] : User enters: " exit"
+27/3/2016 18:24:0 [logic] : Parser parses it to be EXIT
+27/3/2016 18:45:11 [logic] : User enters: " clear"
+27/3/2016 18:45:11 [logic] : Parser parses it to be CLEAR
+27/3/2016 18:45:20 [logic] : User enters: " LOLOL"
+27/3/2016 18:45:20 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:25 [logic] : User enters: " lolol"
+27/3/2016 18:45:25 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:31 [logic] : User enters: " Book"
+27/3/2016 18:45:31 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:32 [logic] : User enters: " book"
+27/3/2016 18:45:32 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:38 [logic] : User enters: " the whorld"
+27/3/2016 18:45:38 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:44 [logic] : User enters: " the World"
+27/3/2016 18:45:44 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:46 [logic] : User enters: " the world"
+27/3/2016 18:45:46 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:50 [logic] : User enters: " The world"
+27/3/2016 18:45:50 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:53 [logic] : User enters: " the World"
+27/3/2016 18:45:53 [logic] : Parser parses it to be ADD
+27/3/2016 18:45:58 [logic] : User enters: " search the world"
+27/3/2016 18:45:58 [logic] : Parser parses it to be ADD
+27/3/2016 18:46:5 [logic] : User enters: " search world"
+27/3/2016 18:46:5 [logic] : Parser parses it to be SEARCH
+27/3/2016 18:46:21 [logic] : User enters: " s the world"
+27/3/2016 18:46:21 [logic] : Parser parses it to be ADD
+27/3/2016 18:46:47 [logic] : User enters: " v 1"
+27/3/2016 18:46:47 [logic] : Parser parses it to be VIEWTYPE
+27/3/2016 18:46:48 [logic] : User enters: " v 2"
+27/3/2016 18:46:48 [logic] : Parser parses it to be VIEWTYPE
+27/3/2016 18:46:50 [logic] : User enters: " v 3"
+27/3/2016 18:46:50 [logic] : Parser parses it to be VIEWTYPE
+27/3/2016 18:46:52 [logic] : User enters: " v 4"
+27/3/2016 18:46:52 [logic] : Parser parses it to be VIEWTYPE
+27/3/2016 18:46:55 [logic] : User enters: " v 5"
+27/3/2016 18:46:55 [logic] : Parser parses it to be VIEWTYPE
+27/3/2016 18:46:57 [logic] : User enters: " exit"
+27/3/2016 18:46:57 [logic] : Parser parses it to be EXIT
+27/3/2016 18:49:56 [logic] : User enters: " clear"
+27/3/2016 18:49:56 [logic] : Parser parses it to be CLEAR
+27/3/2016 18:49:57 [logic] : User enters: " exit"
+27/3/2016 18:49:57 [logic] : Parser parses it to be EXIT
