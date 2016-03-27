@@ -96,6 +96,7 @@ void UserInterface::executeCommandUntilExit() {
     do {
         try {
             stringCommand = getStringCommand();
+            LOG(__FILE__,"User enters: \" " + stringCommand + "\"");
             command = _logic->executeCommand(stringCommand);
             printExecutionMessage(command, VALID_MESSAGE);
         } catch(Exception_InvalidCommand e) {

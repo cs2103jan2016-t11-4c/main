@@ -25,8 +25,6 @@ Command* Logic::executeCommand(string commandText) {
 		throw e;
 	}
 
-	LOG(__FILE__,"User enters: \" " + commandText + "\"");
-
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 

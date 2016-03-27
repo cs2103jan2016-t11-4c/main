@@ -243,3 +243,9 @@
 27/3/2016 18:49:56 [logic] : Parser parses it to be CLEAR
 27/3/2016 18:49:57 [logic] : User enters: " exit"
 27/3/2016 18:49:57 [logic] : Parser parses it to be EXIT
+27/3/2016 19:0:15 [userinterface] : User enters: " add me"
+27/3/2016 19:0:15 [logic] : Parser parses it to be ADD
+27/3/2016 19:0:18 [userinterface] : User enters: " hehehehe"
+27/3/2016 19:0:18 [logic] : Parser parses it to be ADD
+27/3/2016 19:0:24 [userinterface] : User enters: " exit"
+27/3/2016 19:0:24 [logic] : Parser parses it to be EXIT
