@@ -9,6 +9,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <ctime>
+#include <assert.h>
 
 #include "Chrono.h"
 #include "Logic.h"
@@ -22,7 +23,7 @@
 using namespace std;
 
 enum COMMAND_OUTCOME {
-    VALID_MESSAGE, INVALID_MESSAGE, UNDO_MESSAGE
+    VALID_MESSAGE, INVALID_MESSAGE
 };
 
 class UserInterface {
@@ -35,7 +36,7 @@ public:
 
     void setEnvironment();
     void executeCommandUntilExit();
-    
+
 #ifndef TESTMODE 
 private: 
 #else 
@@ -43,7 +44,7 @@ public:
 #endif
 
     Logic* _logic;
-	Memory* _memory;
+    Memory* _memory;
     list<Task*>* _taskList;
 
     //int _commandOutcome;
@@ -63,7 +64,7 @@ public:
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;
-    static const string MESSAGE_SET_SAVE_FILE_DIRECTORY;
+
     static const string MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT;
     static const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
@@ -79,7 +80,15 @@ public:
     static const string MESSAGE_CLEAR_SEARCH;
     static const string MESSAGE_EXIT_SEARCH;
     static const string MESSAGE_VIEW_TYPE;
+    static const string MESSAGE_CHANGE_FILE_DIRECTORY;
+
     static const string MESSAGE_UNDO_COMMAND;
+    static const string MESSAGE_UNDO_ADD;
+    static const string MESSAGE_UNDO_DELETE;
+    static const string MESSAGE_UNDO_EDIT;
+    static const string MESSAGE_UNDO_CLEAR;
+    static const string MESSAGE_UNDO_VIEW_TYPE;
+    static const string MESSAGE_UNDO_CHANGE_DIRECTORY;
 
     static const string ERROR_INVALID_ADD;
     static const string ERROR_INVALID_DELETE;
@@ -96,7 +105,14 @@ public:
     void printBeforeMessageDisplay();
     void printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
 
-    void printNotificationUndo(Command* executionMessage);
+    void printNotificationUndo(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void undoNotificationAdd(Command* executionMessage);
+    void undoNotificationDel(Command* executionMessage);
+    void undoNotificationEdit(Command* executionMessage);
+    void undoNotificationClear(Command* executionMessage);
+    void undoNotificationViewType(Command* executionMessage);
+    void undoNotificationChangDirectory(Command* executionMessage);
+
     void printNotificationAdd(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
     void printNotificationDelete(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
     void printNotificationEdit(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
@@ -139,7 +155,6 @@ public:
 
     //Invalid notification
     void invalidNotificationCommand();
-
     void invalidNotificationAdd();
     void invalidNotificationEdit(); 
     void invalidNotificationDelete();

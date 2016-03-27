@@ -58,3 +58,112 @@
 26/3/2016 10:14:7 [logic] : Parser parses it to be ADD
 26/3/2016 10:14:12 [logic] : User enters: " exit"
 26/3/2016 10:14:12 [logic] : Parser parses it to be EXIT
+27/3/2016 16:3:12 [logic] : User enters: " help me"
+27/3/2016 16:3:12 [logic] : Parser parses it to be ADD
+27/3/2016 16:3:15 [logic] : User enters: " undo"
+27/3/2016 16:3:15 [logic] : Parser parses it to be UNDO
+27/3/2016 16:3:19 [logic] : User enters: " exit"
+27/3/2016 16:3:19 [logic] : Parser parses it to be EXIT
+27/3/2016 16:3:54 [logic] : User enters: " help me"
+27/3/2016 16:3:54 [logic] : Parser parses it to be ADD
+27/3/2016 16:3:57 [logic] : User enters: " undo"
+27/3/2016 16:3:57 [logic] : Parser parses it to be UNDO
+27/3/2016 16:4:23 [logic] : User enters: " help me"
+27/3/2016 16:4:23 [logic] : Parser parses it to be ADD
+27/3/2016 16:4:24 [logic] : User enters: " undo"
+27/3/2016 16:4:24 [logic] : Parser parses it to be UNDO
+27/3/2016 16:8:4 [logic] : User enters: " help me"
+27/3/2016 16:8:4 [logic] : Parser parses it to be ADD
+27/3/2016 16:8:5 [logic] : User enters: " undo"
+27/3/2016 16:8:5 [logic] : Parser parses it to be UNDO
+27/3/2016 16:8:13 [logic] : User enters: " exit"
+27/3/2016 16:8:13 [logic] : Parser parses it to be EXIT
+27/3/2016 16:21:31 [logic] : User enters: " help me"
+27/3/2016 16:21:31 [logic] : Parser parses it to be ADD
+27/3/2016 16:21:34 [logic] : User enters: " undo"
+27/3/2016 16:21:34 [logic] : Parser parses it to be UNDO
+27/3/2016 16:35:24 [logic] : User enters: " exit"
+27/3/2016 16:35:24 [logic] : Parser parses it to be EXIT
+27/3/2016 16:35:32 [logic] : User enters: " undo"
+27/3/2016 16:35:32 [logic] : Parser parses it to be UNDO
+27/3/2016 16:36:15 [logic] : User enters: " undo"
+27/3/2016 16:36:15 [logic] : Parser parses it to be UNDO
+27/3/2016 16:44:15 [logic] : User enters: " unndo"
+27/3/2016 16:44:15 [logic] : Parser parses it to be ADD
+27/3/2016 16:44:27 [logic] : User enters: " undo"
+27/3/2016 16:44:27 [logic] : Parser parses it to be UNDO
+27/3/2016 16:44:36 [logic] : User enters: " undo"
+27/3/2016 16:44:36 [logic] : Parser parses it to be UNDO
+27/3/2016 16:45:21 [logic] : User enters: " undo"
+27/3/2016 16:45:21 [logic] : Parser parses it to be UNDO
+27/3/2016 16:45:25 [logic] : User enters: " adade"
+27/3/2016 16:45:25 [logic] : Parser parses it to be ADD
+27/3/2016 16:45:27 [logic] : User enters: " undo"
+27/3/2016 16:45:27 [logic] : Parser parses it to be UNDO
+27/3/2016 16:46:2 [logic] : User enters: " undo"
+27/3/2016 16:46:2 [logic] : Parser parses it to be UNDO
+27/3/2016 16:46:9 [logic] : User enters: " delete 1"
+27/3/2016 16:46:9 [logic] : Parser parses it to be DEL
+27/3/2016 16:46:12 [logic] : User enters: " undo"
+27/3/2016 16:46:12 [logic] : Parser parses it to be UNDO
+27/3/2016 16:46:52 [logic] : User enters: " undo"
+27/3/2016 16:46:52 [logic] : Parser parses it to be UNDO
+27/3/2016 16:47:2 [logic] : User enters: " add me"
+27/3/2016 16:47:2 [logic] : Parser parses it to be ADD
+27/3/2016 16:47:3 [logic] : User enters: " undo"
+27/3/2016 16:47:3 [logic] : Parser parses it to be UNDO
+27/3/2016 16:47:11 [logic] : User enters: " delete 1"
+27/3/2016 16:47:11 [logic] : Parser parses it to be DEL
+27/3/2016 16:47:13 [logic] : User enters: " undo"
+27/3/2016 16:47:13 [logic] : Parser parses it to be UNDO
+27/3/2016 16:47:15 [logic] : User enters: " exit"
+27/3/2016 16:47:15 [logic] : Parser parses it to be EXIT
+27/3/2016 16:47:54 [logic] : User enters: " search he"
+27/3/2016 16:47:54 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:48:0 [logic] : User enters: " search he"
+27/3/2016 16:48:0 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:48:34 [logic] : User enters: " search me"
+27/3/2016 16:48:34 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:51:13 [logic] : User enters: " search he"
+27/3/2016 16:51:13 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:53:17 [logic] : User enters: " seach m"
+27/3/2016 16:53:17 [logic] : Parser parses it to be ADD
+27/3/2016 16:53:23 [logic] : User enters: " search m"
+27/3/2016 16:53:23 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:53:47 [logic] : User enters: " search m"
+27/3/2016 16:53:47 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:54:20 [logic] : User enters: " exit"
+27/3/2016 16:54:20 [logic] : Parser parses it to be EXIT
+27/3/2016 16:54:37 [logic] : User enters: " search he"
+27/3/2016 16:54:37 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:54:45 [logic] : User enters: " exit"
+27/3/2016 16:54:45 [logic] : Parser parses it to be EXIT
+27/3/2016 16:57:58 [logic] : User enters: " seach f"
+27/3/2016 16:57:58 [logic] : Parser parses it to be ADD
+27/3/2016 16:58:4 [logic] : User enters: " undo"
+27/3/2016 16:58:4 [logic] : Parser parses it to be UNDO
+27/3/2016 16:58:8 [logic] : User enters: " search f"
+27/3/2016 16:58:8 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:59:8 [logic] : User enters: " search t"
+27/3/2016 16:59:8 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:59:18 [logic] : User enters: " exit"
+27/3/2016 16:59:18 [logic] : Parser parses it to be EXIT
+27/3/2016 16:59:47 [logic] : User enters: " search s"
+27/3/2016 16:59:47 [logic] : Parser parses it to be SEARCH
+27/3/2016 16:59:49 [logic] : User enters: " undo"
+27/3/2016 16:59:49 [logic] : Parser parses it to be UNDO
+27/3/2016 17:0:35 [logic] : User enters: " search m"
+27/3/2016 17:0:35 [logic] : Parser parses it to be SEARCH
+27/3/2016 17:0:41 [logic] : User enters: " undo"
+27/3/2016 17:0:41 [logic] : Parser parses it to be UNDO
+27/3/2016 17:0:53 [logic] : User enters: " hi"
+27/3/2016 17:0:53 [logic] : Parser parses it to be ADD
+27/3/2016 17:1:0 [logic] : User enters: " sort"
+27/3/2016 17:1:0 [logic] : Parser parses it to be ADD
+27/3/2016 17:14:11 [logic] : User enters: " exit"
+27/3/2016 17:14:11 [logic] : Parser parses it to be EXIT
+27/3/2016 17:16:18 [logic] : User enters: " exit"
+27/3/2016 17:16:18 [logic] : Parser parses it to be EXIT
+27/3/2016 17:24:35 [logic] : User enters: " add me"
+27/3/2016 17:34:3 [logic] : User enters: " undo"
+27/3/2016 17:34:3 [logic] : Parser parses it to be UNDO
