@@ -23,19 +23,6 @@ RAM::RAM() {
 	loadData();
 }
 
-Task* RAM::ramAddToRawTaskHeap(Task* task) {
-	Task* _task = new Task();
-	*_task = *task;
-
-	return _task;
-}
-
-Command* RAM::ramAddToRawCommandHeap(Command* command) {
-	Command _command = *command;
-
-	return command;
-}
-
 void RAM::ramAdd(Task* task) {
 	_taskList.push_back(task);
 	_lastAddedTask = task;
@@ -104,7 +91,7 @@ bool RAM::ramGetSearchState() {
 	return _searchState;
 }
 
-bool RAM::ramSearch(string searchTerm) {
+bool RAM::ramSearch(string& searchTerm) {
 	ramUnsearch();
 
 	list<Task*>::iterator iter = _taskList.begin();
@@ -204,7 +191,7 @@ string RAM::integerToString(int integer) {
 	return word.str();
 }
 
-int RAM::stringToInteger(string text) {
+int RAM::stringToInteger(string& text) {
 	stringstream ss(text);
 	int integer;
 
@@ -223,8 +210,10 @@ list<Task*>::iterator RAM::indexToTaskListIter(int index) {
 }
 
 bool RAM::foundInTask(Task* task, string searchTerm) {
-	string name = task->getName();
-	string location = task->getLocation();
+	searchTerm = convertToLowerCase(searchTerm);
+
+	string name = convertToLowerCase(task->getName());
+	string location = convertToLowerCase(task->getLocation());
 	string date1 = integerToString(task->getDate1());
 	string date2 = integerToString(task->getDate2());
 	string time1 = integerToString(task->getTime1());
@@ -261,4 +250,14 @@ bool RAM::foundInTask(Task* task, string searchTerm) {
 	}
 
 	return false;
+}
+
+string RAM::convertToLowerCase(string sentence) {
+	locale loc;
+
+	for (unsigned int i = 0; i < sentence.size(); ++i) {
+		sentence[i] = tolower(sentence[i],loc);
+	}
+
+	return sentence;
 }

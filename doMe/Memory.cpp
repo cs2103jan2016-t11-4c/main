@@ -41,14 +41,6 @@ void Memory::resizeWindow()
 	_settings->resizeWindow();
 }
 
-Task* Memory::ramAddToRawTaskHeap(Task* task) {
-	return _ram->ramAddToRawTaskHeap(task);
-}
-
-Command* Memory::ramAddToRawCommandHeap(Command* command) {
-	return _ram->ramAddToRawCommandHeap(command);
-}
-
 void Memory::ramAdd(Task* task) {
 	_ram->ramAdd(task);
 }

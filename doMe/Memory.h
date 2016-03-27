@@ -23,16 +23,11 @@ public:
 	bool changeViewType(int);
 	void resizeWindow();
 
-	//I need these - Michael
-	// if only RAM need these, don't need to be API. RAM calls these fns directly from the singleton Settings object
-	// unless other outside classes need these from Memory component
 	string getSaveDirectory(); 
 	int getViewType(); 
-    string getTextFileName();//complete
+    string getTextFileName();
 
 	//accessing RAM class object
-	Task* ramAddToRawTaskHeap(Task* task);
-	Command* ramAddToRawCommandHeap(Command* command);
 	void ramAdd(Task* task);
 	void ramDel(Task* task);
 	Task* ramDel(int index);
