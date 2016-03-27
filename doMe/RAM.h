@@ -42,6 +42,8 @@ private:
 	
 public:
 	static RAM* getInstance();
+
+	void loadRAM();
 	void ramAdd(Task* task);
 	void ramDel(Task* task);
 	Task* ramDel(int index);

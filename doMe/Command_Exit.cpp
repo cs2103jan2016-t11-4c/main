@@ -20,5 +20,5 @@ bool Command_Exit::undo() {
 }
 
 COMMAND_TYPE Command_Exit::getCommandType() {
-	return EXIT;
+	return _commandType;
 }

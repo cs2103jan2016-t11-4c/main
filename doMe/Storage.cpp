@@ -25,9 +25,8 @@ vector<string> Storage::retrieveData(string directory) {
             dataVector.push_back(tempText);
         }
         readFile.close();
-    }
-    else {
-    	throw Exception_FileCannotOpen(directory + " file does not exist yet and will be created after first save.");
+    }else {
+//    	throw Exception_FileCannotOpen(directory + " file does not exist yet and will be created after first save.");
     }
 	
 	return dataVector;
