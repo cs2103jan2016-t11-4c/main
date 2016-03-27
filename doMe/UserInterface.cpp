@@ -1,15 +1,12 @@
 //@@author A0130475L
 #include "UserInterface.h"
 
-const string UserInterface::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 int UserInterface::DISPLAY_WIDTH = 80;
 int UserInterface::DISPLAY_LENGTH = 25;
-const int UserInterface::DEFAULT_WINDOWS_WIDTH = 80;
-const int UserInterface::DEFAULT_WINDOWS_LENGTH = 25; 
 
 const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
 const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
@@ -370,7 +367,7 @@ string UserInterface::getStringCommand() {
 }
 
 void UserInterface::printProgramWelcomePage() {
-    setDefaultWindowsRowsColumns();
+    _memory->resizeWindow();
     string space = "               ";
     cout << endl;
     cout << endl;
@@ -394,6 +391,7 @@ void UserInterface::printProgramWelcomePage() {
 }
 
 void UserInterface::printNotificationWelcome() {
+    _memory->loadSettings();
     printBeforeMessageDisplay();
     showToUser(MESSAGE_WELCOME);
 }
@@ -589,11 +587,6 @@ void UserInterface::setWindowsRowsColumns(int size) {
             DISPLAY_LENGTH++;
         }
     } 
-}
-
-void UserInterface::setDefaultWindowsRowsColumns() {
-    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
-    system(buffer);
 }
 
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {

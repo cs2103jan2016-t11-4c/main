@@ -1,7 +1,5 @@
 #include "Settings.h"
 const string Settings::FILE_SETTINGS_NAME = "settings.txt";
-const string Settings::VOID_INDICATOR = "-";
-const string Settings::VOID_STRING = "";
 const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string Settings::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const int Settings::DEFAULT_WINDOWS_WIDTH = 80;
@@ -10,10 +8,10 @@ const int Settings::DEFAULT_WINDOWS_LENGTH = 25;
 Settings* Settings::_instance = 0;
 
 Settings* Settings::getInstance() {
-	if (_instance == 0) {
-		_instance = new Settings;
-	}
-	return _instance;
+    if (_instance == 0) {
+        _instance = new Settings;
+    }
+    return _instance;
 }
 
 Settings::Settings(void) {
@@ -27,50 +25,42 @@ Settings::~Settings(void) {
 
 /****************************************************************/
 
-bool Settings::loadSettings() {
-    ifstream readFile(FILE_SETTINGS_NAME);
-    stringstream is;
-    string extractedSettings;
-    int columns;
-    int rows;
-
-    if(checkForSettingsFile()) {
-        getline(readFile, extractedSettings);
-        _textFileName = loadSettingsDetails(extractedSettings);
-
-        getline(readFile, extractedSettings);
-        _saveDirectory = loadSettingsDetails(extractedSettings);
-
-        getline(readFile, extractedSettings);
-        is << (loadSettingsDetails(extractedSettings));
-        is >> _viewType;
-
-        is.clear();
-        getline(readFile, extractedSettings);
-        is << (loadSettingsDetails(extractedSettings));
-        is >> columns;
-
-        is.clear();
-        getline(readFile, extractedSettings);
-        is << (loadSettingsDetails(extractedSettings));
-        is >> rows;
-
-        //change window size
-        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows);
-        system(buffer);
-
-        return true;
-    } else {
+void Settings::loadSettings() {
+    Storage* storage;
+    storage = Storage::getInstance();
+    try {
+    settingsLoadVector(storage->retrieveData(FILE_SETTINGS_NAME));
+    } catch (Exception_FileCannotOpen e) {
         saveSettings();
-        return false;
     }
 }
 
 void Settings::saveSettings() {
-    ofstream writeFile;
-    string viewType;
-    string c;
-    string r;
+    Storage* storage;
+    storage = Storage::getInstance();
+    storage->saveData(settingsGetVector() ,FILE_SETTINGS_NAME);
+}
+
+/****************************************************************/
+
+void Settings::settingsLoadVector(vector<string> &existingData) {
+    int i = 0;
+    int columns;
+    int rows;
+    _textFileName = existingData[i];
+    _saveDirectory = existingData[i+1];
+    _viewType = stringToInteger(existingData[i+2]);
+    columns = stringToInteger(existingData[i+3]);
+    rows = stringToInteger(existingData[i+4]);
+
+    //change window size
+    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), columns , rows);
+    system(buffer);
+
+}
+
+vector<string> Settings::settingsGetVector() {
+    vector<string> updatedData;
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     int columns;
     int rows;
@@ -78,39 +68,75 @@ void Settings::saveSettings() {
     columns = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     rows = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
-    writeFile.close(); //close and reopen file to refresh the data file for overwriting
-    writeFile.open(FILE_SETTINGS_NAME);
-
-    writeFile << writeSettingsDetails(_textFileName) << endl;
-
-    writeFile << writeSettingsDetails(_saveDirectory) << endl;
-
-    viewType = to_string(_viewType);
-    writeFile << writeSettingsDetails(viewType) << endl;
-
-    c = to_string(columns);
-    writeFile << writeSettingsDetails(c) << endl;
-
-    r = to_string(rows);
-    writeFile << writeSettingsDetails(r) << endl;
+    updatedData.push_back(_textFileName);
+    updatedData.push_back(_saveDirectory);
+    updatedData.push_back(integerToString(_viewType));
+    updatedData.push_back(integerToString(columns));
+    updatedData.push_back(integerToString(rows));
+    return updatedData;
 }
 
 /****************************************************************/
-//helper functions
-string Settings::writeSettingsDetails(string sentence) {
-    if(sentence.empty()) {
-        return VOID_INDICATOR;
-    } else {
-        return sentence;
-    }
+
+void Settings::changeSaveDirectory(string directory) {
+    string newDirectory;
+    newDirectory = createValidFileDirectoryString(directory);
+    _saveDirectory = newDirectory;
+    saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan
 }
 
-string Settings::loadSettingsDetails(string sentence) {
-    if(sentence == VOID_INDICATOR) {
-        return VOID_STRING;
-    } else {
-        return sentence;
-    }
+bool Settings::changeViewType(int newViewType) {
+    _viewType = newViewType;
+    saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan
+    return true;
+}
+
+void Settings::changeTextFileName(string textFileName) {
+    string newTextFileName;
+
+    newTextFileName = createValidTextFileNameString(textFileName);
+
+    _textFileName = newTextFileName;
+
+    saveSettings(); //adding saveSettings() to all setter functions in Settings class, some redundancy may need further refactoring -joan
+}
+
+/****************************************************************/
+
+string Settings::getSaveDirectory() {
+    return (_saveDirectory /*+ _textFileName*/);   //getSaveDirectory() should return the main directory w/o specific txt filename so that 
+    //it can be generalised for settings.txt & doMe.txt & logs.txt etc etc
+    //pre-condition: all these .txt files must be in same directory
+}
+
+int Settings::getViewType() {
+    return _viewType;
+}
+
+string Settings::getTextFileName() {
+    return _textFileName;
+}
+
+void Settings::resizeWindow() {
+    sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
+    system(buffer);
+}
+
+/****************************************************************/
+
+string Settings::integerToString(int integer) {
+    ostringstream word;
+    word << integer;
+    return word.str();
+}
+
+int Settings::stringToInteger(string& text) {
+    stringstream ss(text);
+    int integer;
+
+    ss >> integer;
+
+    return integer;
 }
 
 /****************************************************************/
@@ -135,91 +161,7 @@ string Settings::createValidFileDirectoryString(string directory) {
 }
 
 /****************************************************************/
-/*
-void Settings::changeSaveDirectory(string directory) { //need refactoring
-//delete old text file?
-size_t found;
-string extractedDirectory;
-string textFileName;
 
-//check for existing txt file inputted 
-//extract correct data
-if(directory.substr(directory.find_last_of(".") + 1) == "txt") {
-found = directory.find_last_of("/\\");
-extractedDirectory = directory.substr(0,found+1);
-textFileName = directory.substr(found+1);
-} else {
-if(directory.find_last_of("/\\")+1 == directory.size()) {
-extractedDirectory = directory;
-textFileName = _textFileName;
-} else {
-extractedDirectory = directory;
-textFileName = _textFileName;
-extractedDirectory = (extractedDirectory + "/");
-}
-}
-
-_textFileName = textFileName;
-_saveDirectory = extractedDirectory;
-
-if(checkValidityOfDirectory(extractedDirectory) == true) {
-UserInterface UI;
-
-
-UI.printNotificationChangeSaveFileDirectory(getSaveDirectory());
-} else {
-UserInterface UI;
-UI.printNotificationInvalidSaveFileDirectory();
-}
-
-}
-*/
-void Settings::changeSaveDirectory(string directory) {
-    string newDirectory;
-    newDirectory = createValidFileDirectoryString(directory);
-    _saveDirectory = newDirectory;
-	saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan
-}
-
-bool Settings::changeViewType(int newViewType) {
-    _viewType = newViewType;
-    saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan
-    return true;
-}
-
-//might want to change name to suit 
-void Settings::updateTextFileName(string textFileName) {
-    string newTextFileName;
-
-    newTextFileName = createValidTextFileNameString(textFileName);
-
-    _textFileName = newTextFileName;
-    
-    saveSettings(); //adding saveSettings() to all setter functions in Settings class, some redundancy may need further refactoring -joan
-}
-
-/****************************************************************/
-
-string Settings::getSaveDirectory() {
-    return (_saveDirectory /*+ _textFileName*/);   //getSaveDirectory() should return the main directory w/o specific txt filename so that 
-												//it can be generalised for settings.txt & doMe.txt & logs.txt etc etc
-												//pre-condition: all these .txt files must be in same directory
-}
-
-int Settings::getViewType() {
-    return _viewType;
-}
-
-string Settings::getTextFileName() {
-    return _textFileName;
-}
-
-void Settings::resizeWindow() {
-        sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), DEFAULT_WINDOWS_WIDTH , DEFAULT_WINDOWS_LENGTH);
-        system(buffer);
-}
-
-/****************************************************************/
 //all may be redundant / remove if necessary
 void Settings::openNewSettingFile() {
     std::ofstream writeFile;

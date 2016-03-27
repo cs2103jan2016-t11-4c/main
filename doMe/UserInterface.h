@@ -53,15 +53,12 @@ public:
     int _maxWindowLength;
     char buffer[255];
 
-    static const string DEFAULT_TEXT_FILE_NAME;
     static const string SYSTEM_MODE_CON;
     static string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
     static int DISPLAY_WIDTH;
     static int DISPLAY_LENGTH;
-    static const int DEFAULT_WINDOWS_WIDTH;
-    static const int DEFAULT_WINDOWS_LENGTH; 
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;
@@ -127,7 +124,6 @@ public:
     string getStringCommand();
 
     //programme page
-    void setDefaultWindowsRowsColumns();
     void printProgramWelcomePage();
 
     //prompts

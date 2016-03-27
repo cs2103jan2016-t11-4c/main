@@ -14,6 +14,10 @@ Memory::Memory() {
 	_ram = RAM::getInstance();			 //main functionality from RAM constructor
 }
 
+void Memory::loadSettings() {
+    _settings->loadSettings();
+}
+
 string Memory::getSaveDirectory() {
 	return _settings->getSaveDirectory();
 }
@@ -43,30 +47,42 @@ void Memory::resizeWindow()
 
 void Memory::ramAdd(Task* task) {
 	_ram->ramAdd(task);
+    _settings->saveSettings();
 }
 
 void Memory::ramDel(Task* task) {
 	_ram->ramDel(task);
+    _settings->saveSettings();
+
 }
 
 Task* Memory::ramDel(int index) {
 	return _ram->ramDel(index);
+    _settings->saveSettings();
+
 }
 
 list<Task*> Memory::ramClear() {
 	return _ram->ramClear();
+    _settings->saveSettings();
+
 }
 
 void Memory::ramInsert(list<Task*>& oldTaskList) {
 	_ram->ramInsert(oldTaskList);
+    _settings->saveSettings();
+
 }
 
 int Memory::ramGetSize() {
 	return _ram->ramGetSize();
+
 }
 
 Task* Memory::ramGetTask(int index) {
 	return _ram->ramGetTask(index);
+    _settings->saveSettings();
+
 }
 
 bool Memory::ramGetSearchState() {

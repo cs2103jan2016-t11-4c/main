@@ -19,6 +19,7 @@ public:
 	static Memory* getInstance();
 
 	//accessing Settings class object
+    void loadSettings();
 	void changeSaveDirectory(string);
 	bool changeViewType(int);
 	void resizeWindow();
