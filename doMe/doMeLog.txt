@@ -350,3 +350,220 @@
 27/3/2016 20:0:23 [userinterface] : User enters: " exit"
 27/3/2016 20:0:23 [logic] : Parser parses it to be EXIT
 27/3/2016 20:2:30 [userinterface] : User enters: " exit"
+27/3/2016 22:22:31 [userinterface] : User enters: " a"
+27/3/2016 22:22:31 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:31 [userinterface] : User enters: " fa"
+27/3/2016 22:22:31 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:31 [userinterface] : User enters: " fs"
+27/3/2016 22:22:31 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:31 [userinterface] : User enters: " f"
+27/3/2016 22:22:31 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:31 [userinterface] : User enters: " af"
+27/3/2016 22:22:31 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:31 [userinterface] : User enters: " a"
+27/3/2016 22:22:31 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:32 [userinterface] : User enters: " dwa"
+27/3/2016 22:22:32 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:32 [userinterface] : User enters: " e"
+27/3/2016 22:22:32 [logic] : Parser parses it to be INVALID
+27/3/2016 22:22:32 [userinterface] : User enters: " a"
+27/3/2016 22:22:32 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:32 [userinterface] : User enters: " a"
+27/3/2016 22:22:32 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:32 [userinterface] : User enters: " a"
+27/3/2016 22:22:32 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:33 [userinterface] : User enters: " da"
+27/3/2016 22:22:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:33 [userinterface] : User enters: " fs"
+27/3/2016 22:22:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:33 [userinterface] : User enters: " gs"
+27/3/2016 22:22:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:33 [userinterface] : User enters: " gs"
+27/3/2016 22:22:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:33 [userinterface] : User enters: " r"
+27/3/2016 22:22:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:33 [userinterface] : User enters: " w"
+27/3/2016 22:22:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:34 [userinterface] : User enters: " rq"
+27/3/2016 22:22:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:34 [userinterface] : User enters: " we"
+27/3/2016 22:22:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:34 [userinterface] : User enters: " qe"
+27/3/2016 22:22:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:34 [userinterface] : User enters: " "
+27/3/2016 22:22:35 [userinterface] : User enters: " "
+27/3/2016 22:22:35 [userinterface] : User enters: " "
+27/3/2016 22:22:35 [userinterface] : User enters: " "
+27/3/2016 22:22:36 [userinterface] : User enters: " "
+27/3/2016 22:22:36 [userinterface] : User enters: " "
+27/3/2016 22:22:36 [userinterface] : User enters: " "
+27/3/2016 22:22:36 [userinterface] : User enters: " "
+27/3/2016 22:22:36 [userinterface] : User enters: " "
+27/3/2016 22:22:40 [userinterface] : User enters: " weww"
+27/3/2016 22:22:40 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:40 [userinterface] : User enters: " rw"
+27/3/2016 22:22:40 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:41 [userinterface] : User enters: " rwer"
+27/3/2016 22:22:41 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:41 [userinterface] : User enters: " w"
+27/3/2016 22:22:41 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:41 [userinterface] : User enters: " erw"
+27/3/2016 22:22:41 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:41 [userinterface] : User enters: " er"
+27/3/2016 22:22:41 [logic] : Parser parses it to be ADD
+27/3/2016 22:22:41 [userinterface] : User enters: " "
+27/3/2016 22:22:46 [userinterface] : User enters: " search e"
+27/3/2016 22:22:46 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:22:50 [userinterface] : User enters: " undo"
+27/3/2016 22:22:50 [logic] : Parser parses it to be UNDO
+27/3/2016 22:23:18 [userinterface] : User enters: " search e"
+27/3/2016 22:23:18 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:24:16 [userinterface] : User enters: " exit"
+27/3/2016 22:24:16 [logic] : Parser parses it to be EXIT
+27/3/2016 22:32:11 [userinterface] : User enters: " clear"
+27/3/2016 22:32:11 [logic] : Parser parses it to be CLEAR
+27/3/2016 22:32:13 [userinterface] : User enters: " sdfsf"
+27/3/2016 22:32:14 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:14 [userinterface] : User enters: " se"
+27/3/2016 22:32:14 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:14 [userinterface] : User enters: " rw"
+27/3/2016 22:32:14 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:14 [userinterface] : User enters: " er"
+27/3/2016 22:32:14 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:14 [userinterface] : User enters: " r"
+27/3/2016 22:32:14 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:15 [userinterface] : User enters: " erawa"
+27/3/2016 22:32:15 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:15 [userinterface] : User enters: " f"
+27/3/2016 22:32:15 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:15 [userinterface] : User enters: " "
+27/3/2016 22:32:15 [userinterface] : User enters: " fgs"
+27/3/2016 22:32:15 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:15 [userinterface] : User enters: " s"
+27/3/2016 22:32:15 [logic] : Parser parses it to be INVALID
+27/3/2016 22:32:16 [userinterface] : User enters: " s"
+27/3/2016 22:32:16 [logic] : Parser parses it to be INVALID
+27/3/2016 22:32:16 [userinterface] : User enters: " gs"
+27/3/2016 22:32:16 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:16 [userinterface] : User enters: " gdd"
+27/3/2016 22:32:16 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:16 [userinterface] : User enters: " g"
+27/3/2016 22:32:16 [logic] : Parser parses it to be ADD
+27/3/2016 22:32:18 [userinterface] : User enters: " search e"
+27/3/2016 22:32:18 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:32:20 [userinterface] : User enters: " exit"
+27/3/2016 22:32:20 [logic] : Parser parses it to be ERROR
+27/3/2016 22:32:27 [userinterface] : User enters: " "
+27/3/2016 22:32:27 [userinterface] : User enters: " "
+27/3/2016 22:32:27 [userinterface] : User enters: " "
+27/3/2016 22:32:27 [userinterface] : User enters: " "
+27/3/2016 22:32:27 [userinterface] : User enters: " "
+27/3/2016 22:32:28 [userinterface] : User enters: " s"
+27/3/2016 22:32:28 [logic] : Parser parses it to be INVALID
+27/3/2016 22:32:29 [userinterface] : User enters: " s"
+27/3/2016 22:32:29 [logic] : Parser parses it to be INVALID
+27/3/2016 22:33:5 [userinterface] : User enters: " search e"
+27/3/2016 22:33:5 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:33:10 [userinterface] : User enters: " exit"
+27/3/2016 22:33:10 [logic] : Parser parses it to be ERROR
+27/3/2016 22:33:13 [userinterface] : User enters: " search s"
+27/3/2016 22:33:13 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:33:16 [userinterface] : User enters: " exit"
+27/3/2016 22:33:16 [logic] : Parser parses it to be ERROR
+27/3/2016 22:33:33 [userinterface] : User enters: " search g"
+27/3/2016 22:33:33 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:33:35 [userinterface] : User enters: " u"
+27/3/2016 22:33:35 [logic] : Parser parses it to be UNDO
+27/3/2016 22:33:40 [userinterface] : User enters: " "
+27/3/2016 22:33:40 [userinterface] : User enters: " "
+27/3/2016 22:33:40 [userinterface] : User enters: " "
+27/3/2016 22:33:40 [userinterface] : User enters: " "
+27/3/2016 22:33:41 [userinterface] : User enters: " "
+27/3/2016 22:33:41 [userinterface] : User enters: " "
+27/3/2016 22:33:41 [userinterface] : User enters: " "
+27/3/2016 22:33:41 [userinterface] : User enters: " "
+27/3/2016 22:33:42 [userinterface] : User enters: " "
+27/3/2016 22:33:42 [userinterface] : User enters: " "
+27/3/2016 22:33:52 [userinterface] : User enters: " search e"
+27/3/2016 22:33:52 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:33:54 [userinterface] : User enters: " u"
+27/3/2016 22:33:54 [logic] : Parser parses it to be UNDO
+27/3/2016 22:33:58 [userinterface] : User enters: " search f"
+27/3/2016 22:33:58 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:34:0 [userinterface] : User enters: " u"
+27/3/2016 22:34:0 [logic] : Parser parses it to be UNDO
+27/3/2016 22:34:7 [userinterface] : User enters: " search e"
+27/3/2016 22:34:7 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:34:9 [userinterface] : User enters: " exit"
+27/3/2016 22:34:9 [logic] : Parser parses it to be ERROR
+27/3/2016 22:34:12 [userinterface] : User enters: " search f"
+27/3/2016 22:34:12 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:34:13 [userinterface] : User enters: " exit"
+27/3/2016 22:34:13 [logic] : Parser parses it to be ERROR
+27/3/2016 22:37:31 [userinterface] : User enters: " "
+27/3/2016 22:37:31 [userinterface] : User enters: " "
+27/3/2016 22:37:31 [userinterface] : User enters: " "
+27/3/2016 22:37:31 [userinterface] : User enters: " "
+27/3/2016 22:37:31 [userinterface] : User enters: " "
+27/3/2016 22:37:31 [userinterface] : User enters: " "
+27/3/2016 22:37:32 [userinterface] : User enters: " "
+27/3/2016 22:37:32 [userinterface] : User enters: " er"
+27/3/2016 22:37:32 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:33 [userinterface] : User enters: " er"
+27/3/2016 22:37:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:33 [userinterface] : User enters: " er"
+27/3/2016 22:37:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:33 [userinterface] : User enters: " er"
+27/3/2016 22:37:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:33 [userinterface] : User enters: " er"
+27/3/2016 22:37:33 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:34 [userinterface] : User enters: " e"
+27/3/2016 22:37:34 [logic] : Parser parses it to be INVALID
+27/3/2016 22:37:34 [userinterface] : User enters: " re"
+27/3/2016 22:37:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:34 [userinterface] : User enters: " re"
+27/3/2016 22:37:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:34 [userinterface] : User enters: " r"
+27/3/2016 22:37:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:34 [userinterface] : User enters: " er"
+27/3/2016 22:37:34 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:34 [userinterface] : User enters: " e"
+27/3/2016 22:37:34 [logic] : Parser parses it to be INVALID
+27/3/2016 22:37:35 [userinterface] : User enters: " re"
+27/3/2016 22:37:35 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:35 [userinterface] : User enters: " re"
+27/3/2016 22:37:35 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:35 [userinterface] : User enters: " r"
+27/3/2016 22:37:35 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:35 [userinterface] : User enters: " er"
+27/3/2016 22:37:35 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:35 [userinterface] : User enters: " e"
+27/3/2016 22:37:35 [logic] : Parser parses it to be INVALID
+27/3/2016 22:37:36 [userinterface] : User enters: " rer"
+27/3/2016 22:37:36 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:37 [userinterface] : User enters: " er"
+27/3/2016 22:37:37 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:37 [userinterface] : User enters: " er"
+27/3/2016 22:37:37 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:37 [userinterface] : User enters: " er"
+27/3/2016 22:37:38 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:38 [userinterface] : User enters: " er"
+27/3/2016 22:37:38 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:38 [userinterface] : User enters: " er"
+27/3/2016 22:37:38 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:39 [userinterface] : User enters: " er"
+27/3/2016 22:37:39 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:39 [userinterface] : User enters: " er"
+27/3/2016 22:37:39 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:39 [userinterface] : User enters: " er"
+27/3/2016 22:37:39 [logic] : Parser parses it to be ADD
+27/3/2016 22:37:44 [userinterface] : User enters: " search E"
+27/3/2016 22:37:44 [logic] : Parser parses it to be SEARCH
+27/3/2016 22:37:51 [userinterface] : User enters: " exit"
+27/3/2016 22:37:51 [logic] : Parser parses it to be ERROR
+27/3/2016 22:37:53 [userinterface] : User enters: " exit"
+27/3/2016 22:37:53 [logic] : Parser parses it to be ERROR
+27/3/2016 22:38:47 [userinterface] : User enters: " lololol"
+27/3/2016 22:38:47 [logic] : Parser parses it to be ADD
+27/3/2016 22:38:49 [userinterface] : User enters: " exit"
+27/3/2016 22:38:49 [logic] : Parser parses it to be ERROR

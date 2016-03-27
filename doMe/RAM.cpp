@@ -19,7 +19,9 @@ RAM::RAM() {
 	_lastAddedTask = NULL;
 	_storage = Storage::getInstance();
 	_settings = Settings::getInstance();
+}
 
+void RAM::loadRAM() {
 	loadData();
 }
 
@@ -140,14 +142,7 @@ void RAM::sort() {
 }
 
 void RAM::loadData() {
-    try {
 	ramLoadVector(_storage->retrieveData(_settings->getSaveDirectory() + DEFAULT_TEXT_FILE_NAME));
-    } catch (Exception_FileCannotOpen e) {
-        _storage->openDefaultNewFile(DEFAULT_TEXT_FILE_NAME);
-        vector<string> null;
-        ramLoadVector(null);
-        throw e;
-    }
 }
 
 void RAM::saveData() {
