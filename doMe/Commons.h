@@ -12,6 +12,7 @@
 using namespace std;
 
 #define WEEK_DAY Commons::getWeek_Day()
+#define DATE Commons::getDate()
 #define DATE_DAY Commons::getDate_Day()
 #define DATE_MONTH Commons::getDate_Month()
 #define DATE_YEAR Commons::getDate_Year()
@@ -31,12 +32,13 @@ public:
 	static void log(string file, string message);
 
 	static int getWeek_Day();		//eg. 2 = Tuesday
+	static int getDate();			//eg. 20161128
 	static int getDate_Day();		//eg. 2, 14, 30
 	static int getDate_Month();		//eg. 2, 14, 30
 	static int getDate_Year();		//eg. 2016
 	static int getTime_Hour();		//eg. 2, 14, 23
-	static int getTime_Minute();	//eg. 2, 14, 56
-	static int getTime_Second();	//eg. 2, 14, 56
+	static int getTime_Minute();		//eg. 2, 14, 56
+	static int getTime_Second();		//eg. 2, 14, 56
 
 	static string integerToString(int integer);
 	static string trim(string file);

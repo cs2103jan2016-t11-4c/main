@@ -43,7 +43,7 @@ void Storage::saveData(vector<string> updatedData, string directory) {
         writeFile.close();
     }
     else {
-    	throw Exception_FileCannotOpen("Error opening " + directory);
+ //   	throw Exception_FileCannotOpen("Error opening " + directory);
     }
 }
 
