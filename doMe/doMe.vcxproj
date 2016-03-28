@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chrono.cpp" />
+    <ClCompile Include="Command_Feedback.cpp" />
     <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Exception_ExceededParameterLimit.cpp" />
     <ClCompile Include="Exception_FileCannotOpen.cpp" />
@@ -49,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chrono.h" />
+    <ClInclude Include="Command_Feedback.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Exception_ExceededParameterLimit.h" />
     <ClInclude Include="Exception_FileCannotOpen.h" />

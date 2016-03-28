@@ -8,8 +8,7 @@ Command_SaveDirectory::Command_SaveDirectory(string newSaveDirectory)
 }
 
 bool Command_SaveDirectory::execute() {
-	_memory->changeSaveDirectory(_newSaveDirectory);
-	return true;
+	return _memory->changeSaveDirectory(_newSaveDirectory);
 }
 
 bool Command_SaveDirectory::undo() {

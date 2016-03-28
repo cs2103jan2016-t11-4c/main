@@ -1,3 +1,4 @@
+//@@author A0130475L
 #pragma once
 #include <string>
 #include <fstream>
@@ -9,13 +10,7 @@ using namespace std;
 
 
 class Settings {
-private:
-    static Settings* _instance;
-    Settings(void);
-    ~Settings(void);
 public:
-    /*Settings(void);
-    ~Settings(void);*/
     static Settings* getInstance();
 
     //setter
@@ -29,10 +24,6 @@ public:
     void getWindowSize(int& width, int& length);
 
     void loadSettings(); //placed in constructor of Settings; boolean return value to be reconsidered
-
-
-    bool checkEmptySaveDirectory(); 
-    bool checkForSettingsFile();
 
 #ifndef TESTMODE 
 private: 
@@ -52,6 +43,10 @@ public:
     int _width;
     int _length;
     char buffer[255];
+    static Settings* _instance;
+
+    Settings(void);
+    ~Settings(void);
 
     void settingsLoadVector(vector<string> &existingData);
     vector<string> settingsGetVector();

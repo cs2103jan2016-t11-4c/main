@@ -1,3 +1,4 @@
+//@@author A0130475L
 #include "Settings.h"
 const string Settings::FILE_SETTINGS_NAME = "settings.txt";
 const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
@@ -18,7 +19,6 @@ Settings::Settings(void) {
     _viewType = 0;
     _width = DEFAULT_WINDOWS_WIDTH;
     _length = DEFAULT_WINDOWS_LENGTH;
-    loadSettings(); //easier for constructor of Memory class -joan
 }
 
 Settings::~Settings(void) {
@@ -30,7 +30,12 @@ void Settings::loadSettings() {
     Storage* storage;
     storage = Storage::getInstance();
     try {
-        settingsLoadVector(storage->retrieveData(FILE_SETTINGS_NAME));
+        ifstream readFile(FILE_SETTINGS_NAME);
+        if(readFile.is_open()) {
+            settingsLoadVector(storage->retrieveData(FILE_SETTINGS_NAME));
+        } else {
+            saveSettings();
+        }
     } catch (Exception_FileCannotOpen e) {
         saveSettings();
     }

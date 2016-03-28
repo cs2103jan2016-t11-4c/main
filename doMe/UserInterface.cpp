@@ -15,34 +15,6 @@ const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is sa
 const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
-const string UserInterface::MESSAGE_ADD = "Added \"%s\" into %s";
-const string UserInterface::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
-const string UserInterface::MESSAGE_DELETE = "Deleted \"%s\" from %s";
-const string UserInterface::MESSAGE_EDIT = "Edited inputted task description to \"%s\"";
-const string UserInterface::MESSAGE_CLEAR = "All contents cleared from %s";
-const string UserInterface::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit\" to exit the search module~";
-const string UserInterface::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
-const string UserInterface::MESSAGE_CHANGE_FILE_DIRECTORY = "New save directory: %s";
-const string UserInterface::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
-const string UserInterface::MESSAGE_EXIT_SEARCH = "Exited search module.";
-
-const string UserInterface::MESSAGE_UNDO_COMMAND = "Undo previous command.";
-const string UserInterface::MESSAGE_UNDO_ADD = "Undo (ADD) of \"%s\"";
-const string UserInterface::MESSAGE_UNDO_DELETE = "Undo (DELETE) of \"%s\"";
-const string UserInterface::MESSAGE_UNDO_EDIT = "Undo (EDIT) of \"%s\"";
-const string UserInterface::MESSAGE_UNDO_CLEAR = "Undo (CLEAR)";
-const string UserInterface::MESSAGE_UNDO_VIEW_TYPE = "Undo (Viewtype) change of \"%d\"";
-const string UserInterface::MESSAGE_UNDO_CHANGE_DIRECTORY = "Undo (Change Directory) of \"%s\"";
-
-const string UserInterface::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
-const string UserInterface::ERROR_INVALID_DELETE = "Invalid (DELETE) has been inputted.";
-const string UserInterface::ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been inputted.";
-const string UserInterface::ERROR_INVALID_COMMAND = "Invalid command has been inputted.";
-const string UserInterface::ERROR_INVALID_VIEWTYPE = "Invalid (Viewtype) has been inputted.";
-const string UserInterface::ERROR_INVALID_EDIT = "Invalid (EDIT) of task description.";
-const string UserInterface::ERROR_INVALID_UNDO = "Unable to undo previous command.";
-const string UserInterface::ERROR_SET_INVALID_SAVE_FILE_DIRECTORY = "Invalid inputted file directory.";
-
 
 const string UserInterface::MESSAGE_HELP_TIPS[] = { 
     "add <task description>", 
@@ -55,10 +27,6 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
     "exit"
 }; 
 
-/*
-UserInterface::UserInterface(void) {
-}
-*/
 UserInterface::UserInterface(void) {
     COORD windowSize;
     windowSize = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
@@ -66,11 +34,8 @@ UserInterface::UserInterface(void) {
     _maxWindowWidth = windowSize.X;
     _maxWindowLength = windowSize.Y;
 
-    try {
-        _logic = Logic::getInstance();
-    } catch (Exception_FileCannotOpen e){
-        MESSAGE_WELCOME = e.getString();
-    }
+    _commandFeedback = Command_Feedback::getInstance();
+    _logic = Logic::getInstance();
     _memory = Memory::getInstance();
     _taskList = _memory->ramGetTaskList();
 }
@@ -82,9 +47,16 @@ UserInterface::~UserInterface(void) {
 
 void UserInterface::setEnvironment() {
     printProgramWelcomePage();
-    _memory->loadSettings();
-    _memory->loadRam();
-
+    try {
+        _memory->loadSettings();
+    } catch(Exception_FileCannotOpen e) {
+        MESSAGE_WELCOME = e.getString();
+    }
+    try {
+        _memory->loadRam();
+    } catch(Exception_FileCannotOpen e) {
+        MESSAGE_WELCOME = e.getString();
+    }
 
     int length,width;
     _memory->getWindowSize(width,length);
@@ -118,7 +90,7 @@ void UserInterface::printProgramWelcomePage() {
 }
 
 void UserInterface::printNotificationWelcome() {
-    printBeforeMessageDisplay();
+    printDefaultDisplay();
     showToUser(MESSAGE_WELCOME);
 }
 
@@ -145,345 +117,42 @@ void UserInterface::executeCommandUntilExit() {
             stringCommand = getStringCommand();
             LOG(__FILE__,"User enters: \" " + stringCommand + "\"");
             command = _logic->executeCommand(stringCommand);
+
+            printMessageDisplay(command);
             printExecutionMessage(command, VALID_MESSAGE);
         } catch(Exception_InvalidCommand e) {
-            printExecutionMessage(e.getCommand(), INVALID_MESSAGE);
             command = e.getCommand();
+            printMessageDisplay(command);
+            printExecutionMessage(command, INVALID_MESSAGE);
+            
         }
     } while(command->getCommandType() != EXIT);      
 }
 
-void UserInterface::printBeforeMessageDisplay() {
+void UserInterface::printMessageDisplay(Command* command) {
+
+    COMMAND_TYPE commandType = command->getCommandType();
+
+    switch(commandType) {
+    case SEARCH:
+        printSearchList(command->getSearchTerm(), _memory->getViewType());
+        break;
+    default:
+        printDefaultDisplay();
+        break;
+    }
+}
+
+void UserInterface::printDefaultDisplay() {
     Chrono time;
     printTaskList(time.getCurrentDate(),_memory->getViewType());
 }
 
 void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    COMMAND_TYPE commandType = executionMessage->getCommandType();
+    string message;
+    message = _commandFeedback->getCommandFeedback(executionMessage, commandOutcome, _memory->getViewType());
+    showToUser(message);
 
-    switch(commandType) {
-    case ADD:
-        printNotificationAdd(executionMessage, commandOutcome);
-        break;
-    case DISPLAY:
-        showToUser("no display UI");
-        break;
-    case DEL:
-        printNotificationDelete(executionMessage, commandOutcome);
-        break;
-    case EDIT:
-        printNotificationEdit(executionMessage, commandOutcome);
-        break;
-    case CLEAR:
-        printNotificationClear(executionMessage, commandOutcome);
-        break;
-    case UNDO:
-        printNotificationUndo(executionMessage, commandOutcome);
-        break;
-    case SORT:
-        showToUser("auto sort?");
-        break;
-    case SEARCH:
-        printNotificationSearchTerm(executionMessage, commandOutcome);
-        break;
-    case ENDSEARCH:
-        printNotificationEndSearch(executionMessage, commandOutcome);
-        break;
-    case VIEWTYPE:
-        printNotificationViewType(executionMessage, commandOutcome);
-        break;
-    case SAVEDIRECTORY:
-        printNotificationChangeSaveFileDirectory(executionMessage, commandOutcome);
-        break;
-    case EXIT:
-        //showToUser("Do I even need a exiting message? Nope");
-        break;
-    case INVALID:
-        printNotificationInvalidCommand(executionMessage, commandOutcome);
-        break;
-    default:
-        break;
-
-    }
-}
-
-/****************************************************************/
-
-void UserInterface::printNotificationUndo(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    Command* undoCommandMessage;
-    COMMAND_TYPE commandType;
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        undoCommandMessage = executionMessage->getUndoneCommand();
-        commandType = undoCommandMessage->getCommandType();
-        switch(commandType) {
-        case ADD:
-            undoNotificationAdd(undoCommandMessage);
-            break;
-        case DISPLAY:
-            assert(0);
-            showToUser("no display UI");
-            break;
-        case DEL:
-            undoNotificationDel(undoCommandMessage);
-            break;
-        case EDIT:
-            undoNotificationEdit(undoCommandMessage);
-            break;
-        case CLEAR:
-            undoNotificationClear(undoCommandMessage);
-            break;
-        case UNDO:
-            assert(0);
-            showToUser("Unable to undo a undo");
-            break;
-        case SORT:
-            assert(0);
-            showToUser("auto sort?");
-            break;
-        case SEARCH:
-            showToUser("Can you even undo a search?");
-            break;
-        case ENDSEARCH:
-            assert(0);
-            showToUser("No undo exit");
-            break;
-        case VIEWTYPE:
-            undoNotificationViewType(undoCommandMessage);
-            break;
-        case SAVEDIRECTORY:
-            undoNotificationChangDirectory(undoCommandMessage);
-            break;
-        case EXIT:
-            assert(0);
-            break;
-        case INVALID:
-            assert(0);
-            showToUser("Taken care of");
-            break;
-        default:
-            showToUser(MESSAGE_UNDO_COMMAND);
-            break;
-        }
-        break;
-    case INVALID_MESSAGE:
-        invalidNotificationUndo();
-        break;
-    }
-}
-
-void UserInterface::undoNotificationAdd(Command* executionMessage) {
-    string taskString;
-    taskString = getTaskString(executionMessage->getTask(),_memory->getViewType());
-    sprintf_s(buffer, MESSAGE_UNDO_ADD.c_str(),taskString.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::undoNotificationDel(Command* executionMessage) {
-    string taskString;
-    taskString = getTaskString(executionMessage->getTask(),_memory->getViewType());
-    sprintf_s(buffer, MESSAGE_UNDO_DELETE.c_str(),taskString.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::undoNotificationEdit(Command* executionMessage) {
-    string taskString;
-    taskString = getTaskString(executionMessage->getTask(),_memory->getViewType());
-    sprintf_s(buffer, MESSAGE_UNDO_EDIT.c_str(),taskString.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::undoNotificationClear(Command* executionMessage) {
-    showToUser(MESSAGE_UNDO_CLEAR);
-}
-
-void UserInterface::undoNotificationViewType(Command* executionMessage) {
-    sprintf_s(buffer, MESSAGE_UNDO_VIEW_TYPE.c_str(),executionMessage->getViewType());
-    showToUser(buffer);
-}
-
-void UserInterface::undoNotificationChangDirectory(Command* executionMessage) {
-    sprintf_s(buffer, MESSAGE_UNDO_CHANGE_DIRECTORY.c_str(),executionMessage->getSaveDirectory());
-    showToUser(buffer);
-}
-
-/****************************************************************/
-
-void UserInterface::printNotificationAdd(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationAdd(executionMessage->getTask(), _memory->getViewType(), _memory->getTextFileName());
-        break;
-    case INVALID_MESSAGE:
-        invalidNotificationAdd();
-        break;
-    }
-
-}
-
-void UserInterface::printNotificationDelete(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationDelete(executionMessage->getTask(), _memory->getViewType(), _memory->getTextFileName());
-        break;
-    case INVALID_MESSAGE:
-        invalidNotificationDelete();
-        break;
-    }
-}
-
-void UserInterface::printNotificationEdit(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationEdit(executionMessage->getTask(), _memory->getViewType());
-        break;
-    case INVALID_MESSAGE:
-        invalidNotificationEdit();
-        break;
-    }
-}
-
-void UserInterface::printNotificationClear(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationClear(_memory->getTextFileName());
-        break;
-    case INVALID_MESSAGE:
-        showToUser("No Invalid Clear");
-        break;
-    }
-}
-
-void UserInterface::printNotificationSearchTerm(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    string searchTerm;
-    searchTerm = executionMessage->getSearchTerm();
-    printSearchList(searchTerm, _memory->getViewType());
-    validNotificationSearchTerm(searchTerm);
-}
-
-void UserInterface::printNotificationEndSearch(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationExitSearch();
-        break;
-    case INVALID_MESSAGE:
-        showToUser("No Invalid Exit Search");
-        break;
-    }
-}
-
-void UserInterface::printNotificationViewType(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationViewType(executionMessage->getViewType());
-        break;
-    case INVALID_MESSAGE:
-        invalidNotificationViewtype();
-        break;
-    }
-}
-
-void UserInterface::printNotificationChangeSaveFileDirectory(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    switch(commandOutcome) {
-    case VALID_MESSAGE:
-        validNotificationChangeSaveFileDirectory(executionMessage->getSaveDirectory());
-        break;
-    case INVALID_MESSAGE:
-        invalidNotificationSaveFileDirectory();
-        break;
-    }
-}
-
-void UserInterface::printNotificationInvalidCommand(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
-    printBeforeMessageDisplay();
-    invalidNotificationCommand();
-}
-
-/****************************************************************/
-
-void UserInterface::validNotificationAdd(Task* task, int viewType, string textFileName) {
-    string taskString;
-    taskString = getTaskString(task,viewType);
-    sprintf_s(buffer, MESSAGE_ADD.c_str(),taskString.c_str(), textFileName.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationDelete(Task* task, int viewType, string textFileName) {
-    string taskString;
-    taskString = getTaskString(task,viewType);
-    sprintf_s(buffer, MESSAGE_DELETE.c_str(),taskString.c_str(), textFileName.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationEdit(Task* task, int viewType) {
-    string taskString;
-    taskString = getTaskString(task,viewType);
-    sprintf_s(buffer, MESSAGE_EDIT.c_str(),taskString.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationClear(string textFileName) {
-    sprintf_s(buffer, MESSAGE_CLEAR.c_str(), textFileName.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationSearchTerm(string searchTerm) {
-    sprintf_s(buffer, MESSAGE_SEARCH.c_str(), searchTerm.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationExitSearch() {
-    sprintf_s(buffer, MESSAGE_EXIT_SEARCH.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationViewType(int newViewType) {
-    sprintf_s(buffer, MESSAGE_VIEW_TYPE.c_str(), newViewType);
-    showToUser(buffer);
-}
-
-void UserInterface::validNotificationChangeSaveFileDirectory(string newDirectory) {
-    sprintf_s(buffer, MESSAGE_CHANGE_FILE_DIRECTORY.c_str(), newDirectory.c_str());
-    showToUser(buffer);
-}
-
-
-/****************************************************************/
-
-void UserInterface::invalidNotificationAdd() {
-    showToUser(ERROR_INVALID_ADD);
-}
-
-void UserInterface::invalidNotificationDelete() {
-    showToUser(ERROR_INVALID_DELETE);
-}
-
-void UserInterface::invalidNotificationEdit() {
-    showToUser(ERROR_INVALID_EDIT);
-}
-
-void UserInterface::invalidNotificationViewtype() {
-    showToUser(ERROR_INVALID_VIEWTYPE);
-}
-
-void UserInterface::invalidNotificationSaveFileDirectory() {
-    showToUser(ERROR_SET_INVALID_SAVE_FILE_DIRECTORY);
-}
-
-void UserInterface::invalidNotificationCommand() {
-    showToUser(ERROR_INVALID_COMMAND);
-}
-
-void UserInterface::invalidNotificationUndo() {
-    showToUser(ERROR_INVALID_UNDO);
 }
 
 /****************************************************************/
@@ -524,26 +193,6 @@ void UserInterface::printTaskList(int currentDate ,int viewType) {
 
     printDisplayList(createDisplayBox(taskListType->createDisplayList()));
     delete taskListType;
-}
-
-/****************************************************************/
-
-string UserInterface::getTaskString(Task* task, int viewType) {
-    ViewType* taskListType;
-
-    switch(viewType) {
-    case 1:
-        taskListType = new ViewType1();
-        break;
-    case 2:
-        taskListType = new ViewType2();
-        break;
-    default:
-        taskListType = new ViewType();
-        break;
-    }
-
-    return taskListType->getTaskString(task);
 }
 
 /****************************************************************/
@@ -622,25 +271,6 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
 /*************************Unused*********************************/
 /****************************************************************/
 
-void UserInterface::printNotificationEmpty(string textFileName) {
-    sprintf_s(buffer, MESSAGE_EMPTY.c_str(), textFileName.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::printNotificationClearSearch(string searchTerm) {
-    sprintf_s(buffer, MESSAGE_CLEAR_SEARCH.c_str(), searchTerm.c_str());
-    showToUser(buffer);
-}
-
-void UserInterface::printPromptFirstTimeUser() {
-    showToUser(MESSAGE_FIRST_TIME);
-    cout << MESSAGE_SAVE_FILE_NAME;
-}
-
-void UserInterface::printPromptFirstTimeUserDirectory() {
-    cout << MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT;
-}
-
 void UserInterface::printPromptHelp() {
     size_t size = (sizeof(MESSAGE_HELP_TIPS)/sizeof(*MESSAGE_HELP_TIPS));
     vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
@@ -650,9 +280,4 @@ void UserInterface::printPromptHelp() {
         showToUser(*helpListIter);
         helpListIter++;
     }
-}
-
-void UserInterface::printNotificationEmptySaveFileDirectory() {
-    showToUser(MESSAGE_EMPTY_SAVE_FILE_DIRECTORY);
-    showToUser(MESSAGE_TIP_SAVE_FILE_DIRECTORY);
 }

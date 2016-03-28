@@ -23,7 +23,6 @@ public:
 	bool changeSaveDirectory(string);
 	bool changeViewType(int);
     void changeWindowSize(int width,int length);
-
 	string getSaveDirectory(); 
 	int getViewType(); 
     string getTextFileName();
