@@ -11,13 +11,13 @@
 #include "Exception_FileCannotOpen.h"
 using namespace std;
 
-#define WEEK_DAY getWeek_Day()
-#define DATE_DAY getDate_Day()
-#define DATE_MONTH getDate_Month()
-#define DATE_YEAR getDate_Year()
-#define TIME_HOUR getTime_Hour()
-#define TIME_MINUTE getTime_Minute()
-#define TIME_SECOND getTime_Second()
+#define WEEK_DAY Commons::getWeek_Day()
+#define DATE_DAY Commons::getDate_Day()
+#define DATE_MONTH Commons::getDate_Month()
+#define DATE_YEAR Commons::getDate_Year()
+#define TIME_HOUR Commons::getTime_Hour()
+#define TIME_MINUTE Commons::getTime_Minute()
+#define TIME_SECOND Commons::getTime_Second()
 #define LOG(file, message) Commons::log(file, message)
 
 class Commons {
