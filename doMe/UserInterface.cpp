@@ -135,7 +135,7 @@ void UserInterface::printMessageDisplay(Command* command) {
 
     switch(commandType) {
     case SEARCH:
-        printSearchList(command->getSearchTerm(), _memory->getViewType());
+        printSearchDisplay();
         break;
     default:
         printDefaultDisplay();
@@ -144,8 +144,11 @@ void UserInterface::printMessageDisplay(Command* command) {
 }
 
 void UserInterface::printDefaultDisplay() {
-    Chrono time;
-    printTaskList(time.getCurrentDate(),_memory->getViewType());
+    printTaskList(DATE, _memory->getViewType());
+}
+
+void UserInterface::printSearchDisplay() {
+    printTaskList(DATE, _memory->getViewType());
 }
 
 void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
@@ -157,7 +160,7 @@ void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUT
 
 /****************************************************************/
 
-void UserInterface::printSearchList(string searchTerm, int viewType) {
+void UserInterface::printSearchList(int currentDate, int viewType) {
     ViewType* taskListType;
 
     switch(viewType) {
@@ -176,7 +179,7 @@ void UserInterface::printSearchList(string searchTerm, int viewType) {
     delete taskListType;
 }
 
-void UserInterface::printTaskList(int currentDate ,int viewType) {
+void UserInterface::printTaskList(int currentDate, int viewType) {
     ViewType* taskListType;
 
     switch(viewType) {

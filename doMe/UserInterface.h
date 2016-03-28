@@ -48,6 +48,36 @@ public:
     int _maxWindowLength;
     char buffer[255];
 
+    //Initial programme page
+    void printProgramWelcomePage();
+    void printNotificationWelcome();
+
+    //prompts
+    void printPromptCommand();	
+    void printPromptHelp();
+
+    //Message display
+    void printMessageDisplay(Command* command);
+    void printSearchDisplay();
+    void printDefaultDisplay();
+
+    void printTaskList(int currentDate ,int viewType);
+    void printSearchList(int currentDate, int viewType);
+
+    //notification
+    void printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+
+    //helper
+    void showToUser(string message);
+    void showToUserMessageBox();
+    string getStringCommand();
+    vector<string> createDisplayBox(vector<string> displayList);
+    void printDisplayList(vector<string> displayList); 
+
+    //window size related function
+    void resizeWindow(int width, int length);
+    void setWindowsRowsColumns(int size);
+
     static const string SYSTEM_MODE_CON;
     static string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
@@ -57,44 +87,10 @@ public:
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;
-
     static const string MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT;
     static const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
-
     static const string MESSAGE_COMMAND_PROMPT;
-
     static const string MESSAGE_HELP_TIPS[];
-
-    //in the process of changing
-    void printMessageDisplay(Command* command);
-    void printDefaultDisplay();
-
-    //main printing
-    void printTaskList(int currentDate ,int viewType);
-    void printSearchList(string searchTerm, int viewType);
-
-    //command
-    string getStringCommand();
-
-    //programme page
-    void printProgramWelcomePage();
-    void printNotificationWelcome();
-
-    //prompts
-    void printPromptCommand();	
-    void printPromptHelp();
-
-    //notification
-    void printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
-
-    //helper
-    void showToUser(string message);
-    void showToUserMessageBox();
-    void resizeWindow(int width, int length);
-    void setWindowsRowsColumns(int size);
-    vector<string> createDisplayBox(vector<string> displayList);
-    void printDisplayList(vector<string> displayList); 
-
 };
 
