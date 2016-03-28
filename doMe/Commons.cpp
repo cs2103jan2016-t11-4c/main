@@ -18,65 +18,80 @@ void Commons::log(string file, string message) {
 
 int Commons::getWeek_Day() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_mday;
+	return localTime.tm_mday;
+}
+
+int Commons::getDate() {
+	time_t currentTime;
+	struct tm localTime;
+	time( &currentTime );
+	localtime_s(&localTime, &currentTime);
+
+	int day = localTime.tm_mday;
+	int month = localTime.tm_mon + 1;
+	int year = localTime.tm_year + 1900;
+
+	int date = year * 10000 + month * 100 + day;
+
+	return date;
 }
 
 int Commons::getDate_Day() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_mday;
+	return localTime.tm_mday;
 }
 
 int Commons::getDate_Month() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_mon + 1;
+	return localTime.tm_mon + 1;
 }
 
 int Commons::getDate_Year() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_year + 1900;
+	return localTime.tm_year + 1900;
 }
 
 int Commons::getTime_Hour() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_hour;
+	return localTime.tm_hour;
 }
 
 int Commons::getTime_Minute() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_min;
+	return localTime.tm_min;
 }
 
 int Commons::getTime_Second() {
 	time_t currentTime;
-	struct tm *localTime;
+	struct tm localTime;
 	time( &currentTime );
-	localTime = localtime( &currentTime );
+	localtime_s(&localTime, &currentTime);
 
-	return localTime->tm_sec;
+	return localTime.tm_sec;
 }
 
 string Commons::integerToString(int integer) {
