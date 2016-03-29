@@ -1,154 +1,161 @@
+//@@author A0122569B
+
 #include "InputTokens.h"
 
-
-InputTokens::InputTokens(string commandLine) :
-	_commandLine(commandLine)
-{
+InputTokens::InputTokens(string commandLine) {
 	_dictionary = Dictionary::getInstance();
-	generateTokensFromCommandLine();
+	generateTokensFromCommandLine(commandLine);
 }
 
-InputTokens::~InputTokens(void)
-{
+InputTokens::~InputTokens(void) {
 }
 
 string InputTokens::getToken(int index) {
 	assert(!isOutOfBounds(index));
+	
 	return _tokens[index];
 }
 
 string InputTokens::getOriginalToken(int index) {
 	assert(!isOutOfBounds(index));
+	
 	return _tokensOriginal[index];
 }
 
 int InputTokens::getInteger(int index) {
 	assert(!isOutOfBounds(index));
 	assert(isInteger(index));
+	
 	return stoi(_tokens[index]);
 }
 
-int InputTokens::getSize() {
+unsigned int InputTokens::getSize() {
 	return _tokens.size();
 }
 
-int InputTokens::getSize(int index) {
+unsigned int InputTokens::getSize(int index) {
 	assert(!isOutOfBounds(index));
+	
 	return _tokens[index].size();
 }
+
 
 bool InputTokens::isOutOfBounds(int index) {
 	if(index < 0) {
 		return true;
 	}
+
 	unsigned int positiveIndex = index;
-	if(positiveIndex >= _tokens.size()) {
-		return true;
-	} else {
-		return false;
-	}
+	
+	return (positiveIndex >= _tokens.size());
 }
 
 bool InputTokens::hasNoMoreWord(int index) {
 	while(!isOutOfBounds(index) && _tokensOriginal[index] == NO_STRING) {
 		index++;
 	}
+	
 	return isOutOfBounds(index);
 }
 
 bool InputTokens::hasMeaning(string meaning, int index) {
 	assert(!isOutOfBounds(index));
+	
 	return _dictionary->hasMeaning(meaning, _tokens[index]);
 }
 
 bool InputTokens::isInteger(int index) {
 	assert(!isOutOfBounds(index));
-	if(_tokens[index].find_first_not_of("1234567890") == string::npos) {
-		return true;
-	} else {
-		return false;
-	}
-}
 
-bool InputTokens::isInteger(char c) {
-	if(c >= '0' && c <= '9') {
-		return true;
-	} else {
-		return false;
-	}
+	return (_tokens[index].find_first_not_of("1234567890") == string::npos);
 }
 
 bool InputTokens::isParsed(int index) {
 	assert(!isOutOfBounds(index));
-	if(_tokens[index] < "a") {
-		return false;
-	} else {
-		return true;
-	}
+	
+	return !(_tokens[index] < "a");
 }
 
 bool InputTokens::isExtensionOfAWord(int index) {
 	assert(!isOutOfBounds(index));
-	if(_tokensOriginal[index] == NO_STRING) {
-		return true;
-	} else {
-		return false;
-	}
+	
+	return (_tokensOriginal[index] == NO_STRING);
 }
 
 bool InputTokens::isBreakPoint(int index) {
 	return isOutOfBounds(index) || isParsed(index);
 }
 
-bool InputTokens::isMarkedAs(string s, int index) {
+bool InputTokens::isMarkedAs(string marker, int index) {
 	assert(!isOutOfBounds(index));
-	if(_tokens[index].compare(s) == 0) {
-		return true;
-	} else {
-		return false;
-	}
+	
+	return (_tokens[index].compare(marker) == 0);
 }
 
-void InputTokens::markAs(string s, int index) {
+
+void InputTokens::markAs(string marker, int index) {
 	assert(!isOutOfBounds(index));
-	_tokens[index] = s;
+	assert(isLowerCase(marker));
+
+	_tokens[index] = marker;
+	
 	return;
 }
 
-void InputTokens::markAs(string firstString, string secondString, int index) {
+void InputTokens::markAs(string firstMarker, string secondMarker, int index) {
 	assert(!isOutOfBounds(index));
-	_tokens[index] = firstString;
-	_tokensOriginal[index] = secondString;
+	assert(isLowerCase(firstMarker));
+	assert(isLowerCase(secondMarker));
+	
+	_tokens[index] = firstMarker;
+	_tokensOriginal[index] = secondMarker;
+	
 	return;
 }
 
 void InputTokens::remove(int index) {
 	assert(!isOutOfBounds(index));
+	
 	_tokens.erase(_tokens.begin()+index);
 	_tokensOriginal.erase(_tokensOriginal.begin()+index);
+	
 	return;
 }
 
-void InputTokens::generateTokensFromCommandLine() {
-	assert(_commandLine.size() > 0);
-	istringstream is(_commandLine);
+
+void InputTokens::generateTokensFromCommandLine(string commandLine) {
+	assert(commandLine.size() != 0);
+	
+	istringstream is(commandLine);
 	string chunk;
 	while(is >> chunk) {
+		//if a word contains alphabets and numbers, this function split them to get the tokens
 		vector<string> tokens = getTokensFromChunk(makeAllCaps(chunk));
-		_tokens.push_back(tokens[START_INDEX]);
-		_tokensOriginal.push_back(chunk);
+		assert(tokens.size() != 0);
+		
+		addToVector(tokens[START_INDEX], chunk);
 		for(unsigned int i = 1; i < tokens.size(); i++) {
-			_tokens.push_back(tokens[i]);
-			_tokensOriginal.push_back("");
+			addToVector(tokens[i], NO_STRING);
 		}
 	}
+
+	return;
+}
+
+
+void InputTokens::addToVector(string token, string original) {
+	_tokens.push_back(token);
+	_tokensOriginal.push_back(original);
+
 	return;
 }
 
 vector<string> InputTokens::getTokensFromChunk(string chunk) {
 	assert(chunk.size() > 0);
+	
 	vector<string> tokens;
 	size_t index = START_INDEX;
+	
 	while(index != string::npos) {
 		if(isInteger(chunk[index])) {
 			index = getNumbers(index, chunk, &tokens);
@@ -156,20 +163,24 @@ vector<string> InputTokens::getTokensFromChunk(string chunk) {
 			index = getAlphabets(index, chunk, &tokens);
 		}
 	}
+	
 	return tokens;
 }
+
 
 size_t InputTokens::getAlphabets(size_t index, string chunk, vector<string>* tokens) {
 	assert(index != string::npos);
 	assert(tokens != NULL);
 	assert(chunk.size() > 0);
 	assert(chunk.size() > index);
+	
 	size_t next = chunk.find_first_of("0123456789", index);
 	if(next != string::npos) {
 		tokens->push_back(chunk.substr(index,next-index));
 	} else {
 		tokens->push_back(chunk.substr(index));
 	}
+	
 	return next;
 }
 
@@ -178,40 +189,29 @@ size_t InputTokens::getNumbers(size_t index, string chunk, vector<string>*  toke
 	assert(tokens != NULL);
 	assert(chunk.size() > 0);
 	assert(chunk.size() > index);
+	
 	size_t next = chunk.find_first_not_of("0123456789", index);
 	if(next != string::npos) {
 		tokens->push_back(chunk.substr(index,next-index));
 	} else {
 		tokens->push_back(chunk.substr(index));
 	}
+	
 	return next;
 }
 
 string InputTokens::makeAllCaps(string s) {
 	transform(s.begin(), s.end(), s.begin(), toupper);
+	
 	return s;
 }
 
+bool InputTokens::isInteger(char c) {
+	return (c >= '0' && c <= '9');
+}
 
+bool InputTokens::isLowerCase(string s) {
+	assert(s.size() != 0);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	return (s.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") == string::npos);
+}

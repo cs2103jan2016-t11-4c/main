@@ -1,9 +1,11 @@
 //Dictionary stores list of words and their corresponding meaning.
-//This singleton class is to be initialized with the getInstance() method which return a ptr to the object
+//This singleton class is to be initialized with the getInstance() method which returns a ptr to the object
 //The main API is bool Dictionary::hasMeaning(string meaning, string s);
 //Description: checks if a certain string s has the meaning provided by the meaning string
 //Pre-Condition: The meaning string is already in the dictionary
 //Post-Condition: None
+//
+//@@author A0122569B
 
 #pragma once
 
@@ -23,6 +25,9 @@ public:
 	bool hasMeaning(string meaning, string s);	//returns true if string s has the expected meaning, false otherwise
 	~Dictionary(void);
 
+	vector<string>* getSynonyms(string s);		//string must be present in dictionary
+	void addToDictionary(SynonymList* list);	//method that adds words to the dictionary
+
 private:
 	Dictionary(void);
 	
@@ -31,7 +36,7 @@ private:
 
 	void generateVocabulary();	//new vocabulary to be added through this method
 
-	void addV1VocabularyPackage();
+	void addBasicVocabularyPackage();
 	void addChronoVocabularyPackage();
 
 	void addDirectory();		//methods that add vocabulary to the dictionary
@@ -80,8 +85,5 @@ private:
 	void addThird();
 	void addFourth();
 
-	void addToDictionary(SynonymList* list);
-	
-	vector<string>* getSynonyms(string s);					//string must be present in dictionary
 	bool isFoundInVector(vector<string>* vector, string s);
 };

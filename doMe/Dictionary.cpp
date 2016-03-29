@@ -1,3 +1,5 @@
+//@@author A0122569B
+
 #include "Dictionary.h"
 
 Dictionary* Dictionary::_theOne = NULL;
@@ -28,11 +30,11 @@ bool Dictionary::hasMeaning(string meaning, string s) {
 }
 
 void Dictionary::generateVocabulary() { 
-	addV1VocabularyPackage();
+	addBasicVocabularyPackage();
 	addChronoVocabularyPackage();
 }
 
-void Dictionary::addV1VocabularyPackage() {
+void Dictionary::addBasicVocabularyPackage() {
 	addDisplay();
 	addDirectory();
 	addDelete();

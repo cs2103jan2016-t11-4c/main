@@ -1,3 +1,14 @@
+//This is the CommandPacker. This class creates the appropriate command object based on the 
+//lexed tokens passed to it. It is an singleton class and pointer to the object should be 
+//retrieved using the CommandPacker::getInstance() method.
+//The main API is Command* packCommand(InputTokens* tokens);
+//description: makes a command object baed on the tokens passed to it and returns the address 
+//to the command object.
+//Pre-Condition: The tokens pointer should not be NULL
+//Post-Condition: A Command object would be created. If required, a Task Object may also be created
+//
+//@@author A0122569B
+
 #pragma once
 
 #include "Command.h"
@@ -19,7 +30,7 @@
 #include <assert.h>
 #include <vector>
 
-#define LAST_INDEX -1
+#define LAST_INDEX 0
 #define NO_STRING ""
 
 using namespace std;
@@ -34,17 +45,17 @@ public:
 private:
 	CommandPacker(void);
 	static CommandPacker* _theOne;
-	TaskPacker* _taskPacker;
-
 	
+	TaskPacker* _taskPacker;
 	InputTokens* _tokens;
+	
 	string _description;
 	int _singleIndex;
-	vector<int> _indexes;
+	vector<int>* _indexes;
 	Task* _task;
 	Command* _command;
+	bool ambiguous;
 
-public:
 	void initializeAttributes(InputTokens* tokens);
 	void branchToNode(int index);
 

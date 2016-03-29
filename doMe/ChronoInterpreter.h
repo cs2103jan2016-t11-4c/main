@@ -1,6 +1,9 @@
+//@@author A0122569B
+
 #pragma once
+
 #include "InputTokens.h"
-#include "Chrono.h"
+#include "Commons.h"
 #include <assert.h>
 
 #define NO_VALUE 0
@@ -19,12 +22,14 @@ private:
 	static ChronoInterpreter* _theOne;
 
 	InputTokens* _tokens;
-	Chrono _chrono;
+	Commons* common;
 	int _day;
 	int _month;
 	int _year;
 	int _hour;
 	int _minute;
+	bool isPM;
+	bool dateFound;
 
 	void setTokens(InputTokens* tokens);
 	void traverseTokens(int index);
@@ -35,39 +40,63 @@ private:
 	void twoDigitIntegerNode(int index);
 	void threeDigitIntegerNode(int index);
 	void fourDigitIntegerNode(int index);
-	void sixDigitIntegerNode(int index, int size);
 	
-	void timeFormatANodeOne(int index);
-	void timeFormatANodeTwo(int index);
+	bool timeFormatANodeOne(int index);
+	bool timeFormatANodeTwo(int index);
 
 	bool timeFormatBNodeOne(int index);
 	bool timeFormatBNodeTwo(int index);
 
-	void dateFormatANodeOne(int index, int size);
+	bool dateFormatANodeOne(int index);
+	bool dateFormatANodeTwo(int index);
+	bool dateFormatANodeThree(int index);
+	bool dateFormatANodeFour(int index);
+	bool dateFormatANodeFive(int index);
+	bool dateFormatANodeSix(int index);
 
 	bool dateFormatBNodeOne(int index);
 	bool dateFormatBNodeTwo(int index);
 	bool dateFormatBNodeThree(int index);
 	bool dateFormatBNodeFour(int index);
-	bool dateFormatBNodeFive(int index);
 
 	bool dateFormatCNodeOne(int index);
-	void dateFormatCNodeTwo(int index);
+	bool dateFormatCNodeTwo(int index);
+	bool dateFormatCNodeThree(int index);
+	bool dateFormatCNodeFour(int index);
 
 	bool dateFormatDNodeOne(int index);
 	bool dateFormatDNodeTwo(int index);
 	bool dateFormatDNodeThree(int index);
 	bool dateFormatDNodeFour(int index);
 
+	bool dateRangeFormatANodeOne(int index);
+	bool dateRangeFormatANodeTwo(int index);
+	bool dateRangeFormatANodeThree(int index);
+	bool dateRangeFormatANodeFour(int index);
+	
 	int getMonthFromWord(int index);
 
 	void insertTime(int index);
 	void insertDate(int index);
+
+	int generateTime(int hour, int minute);	
+	int generateDate(int day, int month, int year);
+
+	bool isPossibleYear(int index);
+
+	int inferYear();
+	int inferYear(int twoDigitYear);
+
+	void adjustTo24HrsTime();
 	
-	bool isValidTime();
+
+	bool isExtensionOfDay(int index);
+
+	bool isValid24HrsTime();
+	bool isValid12HrsTime();
+	bool isValidMinutes();
 	bool isValidDate();
 	bool isLeap(int year);
 
 	void clearCache();
 };
-

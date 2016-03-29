@@ -1,14 +1,14 @@
+//@@author A0122569B
+
 #include "TaskPacker.h"
 
 TaskPacker* TaskPacker::_theOne = NULL;
 
-TaskPacker::TaskPacker(void)
-{
+TaskPacker::TaskPacker(void) {
 	_chronoInterpreter = ChronoInterpreter::getInstance();
 }
 
-TaskPacker::~TaskPacker(void)
-{
+TaskPacker::~TaskPacker(void) {
 }
 
 TaskPacker* TaskPacker::getInstance() {
@@ -21,10 +21,13 @@ TaskPacker* TaskPacker::getInstance() {
 
 
 Task* TaskPacker::packTask(InputTokens* tokens, int index) {
+	assert(tokens);
+	assert(!tokens->isOutOfBounds(index));
+
 	setAttributes(tokens);
 	findTaskDetails(index);
-	Task* task = new Task(_name, _date1, _date2, _time1, _time2, _location);
-	return task;
+	
+	return new Task(_name, _date1, _date2, _time1, _time2, _location);
 }
 
 
@@ -55,7 +58,7 @@ void TaskPacker::findDateAndTime(int index) {
 	_chronoInterpreter->interpretDateAndTime(_tokens, index);
 	findTime(index);
 	findDate(index);
-	
+
 	return;
 }
 

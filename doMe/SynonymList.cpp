@@ -1,3 +1,5 @@
+//@@author A0122569B
+
 #include "SynonymList.h"
 
 SynonymList::SynonymList(string meaning) :
@@ -20,7 +22,9 @@ vector<string>* SynonymList::getSynonyms() {
 
 void SynonymList::add(string synonym)  {
 	assert(synonym.compare("") != 0);
+	
 	_synonyms->push_back(synonym);
+	
 	return;
 }
 
@@ -31,5 +35,6 @@ void SynonymList::add(vector<string>* synonyms) {
 	for(unsigned int i = 0; i < synonyms->size(); i++) {
 		_synonyms->push_back(synonymsRef[i]);
 	}
+
 	return;
 }

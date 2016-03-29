@@ -1,3 +1,7 @@
+//The interface for the Parser Class
+//
+//@@author A0122569B
+
 #pragma once
 
 #include "Command.h"
