@@ -70,9 +70,9 @@ void TaskPacker::findDate(int index) {
 }
 
 void TaskPacker::extractDates(int index) {
-	for(int i = index; i < _tokens->getSize(); i++) {
-		if(_tokens->isMarkedAs(DATE_MARKER, i)) {
-			_dates.push_back(stoi(_tokens->getOriginalToken(i)));
+	for(unsigned int i = index; i < _tokens->getSize(); i++) {
+		if(_tokens->isMarkedAs(DATE_MARKER, (int) i)) {
+			_dates.push_back(stoi(_tokens->getOriginalToken((int) i)));
 		}
 	}
 
@@ -103,9 +103,9 @@ void TaskPacker::findTime(int index) {
 }
 
 void TaskPacker::extractTimes(int index) {
-	for(int i = index; i < _tokens->getSize(); i++) {
-		if(_tokens->isMarkedAs(TIME_MARKER, i)) {
-			_times.push_back(stoi(_tokens->getOriginalToken(i)));
+	for(unsigned int i = index; i < _tokens->getSize(); i++) {
+		if(_tokens->isMarkedAs(TIME_MARKER, (int) i)) {
+			_times.push_back(stoi(_tokens->getOriginalToken((int) i)));
 		}
 	}
 		return;
@@ -127,9 +127,9 @@ void TaskPacker::finalizeTimes() {
 
 
 void TaskPacker::findLocation(int index) {
-	for(int i = index; i < _tokens->getSize(); i++) {
-		if(hasLocationMarker(_tokens->getToken(i))) {
-			extractLocation(i);
+	for(unsigned int i = index; i < _tokens->getSize(); i++) {
+		if(hasLocationMarker(_tokens->getToken((int) i))) {
+			extractLocation((int) i);
 			break;
 		}
 	}
@@ -158,9 +158,9 @@ bool TaskPacker::hasLocationMarker(string s) {
 
 
 void TaskPacker::findName(int index) {
-	for(int i = index; i < _tokens->getSize(); i++) {
-		if(!_tokens->isParsed(i)) {
-			extractName(i);
+	for(unsigned int i = index; i < _tokens->getSize(); i++) {
+		if(!_tokens->isParsed((int) i)) {
+			extractName((int) i);
 			break;
 		}
 	}

@@ -12,3 +12,7 @@ bool Command_Invalid::execute() {
 COMMAND_TYPE Command_Invalid::getCommandType() {
 	return INVALID;
 }
+
+string Command_Invalid::getStringForm() {
+	return "Invalid";
+}

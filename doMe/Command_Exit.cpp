@@ -22,3 +22,7 @@ bool Command_Exit::undo() {
 COMMAND_TYPE Command_Exit::getCommandType() {
 	return _commandType;
 }
+
+string Command_Exit::getStringForm() {
+	return "Exit";
+}

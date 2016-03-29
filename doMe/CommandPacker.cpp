@@ -157,7 +157,7 @@ void CommandPacker::nodeThreeOfChangeViewTypeCommand(int index) {
 void CommandPacker::nodeOneOfDeleteCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		_singleIndex = LAST_INDEX;
-		packDeleteCommand;
+		packDeleteCommand();
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
 		nodeTwoOfDeleteCommand(index+1);
@@ -313,7 +313,7 @@ void CommandPacker::packExitCommand() {
 }
 
 void CommandPacker::packClearCommand() {
-	_command = new Command_Clear(&_indexes);
+	_command = new Command_Clear(_indexes);
 	
 	return;
 }

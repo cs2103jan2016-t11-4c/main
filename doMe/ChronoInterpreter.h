@@ -29,7 +29,6 @@ private:
 	int _hour;
 	int _minute;
 	bool isPM;
-	bool dateFound;
 
 	void setTokens(InputTokens* tokens);
 	void traverseTokens(int index);

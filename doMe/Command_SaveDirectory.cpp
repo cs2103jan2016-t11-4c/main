@@ -23,3 +23,8 @@ string Command_SaveDirectory::getSaveDirectory() {
 COMMAND_TYPE Command_SaveDirectory::getCommandType() {
 	return SAVEDIRECTORY;
 }
+
+string Command_SaveDirectory::getStringForm() {
+	string s = "SaveDirectory address: " + _newSaveDirectory;
+	return s;
+}

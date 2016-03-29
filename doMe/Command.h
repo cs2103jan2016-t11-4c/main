@@ -25,6 +25,8 @@ public:
 	virtual	string getSaveDirectory() {return "";}
 	virtual int getViewType() {return 0;}
 
+	virtual string getStringForm() {return "";}
+
 	virtual void setUndoneCommand(Command* command){}
 	virtual Command* getUndoneCommand(){return NULL;}
 };

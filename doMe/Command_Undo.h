@@ -13,4 +13,5 @@ public:
 	void setUndoneCommand(Command* command);
 	Command* getUndoneCommand();
 	COMMAND_TYPE getCommandType();
+	string getStringForm();
 };

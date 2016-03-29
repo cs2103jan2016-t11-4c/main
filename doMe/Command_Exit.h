@@ -10,6 +10,7 @@ private:
 public:
 	Command_Exit();
 	COMMAND_TYPE getCommandType();
+	string getStringForm();
 	bool execute();
 	bool undo();
 };

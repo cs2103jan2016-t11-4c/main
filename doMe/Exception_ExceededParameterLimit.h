@@ -1,4 +1,5 @@
 #pragma once
+
 class Exception_ExceededParameterLimit
 {
 public:

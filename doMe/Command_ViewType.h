@@ -13,4 +13,5 @@ public:
 	bool undo();
 	int getViewType();
 	COMMAND_TYPE getCommandType();
+	string getStringForm();
 };

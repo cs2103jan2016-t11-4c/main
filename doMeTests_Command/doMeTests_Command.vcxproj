@@ -52,7 +52,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\PeiChangHong\Documents\NUS Modules 14 I 15\Semester 4\CS2103\Core\main\doMe;C:\Users\zawadfarhan\Documents\Visual Studio 2012\Projects\DoMe\doMe;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories);G:\MISC\PortableGit\doMeGit\main\doMe;F:\201516Sem2\CS2103\Project\doMeTests_Command</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\zawadfarhan\Documents\Visual Studio 2012\Projects\doMe\doMe;C:\Users\PeiChangHong\Documents\NUS Modules 14 I 15\Semester 4\CS2103\Core\main\doMe;C:\Users\zawadfarhan\Documents\Visual Studio 2012\Projects\DoMe\doMe;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories);G:\MISC\PortableGit\doMeGit\main\doMe;F:\201516Sem2\CS2103\Project\doMeTests_Command</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>

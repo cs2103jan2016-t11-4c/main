@@ -37,10 +37,10 @@ void ChronoInterpreter::setTokens(InputTokens* tokens) {
 void ChronoInterpreter::traverseTokens(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	
-	for(int i = index; i < _tokens->getSize(); i++) {
+	for(unsigned int i = index; i < _tokens->getSize(); i++) {
 		if(_tokens->isExtensionOfAWord(i)) {
 			continue;
-		} else if(_tokens->isInteger(i)) {
+		} else if(_tokens->isInteger((int) i)) {
 			integerNode(i);
 		} else if(_tokens->hasMeaning("MONTHSOFTHEYEAR", i)) {
 			alphabeticMonthNode(i);
@@ -72,7 +72,7 @@ void ChronoInterpreter::twoDigitIntegerNode(int index) {
 	assert(_tokens->getSize(index) < 3);
 	
 	if(timeFormatBNodeOne(index)) {
-	} else if(dateFormatDNodeOne(index)) {
+	} else if(dateFormatANodeOne(index)) {
 	} else {
 		dateFormatDNodeOne(index);
 	}
@@ -464,15 +464,63 @@ bool ChronoInterpreter::dateRangeFormatANodeOne(int index) {
 	assert(_tokens->getSize() < 3);
 	
 	int day = _tokens->getInteger(index);
-	_day = day
-	if(
+	_day = day;
 
-
+	if(dateRangeFormatANodeTwo(index + 1)) {
+		_day = day;
+		insertDate(index);
+		return true;
+	} else {
+		return false;
+	}
 }
 
-bool ChronoInterpreter::dateRangeFormatANodeTwo(int index);
-bool ChronoInterpreter::dateRangeFormatANodeThree(int index);
-bool ChronoInterpreter::dateRangeFormatANodeFour(int index);
+bool ChronoInterpreter::dateRangeFormatANodeTwo(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	}
+
+	if(isExtensionOfDay(index) && dateRangeFormatANodeThree(index+1)) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return dateRangeFormatANodeThree(index);
+	}
+}
+
+bool ChronoInterpreter::dateRangeFormatANodeThree(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if(!_tokens->hasMeaning("TO", index)) {
+		return false;
+	}
+
+	if(dateRangeFormatANodeFour(index+1)) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::dateRangeFormatANodeFour(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if (!_tokens->isInteger(index)) {
+		return false;
+	} else if (_tokens->getSize(index) > 2) {
+		return false;
+	} else if(_tokens->getInteger(index) < _day) {
+		return false;
+	} else if(dateFormatANodeOne(index) ||
+		      dateFormatDNodeOne(index)) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 int ChronoInterpreter::getMonthFromWord(int index) {
 	assert(!_tokens->isOutOfBounds(index));
@@ -563,10 +611,8 @@ int ChronoInterpreter::inferYear() {
 
 int ChronoInterpreter::inferYear(int twoDigitYear) {
 	int year = twoDigitYear + 2000;
-	
-	while DATE_YEAR
-	if(DATE_MONTH + 6 > 12 && (DATE_MONTH + 6) % 12 > _month) {
-		year++;
+	while (DATE_YEAR - 5 > year) {
+		year += 100;
 	}
 
 	return year;

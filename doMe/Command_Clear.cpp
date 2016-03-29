@@ -51,3 +51,12 @@ bool Command_Clear::outOfRange() {
 
 	return false;
 }
+
+string Command_Clear::getStringForm() {
+	string s = "Clear index: ";
+	for(unsigned int i = 0; i < _deleteList.size(); i++) {
+		s += to_string(_deleteList[i]);
+		s += ", ";
+	}
+	return s;
+}

@@ -77,3 +77,14 @@ bool Command_Edit::outOfRange() {
 	}
 	return false;
 }
+
+string Command_Edit::getStringForm() {
+	string s = "Edit index: " + to_string(_index) + " task- ";
+	s += "name: " + _task->getName();
+	s += ", location: " + _task->getLocation();
+	s += ", date1: " + to_string(_task->getDate1());
+	s += ", date2: " + to_string(_task->getDate2());
+	s += ", time1: " + to_string(_task->getTime1());
+	s += ", time1: " + to_string(_task->getTime2());
+	return s;
+}

@@ -1,4 +1,7 @@
 //@@author A0125290M
+
+#pragma once
+
 #include <ctime>
 #include <iostream>
 #include <string>

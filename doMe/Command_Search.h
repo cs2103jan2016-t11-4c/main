@@ -12,4 +12,5 @@ public:
 	bool undo();
 	string getSearchTerm();
 	COMMAND_TYPE getCommandType();
+	string getStringForm();
 };

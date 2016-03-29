@@ -22,3 +22,8 @@ int Command_ViewType::getViewType() {
 COMMAND_TYPE Command_ViewType::getCommandType() {
 	return VIEWTYPE;
 }
+
+string Command_ViewType::getStringForm() {
+	string s = "ViewType index: " + to_string(_newViewType);
+	return s;
+}

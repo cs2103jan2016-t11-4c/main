@@ -24,3 +24,7 @@ Command* Command_Undo::getUndoneCommand() {
 COMMAND_TYPE Command_Undo::getCommandType() {
 	return UNDO;
 }
+
+string Command_Undo::getStringForm() {
+	return "Undo";
+}
