@@ -71,7 +71,9 @@ void ChronoInterpreter::twoDigitIntegerNode(int index) {
 	assert(_tokens->isInteger(index));
 	assert(_tokens->getSize(index) < 3);
 	
-	if(timeFormatBNodeOne(index)) {
+	if(timeRangeFormatANodeOne(index)) {
+	} else if(dateRangeFormatANodeOne(index)) {
+	} else if(timeFormatBNodeOne(index)) {
 	} else if(dateFormatANodeOne(index)) {
 	} else {
 		dateFormatDNodeOne(index);
@@ -79,15 +81,18 @@ void ChronoInterpreter::twoDigitIntegerNode(int index) {
 	return;
 }
 
-
 void ChronoInterpreter::fourDigitIntegerNode(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
 	assert(_tokens->getSize(index) <= 4);	
 	assert(_tokens->getSize(index) >= 3);
-
-	if(!timeFormatBNodeOne(index)) {
-	timeFormatANodeOne(index);
+	
+	if(timeRangeFormatANodeOne(index)) {
+	} else if(timeRangeFormatBNodeOne(index)) {
+	} else if(timeFormatBNodeOne(index)) {
+	} else if(timeFormatCNodeOne(index)) {
+	} else {
+		timeFormatANodeOne(index);
 	}
 
 	return;
@@ -109,7 +114,9 @@ void ChronoInterpreter::alphabeticMonthNode(int index) {
 bool ChronoInterpreter::timeFormatANodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
-
+	assert(_tokens->getSize(index) < 5);
+	assert(_tokens->getSize(index) > 2);
+	
 	int number = _tokens->getInteger(index);
 	_minute = number % 100;
 	_hour = number / 100;
@@ -137,6 +144,7 @@ bool ChronoInterpreter::timeFormatANodeTwo(int index) {
 bool ChronoInterpreter::timeFormatBNodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
+	assert(_tokens->getSize(index) < 5);
 
 	int number = _tokens->getInteger(index);
 	if(number < 100) {
@@ -164,6 +172,31 @@ bool ChronoInterpreter::timeFormatBNodeTwo(int index) {
 		}
 		adjustTo24HrsTime();
 		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+bool ChronoInterpreter::timeFormatCNodeOne(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->isInteger(index));
+	assert(_tokens->getSize(index) < 5);
+	assert(_tokens->getSize(index) > 2);
+	
+	if(_tokens->isOutOfBounds(index-1)) {
+		return false;
+	} else if (!_tokens->isMarkedAs(DATE_MARKER,index-1)) {
+		return false;
+	}
+
+	int number = _tokens->getInteger(index);
+	_minute = number % 100;
+	_hour = number / 100;
+
+	if(isValid24HrsTime()) {
+		insertTime(index);
 		return true;
 	} else {
 		return false;
@@ -265,13 +298,16 @@ bool ChronoInterpreter::dateFormatANodeSix(int index) {
 		} else {
 			_year = _tokens->getInteger(index);
 		}
-		if(isValidDate()) {
-			_tokens->remove(index);
-			return true;
-		}
+	} else {
 		return false;
 	}
-	return false;
+	
+	if(isValidDate()) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
 }
 
 
@@ -323,14 +359,60 @@ bool ChronoInterpreter::dateFormatBNodeThree(int index) {
 
 bool ChronoInterpreter::dateFormatBNodeFour(int index) {
 	if(_tokens->isOutOfBounds(index)) {
-		return dateFormatANodeFive(index);
+		return dateFormatBNodeFive(index);
 	}
 
-	if(isExtensionOfDay(index) && dateFormatANodeFive(index+1)) {
+	if(isExtensionOfDay(index) && dateFormatBNodeFive(index+1)) {
 		_tokens->remove(index);
 		return true;
 	} else {
-		return dateFormatANodeFive(index);
+		return dateFormatBNodeFive(index);
+	}
+}
+
+bool ChronoInterpreter::dateFormatBNodeFive(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		_year = inferYear();
+	} else if(_tokens->hasMeaning("DIVIDER", index)) {
+		if(dateFormatBNodeSix(index+1)) {
+			_tokens->remove(index);
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		_year = inferYear();
+	}
+
+	if(isValidDate()) {
+		dateRangeFormatBNodeOne(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::dateFormatBNodeSix(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	}
+
+	unsigned int size = _tokens->getSize(index);
+	if(_tokens->isInteger(index) && (size == 4 || size == 2)) {
+		if(size == 2) {
+			_year = inferYear(_tokens->getInteger(index));
+		} else {
+			_year = _tokens->getInteger(index);
+		}
+	} else {
+		return false;
+	}
+	
+	if(isValidDate()) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
 	}
 }
 
@@ -396,6 +478,8 @@ bool ChronoInterpreter::dateFormatCNodeFour(int index) {
 	if(isValidDate()) {
 		if(yearFound) {
 			_tokens->remove(index);
+		} else {
+			dateRangeFormatBNodeOne(index);
 		}
 		return true;
 	} else {
@@ -441,7 +525,7 @@ bool ChronoInterpreter::dateFormatDNodeThree(int index) {
 		return false;
 	}
 		
-	if(dateFormatCNodeFour(index+1)) {
+	if(dateFormatDNodeFour(index+1)) {
 		_tokens->remove(index);
 		return true;
 	} else {
@@ -449,10 +533,171 @@ bool ChronoInterpreter::dateFormatDNodeThree(int index) {
 	}
 }
 
+bool ChronoInterpreter::dateFormatDNodeFour(int index) {
+	bool yearFound = false;
+	
+	if(_tokens->isOutOfBounds(index)) {
+		_year = inferYear();
+	} else if(isPossibleYear(index)) {
+		yearFound = true;
+		_year=_tokens->getInteger(index);
+		if(_year < 100) {
+			_year = inferYear(_year);
+		}
+	} else {
+		_year = inferYear();
+	}
+
+	if(isValidDate()) {
+		if(yearFound) {
+			_tokens->remove(index);
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+bool ChronoInterpreter::timeRangeFormatANodeOne(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->isInteger(index));
+	assert(_tokens->getSize(index) < 5);
+	
+	int number = _tokens->getInteger(index);
+	if(number < 100) {
+		_hour = number;
+		_minute = 0;
+	} else {
+		_minute = number % 100;
+		_hour = number / 100;
+	}
+
+	if(!isValid12HrsTime()) {
+		return false;
+	}
+	
+	int hour = _hour;
+	int minute = _minute;
+	if(timeRangeFormatANodeTwo(index + 1)) {
+		if(_hour > 12) {
+			_hour -= 12;
+		}
+		if(_hour == 0) {
+			_hour += 12;
+		}
+		if((_hour < hour) || (_hour == hour && _minute < minute)) {
+			isPM = !isPM;
+		}
+		if(hour == 12) {
+			isPM = !isPM;
+		}
+		if(_hour == 12) {
+			isPM = !isPM;
+		}
+
+		_hour = hour;
+		_minute = minute;
+		adjustTo24HrsTime();
+		insertTime(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::timeRangeFormatANodeTwo(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if(!_tokens->hasMeaning("TO", index)) {
+		return false;
+	}
+
+	if(timeRangeFormatANodeThree(index+1)) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::timeRangeFormatANodeThree(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if (!_tokens->isInteger(index)) {
+		return false;
+	} else if (_tokens->getSize(index) > 4) {
+		return false;
+	} else if(timeFormatBNodeOne(index)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+bool ChronoInterpreter::timeRangeFormatBNodeOne(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->isInteger(index));
+	assert(_tokens->getSize(index) < 5);
+	assert(_tokens->getSize(index) > 2);
+
+	int number = _tokens->getInteger(index);
+		_minute = number % 100;
+		_hour = number / 100;
+
+	if(!isValid24HrsTime()) {
+		return false;
+	}
+	
+	int hour = _hour;
+	int minute = _minute;
+	if(timeRangeFormatBNodeTwo(index + 1)) {
+		_hour = hour;
+		_minute = minute;
+		insertTime(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::timeRangeFormatBNodeTwo(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if(!_tokens->hasMeaning("TO", index)) {
+		return false;
+	}
+
+	if(timeRangeFormatBNodeThree(index+1)) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::timeRangeFormatBNodeThree(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if (!_tokens->isInteger(index)) {
+		return false;
+	} else if (_tokens->getSize(index) > 4) {
+		return false;
+	} else if (_tokens->getSize(index) < 3) {
+		return false;
+	} else if(timeFormatANodeOne(index)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
 bool ChronoInterpreter::dateRangeFormatANodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
-	assert(_tokens->getSize() < 3);
+	assert(_tokens->getSize(index) < 3);
 	
 	int day = _tokens->getInteger(index);
 	_day = day;
@@ -505,6 +750,54 @@ bool ChronoInterpreter::dateRangeFormatANodeFour(int index) {
 		return false;
 	} else if(dateFormatANodeOne(index) ||
 		      dateFormatDNodeOne(index)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+bool ChronoInterpreter::dateRangeFormatBNodeOne(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if(!_tokens->hasMeaning("TO", index)) {
+		return false;
+	} else if(dateRangeFormatBNodeTwo(index+1)) {
+		_tokens->remove(index);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool ChronoInterpreter::dateRangeFormatBNodeTwo(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if (!_tokens->isInteger(index)) {
+		return false;
+	} else if (_tokens->getSize(index) > 2) {
+		return false;
+	} else if(_tokens->getInteger(index) < _day) {
+		return false;
+	}
+	
+	int previousDay = _day;
+	_day = _tokens->getInteger(index);
+	if(isValidDate()) {
+		dateRangeFormatBNodeThree(index+1);
+		insertDate(index);
+		_day = previousDay;
+		return true;
+	} else {
+		_day = previousDay;
+		return false;
+	}
+}
+
+bool ChronoInterpreter::dateRangeFormatBNodeThree(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if(isExtensionOfDay(index)) {
 		_tokens->remove(index);
 		return true;
 	} else {

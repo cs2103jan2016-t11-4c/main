@@ -84,6 +84,8 @@ private:
 	void addSecond();
 	void addThird();
 	void addFourth();
+	void addNumberSuffix();
+	void addTo();
 
 	bool isFoundInVector(vector<string>* vector, string s);
 };

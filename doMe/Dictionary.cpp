@@ -84,6 +84,8 @@ void Dictionary::addChronoVocabularyPackage() {
 	addSecond();
 	addThird();
 	addFourth();
+	addNumberSuffix();
+	addTo();
 }
 
 void Dictionary::addDisplay() {
@@ -205,7 +207,6 @@ void Dictionary::addHrs() {
 void Dictionary::addDivider() {
 	SynonymList* list = new SynonymList("DIVIDER");
 	list->add("/");
-	list->add("-");
 	addToDictionary(list);
 }
 
@@ -410,33 +411,50 @@ void Dictionary::addPM() {
 }
 
 void Dictionary::addMeridiem() {
-		SynonymList* list = new SynonymList("MERIDIEM");
-		list->add(getSynonyms("AM"));
-		list->add(getSynonyms("PM"));
-		addToDictionary(list);
+	SynonymList* list = new SynonymList("MERIDIEM");
+	list->add(getSynonyms("AM"));
+	list->add(getSynonyms("PM"));
+	addToDictionary(list);
 }
 
 void Dictionary::addFirst() {
-		SynonymList* list = new SynonymList("FIRST");
-		list->add("ST");
-		addToDictionary(list);
+	SynonymList* list = new SynonymList("FIRST");
+	list->add("ST");
+	addToDictionary(list);
 }
+
 void Dictionary::addSecond() {
-		SynonymList* list = new SynonymList("SECOND");
-		list->add("ND");
-		addToDictionary(list);
+	SynonymList* list = new SynonymList("SECOND");
+	list->add("ND");
+	addToDictionary(list);
 }
 
 void Dictionary::addThird() {
-		SynonymList* list = new SynonymList("THIRD");
-		list->add("RD");
-		addToDictionary(list);
+	SynonymList* list = new SynonymList("THIRD");
+	list->add("RD");
+	addToDictionary(list);
 }
 
 void Dictionary::addFourth() {
-		SynonymList* list = new SynonymList("FOURTH");
-		list->add("TH");
-		addToDictionary(list);
+	SynonymList* list = new SynonymList("FOURTH");
+	list->add("TH");
+	addToDictionary(list);
+}
+
+void Dictionary::addNumberSuffix() {
+	SynonymList* list = new SynonymList("NUMBERSUFFIX");
+	list->add(getSynonyms("FIRST"));
+	list->add(getSynonyms("SECOND"));
+	list->add(getSynonyms("THIRD"));
+	list->add(getSynonyms("FOURTH"));
+	addToDictionary(list);
+}
+
+void Dictionary::addTo() {
+	SynonymList* list = new SynonymList("TO");
+	list->add("TO");
+	list->add("-");
+	addToDictionary(list);
 }
 
 void Dictionary::addToDictionary(SynonymList* list) {

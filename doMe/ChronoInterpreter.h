@@ -46,6 +46,8 @@ private:
 	bool timeFormatBNodeOne(int index);
 	bool timeFormatBNodeTwo(int index);
 
+	bool timeFormatCNodeOne(int index);
+
 	bool dateFormatANodeOne(int index);
 	bool dateFormatANodeTwo(int index);
 	bool dateFormatANodeThree(int index);
@@ -57,6 +59,8 @@ private:
 	bool dateFormatBNodeTwo(int index);
 	bool dateFormatBNodeThree(int index);
 	bool dateFormatBNodeFour(int index);
+	bool dateFormatBNodeFive(int index);
+	bool dateFormatBNodeSix(int index);
 
 	bool dateFormatCNodeOne(int index);
 	bool dateFormatCNodeTwo(int index);
@@ -68,10 +72,25 @@ private:
 	bool dateFormatDNodeThree(int index);
 	bool dateFormatDNodeFour(int index);
 
+	bool timeRangeFormatANodeOne(int index);
+	bool timeRangeFormatANodeTwo(int index);
+	bool timeRangeFormatANodeThree(int index);
+	bool timeRangeFormatANodeFour(int index);
+
+	bool timeRangeFormatBNodeOne(int index);
+	bool timeRangeFormatBNodeTwo(int index);
+	bool timeRangeFormatBNodeThree(int index);
+	bool timeRangeFormatBNodeFour(int index);
+
 	bool dateRangeFormatANodeOne(int index);
 	bool dateRangeFormatANodeTwo(int index);
 	bool dateRangeFormatANodeThree(int index);
 	bool dateRangeFormatANodeFour(int index);
+
+	bool dateRangeFormatBNodeOne(int index);
+	bool dateRangeFormatBNodeTwo(int index);
+	bool dateRangeFormatBNodeThree(int index);
+	bool dateRangeFormatBNodeFour(int index);
 	
 	int getMonthFromWord(int index);
 
@@ -88,7 +107,6 @@ private:
 
 	void adjustTo24HrsTime();
 	
-
 	bool isExtensionOfDay(int index);
 
 	bool isValid24HrsTime();

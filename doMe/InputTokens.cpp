@@ -173,13 +173,22 @@ size_t InputTokens::getAlphabets(size_t index, string chunk, vector<string>* tok
 	assert(chunk.size() > 0);
 	assert(chunk.size() > index);
 	
-	size_t next = chunk.find_first_of("0123456789", index);
-	if(next != string::npos) {
+	size_t next = chunk.find_first_of("0123456789-/", index);
+	if(next == index) {
+	} else if(next != string::npos) {
 		tokens->push_back(chunk.substr(index,next-index));
 	} else {
 		tokens->push_back(chunk.substr(index));
 	}
 	
+	if(next != string::npos && next == chunk.find_first_of("-/", index)) {
+		tokens->push_back(chunk.substr(next,1));
+		next++;
+		if(next >= chunk.size()) {
+			next = string::npos;
+		}
+	}
+
 	return next;
 }
 
