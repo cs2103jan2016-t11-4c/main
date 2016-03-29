@@ -6,6 +6,7 @@ CommandPacker* CommandPacker::_theOne = NULL;
 
 CommandPacker::CommandPacker() {
 	_taskPacker = TaskPacker::getInstance();
+	_indexes = new vector<int>;
 }
 
 CommandPacker::~CommandPacker(void) {
@@ -36,10 +37,8 @@ void CommandPacker::initializeAttributes(InputTokens* tokens) {
 	_tokens = tokens;
 	_description = NO_STRING;
 	_singleIndex = NO_VALUE;
-	if(!_indexes || _indexes->size() != 0) {
-		_indexes = new vector<int>;
-	}
-	ambiguous = false;
+	delete _indexes;
+	_indexes = new vector<int>;
 
 	return;
 }

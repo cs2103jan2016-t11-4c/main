@@ -23,6 +23,7 @@ void ChronoInterpreter::interpretDateAndTime(InputTokens* tokens, int index) {
 	assert(!tokens->isOutOfBounds(index));
 
 	setTokens(tokens);
+	clearCache();
 	traverseTokens(index);
 	
 	return;
@@ -45,6 +46,7 @@ void ChronoInterpreter::traverseTokens(int index) {
 		} else if(_tokens->hasMeaning("MONTHSOFTHEYEAR", i)) {
 			alphabeticMonthNode(i);
 		}
+		clearCache();
 	}
 	
 	return;
@@ -55,10 +57,8 @@ void ChronoInterpreter::integerNode(int index) {
 	assert(_tokens->isInteger(index));
 
 	int size = _tokens->getSize(index);
-	if(size == 4) {
+	if(size > 2 && size <= 4) {
 		fourDigitIntegerNode(index);		
-	} else if(size == 3) {
-		threeDigitIntegerNode(index);
 	} else if(size < 3) {
 		twoDigitIntegerNode(index);
 	}
@@ -76,25 +76,16 @@ void ChronoInterpreter::twoDigitIntegerNode(int index) {
 	} else {
 		dateFormatDNodeOne(index);
 	}
-
 	return;
 }
 
-void ChronoInterpreter::threeDigitIntegerNode(int index) {
-	assert(!_tokens->isOutOfBounds(index));
-	assert(_tokens->isInteger(index));
-	assert(_tokens->getSize(index) == 3);
-	
-	timeFormatBNodeOne(index);
-
-	return;
-}
 
 void ChronoInterpreter::fourDigitIntegerNode(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
-	assert(_tokens->getSize(index) == 4);	
-	
+	assert(_tokens->getSize(index) <= 4);	
+	assert(_tokens->getSize(index) >= 3);
+
 	if(!timeFormatBNodeOne(index)) {
 	timeFormatANodeOne(index);
 	}
@@ -106,12 +97,12 @@ void ChronoInterpreter::alphabeticMonthNode(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->hasMeaning("MONTHSOFTHEYEAR", index));
 	
-	_month = getMonthFromWord(index);
-	if(dateFormatCNodeThree(index+1)) {
-		insertDate(index);
+	if(dateFormatBNodeOne(index)) {
+		return;
+	} else {
+		dateFormatCNodeOne(index);
+		return;
 	}
-	
-	return;
 }
 
 
@@ -183,7 +174,7 @@ bool ChronoInterpreter::timeFormatBNodeTwo(int index) {
 bool ChronoInterpreter::dateFormatANodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
-	assert(_tokens->getSize() < 3);
+	assert(_tokens->getSize(index) < 3);
 
 	_day = _tokens->getInteger(index);
 	if(dateFormatANodeTwo(index+1)) {
@@ -345,7 +336,7 @@ bool ChronoInterpreter::dateFormatBNodeFour(int index) {
 
 
 bool ChronoInterpreter::dateFormatCNodeOne(int index) {
-	assert(_tokens->isOutOfBounds(index));
+	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->hasMeaning("MONTHSOFTHEYEAR", index));
 	
 	_month = getMonthFromWord(index);
@@ -416,7 +407,7 @@ bool ChronoInterpreter::dateFormatCNodeFour(int index) {
 bool ChronoInterpreter::dateFormatDNodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
-	assert(_tokens->getSize() < 3);
+	assert(_tokens->getSize(index) < 3);
 
 	_day = _tokens->getInteger(index);
 
@@ -654,7 +645,7 @@ bool ChronoInterpreter::isValid24HrsTime() {
 }
 
 bool ChronoInterpreter::isValid12HrsTime() {
-	if (_hour >= 12 || _hour < 0) {
+	if (_hour > 12 || _hour <= 0) {
 		return false;
 	}
 	return isValidMinutes();
@@ -695,5 +686,6 @@ void ChronoInterpreter::clearCache() {
 	_year = NO_VALUE;
 	_hour = NO_VALUE;
 	_minute = NO_VALUE;
+	isPM = false;
 	return;
 }

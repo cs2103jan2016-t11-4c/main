@@ -54,7 +54,6 @@ private:
 	vector<int>* _indexes;
 	Task* _task;
 	Command* _command;
-	bool ambiguous;
 
 	void initializeAttributes(InputTokens* tokens);
 	void branchToNode(int index);

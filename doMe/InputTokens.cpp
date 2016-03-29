@@ -105,7 +105,6 @@ void InputTokens::markAs(string marker, int index) {
 void InputTokens::markAs(string firstMarker, string secondMarker, int index) {
 	assert(!isOutOfBounds(index));
 	assert(isLowerCase(firstMarker));
-	assert(isLowerCase(secondMarker));
 	
 	_tokens[index] = firstMarker;
 	_tokensOriginal[index] = secondMarker;
