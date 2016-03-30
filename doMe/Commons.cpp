@@ -22,7 +22,7 @@ int Commons::getWeek_Day() {
 	time( &currentTime );
 	localtime_s(&localTime, &currentTime);
 
-	return localTime.tm_mday;
+	return localTime.tm_wday;
 }
 
 int Commons::getDate() {
