@@ -5,7 +5,7 @@
 string testStringDriver[5] = { 
     "Attend dance performance @museum 1/4 730pm", 
     "Conduct V0.3 demo on 31 march 11am",
-    "Sleep by 1200am",
+    "Sleep by 1200am 1 jan",
     "Presentation for IE2150 from 11/4 to 12/4",
     "Study hard"
 }; 
@@ -26,7 +26,7 @@ public:
         string expectedString[5] = {
             "Added \"Attend dance performance (museum) 19:30 1/4/2016\" into doMe.txt",
             "Added \"Conduct V0.3 demo on 11:00 31/3/2016\" into doMe.txt",
-            "Added \"Sleep by 0:00\" into doMe.txt",
+            "Added \"Sleep by 0:00 1/1/2016\" into doMe.txt",
             "Added \"Presentation for IE2150 from 11/4/2016 - 12/4/2016\" into doMe.txt",
             "Added \"Study hard <No deadline>\" into doMe.txt"
         };
@@ -54,7 +54,7 @@ public:
         }
 
         //case: Clearing of task
-        //Test Parser + Command_Delete + ViewType(default) + Command_Feedback of clear
+        //Test Parser + Command_Clear + ViewType(default) + Command_Feedback of clear
         testCommand = sut._logic->executeCommand(testerClear);
         actualString = (sut._commandFeedback)->getCommandFeedback(testCommand, VALID_MESSAGE, testViewType);
         Assert::AreEqual(expectedString, actualString);
@@ -69,7 +69,7 @@ public:
         string actualString;
         string expectedString[5] = {
             "Deleted \"Study hard <No deadline>\" from doMe.txt",
-            "Deleted \"Sleep by 12:00am\" from doMe.txt",
+            "Deleted \"Sleep by 12:00am 1/1/2016\" from doMe.txt",
             "Deleted \"Attend dance performance (museum) 7:30pm 1/4/2016\" from doMe.txt"
         };
         string testerDelete[3] = {
@@ -100,12 +100,11 @@ public:
         int i = 0;
         string actualString;
         string expectedString[5] = {
-            "Sleep by 12:00am",
+            "Sleep by 12:00am 1-Jan",
             "Conduct V0.3 demo on 11:00am 31-Mar",
             "Study harder 4-Apr",
             "Attend dance performance (museum) 7:30pm 5-Apr",
-            "Presentation for IE2150 from 11-Apr - 12-Apr"
-            
+            "Presentation for IE2150 from 11-Apr - 12-Apr"  
         };
         string expectedFeedback[2] = {
             "Edited inputted task description to \"Study harder 4-Apr\"",
@@ -127,7 +126,7 @@ public:
             Assert::AreEqual(expectedFeedback[i], actualString);
         }
         //case: Editing of task
-        //Test Parser + Command_Delete + ViewType(2) + Command_Feedback of edit
+        //Test Parser + Command_Edit + ViewType(2) + Command_Feedback of edit
         list<Task*>::iterator taskListIter = (*(sut._taskList)).begin();
         i = 0;
         while(taskListIter != (*(sut._taskList)).end()) {
