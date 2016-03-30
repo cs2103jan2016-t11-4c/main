@@ -3,9 +3,10 @@
 
 const string ViewType1::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
 const string ViewType1::MESSAGE_NEW_LINE = "\n";
-const string ViewType1::MESSAGE_AM = " am";
-const string ViewType1::MESSAGE_PM = " pm";
-const int TIME_MIDDAY = 1200;
+const string ViewType1::MESSAGE_AM = "am";
+const string ViewType1::MESSAGE_PM = "pm";
+const int ViewType1::TIME_STRING_INT = 4;//Meridiem size (am/pm) + 2
+const int ViewType1::TIME_MIDDAY = 1200;
 
 
 ViewType1::ViewType1(void) {
@@ -32,7 +33,7 @@ string ViewType1::getComplimentaryString(Task* individualTask) {
     case 0:
         sprintf_s(buffer, MESSAGE_DISPLAY_HEADER.c_str(), (getDateTaskString(_currentDate)).c_str());
         _headerMarker = 1;
-        if(_currentDate != date) {
+        if(_currentDate < date) {
             _headerMarker = 2;
              return buffer + MESSAGE_NEW_LINE;
         } else {
@@ -40,7 +41,7 @@ string ViewType1::getComplimentaryString(Task* individualTask) {
         break;
     }
     case 1:
-        if(_currentDate != date) {    
+        if(_currentDate < date) {    
             _headerMarker = 2;
             return MESSAGE_SPACE_STRING;
             break;
@@ -66,7 +67,7 @@ string ViewType1::getTimeTaskString(int time) {
             timeString = integerToString(time);
             timeString = timeString + MESSAGE_AM;
         }
-        timeString.insert(timeString.size() - 5, MESSAGE_TIME_SEPERATOR);
+        timeString.insert(timeString.size() - TIME_STRING_INT, MESSAGE_TIME_SEPERATOR);
         return timeString;
 
     } else {

@@ -148,7 +148,7 @@ void UserInterface::printDefaultDisplay() {
 }
 
 void UserInterface::printSearchDisplay() {
-    printTaskList(DATE, _memory->getViewType());
+    printSearchList(DATE, _memory->getViewType());
 }
 
 void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {

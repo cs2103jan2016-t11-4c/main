@@ -15,7 +15,7 @@ public:
 
         task = new Task("read book" , 20160819 , 20160821 , 1300 , 1600 , "home");
         actualString = testView.getTaskString(task);
-        Assert::AreEqual(actualString, expectedString);
+        Assert::AreEqual(expectedString, actualString);
     }
 
     TEST_METHOD(ViewType_CreateDisplayList) {
@@ -45,7 +45,7 @@ public:
         vector<string>::iterator displayListIter = actualDisplayList.begin();
 
         while(displayListIter != actualDisplayList.end()) {
-            Assert::AreEqual(*displayListIter  , expectedString[i]);
+            Assert::AreEqual(expectedString[i], *displayListIter);
             i++;
             displayListIter++;
         }
@@ -79,7 +79,7 @@ public:
         vector<string>::iterator displayListIter = actualDisplayList.begin();
 
         while(displayListIter != actualDisplayList.end()) {
-            Assert::AreEqual(*displayListIter  , expectedString[i]);
+            Assert::AreEqual(expectedString[i], *displayListIter);
             i++;
             displayListIter++;
         }
@@ -92,12 +92,12 @@ public:
     TEST_METHOD(ViewType1_getTaskString) {
         Task* task;
         ViewType1 testView;
-        string expectedString = "read book (home) 1:00 pm 19/8/2016 - 4:00 pm 21/8/2016";
+        string expectedString = "read book (home) 1:00pm 19/8/2016 - 4:00pm 21/8/2016";
         string actualString;
 
         task = new Task("read book" , 20160819 , 20160821 , 1300 , 1600 , "home");
         actualString = testView.getTaskString(task);
-        Assert::AreEqual(actualString, expectedString);
+        Assert::AreEqual(expectedString, actualString);
     }
 
     TEST_METHOD(ViewType1_CreateDisplayList) {
@@ -107,12 +107,12 @@ public:
         list<Task*> ls;
         string expectedString[8] = { 
             "Today's date is 21/8/2016",
-            "1. read book (home) 1:00 pm 21/8/2016", 
-            "2. read book (home) 1:00 pm 19/8/2016 - 4:00 pm 21/8/2016",             
+            "1. read book (home) 1:00pm 21/8/2016", 
+            "2. read book (home) 1:00pm 19/8/2016 - 4:00pm 21/8/2016",             
             " ",
             "3. read book (home) 21/9/2016",
-            "4. read book (college) 1:00 am - 2:00 am 22/9/2016",
-            "5. read book 1:00 am - 2:00 am 23/10/2016",
+            "4. read book (college) 1:00am - 2:00am 22/9/2016",
+            "5. read book 1:00am - 2:00am 23/10/2016",
             "6. read book (college) <No deadline>"
         };
 
@@ -130,7 +130,7 @@ public:
         vector<string>::iterator displayListIter = actualDisplayList.begin();
 
         while(displayListIter != actualDisplayList.end()) {
-            Assert::AreEqual(*displayListIter  , expectedString[i]);
+            Assert::AreEqual(expectedString[i], *displayListIter);
             i++;
             displayListIter++;
         }
@@ -143,11 +143,11 @@ public:
         ViewType1 testView;
         list<Task*> ls;
         string expectedString[6] = { 
-            "1. read book (home) 1:00 pm 21/8/2016", 
-            "2. read book (home) 1:00 pm 19/8/2016 - 4:00 pm 21/8/2016",             
+            "1. read book (home) 1:00pm 21/8/2016", 
+            "2. read book (home) 1:00pm 19/8/2016 - 4:00pm 21/8/2016",             
             "3. read book (home) 21/9/2016",
-            "4. read book (college) 1:00 am - 2:00 am 22/9/2016",
-            "5. read book 1:00 am - 2:00 am 23/10/2016",
+            "4. read book (college) 1:00am - 2:00am 22/9/2016",
+            "5. read book 1:00am - 2:00am 23/10/2016",
             "6. read book (college) <No deadline>"
         };
 
@@ -177,12 +177,12 @@ public:
     TEST_METHOD(ViewType2_getTaskString) {
         Task* task;
         ViewType2 testView;
-        string expectedString = "read book (home) 1:00 pm 19-Aug - 4:00 pm 21-Aug";
+        string expectedString = "read book (home) 1:00pm 19-Aug - 4:00pm 21-Aug";
         string actualString;
 
         task = new Task("read book" , 20160819 , 20160821 , 1300 , 1600 , "home");
         actualString = testView.getTaskString(task);
-        Assert::AreEqual(actualString, expectedString);
+        Assert::AreEqual(expectedString, actualString);
     }
 
     TEST_METHOD(ViewType2_CreateDisplayList) {
@@ -192,12 +192,12 @@ public:
         list<Task*> ls;
         string expectedString[8] = { 
             "Today's date is 21-Aug",
-            "1. read book (home) 1:00 pm 21-Aug", 
-            "2. read book (home) 1:00 pm 19-Aug - 4:00 pm 21-Aug",
+            "1. read book (home) 1:00pm 21-Aug", 
+            "2. read book (home) 1:00pm 19-Aug - 4:00pm 21-Aug",
             " ",
             "3. read book (home) 21-Sep",
-            "4. read book (college) 1:00 am - 2:00 am 22-Sep",
-            "5. read book 1:00 am - 2:00 am 23-Oct",
+            "4. read book (college) 1:00am - 2:00am 22-Sep",
+            "5. read book 1:00am - 2:00am 23-Oct",
             "6. read book (college) <No deadline>"
         };
 
@@ -215,7 +215,7 @@ public:
         vector<string>::iterator displayListIter = actualDisplayList.begin();
 
         while(displayListIter != actualDisplayList.end()) {
-            Assert::AreEqual(*displayListIter  , expectedString[i]);
+            Assert::AreEqual(expectedString[i], *displayListIter);
             i++;
             displayListIter++;
         }
@@ -228,11 +228,11 @@ public:
         ViewType2 testView;
         list<Task*> ls;
         string expectedString[6] = { 
-            "1. read book (home) 1:00 pm 21-Aug", 
-            "2. read book (home) 1:00 pm 19-Aug - 4:00 pm 21-Aug",             
+            "1. read book (home) 1:00pm 21-Aug", 
+            "2. read book (home) 1:00pm 19-Aug - 4:00pm 21-Aug",             
             "3. read book (home) 21-Sep",
-            "4. read book (college) 1:00 am - 2:00 am 22-Sep",
-            "5. read book 1:00 am - 2:00 am 23-Oct",
+            "4. read book (college) 1:00am - 2:00am 22-Sep",
+            "5. read book 1:00am - 2:00am 23-Oct",
             "6. read book (college) <No deadline>"
         };
 
