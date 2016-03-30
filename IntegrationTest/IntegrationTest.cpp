@@ -17,7 +17,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 namespace IntegrationTest {	
     TEST_CLASS(Integration) {
 public:
-    TEST_METHOD(Integration_Command_Add_Feedback_V0) {
+    TEST_METHOD(_Integration_Command_Add_Feedback_V0) {
         UserInterface sut;
         Command* testCommand;
         int testViewType = 0;
@@ -41,7 +41,7 @@ public:
         }
     }
 
-    TEST_METHOD(Integration_Command_Clear_Feedback_V0) {
+    TEST_METHOD(_Integration_Command_Clear_Feedback_V0) {
         UserInterface sut;
         Command* testCommand;
         int testViewType = 0;
@@ -61,7 +61,7 @@ public:
 
     }
 
-    TEST_METHOD(Integration_Command_Delete_Feedback_V1) {
+    TEST_METHOD(_Integration_Command_Delete_Feedback_V1) {
         UserInterface sut;
         Command* testCommand;
         int testViewType = 1;
@@ -93,7 +93,7 @@ public:
         }
     }
 
-    TEST_METHOD(Integration_Command_Edit_Feedback_V2) {
+    TEST_METHOD(_Integration_Command_Edit_Feedback_V2) {
         UserInterface sut;
         Command* testCommand;
         int testViewType = 2;
