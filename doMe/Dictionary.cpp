@@ -100,6 +100,7 @@ void Dictionary::addNaturalLanguagePackage() {
 	addTo();
 	addBy();
 	addFrom();
+	addOn();
 	addFor();
 	addThe();
 	addAll();
@@ -502,6 +503,12 @@ void Dictionary::addFrom() {
 	SynonymList* list = new SynonymList("FROM");
 	list->add("FROM");
 	list->add("FRM");
+	addToDictionary(list);
+}
+
+void Dictionary::addOn() {
+	SynonymList* list = new SynonymList("ON");
+	list->add("ON");
 	addToDictionary(list);
 }
 
