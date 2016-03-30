@@ -39,16 +39,37 @@ void ChronoInterpreter::traverseTokens(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	
 	for(unsigned int i = index; i < _tokens->getSize(); i++) {
-		if(_tokens->isExtensionOfAWord(i)) {
+		if(_tokens->isExtensionOfAWord((int) i)) {
 			continue;
 		} else if(_tokens->isInteger((int) i)) {
-			integerNode(i);
-		} else if(_tokens->hasMeaning("MONTHSOFTHEYEAR", i)) {
-			alphabeticMonthNode(i);
+			integerNode((int) i);
+		} else if(_tokens->hasMeaning("MONTHSOFTHEYEAR", (int) i)) {
+			alphabeticMonthNode((int) i);
+		} else if(_tokens->hasMeaning("THIS", (int) i)) {
+			thisNode((int) i);
+		} else if(_tokens->hasMeaning("NEXT", (int) i)) {
+			nextNode((int) i);
+		} else if(_tokens->hasMeaning("RELATIONALDATE", (int) i)) {
+			relationalDateNode((int) i);
+		} else if(_tokens->hasMeaning("DAYSOFTHEWEEK", (int) i)) {
+			dayOfTheWeekNode((int) i);
 		}
 		clearCache();
 	}
 	
+	return;
+}
+
+void ChronoInterpreter::postProcess(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+
+	for(unsigned int i = index+1; i < _tokens->getSize(); i++) {
+		if(_tokens->isMarkedAs(DATE_MARKER, (int) i) ||
+		   _tokens->isMarkedAs(TIME_MARKER, (int) i)) {
+			   naturalLanguageNode((int) i-1);
+		}
+	}
+
 	return;
 }
 
@@ -61,6 +82,64 @@ void ChronoInterpreter::integerNode(int index) {
 		fourDigitIntegerNode(index);		
 	} else if(size < 3) {
 		twoDigitIntegerNode(index);
+	}
+	
+	return;
+}
+
+void ChronoInterpreter::alphabeticMonthNode(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("MONTHSOFTHEYEAR", index));
+	
+	if(dateFormatBNodeOne(index)) {
+	} else {
+		dateFormatCNodeOne(index);
+	}
+
+		return;
+}
+
+void ChronoInterpreter::thisNode(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("THIS", index));
+
+	dateFormatENodeOne(index);
+
+	return;
+}
+
+void ChronoInterpreter::nextNode(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("NEXT", index));
+
+	dateFormatENodeTwo(index);
+
+	return;
+}
+
+void ChronoInterpreter::relationalDateNode(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("RELATIONALDATE", index));
+	
+	dateFormatENodeThree(index);
+
+	return;
+}
+
+void ChronoInterpreter::dayOfTheWeekNode(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("DAYSOFTHEWEEK", index));
+
+	dateFormatENodeFive(index);
+
+	return;
+}
+
+void ChronoInterpreter::naturalLanguageNode(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return;
+	} else if(isReferToTime(index)) {
+		_tokens->remove(index);
 	}
 	
 	return;
@@ -96,18 +175,6 @@ void ChronoInterpreter::fourDigitIntegerNode(int index) {
 	}
 
 	return;
-}
-
-void ChronoInterpreter::alphabeticMonthNode(int index) {
-	assert(!_tokens->isOutOfBounds(index));
-	assert(_tokens->hasMeaning("MONTHSOFTHEYEAR", index));
-	
-	if(dateFormatBNodeOne(index)) {
-		return;
-	} else {
-		dateFormatCNodeOne(index);
-		return;
-	}
 }
 
 
@@ -558,6 +625,103 @@ bool ChronoInterpreter::dateFormatDNodeFour(int index) {
 	}
 }
 
+bool ChronoInterpreter::dateFormatENodeOne(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("THIS", index));
+
+	if(dateFormatENodeFour(index+1)) {
+		_tokens->remove(index);
+		return true;
+	}
+
+	return false;
+}
+
+bool ChronoInterpreter::dateFormatENodeTwo(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	} else if(_tokens->hasMeaning("NEXT", index)) {
+		_nextCount++;
+		if(dateFormatENodeTwo(index+1)) {
+			_tokens->remove(index);
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return dateFormatENodeFour(index);
+	}
+}
+
+bool ChronoInterpreter::dateFormatENodeThree(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	}
+
+	if(_tokens->hasMeaning("RELATIONALDATE", index)) {
+		int daysToTarget = getRelationalDateFromWord(index);
+		int date = dateArithmetics(daysToTarget, DATE);
+		_day = getDay(date);
+		_month = getMonth(date);
+		_year = getYear(date);
+		if(isValidDate()) {
+			insertDate(index);
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return dateFormatENodeThree(index);
+	}
+}
+
+bool ChronoInterpreter::dateFormatENodeFour(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	}
+
+	if(_tokens->hasMeaning("WEEK", index)) {
+		int daysToTarget = 7 - WEEK_DAY;
+		daysToTarget += 7 * _nextCount;
+		int date = dateArithmetics(daysToTarget, DATE);
+		_day = getDay(date);
+		_month = getMonth(date);
+		_year = getYear(date);
+		if(isValidDate()) {
+			insertDate(index);
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return dateFormatENodeFive(index);
+	}
+}
+
+bool ChronoInterpreter::dateFormatENodeFive(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		return false;
+	}
+
+	if(_tokens->hasMeaning("DAYSOFTHEWEEK", index)) {
+		int daysToTarget = getDayOfWeekFromWord(index);
+		daysToTarget = (daysToTarget + 7 - WEEK_DAY) % 7;
+		daysToTarget += 7 * _nextCount;
+		int date = dateArithmetics(daysToTarget, DATE);
+		_day = getDay(date);
+		_month = getMonth(date);
+		_year = getYear(date);
+		if(isValidDate()) {
+			insertDate(index);
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
+	}
+}
+
 
 bool ChronoInterpreter::timeRangeFormatANodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
@@ -840,6 +1004,46 @@ int ChronoInterpreter::getMonthFromWord(int index) {
 	return -1;
 }
 
+int ChronoInterpreter::getDayOfWeekFromWord(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("DAYSOFTHEWEEK", index));
+
+	if(_tokens->hasMeaning("MONDAY", index)) {
+		return 1;
+	} else if(_tokens->hasMeaning("TUESDAY", index)) {
+		return 2;
+	} else if(_tokens->hasMeaning("WEDNESDAY", index)) {
+		return 3;
+	} else if(_tokens->hasMeaning("THURSDAY", index)) {
+		return 4;
+	} else if(_tokens->hasMeaning("FRIDAY", index)) {
+		return 5;
+	} else if(_tokens->hasMeaning("SATURDAY", index)) {
+		return 6;
+	} else if(_tokens->hasMeaning("SUNDAY", index)) {
+		return 7;
+	}
+	
+	assert(false); //method should return before reaching this line
+	return -1;
+}
+
+int ChronoInterpreter::getRelationalDateFromWord(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("RELATIONALDATE", index));
+
+	if(_tokens->hasMeaning("TODAY", index)) {
+		return 0;
+	} else if(_tokens->hasMeaning("TOMORROW", index)) {
+		return 1;
+	} else if(_tokens->hasMeaning("YESTERDAY", index)) {
+		return -1;
+	}
+	
+	assert(false); //method should return before reaching this line
+	return -1;
+}
+
 void ChronoInterpreter::insertTime(int index) {
 	string time = to_string(generateTime(_hour,_minute));
 	_tokens->markAs(TIME_MARKER, time, index);
@@ -854,12 +1058,44 @@ void ChronoInterpreter::insertDate(int index) {
 	return;
 }
 
+int ChronoInterpreter::dateArithmetics(int days, int date) {
+	int day = getDay(date);
+	int month = getMonth(date);
+	int year = getYear(date);
+
+	std::tm t = {};
+	t.tm_mday = day;
+	t.tm_mon = month - 1;
+	t.tm_year = year - 1900;
+	
+	t.tm_mday += days;
+	mktime(&t);
+
+	day = t.tm_mday;
+	month = t.tm_mon + 1;
+	year = t.tm_year + 1900;
+
+	return generateDate(day, month, year);
+}
+
 int ChronoInterpreter::generateTime(int hour, int minute) {
 	return (hour*100 + minute);
 }
 
 int ChronoInterpreter::generateDate(int day, int month, int year) {
 	return (day+month*100+year*10000);
+}
+
+int ChronoInterpreter::getYear(int date) {
+	return date/10000;
+}
+
+int ChronoInterpreter::getMonth(int date) {
+	return (date/100)%100;
+}
+	
+int ChronoInterpreter::getDay(int date) {
+	return date%100;
 }
 
 bool ChronoInterpreter::isPossibleYear(int index) {
@@ -930,6 +1166,20 @@ bool ChronoInterpreter::isExtensionOfDay(int index) {
 	}
 }
 
+bool ChronoInterpreter::isReferToTime(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+
+	if(_tokens->hasMeaning("TO",index)) {
+		return true;
+	} else if(_tokens->hasMeaning("BY",index)) {
+		return true;
+	} else if(_tokens->hasMeaning("FROM",index)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 bool ChronoInterpreter::isValid24HrsTime() {
 	if (_hour >= 24 || _hour < 0) {
 		return false;
@@ -952,7 +1202,7 @@ bool ChronoInterpreter::isValidMinutes() {
 }
 
 bool ChronoInterpreter::isValidDate() {
-	static const int daysInEachMonth[13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+	int daysInEachMonth[13] = {0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
 	
 	if(_month > 12 || _month < 1) {												//month not possible
 		return false;
@@ -979,6 +1229,8 @@ void ChronoInterpreter::clearCache() {
 	_year = NO_VALUE;
 	_hour = NO_VALUE;
 	_minute = NO_VALUE;
+	_nextCount = NO_VALUE;
 	isPM = false;
+
 	return;
 }

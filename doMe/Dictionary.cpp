@@ -32,6 +32,9 @@ bool Dictionary::hasMeaning(string meaning, string s) {
 void Dictionary::generateVocabulary() { 
 	addBasicVocabularyPackage();
 	addChronoVocabularyPackage();
+	addNaturalLanguagePackage();
+
+	return;
 }
 
 void Dictionary::addBasicVocabularyPackage() {
@@ -74,9 +77,11 @@ void Dictionary::addChronoVocabularyPackage() {
 	addSaturday();
 	addSunday();
 	addDaysOfTheWeek();
+	addWeek();
 	addTomorrow();
 	addToday();
 	addYesterday();
+	addRelationalDate();
 	addPM();
 	addAM();
 	addMeridiem();
@@ -85,7 +90,21 @@ void Dictionary::addChronoVocabularyPackage() {
 	addThird();
 	addFourth();
 	addNumberSuffix();
+
+	return;
+}
+
+void Dictionary::addNaturalLanguagePackage() {
+	addNext();
+	addThis();
 	addTo();
+	addBy();
+	addFrom();
+	addFor();
+	addThe();
+	addAll();
+
+	return;
 }
 
 void Dictionary::addDisplay() {
@@ -375,6 +394,13 @@ void Dictionary::addDaysOfTheWeek() {
 	addToDictionary(list);
 }
 
+void Dictionary::addWeek() {
+	SynonymList* list = new SynonymList("WEEK");
+	list->add("WK");
+	list->add("WEEK");
+	addToDictionary(list);
+}
+
 void Dictionary::addTomorrow() {
 	SynonymList* list = new SynonymList("TOMORROW");
 	list->add("TMR");
@@ -395,6 +421,14 @@ void Dictionary::addYesterday() {
 	list->add("YSTRDAY");
 	list->add("YESTERDAY");
 	list->add("YEST");
+	addToDictionary(list);
+}
+
+void Dictionary::addRelationalDate() {
+	SynonymList* list = new SynonymList("RELATIONALDATE");
+	list->add(getSynonyms("TODAY"));
+	list->add(getSynonyms("TOMORROW"));
+	list->add(getSynonyms("YESTERDAY"));
 	addToDictionary(list);
 }
 
@@ -450,12 +484,69 @@ void Dictionary::addNumberSuffix() {
 	addToDictionary(list);
 }
 
+
 void Dictionary::addTo() {
 	SynonymList* list = new SynonymList("TO");
 	list->add("TO");
 	list->add("-");
 	addToDictionary(list);
 }
+
+void Dictionary::addBy() {
+	SynonymList* list = new SynonymList("BY");
+	list->add("BY");
+	addToDictionary(list);
+}
+
+void Dictionary::addFrom() {
+	SynonymList* list = new SynonymList("FROM");
+	list->add("FROM");
+	list->add("FRM");
+	addToDictionary(list);
+}
+
+void Dictionary::addNext() {
+	SynonymList* list = new SynonymList("NEXT");
+	list->add("NEXT");
+	list->add("NXT");
+	addToDictionary(list);
+}
+
+void Dictionary::addThis() {
+	SynonymList* list = new SynonymList("THIS");
+	list->add("THIS");
+	list->add("TIS");
+	addToDictionary(list);
+}
+
+void Dictionary::addFor() {
+	SynonymList* list = new SynonymList("FOR");
+	list->add("FOR");
+	list->add("FR");
+	addToDictionary(list);
+}
+
+void Dictionary::addThe() {
+	SynonymList* list = new SynonymList("THE");
+	list->add("THE");
+	list->add("TEH");
+	addToDictionary(list);
+}
+
+void Dictionary::addAll() {
+	SynonymList* list = new SynonymList("ALL");
+	list->add("ALL");
+	list->add("EVERYTHING");
+	list->add("EVERYTHIN");
+	list->add("EVRYTHING");
+	list->add("EVRYTHIN");
+	list->add("EVRYTIN");
+	list->add("EVERYTIN");
+	list->add("EVRYTING");
+	list->add("EVERYTING");
+	addToDictionary(list);
+}
+
 
 void Dictionary::addToDictionary(SynonymList* list) {
 		_wordMap.insert(pair<string, SynonymList*>(
