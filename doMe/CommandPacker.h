@@ -25,6 +25,7 @@
 #include "InputTokens.h"
 #include "TaskPacker.h"
 #include "Task.h"
+#include "ChronoInterpreter.h"
 #include "Exception_ExceededParameterLimit.h"
 #include <string>
 #include <assert.h>
@@ -48,6 +49,7 @@ private:
 	
 	TaskPacker* _taskPacker;
 	InputTokens* _tokens;
+	ChronoInterpreter* _chrono;
 	
 	string _description;
 	int _singleIndex;
@@ -110,4 +112,6 @@ private:
 
 	void addToIndexes(int index);
 	void addRangeToIndexes(int index);
+
+	void postProcessTask();
 };

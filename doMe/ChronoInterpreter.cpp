@@ -1175,6 +1175,8 @@ bool ChronoInterpreter::isReferToTime(int index) {
 		return true;
 	} else if(_tokens->hasMeaning("FROM",index)) {
 		return true;
+	} else if(_tokens->hasMeaning("ON",index)) {
+		return true;
 	} else {
 		return false;
 	}

@@ -7,6 +7,7 @@ CommandPacker* CommandPacker::_theOne = NULL;
 CommandPacker::CommandPacker() {
 	_taskPacker = TaskPacker::getInstance();
 	_indexes = new vector<int>;
+	_chrono = ChronoInterpreter::getInstance();
 }
 
 CommandPacker::~CommandPacker(void) {
@@ -346,6 +347,7 @@ void CommandPacker::nodeThreeOfSearchCommand(int index) {
 void CommandPacker::nodeOneOfAddCommand(int index) {	
 	try {
 		_task = _taskPacker->packTask(_tokens, index);
+		postProcessTask();
 		packAddCommand();
 	} catch (Exception_ExceededParameterLimit e) {
 		packInvalidCommand();
@@ -488,6 +490,34 @@ void CommandPacker::addRangeToIndexes(int index) {
 
 	for(int i = start; i <= end; i++) {
 		addToIndexes(i);
+	}
+
+	return;
+}
+
+void CommandPacker::postProcessTask() {
+	if(_task->getDate2() == NO_DATE && _task->getTime2() != NO_TIME) {
+		_task->setDate2(DATE);
+	}
+
+	if(_task->getTime1() != NO_TIME && _task->getTime1() > _task->getTime2()) {
+		if(_task->getDate1() == NO_DATE) {
+			_task->setDate1(_task->getDate2());
+			_task->setDate2(_chrono->dateArithmetics(1,_task->getDate2()));
+		} else if(_task->getDate1() == _task->getDate2()) {
+			_task->setDate1(_task->getDate2());
+			_task->setDate2(_chrono->dateArithmetics(1,_task->getDate2()));
+		}
+	}
+
+	if(_task->getTime1() != NO_TIME && _task->getDate1() != NO_DATE &&
+	   _task->getDate1() > _task->getDate2()) {
+		int tempTime = _task->getTime2();
+		int tempDate = _task->getDate2();
+		_task->setTime2(_task->getTime1());
+		_task->setDate2(_task->getTime1());
+		_task->setTime1(tempTime);
+		_task->setDate1(tempDate);
 	}
 
 	return;
