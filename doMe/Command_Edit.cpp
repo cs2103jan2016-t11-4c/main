@@ -20,32 +20,33 @@ bool Command_Edit::execute() {
 
 	_task = _memory->ramGetTask(_index);
 
+	_oldName = _task->getName();
+	_oldDate1 = _task->getDate1();
+	_oldDate2 = _task->getDate2();
+	_oldTime1 = _task->getTime1();
+	_oldTime2 = _task->getTime2();
+	_oldLocation = _task->getLocation();
+//	_oldDoneStatus = _task->getDoneStatus();
+
 	if(!_newName.empty()) {
-		_oldName = _task->getName();
 		_task->setName(_newName);
 	}
 	if(_newDate1 != -1) {
-		_oldDate1 = _task->getDate1();
 		_task->setDate1(_newDate1);
 	}
 	if(_newDate2 != -1) {
-		_oldDate2 = _task->getDate2();
 		_task->setDate2(_newDate2);
 	}
 	if(_newTime1 != -1) {
-		_oldTime1 = _task->getTime1();
 		_task->setTime1(_newTime1);
 	}
 	if(_newTime2 != -1) {
-		_oldTime2 = _task->getTime2();
 		_task->setTime2(_newTime2);
 	}
 	if(!_newLocation.empty()) {
-		_oldLocation = _task->getLocation();
 		_task->setLocation(_newLocation);
 	}
 /*	if(!_newDoneStatus != -1) {
-		_oldDoneStatus = _task->getDoneStatus();
 		_task->setDoneStatus(_newDoneStatus);
 	}*/
 	_memory->ramSort();

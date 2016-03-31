@@ -25,6 +25,7 @@
 #include "InputTokens.h"
 #include "TaskPacker.h"
 #include "Task.h"
+#include "ChronoInterpreter.h"
 #include "Exception_ExceededParameterLimit.h"
 #include <string>
 #include <assert.h>
@@ -48,6 +49,7 @@ private:
 	
 	TaskPacker* _taskPacker;
 	InputTokens* _tokens;
+	ChronoInterpreter* _chrono;
 	
 	string _description;
 	int _singleIndex;
@@ -64,30 +66,37 @@ private:
 	void nodeOneOfChangeDirectoryCommand(int index);
 	void nodeTwoOfChangeDirectoryCommand(int index);
 	void nodeThreeOfChangeDirectoryCommand(int index);
+	void nodeFourOfChangeDirectoryCommand(int index);
+	void nodeFiveOfChangeDirectoryCommand(int index);
 
 	void nodeOneOfChangeViewTypeCommand(int index);
 	void nodeTwoOfChangeViewTypeCommand(int index);
 	void nodeThreeOfChangeViewTypeCommand(int index);
+	void nodeFourOfChangeViewTypeCommand(int index);
 
 	void nodeOneOfDeleteCommand(int index);
 	void nodeTwoOfDeleteCommand(int index);	
 
 	void nodeOneOfUndoCommand(int index);
-	void nodeTwoOfUndoCommand(int index);
 
 	void nodeOneOfExitCommand(int index);
-	void nodeTwoOfExitCommand(int index);
 
 	void nodeOneOfClearCommand(int index);
 	void nodeTwoOfClearCommand(int index);
+	void nodeThreeOfClearCommand(int index);
+	void nodeFourOfClearCommand(int index);
+	void nodeFiveOfClearCommand(int index);
+	void nodeSixOfClearCommand(int index);
 
 	void nodeOneOfSearchCommand(int index);
 	void nodeTwoOfSearchCommand(int index);
+	void nodeThreeOfSearchCommand(int index);
 
 	void nodeOneOfAddCommand(int index);
 
 	void nodeOneOfEditCommand(int index);
 	void nodeTwoOfEditCommand(int index);
+	void nodeThreeOfEditCommand(int index);
 
 	void packDisplayCommand();
 	void packChangeViewTypeCommand();
@@ -100,4 +109,9 @@ private:
 	void packAddCommand();
 	void packEditCommand();
 	void packInvalidCommand();
+
+	void addToIndexes(int index);
+	void addRangeToIndexes(int index);
+
+	void postProcessTask();
 };

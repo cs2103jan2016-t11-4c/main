@@ -5,6 +5,7 @@
 #include "InputTokens.h"
 #include "Commons.h"
 #include <assert.h>
+#include <time.h>
 
 #define NO_VALUE 0
 #define TIME_MARKER "time"
@@ -16,6 +17,7 @@ public:
 	~ChronoInterpreter(void);
 	static ChronoInterpreter* getInstance();
 	void interpretDateAndTime(InputTokens* tokens, int index);
+	int dateArithmetics(int days, int date);
 
 private:
 	ChronoInterpreter();
@@ -28,13 +30,21 @@ private:
 	int _year;
 	int _hour;
 	int _minute;
+	int _nextCount;
 	bool isPM;
+
 
 	void setTokens(InputTokens* tokens);
 	void traverseTokens(int index);
+	void postProcess(int index);
 
 	void integerNode(int index);
 	void alphabeticMonthNode(int index);
+	void thisNode(int index);
+	void nextNode(int index);
+	void relationalDateNode(int index);
+	void dayOfTheWeekNode(int index);
+	void naturalLanguageNode(int index);
 	
 	void twoDigitIntegerNode(int index);
 	void threeDigitIntegerNode(int index);
@@ -72,6 +82,13 @@ private:
 	bool dateFormatDNodeThree(int index);
 	bool dateFormatDNodeFour(int index);
 
+	bool dateFormatENodeOne(int index);
+	bool dateFormatENodeTwo(int index);
+	bool dateFormatENodeThree(int index);
+	bool dateFormatENodeFour(int index);
+	bool dateFormatENodeFive(int index);
+
+
 	bool timeRangeFormatANodeOne(int index);
 	bool timeRangeFormatANodeTwo(int index);
 	bool timeRangeFormatANodeThree(int index);
@@ -92,13 +109,19 @@ private:
 	bool dateRangeFormatBNodeThree(int index);
 	bool dateRangeFormatBNodeFour(int index);
 	
-	int getMonthFromWord(int index);
+	int getMonthFromWord(int index);	
+	int getDayOfWeekFromWord(int index);
+	int getRelationalDateFromWord(int index);
 
 	void insertTime(int index);
 	void insertDate(int index);
 
 	int generateTime(int hour, int minute);	
 	int generateDate(int day, int month, int year);
+
+	int getYear(int date);
+	int getMonth(int date);
+	int getDay(int date);
 
 	bool isPossibleYear(int index);
 
@@ -108,6 +131,7 @@ private:
 	void adjustTo24HrsTime();
 	
 	bool isExtensionOfDay(int index);
+	bool isReferToTime(int index);
 
 	bool isValid24HrsTime();
 	bool isValid12HrsTime();

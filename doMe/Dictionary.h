@@ -38,6 +38,7 @@ private:
 
 	void addBasicVocabularyPackage();
 	void addChronoVocabularyPackage();
+	void addNaturalLanguagePackage();
 
 	void addDirectory();		//methods that add vocabulary to the dictionary
 	void addDisplay();
@@ -74,9 +75,11 @@ private:
 	void addSaturday();
 	void addSunday();
 	void addDaysOfTheWeek();
+	void addWeek();
 	void addTomorrow();
 	void addToday();
 	void addYesterday();
+	void addRelationalDate();
 	void addAM();
 	void addPM();
 	void addMeridiem();
@@ -85,7 +88,17 @@ private:
 	void addThird();
 	void addFourth();
 	void addNumberSuffix();
+	
+
+	void addNext();
+	void addThis();
 	void addTo();
+	void addBy();
+	void addFrom();
+	void addOn();
+	void addFor();
+	void addThe();
+	void addAll();
 
 	bool isFoundInVector(vector<string>* vector, string s);
 };

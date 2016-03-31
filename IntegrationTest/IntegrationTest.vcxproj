@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1245583B-3756-42BA-9504-EFDE07CD89DF}</ProjectGuid>
+    <ProjectGuid>{09BB3AA4-977B-4D96-AD0A-8446DE66B82E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>ViewTypeTest</RootNamespace>
-    <ProjectName>ViewTypeTest</ProjectName>
+    <RootNamespace>IntegrationTest</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -53,7 +52,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>C:\Users\zawadfarhan\Documents\Visual Studio 2012\Projects\doMe\doMe;C:\Users\PeiChangHong\Documents\NUS Modules 14 I 15\Semester 4\CS2103\Core\main\doMe;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\PeiChangHong\Documents\NUS Modules 14 I 15\Semester 4\CS2103\Core\main\doMe;$(VCInstallDir)UnitTest\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <UseFullPaths>true</UseFullPaths>
     </ClCompile>
@@ -83,16 +82,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="TesterHeader.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="TesterHeader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ViewType Unit Test.cpp" />
+    <ClCompile Include="IntegrationTest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\doMe\doMe.vcxproj">

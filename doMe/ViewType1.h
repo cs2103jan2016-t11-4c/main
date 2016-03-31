@@ -11,6 +11,8 @@ private:
     static const string MESSAGE_NEW_LINE;
     static const string MESSAGE_AM;
     static const string MESSAGE_PM;
+    static const int TIME_STRING_INT;
+    static const int TIME_MIDDAY;
 
     //overiding functions
     string getComplimentaryString(Task* individualTask);

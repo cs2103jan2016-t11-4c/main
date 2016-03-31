@@ -136,9 +136,10 @@ void RAM::ramSort() {
 }
 
 void RAM::sort() {
+	_taskList.sort([](Task* a, Task* b) {return a->getName() < b->getName();});
 	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
 	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
-	//_taskList.sort([](Task* a, Task* b) {return a->getName() < b->getName();});
+
 	//_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() < b->getDoneStatus();});
 }
 

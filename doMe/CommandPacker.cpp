@@ -7,6 +7,7 @@ CommandPacker* CommandPacker::_theOne = NULL;
 CommandPacker::CommandPacker() {
 	_taskPacker = TaskPacker::getInstance();
 	_indexes = new vector<int>;
+	_chrono = ChronoInterpreter::getInstance();
 }
 
 CommandPacker::~CommandPacker(void) {
@@ -61,7 +62,7 @@ void CommandPacker::branchToNode(int index) {
 	} else if(_tokens->hasMeaning("CLEAR", index)) {
 		nodeOneOfClearCommand(index+1);
 	} else if(_tokens->hasMeaning("CHANGEDIRECTORY", index)) {
-		nodeTwoOfChangeDirectoryCommand(index+1);
+		nodeThreeOfChangeDirectoryCommand(index+1);
 	} else if(_tokens->hasMeaning("CHANGEVIEWTYPE", index)) {
 		nodeTwoOfChangeViewTypeCommand(index+1);
 	} else {
@@ -86,10 +87,10 @@ void CommandPacker::nodeOneOfDisplayCommand(int index) {
 void CommandPacker::nodeOneOfChangeDirectoryCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
-	} else if(_tokens->hasMeaning("DIRECTORY", index)) {
+	} else if(_tokens->hasMeaning("THE", index)) {
 		nodeTwoOfChangeDirectoryCommand(index+1);
 	} else {
-		nodeOneOfChangeViewTypeCommand(index);
+		nodeTwoOfChangeDirectoryCommand(index);
 	}
 
 	return;
@@ -98,15 +99,39 @@ void CommandPacker::nodeOneOfChangeDirectoryCommand(int index) {
 void CommandPacker::nodeTwoOfChangeDirectoryCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
+	} else if(_tokens->hasMeaning("DIRECTORY", index)) {
+		nodeThreeOfChangeDirectoryCommand(index+1);
+	} else {
+		nodeOneOfChangeViewTypeCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
+	if(_tokens->hasNoMoreWord(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("TO", index)) {
+		nodeFourOfChangeDirectoryCommand(index+1);
+	} else {
+		nodeFourOfChangeDirectoryCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeFourOfChangeDirectoryCommand(int index) {
+	if(_tokens->hasNoMoreWord(index)) {
+		packInvalidCommand();
 	} else {
 		_description = _tokens->getOriginalToken(index);
-		nodeThreeOfChangeDirectoryCommand(index+1);
+		nodeFiveOfChangeDirectoryCommand(index+1);
 	}
 	
 	return;
 }
 
-void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
+void CommandPacker::nodeFiveOfChangeDirectoryCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packChangeDirectoryCommand();
 	} else {
@@ -120,10 +145,10 @@ void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
 void CommandPacker::nodeOneOfChangeViewTypeCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
-	} else if(_tokens->hasMeaning("DISPLAY", index)) {
+	} else if(_tokens->hasMeaning("VIEW", index)) {
 		nodeTwoOfChangeViewTypeCommand(index+1);
 	} else {
-		nodeOneOfEditCommand(index);
+		nodeOneOfEditCommand(SECOND_INDEX);
 	}
 	
 	return;
@@ -132,9 +157,21 @@ void CommandPacker::nodeOneOfChangeViewTypeCommand(int index) {
 void CommandPacker::nodeTwoOfChangeViewTypeCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
+	} else if(_tokens->hasMeaning("TO", index)) {
+		nodeThreeOfChangeViewTypeCommand(index+1);
+	} else {
+		nodeThreeOfChangeViewTypeCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeThreeOfChangeViewTypeCommand(int index) {
+	if(_tokens->hasNoMoreWord(index)) {
+		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
-		nodeThreeOfChangeViewTypeCommand(index+1);
+		nodeFourOfChangeViewTypeCommand(index+1);
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
 	}
@@ -142,7 +179,7 @@ void CommandPacker::nodeTwoOfChangeViewTypeCommand(int index) {
 	return;
 }
 
-void CommandPacker::nodeThreeOfChangeViewTypeCommand(int index) {
+void CommandPacker::nodeFourOfChangeViewTypeCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packChangeViewTypeCommand();
 	} else {
@@ -161,7 +198,7 @@ void CommandPacker::nodeOneOfDeleteCommand(int index) {
 		_singleIndex = stoi(_tokens->getToken(index));
 		nodeTwoOfDeleteCommand(index+1);
 	} else {
-		nodeOneOfAddCommand(START_INDEX);
+		nodeOneOfClearCommand(SECOND_INDEX);
 	}
 	
 	return;
@@ -171,7 +208,7 @@ void CommandPacker::nodeTwoOfDeleteCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packDeleteCommand();
 	} else {
-		packInvalidCommand();
+		nodeOneOfClearCommand(SECOND_INDEX);
 	}
 	
 	return;
@@ -201,28 +238,102 @@ void CommandPacker::nodeOneOfExitCommand(int index) {
 
 
 void CommandPacker::nodeOneOfClearCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packClearCommand();
 	} else {
-		nodeOneOfDeleteCommand(index);
+		nodeTwoOfClearCommand(index);
 	}
 	
 	return;
 }
 
+void CommandPacker::nodeTwoOfClearCommand(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+
+	if(_tokens->hasMeaning("ALL", index)) {
+		nodeThreeOfClearCommand(index+1);
+	} else {
+		nodeFourOfClearCommand(index);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeThreeOfClearCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packClearCommand();
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeFourOfClearCommand(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	
+	if(_tokens->isInteger(index)) {
+		addToIndexes(_tokens->getInteger(index));
+		nodeFiveOfClearCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeFiveOfClearCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packClearCommand();
+	} else if(_tokens->isInteger(index)) {
+		addToIndexes(_tokens->getInteger(index));
+		nodeFiveOfClearCommand(index+1);
+	} else if(_tokens->hasMeaning("TO", index)) {
+		nodeSixOfClearCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeSixOfClearCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->isInteger(index)) {
+		addRangeToIndexes(_tokens->getInteger(index));
+		nodeFiveOfClearCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
 
 void CommandPacker::nodeOneOfSearchCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
+	} else if(_tokens->hasMeaning("FOR", index)) {
+		nodeTwoOfSearchCommand(index+1);
+	} else {
+		nodeTwoOfSearchCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeTwoOfSearchCommand(int index) {
+	if(_tokens->hasNoMoreWord(index)) {
+		packInvalidCommand();
 	} else {
 		_description = _tokens->getOriginalToken(index);
-		nodeTwoOfSearchCommand(index+1);
+		nodeThreeOfSearchCommand(index+1);
 	}
 	
 	return;
 }
 
-void CommandPacker::nodeTwoOfSearchCommand(int index) {
+void CommandPacker::nodeThreeOfSearchCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packSearchCommand();
 	} else {
@@ -233,10 +344,10 @@ void CommandPacker::nodeTwoOfSearchCommand(int index) {
 }
 
 
-void CommandPacker::nodeOneOfAddCommand(int index) {
-	
+void CommandPacker::nodeOneOfAddCommand(int index) {	
 	try {
 		_task = _taskPacker->packTask(_tokens, index);
+		postProcessTask();
 		packAddCommand();
 	} catch (Exception_ExceededParameterLimit e) {
 		packInvalidCommand();
@@ -261,6 +372,18 @@ void CommandPacker::nodeOneOfEditCommand(int index) {
 }
 
 void CommandPacker::nodeTwoOfEditCommand(int index) {
+	if(_tokens->hasNoMoreWord(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("TO", index)) {
+		nodeThreeOfEditCommand(index+1);
+	} else {
+		nodeThreeOfEditCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeThreeOfEditCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
 	} else {
@@ -338,5 +461,64 @@ void CommandPacker::packEditCommand() {
 void CommandPacker::packInvalidCommand() {
 	_command = new Command_Invalid();
 	
+	return;
+}
+
+void CommandPacker::addToIndexes(int index) {
+	vector<int>& indexRef = *_indexes;
+
+	for(unsigned int i = 0; i < indexRef.size();) {
+		if(indexRef[i] == index) {
+			indexRef.erase(indexRef.begin()+i);
+		} else {
+			i++;
+		}
+	}
+
+	indexRef.push_back(index);
+}
+
+void CommandPacker::addRangeToIndexes(int index) {
+	vector<int>& indexRef = *_indexes;
+	int start = indexRef[indexRef.size()-1];
+	int end = index;
+
+	if(end < start) {
+		end = start;
+		start = index;
+	}
+
+	for(int i = start; i <= end; i++) {
+		addToIndexes(i);
+	}
+
+	return;
+}
+
+void CommandPacker::postProcessTask() {
+	if(_task->getDate2() == NO_DATE && _task->getTime2() != NO_TIME) {
+		_task->setDate2(DATE);
+	}
+
+	if(_task->getTime1() != NO_TIME && _task->getTime1() > _task->getTime2()) {
+		if(_task->getDate1() == NO_DATE) {
+			_task->setDate1(_task->getDate2());
+			_task->setDate2(_chrono->dateArithmetics(1,_task->getDate2()));
+		} else if(_task->getDate1() == _task->getDate2()) {
+			_task->setDate1(_task->getDate2());
+			_task->setDate2(_chrono->dateArithmetics(1,_task->getDate2()));
+		}
+	}
+
+	if(_task->getTime1() != NO_TIME && _task->getDate1() != NO_DATE &&
+	   _task->getDate1() > _task->getDate2()) {
+		int tempTime = _task->getTime2();
+		int tempDate = _task->getDate2();
+		_task->setTime2(_task->getTime1());
+		_task->setDate2(_task->getTime1());
+		_task->setTime1(tempTime);
+		_task->setDate1(tempDate);
+	}
+
 	return;
 }

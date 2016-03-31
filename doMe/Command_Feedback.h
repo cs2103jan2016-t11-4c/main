@@ -19,7 +19,11 @@ public:
     ~Command_Feedback(void);
     static Command_Feedback* getInstance();
     string getCommandFeedback(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-private:
+#ifndef TESTMODE 
+private: 
+#else 
+public: 
+#endif
     static Command_Feedback* _instance;
     char buffer[255];
     Command_Feedback(void);
