@@ -22,7 +22,9 @@ using namespace std;
 #define TIME_HOUR Commons::getTime_Hour()
 #define TIME_MINUTE Commons::getTime_Minute()
 #define TIME_SECOND Commons::getTime_Second()
+#define ADD_TO_DATE(days, date) Commons::addToDate()
 #define LOG(file, message) Commons::log(file, message)
+
 
 class Commons {
 public:
@@ -42,7 +44,13 @@ public:
 	static int getTime_Hour();		//eg. 2, 14, 23
 	static int getTime_Minute();		//eg. 2, 14, 56
 	static int getTime_Second();		//eg. 2, 14, 56
-
+	
+	static int addToDate(int days, int date);
+	static int generateDate(int day, int month, int year);
+	static int getYear(int date);
+	static int getMonth(int date);
+	static int getDay(int date);
+	
 	static string integerToString(int integer);
 	static string trim(string file);
 };

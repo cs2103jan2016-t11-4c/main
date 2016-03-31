@@ -104,6 +104,41 @@ string Commons::integerToString(int integer) {
 	return word.str();
 }
 
+int Commons::addToDate(int days, int date) {
+	int day = getDay(date);
+	int month = getMonth(date);
+	int year = getYear(date);
+
+	std::tm t = {};
+	t.tm_mday = day;
+	t.tm_mon = month - 1;
+	t.tm_year = year - 1900;
+	
+	t.tm_mday += days;
+	mktime(&t);
+
+	day = t.tm_mday;
+	month = t.tm_mon + 1;
+	year = t.tm_year + 1900;
+
+	return generateDate(day, month, year);
+}
+
+int Commons::generateDate(int day, int month, int year) {
+	return (day+month*100+year*10000);
+}
+
+int Commons::getYear(int date) {
+	return date/10000;
+}
+
+int Commons::getMonth(int date) {
+	return (date/100)%100;
+}
+	
+int Commons::getDay(int date) {
+	return date%100;
+}
 string Commons::trim(string file) {
 	size_t found = file.find_last_of("\\");
 
@@ -113,3 +148,4 @@ string Commons::trim(string file) {
 
 	return file.substr(0,found);
 }
+
