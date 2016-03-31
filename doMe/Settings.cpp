@@ -143,8 +143,8 @@ int Settings::stringToInteger(string& text) {
 
 //helper function to make correct format of save directory
 string Settings::createValidFileDirectoryString(string directory) {
-    string fileSeparator= "/";
-    if(directory.find_last_of("/\\")+1 == directory.size()) {
+    string fileSeparator= "\\";
+    if(directory.find_last_of("\\")+1 == directory.size()) {
         return directory;
     } else {
         return directory + fileSeparator;
