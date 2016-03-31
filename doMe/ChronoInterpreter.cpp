@@ -660,10 +660,10 @@ bool ChronoInterpreter::dateFormatENodeThree(int index) {
 
 	if(_tokens->hasMeaning("RELATIONALDATE", index)) {
 		int daysToTarget = getRelationalDateFromWord(index);
-		int date = dateArithmetics(daysToTarget, DATE);
-		_day = getDay(date);
-		_month = getMonth(date);
-		_year = getYear(date);
+		int date = ADD_TO_DATE(daysToTarget, DATE);
+		_day = GET_DAY(date);
+		_month = GET_MONTH(date);
+		_year = GET_YEAR(date);
 		if(isValidDate()) {
 			insertDate(index);
 			return true;

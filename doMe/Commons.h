@@ -22,7 +22,11 @@ using namespace std;
 #define TIME_HOUR Commons::getTime_Hour()
 #define TIME_MINUTE Commons::getTime_Minute()
 #define TIME_SECOND Commons::getTime_Second()
-#define ADD_TO_DATE(days, date) Commons::addToDate()
+#define ADD_TO_DATE(days, date) Commons::addToDate(days, date)
+#define GENERATE_DATE(day, month, year) Commons::generateDate(day, month, year)
+#define GET_DAY(date) Commons::getDay(date)
+#define GET_MONTH(date) Commons::getMonth(date)
+#define GET_YEAR(date) Commons::getYear(date)
 #define LOG(file, message) Commons::log(file, message)
 
 
