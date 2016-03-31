@@ -1,6 +1,7 @@
 //@@author A0125290M
 #pragma once
 #include <list>
+#include <algorithm>
 #include "Memory.h"
 #include "Task.h"
 using namespace std;
