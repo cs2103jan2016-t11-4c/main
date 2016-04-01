@@ -91,7 +91,11 @@ Task* RAM::ramGetTask(int index) {		//index must be valid
 }
 
 Task* RAM::ramGetLastModifiedTask() {
-	return _lastModifiedTask;
+	Task* lastModifiedTask = _lastModifiedTask;
+
+	_lastModifiedTask = NULL;
+
+	return lastModifiedTask;
 }
 
 bool RAM::ramGetSearchState() {
