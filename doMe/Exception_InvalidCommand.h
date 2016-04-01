@@ -5,6 +5,8 @@
 #include "Command.h"
 using namespace std;
 
+class Command;
+
 class Exception_InvalidCommand {
 private:
 	Command* _command;
