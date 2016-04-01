@@ -234,25 +234,7 @@ void UserInterface::printList(vector<string> displayList, vector<string> colourC
         }
     }
 }
-/****************************************************************/
-void UserInterface::setConsoleColor(int BC, int FC) {
-   // Remember to #include <windows.h> to use this
-   // Colours are from 0 to 15, standard EGA colours,
-   // the same colours that the console command "COLOR /?" uses.
-   if (FC > 15 || BC > 15) {
-      setConsoleColor(12, 0);
-      cout << "*** Error in setConsoleColor() *\n";
-      if (FC > 15) cout << "Invalid colour code for foreground: " << FC << "\n";
-      if (BC > 15) cout << "Invalid colour code for background: " << BC << "\n";
-      cout << "Foreground and Background colours have to be from 0 to 15.\n";
-      system("pause"); // change this to something like cin or whatever if you don't want to use system()
-      exit(1);
-   }
 
-   HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-   int colour = BC * 16 + FC;
-   SetConsoleTextAttribute(hConsole, colour);
-}
 /****************************************************************/
 
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
@@ -337,6 +319,12 @@ void UserInterface::changeListColour(string colourCoding) {
         return;
     } 
     setConsoleColorDefault();
+}
+
+void UserInterface::setConsoleColor(int background, int foreground) {
+   HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+   int colour = background * 16 + foreground;
+   SetConsoleTextAttribute(hConsole, colour);
 }
 
 void UserInterface::setConsoleColorDefault() {
