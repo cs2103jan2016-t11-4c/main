@@ -71,7 +71,9 @@ public:
     void showToUserMessageBox();
     string getStringCommand();
     vector<string> createDisplayBox(vector<string> displayList);
-    void printDisplayList(vector<string> displayList); 
+    vector<string> synchronizeColourCodingWithDisplayBox(vector<string> colourCoding);
+    void printList(vector<string> displayList); 
+    void printList(vector<string> displayList, vector<string> colourCoding);
 
     //window size related function
     void resizeWindow(int width, int length);
@@ -79,16 +81,22 @@ public:
 
     //window text colour
     enum Colour {
-        BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GRAY
+        BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GRAY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_AQUA, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
     };
-    void setWindowsColour(Colour background, Colour foreground);
+    static const string COLOUR_DEFAULT;
+    static const string COLOUR_NEW;
+
+    void changeListColour(string colourCoding);
+    void setConsoleColor(int background, int foreground);
+    void setConsoleColorDefault();
 
     static const string SYSTEM_MODE_CON;
+    static const string SYSTEM_COLOUR;
     static string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
-    static int DISPLAY_WIDTH;
-    static int DISPLAY_LENGTH;
+    static unsigned int DISPLAY_WIDTH;
+    static unsigned int DISPLAY_LENGTH;
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;

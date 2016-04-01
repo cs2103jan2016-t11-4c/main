@@ -8,6 +8,7 @@
 #include <assert.h>
 
 #include "Task.h"
+#include "Memory.h"
 
 using namespace std;
 
@@ -19,6 +20,7 @@ protected:
 public: 
 #endif
     list<Task*> *_taskList;
+    vector<string> _colourCoding;
     vector<string> _displayList;
     int _currentDate;
     char buffer[255];
@@ -34,6 +36,9 @@ public:
     static const string MESSAGE_DISPLAY_HEADER;
     static const string MESSAGE_NEW_LINE;
     static const string MESSAGE_EMPTY_LIST;
+
+    static const string COLOUR_DEFAULT;
+    static const string COLOUR_NEW;
 
     string createTaskString(Task* individualTask, int index);
 
@@ -53,6 +58,8 @@ public:
     string formateAddSpace(string s);
     string formateAddBracket(string s);
 
+    string colourCoderTag(Task* individualTask, Task* recentTask);
+
 public:
     ViewType(void);
     ViewType(list<Task*> *taskList);
@@ -62,5 +69,6 @@ public:
     virtual vector<string> createDisplayList();
     vector<string> createSearchList();
     string getTaskString(Task* individualTask);
+    vector<string> getColourCoding();
 };
 

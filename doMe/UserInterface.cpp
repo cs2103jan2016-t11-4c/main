@@ -2,19 +2,22 @@
 #include "UserInterface.h"
 
 const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
+const string UserInterface::SYSTEM_COLOUR = "Color %s";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
-int UserInterface::DISPLAY_WIDTH = 80;
-int UserInterface::DISPLAY_LENGTH = 25;
+unsigned int UserInterface::DISPLAY_WIDTH = 80;
+unsigned int UserInterface::DISPLAY_LENGTH = 25;
 
 const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
 const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
 const string UserInterface::MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT = "Set your save file directory: ";
 const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is save at the current directory.";
 const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
-
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
+
+const string UserInterface::COLOUR_DEFAULT = "DEFAULT";
+const string UserInterface::COLOUR_NEW = "NEW";
 
 const string UserInterface::MESSAGE_HELP_TIPS[] = { 
     "add <task description>", 
@@ -46,7 +49,9 @@ UserInterface::~UserInterface(void) {
 /****************************************************************/
 
 void UserInterface::setEnvironment() {
+    setConsoleColorDefault();
     printProgramWelcomePage();
+
     try {
         _memory->loadSettings();
     } catch(Exception_FileCannotOpen e) {
@@ -66,7 +71,6 @@ void UserInterface::setEnvironment() {
 }
 
 void UserInterface::printProgramWelcomePage() {
-    system("Color 08");
     resizeWindow(DISPLAY_WIDTH,DISPLAY_LENGTH);
     string space = "               ";
     cout << endl;
@@ -125,7 +129,7 @@ void UserInterface::executeCommandUntilExit() {
             command = e.getCommand();
             printMessageDisplay(command);
             printExecutionMessage(command, INVALID_MESSAGE);
-            
+
         }
     } while(command->getCommandType() != EXIT);      
 }
@@ -161,6 +165,32 @@ void UserInterface::printExecutionMessage(Command* executionMessage, CommandOutc
 
 /****************************************************************/
 
+void UserInterface::printTaskList(int currentDate, int viewType) {
+    ViewType* taskListType;
+    vector<string> displayList;
+    vector<string> colourCoding;
+
+    switch(viewType) {
+    case 1:
+        taskListType = new ViewType1(_taskList , currentDate);
+        break;
+    case 2:
+        taskListType = new ViewType2(_taskList , currentDate);
+        break;
+    default:
+        taskListType = new ViewType(_taskList , currentDate);
+        break;
+    }
+    displayList = taskListType->createDisplayList();
+    colourCoding = taskListType->getColourCoding();
+
+    displayList = createDisplayBox(displayList);
+    colourCoding = synchronizeColourCodingWithDisplayBox(colourCoding);
+
+    printList(displayList, colourCoding);
+    delete taskListType;
+}
+
 void UserInterface::printSearchList(int currentDate, int viewType) {
     ViewType* taskListType;
 
@@ -175,39 +205,85 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
         taskListType = new ViewType(_taskList);
         break;
     }
-    printDisplayList(createDisplayBox(taskListType->createSearchList()));
+    printList(createDisplayBox(taskListType->createSearchList()));
 
-    delete taskListType;
-}
-
-void UserInterface::printTaskList(int currentDate, int viewType) {
-    ViewType* taskListType;
-
-    switch(viewType) {
-    case 1:
-        taskListType = new ViewType1(_taskList , currentDate);
-        break;
-    case 2:
-        taskListType = new ViewType2(_taskList , currentDate);
-        break;
-    default:
-        taskListType = new ViewType(_taskList , currentDate);
-        break;
-    }
-
-    printDisplayList(createDisplayBox(taskListType->createDisplayList()));
     delete taskListType;
 }
 
 /****************************************************************/
 
-void UserInterface::printDisplayList(vector<string> displayList) {
+void UserInterface::printList(vector<string> displayList) {
     vector<string>::iterator displayListIter = displayList.begin();
 
     while(displayListIter != displayList.end()) {
         showToUser(*displayListIter);
         displayListIter++;
     }
+}
+
+void UserInterface::printList(vector<string> displayList, vector<string> colourCoding) {
+    vector<string>::iterator displayListIter = displayList.begin();
+    vector<string>::iterator colourCodingIter = colourCoding.begin();
+  
+    while(displayListIter != displayList.end()) {
+        changeListColour(*colourCodingIter);
+        showToUser(*displayListIter);
+        displayListIter++;
+        if(colourCodingIter != colourCoding.end()-1) {
+            colourCodingIter++;
+        }
+    }
+}
+/****************************************************************/
+void UserInterface::setConsoleColor(int BC, int FC) {
+   // Remember to #include <windows.h> to use this
+   // Colours are from 0 to 15, standard EGA colours,
+   // the same colours that the console command "COLOR /?" uses.
+   if (FC > 15 || BC > 15) {
+      setConsoleColor(12, 0);
+      cout << "*** Error in setConsoleColor() *\n";
+      if (FC > 15) cout << "Invalid colour code for foreground: " << FC << "\n";
+      if (BC > 15) cout << "Invalid colour code for background: " << BC << "\n";
+      cout << "Foreground and Background colours have to be from 0 to 15.\n";
+      system("pause"); // change this to something like cin or whatever if you don't want to use system()
+      exit(1);
+   }
+
+   HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+   int colour = BC * 16 + FC;
+   SetConsoleTextAttribute(hConsole, colour);
+}
+/****************************************************************/
+
+vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
+    vector<string>::iterator displayListIter;
+    string messageBox;
+
+    setWindowsRowsColumns(displayList.size()+2);
+    messageBox.assign(DISPLAY_WIDTH,MESSAGE_BOX_CHARACTER);
+    messageBox.pop_back();
+
+    displayList.insert(displayList.begin(),messageBox);
+    displayList.insert(displayList.begin(),MESSAGE_VOID_STRING);
+    displayListIter = displayList.begin();
+    displayListIter++;
+
+    while(displayList.size() < DISPLAY_LENGTH) {
+        displayList.push_back(MESSAGE_VOID_STRING);
+    }
+
+    displayList.insert(displayList.end(),messageBox);
+    return displayList;
+}
+
+vector<string> UserInterface::synchronizeColourCodingWithDisplayBox(vector<string> colourCoding) {
+    int i = 0;
+    while(i < 2) {
+        colourCoding.insert(colourCoding.begin(),COLOUR_DEFAULT);
+        i++;
+    }
+    colourCoding.insert(colourCoding.end(),COLOUR_DEFAULT);
+    return colourCoding;
 }
 
 void UserInterface::showToUser(string message) {
@@ -222,6 +298,8 @@ void UserInterface::showToUserMessageBox() {
 
     showToUser(messageBox);
 }
+
+/****************************************************************/
 
 void UserInterface::resizeWindow(int width, int length) {
     sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), width, length);
@@ -251,25 +329,18 @@ void UserInterface::setWindowsRowsColumns(int size) {
     _memory->changeWindowSize(DISPLAY_WIDTH,DISPLAY_LENGTH + 4);
 }
 
-vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
-    vector<string>::iterator displayListIter;
-    string messageBox;
+/****************************************************************/
 
-    setWindowsRowsColumns(displayList.size()+2);
-    messageBox.assign(DISPLAY_WIDTH,MESSAGE_BOX_CHARACTER);
-    messageBox.pop_back();
+void UserInterface::changeListColour(string colourCoding) {
+    if(colourCoding == COLOUR_NEW) {
+        setConsoleColor(BLACK, LIGHT_RED);
+        return;
+    } 
+    setConsoleColorDefault();
+}
 
-    displayList.insert(displayList.begin(),messageBox);
-    displayList.insert(displayList.begin(),MESSAGE_VOID_STRING);
-    displayListIter = displayList.begin();
-    displayListIter++;
-
-    while(displayList.size() < DISPLAY_LENGTH) {
-        displayList.push_back(MESSAGE_VOID_STRING);
-    }
-
-    displayList.insert(displayList.end(),messageBox);
-    return displayList;
+void UserInterface::setConsoleColorDefault() {
+    setConsoleColor(BLACK, LIGHT_WHITE);
 }
 
 /*************************Unused*********************************/
