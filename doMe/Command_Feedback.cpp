@@ -68,7 +68,7 @@ string Command_Feedback::getTaskString(Task* task, int viewType) {
 }
 
 string Command_Feedback::getCommandFeedback(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
-    COMMAND_TYPE commandType = executionMessage->getCommandType();
+    CommandType commandType = executionMessage->getCommandType();
 
     switch(commandType) {
     case ADD:
@@ -120,7 +120,7 @@ string Command_Feedback::getCommandFeedback(Command* executionMessage, COMMAND_O
 
 string Command_Feedback::getNotificationUndo(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
     Command* undoCommandMessage;
-    COMMAND_TYPE commandType;
+    CommandType commandType;
 
     switch(commandOutcome) {
     case VALID_MESSAGE:

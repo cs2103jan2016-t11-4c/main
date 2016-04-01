@@ -131,7 +131,7 @@ void UserInterface::executeCommandUntilExit() {
 
 void UserInterface::printMessageDisplay(Command* command) {
 
-    COMMAND_TYPE commandType = command->getCommandType();
+    CommandType commandType = command->getCommandType();
 
     switch(commandType) {
     case SEARCH:
