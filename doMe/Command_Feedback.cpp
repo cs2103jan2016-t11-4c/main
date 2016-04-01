@@ -67,7 +67,7 @@ string Command_Feedback::getTaskString(Task* task, int viewType) {
     return taskListType->getTaskString(task);
 }
 
-string Command_Feedback::getCommandFeedback(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getCommandFeedback(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     CommandType commandType = executionMessage->getCommandType();
 
     switch(commandType) {
@@ -118,7 +118,7 @@ string Command_Feedback::getCommandFeedback(Command* executionMessage, COMMAND_O
 
 /****************************************************************/
 
-string Command_Feedback::getNotificationUndo(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     Command* undoCommandMessage;
     CommandType commandType;
 
@@ -181,7 +181,7 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, COMMAND_
     }
 }
 
-string Command_Feedback::getNotificationAdd(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationAdd(executionMessage->getTask(), viewType, DEFAULT_TEXT_FILE_NAME);
@@ -193,7 +193,7 @@ string Command_Feedback::getNotificationAdd(Command* executionMessage, COMMAND_O
 
 }
 
-string Command_Feedback::getNotificationDelete(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationDelete(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationDelete(executionMessage->getTask(), viewType, DEFAULT_TEXT_FILE_NAME);
@@ -204,7 +204,7 @@ string Command_Feedback::getNotificationDelete(Command* executionMessage, COMMAN
     }
 }
 
-string Command_Feedback::getNotificationEdit(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationEdit(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationEdit(executionMessage->getTask(), viewType);
@@ -215,7 +215,7 @@ string Command_Feedback::getNotificationEdit(Command* executionMessage, COMMAND_
     }
 }
 
-string Command_Feedback::getNotificationClear(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationClear(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationClear(DEFAULT_TEXT_FILE_NAME);
@@ -226,13 +226,13 @@ string Command_Feedback::getNotificationClear(Command* executionMessage, COMMAND
     }
 }
 
-string Command_Feedback::getNotificationSearchTerm(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationSearchTerm(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     string searchTerm;
     searchTerm = executionMessage->getSearchTerm();
     return validNotificationSearchTerm(searchTerm);
 }
 
-string Command_Feedback::getNotificationEndSearch(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationEndSearch(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationExitSearch();
@@ -243,7 +243,7 @@ string Command_Feedback::getNotificationEndSearch(Command* executionMessage, COM
     }
 }
 
-string Command_Feedback::getNotificationViewType(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationViewType(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationViewType(executionMessage->getViewType());
@@ -254,7 +254,7 @@ string Command_Feedback::getNotificationViewType(Command* executionMessage, COMM
     }
 }
 
-string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
         return validNotificationChangeSaveFileDirectory(executionMessage->getSaveDirectory());
@@ -265,7 +265,7 @@ string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executi
     }
 }
 
-string Command_Feedback::getNotificationInvalidCommand(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType) {
+string Command_Feedback::getNotificationInvalidCommand(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     return invalidNotificationCommand();
 }
 

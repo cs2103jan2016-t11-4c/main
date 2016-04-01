@@ -66,6 +66,7 @@ void UserInterface::setEnvironment() {
 }
 
 void UserInterface::printProgramWelcomePage() {
+    system("Color 08");
     resizeWindow(DISPLAY_WIDTH,DISPLAY_LENGTH);
     string space = "               ";
     cout << endl;
@@ -151,7 +152,7 @@ void UserInterface::printSearchDisplay() {
     printSearchList(DATE, _memory->getViewType());
 }
 
-void UserInterface::printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome) {
+void UserInterface::printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome) {
     string message;
     message = _commandFeedback->getCommandFeedback(executionMessage, commandOutcome, _memory->getViewType());
     showToUser(message);

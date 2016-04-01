@@ -64,7 +64,7 @@ public:
     void printSearchList(int currentDate, int viewType);
 
     //notification
-    void printExecutionMessage(Command* executionMessage, COMMAND_OUTCOME commandOutcome);
+    void printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome);
 
     //helper
     void showToUser(string message);
@@ -76,6 +76,12 @@ public:
     //window size related function
     void resizeWindow(int width, int length);
     void setWindowsRowsColumns(int size);
+
+    //window text colour
+    enum Colour {
+        BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GRAY
+    };
+    void setWindowsColour(Colour background, Colour foreground);
 
     static const string SYSTEM_MODE_CON;
     static string MESSAGE_WELCOME;

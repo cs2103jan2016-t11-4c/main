@@ -9,7 +9,7 @@
 
 using namespace std;
 
-enum COMMAND_OUTCOME {
+enum CommandOutcome {
     VALID_MESSAGE, INVALID_MESSAGE
 };
 
@@ -18,7 +18,7 @@ class Command_Feedback {
 public:
     ~Command_Feedback(void);
     static Command_Feedback* getInstance();
-    string getCommandFeedback(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
+    string getCommandFeedback(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
 #ifndef TESTMODE 
 private: 
 #else 
@@ -31,16 +31,16 @@ public:
     string getTaskString(Task* task, int viewType); 
 
     //get string for individual commands
-    string getNotificationUndo(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationAdd(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationDelete(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationEdit(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationClear(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationSearchTerm(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationEndSearch(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationViewType(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationChangeSaveFileDirectory(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
-    string getNotificationInvalidCommand(Command* executionMessage, COMMAND_OUTCOME commandOutcome, int viewType);
+    string getNotificationUndo(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationDelete(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationEdit(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationClear(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationSearchTerm(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationEndSearch(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationViewType(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationChangeSaveFileDirectory(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationInvalidCommand(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
 
     //valid notification
     string validNotificationAdd(Task* task, int viewType, string textFileName); 
