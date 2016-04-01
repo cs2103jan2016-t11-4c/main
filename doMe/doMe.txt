@@ -1,147 +1,104 @@
-IE2150 Revision
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-Plan daily finances
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-Study OC function curve
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-med
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-de
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-add me
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-add me
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-ME
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-Apply for Edusave withdrawal
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-Fix Endsearch issue
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-me
+er
 -1
 -1
 -1
 -1
 
+0
 __________
-IE2150 Project Research
+r
 -1
-20160331
+-1
 -1
 -1
 
+0
 __________
-IE2100 Homework 4
--1
-20160401
+er
 -1
 -1
-
-__________
-Financial Aid
--1
-20160401
 -1
 -1
 
-__________
-SSA3201 Read Cooling Off Day Alfian Saat
--1
-20160403
--1
--1
-
-__________
-IE2150 reading
--1
-20160404
--1
--1
-
-__________
-SSA Project
--1
-20160404
--1
--1
-
-__________
-NUSSSU WELFARE
--1
-20160406
--1
--1
-
-__________
-IE2150 Project Deadline
--1
-20160411
--1
--1
-
-__________
-SSA3201 Project Deadline
--1
-20160411
--1
--1
-
-__________
-RESUME & INTERNSHIP
-20160405
-20160412
--1
--1
-
+0
 __________

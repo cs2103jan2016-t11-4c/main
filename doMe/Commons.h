@@ -12,6 +12,7 @@
 #include "Exception_InvalidCommand.h"
 #include "Exception_ExceededParameterLimit.h"
 #include "Exception_FileCannotOpen.h"
+#include "Exception_CorruptedFile.h"
 using namespace std;
 
 #define WEEK_DAY Commons::getWeek_Day()

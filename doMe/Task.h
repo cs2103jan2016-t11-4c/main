@@ -16,6 +16,7 @@ using namespace std;
 #define NO_TIME -1
 #define NO_LOCATION ""
 #define NO_NAME ""
+#define NO_DONE 0
 
 class Task {
 private:
@@ -25,9 +26,10 @@ private:
 	int _time1;
 	int _time2;
 	string _location;
+	int _doneStatus;
 	
 public:
-	Task(string name = NO_NAME, int date1 = NO_DATE, int date2 = NO_DATE, int time1 = NO_TIME, int time2 = NO_TIME, string location = NO_LOCATION);
+	Task(string name = NO_NAME, int date1 = NO_DATE, int date2 = NO_DATE, int time1 = NO_TIME, int time2 = NO_TIME, string location = NO_LOCATION, int doneStatus = NO_DONE);
 	~Task();
 	string getName();
 	int getDate1();
@@ -35,6 +37,7 @@ public:
 	int getTime1();
 	int getTime2();
 	string getLocation();
+	int getDoneStatus();
 
 	void setName(string newName);
 	void setDate1(int newDate);
@@ -42,4 +45,5 @@ public:
 	void setTime1(int newTime);
 	void setTime2(int newTime);
 	void setLocation(string newLocation);
+	void setDoneStatus(int newDoneStatus);
 };

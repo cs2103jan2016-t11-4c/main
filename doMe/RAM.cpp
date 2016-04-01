@@ -158,6 +158,10 @@ void RAM::loadData() {
 		saveData();
 		throw e;
 	}
+//	catch(Exception_CorruptedFile e) {
+//		saveData();
+//		throw e;
+//	}
 }
 
 void RAM::saveData() {
@@ -174,6 +178,7 @@ vector<string> RAM::ramGetVector() {
 		updatedData.push_back(integerToString((*iter)->getTime1()));
 		updatedData.push_back(integerToString((*iter)->getTime2()));
 		updatedData.push_back((*iter)->getLocation());
+		updatedData.push_back(integerToString((*iter)->getDoneStatus()));
 		updatedData.push_back(LIST_DIVIDER);
 	}
 	for(list<Task*>::iterator iter = _tempTaskList.begin(); iter != _tempTaskList.end(); iter++) {
@@ -183,21 +188,29 @@ vector<string> RAM::ramGetVector() {
 		updatedData.push_back(integerToString((*iter)->getTime1()));
 		updatedData.push_back(integerToString((*iter)->getTime2()));
 		updatedData.push_back((*iter)->getLocation());
+		updatedData.push_back(integerToString((*iter)->getDoneStatus()));
 		updatedData.push_back(LIST_DIVIDER);
 	}
 	return updatedData;
 }
 
 void RAM::ramLoadVector(vector<string>& existingData) {
-	for(unsigned int i = 0; i < existingData.size(); i+=7) {
+	if(existingData.size() % 8 != 0) {
+		return;
+//		Exception_CorruptedFile e();
+//		throw e;
+	}
+
+	for(unsigned int i = 0; i < existingData.size(); i+=8) {
 		string name = existingData[i];
 		int date1 = stringToInteger(existingData[i+1]);
 		int date2 = stringToInteger(existingData[i+2]);
 		int time1 = stringToInteger(existingData[i+3]);
 		int time2 = stringToInteger(existingData[i+4]);
 		string location = existingData[i+5];
+		int doneStatus = stringToInteger(existingData[i+6]);
 
-		_taskList.push_back(new Task(name, date1, date2, time1, time2, location));
+		_taskList.push_back(new Task(name, date1, date2, time1, time2, location, doneStatus));
 	}
 	sort();
 }

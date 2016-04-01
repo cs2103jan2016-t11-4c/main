@@ -57,6 +57,7 @@
     <ClInclude Include="Exception_InvalidCommand.h" />
     <ClInclude Include="Command_Redo.h" />
     <ClInclude Include="Command_Help.h" />
+    <ClInclude Include="Exception_CorruptedFile.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />

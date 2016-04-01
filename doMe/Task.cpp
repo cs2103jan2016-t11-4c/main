@@ -3,13 +3,14 @@
 /*
 *  Default constructor and destructor
 */
-Task::Task(string name, int date1, int date2, int time1, int time2, string location) {
+Task::Task(string name, int date1, int date2, int time1, int time2, string location, int doneStatus) {
 	_name = name;
 	_date1 = date1;
     _date2 = date2;
 	_time1 = time1;
     _time2 = time2;
 	_location = location;
+	_doneStatus = doneStatus;
 }
 
 Task::~Task(void) {
@@ -39,6 +40,10 @@ string Task::getLocation() {
 	return _location;
 }
 
+int Task::getDoneStatus() {
+	return _doneStatus;
+}
+
 void Task::setName(std::string newName) {
 	_name = newName;
 }
@@ -61,6 +66,11 @@ void Task::setTime2(int newTime) {
 
 void Task::setLocation(std::string newLocation) {
 	_location = newLocation;
+}
+
+
+void Task::setDoneStatus(int newDoneStatus) {
+	_doneStatus = newDoneStatus;
 }
 
 

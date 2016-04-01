@@ -222,6 +222,9 @@
     <ClInclude Include="Command_Help.h">
       <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
+    <ClInclude Include="Exception_CorruptedFile.h">
+      <Filter>Header Files\Exception Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
