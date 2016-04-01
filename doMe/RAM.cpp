@@ -16,7 +16,7 @@ RAM* RAM::getInstance() {
 RAM::RAM() {
 	_searchState = false;
 	_searchTerm = "";
-	_lastAddedTask = NULL;
+	_lastModifiedTask = NULL;
 	_storage = Storage::getInstance();
 	_settings = Settings::getInstance();
 }
@@ -27,7 +27,7 @@ void RAM::loadRAM() {
 
 void RAM::ramAdd(Task* task) {
 	_taskList.push_back(task);
-	_lastAddedTask = task;
+	_lastModifiedTask = task;
 	ramUnsearch();
 	sort();
 	saveData();
@@ -83,10 +83,15 @@ int RAM::ramGetSize() {
 
 Task* RAM::ramGetTask(int index) {		//index must be valid
 	if(index == 0) {
-		return _lastAddedTask;
+		return _lastModifiedTask;
 	}
+	
+	_lastModifiedTask = indexToTask(index);
+	return _lastModifiedTask;
+}
 
-	return *(indexToTaskListIter(index));
+Task* RAM::ramGetLastModifiedTask() {
+	return _lastModifiedTask;
 }
 
 bool RAM::ramGetSearchState() {
@@ -109,7 +114,7 @@ bool RAM::ramSearch(string& searchTerm) {
 	if(_tempTaskList.empty()) {
 		return false;
 	}
-
+	
 	_searchTerm = searchTerm;
 	_searchState = true;
 
@@ -136,15 +141,19 @@ void RAM::ramSort() {
 }
 
 void RAM::sort() {
-	_taskList.sort([](Task* a, Task* b) {return a->getName() < b->getName();});
 	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
 	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
-
+	//_taskList.sort([](Task* a, Task* b) {return a->getName() < b->getName();});
 	//_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() < b->getDoneStatus();});
 }
 
 void RAM::loadData() {
-	ramLoadVector(_storage->retrieveData(_settings->getSaveDirectory() + DEFAULT_TEXT_FILE_NAME));
+	try {
+		ramLoadVector(_storage->retrieveData(_settings->getSaveDirectory() + DEFAULT_TEXT_FILE_NAME));
+	}catch(Exception_FileCannotOpen e) {
+		saveData();
+		throw e;
+	}
 }
 
 void RAM::saveData() {
@@ -202,6 +211,10 @@ int RAM::stringToInteger(string& text) {
 	ss >> integer;
 
 	return integer;
+}
+
+Task* RAM::indexToTask(int index) {
+	return *(indexToTaskListIter(index));
 }
 
 list<Task*>::iterator RAM::indexToTaskListIter(int index) {

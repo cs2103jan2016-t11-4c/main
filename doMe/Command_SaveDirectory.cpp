@@ -20,7 +20,7 @@ string Command_SaveDirectory::getSaveDirectory() {
 	return _newSaveDirectory;
 }
 
-COMMAND_TYPE Command_SaveDirectory::getCommandType() {
+CommandType Command_SaveDirectory::getCommandType() {
 	return SAVEDIRECTORY;
 }
 

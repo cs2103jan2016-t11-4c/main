@@ -5,11 +5,9 @@ Logic* Logic::_instance = NULL;
 Logic::Logic() {
 	_parser = Parser::getInstance();
 	_memory = Memory::getInstance();
-	_commandHistoryList = new stack<Command*>;
 }
 
 Logic::~Logic() {
-	delete _commandHistoryList;
 }
 
 Logic* Logic::getInstance() {
@@ -25,6 +23,8 @@ Command* Logic::executeCommand(string commandText) {
 		throw e;
 	}
 
+	LOG(__FILE__,"User enters: \" " + commandText + "\"");
+
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 
@@ -35,25 +35,51 @@ Command* Logic::executeCommand(string commandText) {
 		return command;
 	}
 
+	if(command->getCommandType() == REDO) {
+		command->setRedoneCommand(redo());
+		return command;
+	}
+
 	if(command->execute() == false) {
 		Exception_InvalidCommand e(command);
 		throw e;
 	}
 
-	_commandHistoryList->push(command);
+	_commandUndoStack.push(command);
+	clearCommandRedoStack();
 
 	return command;
 }
 
 Command* Logic::undo() {
-	if(_commandHistoryList->empty()) {
+	if(_commandUndoStack.empty()) {
 		Exception_InvalidCommand e(new Command_Undo());
 		throw e;
 	}
 
-	Command* command = _commandHistoryList->top();
+	Command* command = _commandUndoStack.top();
 	command->undo();
-	_commandHistoryList->pop();
+	_commandUndoStack.pop();
+	_commandRedoStack.push(command);
 
 	return command;
+}
+
+Command* Logic::redo() {
+	if(_commandRedoStack.empty()) {
+		Exception_InvalidCommand e(new Command_Redo());
+		throw e;
+	}
+	Command* command = _commandRedoStack.top();
+	command->execute();
+	_commandRedoStack.pop();
+	_commandUndoStack.push(command);
+
+	return command;
+}
+
+void Logic::clearCommandRedoStack() {
+	while(!_commandRedoStack.empty()) {
+		_commandRedoStack.pop();
+	}
 }

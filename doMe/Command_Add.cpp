@@ -26,7 +26,7 @@ Task* Command_Add::getTask() {
 	return _task;
 }
 
-COMMAND_TYPE Command_Add::getCommandType() {
+CommandType Command_Add::getCommandType() {
 	return ADD;
 }
 

@@ -8,7 +8,7 @@ using namespace std;
 
 class Memory;
 
-enum COMMAND_TYPE { ADD, DISPLAY, DEL, EDIT, CLEAR, UNDO, SORT, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, INVALID};
+enum CommandType { ADD, DISPLAY, DEL, EDIT, CLEAR, UNDO, REDO, SORT, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, HELP, INVALID};
 
 class Command {
 protected:
@@ -17,7 +17,7 @@ public:
 	Command();
 	virtual bool execute() {return false;}
 	virtual bool undo() {return false;}
-	virtual COMMAND_TYPE getCommandType() {return INVALID;}
+	virtual CommandType getCommandType() {return INVALID;}
 	string getCommandTypeStr();
 
 	virtual Task* getTask() {return NULL;}
@@ -25,9 +25,10 @@ public:
 	virtual	string getSearchTerm() {return "";}
 	virtual	string getSaveDirectory() {return "";}
 	virtual int getViewType() {return 0;}
-
 	virtual string getStringForm() {return "";}
 
-	virtual void setUndoneCommand(Command* command){}
-	virtual Command* getUndoneCommand(){return NULL;}
+	virtual void setUndoneCommand(Command* command) {}
+	virtual Command* getUndoneCommand() {return NULL;}
+	virtual void setRedoneCommand(Command* command) {}
+	virtual Command* getRedoneCommand() {return NULL;}
 };

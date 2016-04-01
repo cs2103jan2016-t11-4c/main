@@ -103,11 +103,14 @@
     <ClCompile Include="Commons.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Chrono.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Command_Feedback.cpp">
       <Filter>Source Files\UserInterface Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Redo.cpp">
+      <Filter>Source Files\Command Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="Command_Help.cpp">
+      <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -210,11 +213,14 @@
     <ClInclude Include="Commons.h">
       <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Chrono.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Command_Feedback.h">
       <Filter>Header Files\UserInterface Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Redo.h">
+      <Filter>Header Files\Command Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Command_Help.h">
+      <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

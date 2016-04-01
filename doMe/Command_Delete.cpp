@@ -25,7 +25,7 @@ Task* Command_Delete::getTask() {
 	return _task;
 }
 
-COMMAND_TYPE Command_Delete::getCommandType() {
+CommandType Command_Delete::getCommandType() {
 	return DEL;
 }
 

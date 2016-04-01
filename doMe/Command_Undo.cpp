@@ -21,7 +21,7 @@ Command* Command_Undo::getUndoneCommand() {
 	return _undoneCommand;
 }
 
-COMMAND_TYPE Command_Undo::getCommandType() {
+CommandType Command_Undo::getCommandType() {
 	return UNDO;
 }
 

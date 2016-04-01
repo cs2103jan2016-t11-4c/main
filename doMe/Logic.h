@@ -1,5 +1,4 @@
 //@@author A0125290M
-#pragma once
 #include <iostream>
 #include <string>
 #include <stack>
@@ -16,11 +15,16 @@ private:
 	static Logic* _instance;
 	Logic();
 
-	stack<Command*>* _commandHistoryList;
+	stack<Command*> _commandUndoStack;
+	stack<Command*> _commandRedoStack;
+
 	Parser* _parser;
 	Memory* _memory;
 
 	Command* undo();
+	Command* redo();
+
+	void clearCommandRedoStack();
 
 public:
 	~Logic();

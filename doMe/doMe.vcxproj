@@ -11,7 +11,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Chrono.cpp" />
     <ClCompile Include="Command_Feedback.cpp" />
     <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Exception_ExceededParameterLimit.cpp" />
@@ -25,6 +24,8 @@
     <ClCompile Include="ChronoInterpreter.cpp" />
     <ClCompile Include="Parser_Interface.cpp" />
     <ClCompile Include="Exception_InvalidCommand.cpp" />
+    <ClCompile Include="Command_Redo.cpp" />
+    <ClCompile Include="Command_Help.cpp" />
     <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -49,12 +50,13 @@
     <ClCompile Include="ViewType2.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Chrono.h" />
     <ClInclude Include="Command_Feedback.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Exception_ExceededParameterLimit.h" />
     <ClInclude Include="Exception_FileCannotOpen.h" />
     <ClInclude Include="Exception_InvalidCommand.h" />
+    <ClInclude Include="Command_Redo.h" />
+    <ClInclude Include="Command_Help.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />

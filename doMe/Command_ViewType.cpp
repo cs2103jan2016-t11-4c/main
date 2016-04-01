@@ -19,7 +19,7 @@ int Command_ViewType::getViewType() {
 	return _newViewType;
 }
 
-COMMAND_TYPE Command_ViewType::getCommandType() {
+CommandType Command_ViewType::getCommandType() {
 	return VIEWTYPE;
 }
 

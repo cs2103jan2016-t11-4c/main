@@ -19,7 +19,7 @@ bool Command_Exit::undo() {
 	return _memory->ramSearch(_searchTerm);
 }
 
-COMMAND_TYPE Command_Exit::getCommandType() {
+CommandType Command_Exit::getCommandType() {
 	return _commandType;
 }
 

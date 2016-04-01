@@ -28,7 +28,7 @@ bool Command_Clear::undo() {
 	return true;
 }
 
-COMMAND_TYPE Command_Clear::getCommandType() {
+CommandType Command_Clear::getCommandType() {
 	return CLEAR;
 }
 

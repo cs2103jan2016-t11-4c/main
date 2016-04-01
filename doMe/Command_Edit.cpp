@@ -10,7 +10,7 @@ Command_Edit::Command_Edit(int index, Task* task)
 	_newTime1 = task->getTime1();
 	_newTime2 = task->getTime2();
 	_newLocation = task->getLocation();
-//	_newDoneStatus = task->getDoneStatus();
+//	_newDoneStatus = task->getDoneStatus();	
 }
 
 bool Command_Edit::execute() {
@@ -31,22 +31,22 @@ bool Command_Edit::execute() {
 	if(!_newName.empty()) {
 		_task->setName(_newName);
 	}
-	if(_newDate1 != -1) {
+	if(_newDate1 != -2) {
 		_task->setDate1(_newDate1);
 	}
-	if(_newDate2 != -1) {
+	if(_newDate2 != -2) {
 		_task->setDate2(_newDate2);
 	}
-	if(_newTime1 != -1) {
+	if(_newTime1 != -2) {
 		_task->setTime1(_newTime1);
 	}
-	if(_newTime2 != -1) {
+	if(_newTime2 != -2) {
 		_task->setTime2(_newTime2);
 	}
-	if(!_newLocation.empty()) {
+	if(_newLocation != " ") {
 		_task->setLocation(_newLocation);
 	}
-/*	if(!_newDoneStatus != -1) {
+/*	if(!_newDoneStatus != -2) {
 		_task->setDoneStatus(_newDoneStatus);
 	}*/
 	_memory->ramSort();
@@ -68,7 +68,7 @@ Task* Command_Edit::getTask() {
 	return _task;
 }
 
-COMMAND_TYPE Command_Edit::getCommandType() {
+CommandType Command_Edit::getCommandType() {
 	return EDIT;
 }
 

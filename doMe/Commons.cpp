@@ -3,7 +3,7 @@
 
 const string Commons::LOG_FILE_NAME = "doMeLog.txt";
 const string Commons::TIME_DIVIDER = ":";
-const string Commons::LOG_ENTRY = "%d/%d/%d %d:%d:%d [%s] : %s";
+const string Commons::LOG_ENTRY = "%02d/%02d/%d %02d:%02d:%02d [%13s] : %s";
 
 Commons::Commons() {
 }
@@ -148,4 +148,3 @@ string Commons::trim(string file) {
 
 	return file.substr(0,found);
 }
-

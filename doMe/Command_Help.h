@@ -3,15 +3,10 @@
 #include "Command.h"
 using namespace std;
 
-class Command_ViewType : public Command {
-private:
-	int _oldViewType;
-	int _newViewType;
+class Command_Help : public Command {
 public:
-	Command_ViewType(int newViewType);
+	Command_Help();
 	bool execute();
-	bool undo();
-	int getViewType();
 	CommandType getCommandType();
 	string getStringForm();
 };

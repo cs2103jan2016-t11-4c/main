@@ -3,15 +3,15 @@
 #include "Command.h"
 using namespace std;
 
-class Command_SaveDirectory : public Command {
+class Command_Redo : public Command {
 private:
-	string _oldSaveDirectory;
-	string _newSaveDirectory;
+	Command* _redoneCommand;
 public:
-	Command_SaveDirectory(string newSaveDirectory);
+	Command_Redo();
 	bool execute();
 	bool undo();
-	string getSaveDirectory();
+	void setRedoneCommand(Command* command);
+	Command* getRedoneCommand();
 	CommandType getCommandType();
 	string getStringForm();
 };

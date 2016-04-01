@@ -12,6 +12,6 @@ public:
 	bool undo();
 	void setUndoneCommand(Command* command);
 	Command* getUndoneCommand();
-	COMMAND_TYPE getCommandType();
+	CommandType getCommandType();
 	string getStringForm();
 };

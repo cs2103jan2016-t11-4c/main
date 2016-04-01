@@ -13,6 +13,6 @@ public:
 	Command_Clear(vector<int>* deleteList);
 	bool execute();
 	bool undo();
-	COMMAND_TYPE getCommandType();
+	CommandType getCommandType();
 	string getStringForm();
 };

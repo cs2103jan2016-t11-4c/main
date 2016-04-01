@@ -84,6 +84,10 @@ Task* Memory::ramGetTask(int index) {
 
 }
 
+Task* Memory::ramGetLastModifiedTask() {
+	return _ram->ramGetLastModifiedTask();
+}
+
 bool Memory::ramGetSearchState() {
 	return _ram->ramGetSearchState();
 }

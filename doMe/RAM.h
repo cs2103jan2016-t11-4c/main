@@ -8,6 +8,7 @@
 #include "Task.h"
 #include "Storage.h"
 #include "Command.h"
+#include "Commons.h"
 #include "Settings.h"
 using namespace std;
 
@@ -24,7 +25,7 @@ private:
 	list<Task*> _tempTaskList;
 	bool _searchState;
 	string _searchTerm;
-	Task* _lastAddedTask;
+	Task* _lastModifiedTask;
 
 	static const string LIST_DIVIDER;
 	static const string DEFAULT_TEXT_FILE_NAME;
@@ -36,6 +37,7 @@ private:
 	void ramLoadVector(vector<string>& existingData);
 	string integerToString(int integer);
 	int stringToInteger(string& text);
+	Task* indexToTask(int index);
 	list<Task*>::iterator indexToTaskListIter(int index);
 	bool foundInTask(Task* task, string searchTerm);
 	string convertToLowerCase(string sentence);
@@ -51,6 +53,7 @@ public:
 	void ramInsert(list<Task*>& oldTaskList);
 	int ramGetSize();
 	Task* ramGetTask(int index);
+	Task* ramGetLastModifiedTask();
 	bool ramGetSearchState();
 	bool ramSearch(string& searchTerm);
 	string ramUnsearch();

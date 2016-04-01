@@ -11,6 +11,6 @@ public:
 	bool execute();
 	bool undo();
 	string getSearchTerm();
-	COMMAND_TYPE getCommandType();
+	CommandType getCommandType();
 	string getStringForm();
 };

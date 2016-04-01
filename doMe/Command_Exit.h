@@ -9,7 +9,7 @@ private:
 	COMMAND_TYPE _commandType;
 public:
 	Command_Exit();
-	COMMAND_TYPE getCommandType();
+	CommandType getCommandType();
 	string getStringForm();
 	bool execute();
 	bool undo();

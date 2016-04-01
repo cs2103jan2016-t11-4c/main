@@ -37,6 +37,7 @@ public:
 	void ramInsert(list<Task*>& oldTaskList);
 	int ramGetSize();
 	Task* ramGetTask(int index);
+	Task* ramGetLastModifiedTask();
 	bool ramGetSearchState();
 	bool ramSearch(string searchTerm);
 	string ramUnsearch();

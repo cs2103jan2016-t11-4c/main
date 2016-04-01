@@ -9,7 +9,7 @@ bool Command_Invalid::execute() {
 	return false;
 }
 
-COMMAND_TYPE Command_Invalid::getCommandType() {
+CommandType Command_Invalid::getCommandType() {
 	return INVALID;
 }
 

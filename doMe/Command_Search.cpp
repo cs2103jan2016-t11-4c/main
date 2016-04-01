@@ -19,7 +19,7 @@ string Command_Search::getSearchTerm() {
 	return _searchTerm;
 }
 
-COMMAND_TYPE Command_Search::getCommandType() {
+CommandType Command_Search::getCommandType() {
 	return SEARCH;
 }
 
