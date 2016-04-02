@@ -114,10 +114,6 @@ bool RAM::ramSearch(string& searchTerm) {
 			iter++;
 		}
 	}
-
-	if(_tempTaskList.empty()) {
-		return false;
-	}
 	
 	_searchTerm = searchTerm;
 	_searchState = true;
@@ -145,10 +141,10 @@ void RAM::ramSort() {
 }
 
 void RAM::sort() {
+	_taskList.sort([&](Task* a, Task* b) {return convertToLowerCase(a->getName()) < convertToLowerCase(b->getName());});
 	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
 	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
-	//_taskList.sort([](Task* a, Task* b) {return a->getName() < b->getName();});
-	//_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() < b->getDoneStatus();});
+	_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() < b->getDoneStatus();});
 }
 
 void RAM::loadData() {
@@ -245,13 +241,12 @@ list<Task*>::iterator RAM::indexToTaskListIter(int index) {
 
 bool RAM::foundInTask(Task* task, string searchTerm) {
 	searchTerm = convertToLowerCase(searchTerm);
-
 	string name = convertToLowerCase(task->getName());
 	string location = convertToLowerCase(task->getLocation());
-	string date1 = integerToString(task->getDate1());
-	string date2 = integerToString(task->getDate2());
-	string time1 = integerToString(task->getTime1());
-	string time2 = integerToString(task->getTime2());
+
+	searchTerm = searchTerm.insert(0, " ");
+	name = name.insert(0, " ");
+	location = location.insert(0, " ");
 
 	size_t found = name.find(searchTerm);
 	if(found != string::npos) {
@@ -259,26 +254,6 @@ bool RAM::foundInTask(Task* task, string searchTerm) {
 	}
 
 	found = location.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
-
-	found = date1.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
-
-	found = date2.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
-
-	found = time1.find(searchTerm);
-	if(found != string::npos) {
-		return true;
-	}
-
-	found = time2.find(searchTerm);
 	if(found != string::npos) {
 		return true;
 	}
