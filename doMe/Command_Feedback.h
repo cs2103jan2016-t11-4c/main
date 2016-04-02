@@ -32,6 +32,8 @@ public:
 
     //get string for individual commands
     string getNotificationUndo(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationRedo(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+
     string getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationDelete(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationEdit(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
@@ -40,6 +42,7 @@ public:
     string getNotificationEndSearch(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationViewType(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationChangeSaveFileDirectory(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationHelpPrompt(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationInvalidCommand(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
 
     //valid notification
@@ -51,6 +54,7 @@ public:
     string validNotificationExitSearch(); 
     string validNotificationViewType(int newViewType);
     string validNotificationChangeSaveFileDirectory(string newDirectory);
+    string validNotificationHelpPrompt();
 
     //Invalid notification
     string invalidNotificationCommand();
@@ -82,6 +86,7 @@ public:
     static const string MESSAGE_EXIT_SEARCH;
     static const string MESSAGE_VIEW_TYPE;
     static const string MESSAGE_CHANGE_FILE_DIRECTORY;
+    static const string MESSAGE_HELP;
 
     static const string ERROR_INVALID_ADD;
     static const string ERROR_INVALID_DELETE;

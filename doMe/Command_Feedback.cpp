@@ -14,6 +14,7 @@ const string Command_Feedback::MESSAGE_SEARCH = "~Showing all results for \"%s\"
 const string Command_Feedback::MESSAGE_CHANGE_FILE_DIRECTORY = "New save directory: %s";
 const string Command_Feedback::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
 const string Command_Feedback::MESSAGE_EXIT_SEARCH = "Exited search module.";
+const string Command_Feedback::MESSAGE_HELP = "Showing available commands and how to use them.";
 
 const string Command_Feedback::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
 const string Command_Feedback::ERROR_INVALID_DELETE = "Invalid (DELETE) has been inputted.";
@@ -89,6 +90,9 @@ string Command_Feedback::getCommandFeedback(Command* executionMessage, CommandOu
     case UNDO:
         return getNotificationUndo(executionMessage, commandOutcome, viewType);
         break;
+    case REDO:
+        return getNotificationRedo(executionMessage, commandOutcome, viewType);
+        break;
     case SORT:
         //return "auto sort?";
         break;
@@ -106,6 +110,9 @@ string Command_Feedback::getCommandFeedback(Command* executionMessage, CommandOu
         break;
     case EXIT:
         //showToUser("Do I even need a exiting message? Nope");
+        break;
+    case HELP:
+        return getNotificationHelpPrompt(executionMessage, commandOutcome, viewType);
         break;
     case INVALID:
         return getNotificationInvalidCommand(executionMessage, commandOutcome, viewType);
@@ -156,8 +163,9 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
             return validNotificationExitSearch();
             break;
         case ENDSEARCH:
-            assert(0);
-            //return "No undo exit";
+            //assert(0);
+            return getNotificationSearchTerm(undoCommandMessage, commandOutcome, viewType);
+            return "No undo exit";
             break;
         case VIEWTYPE:
             return undoNotificationViewType(undoCommandMessage, viewType);
@@ -179,6 +187,10 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
         return invalidNotificationUndo();
         break;
     }
+}
+
+string Command_Feedback::getNotificationRedo(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
+    return getCommandFeedback(executionMessage, commandOutcome, viewType);
 }
 
 string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -265,6 +277,10 @@ string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executi
     }
 }
 
+string Command_Feedback::getNotificationHelpPrompt(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
+        return validNotificationHelpPrompt();
+}
+
 string Command_Feedback::getNotificationInvalidCommand(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     return invalidNotificationCommand();
 }
@@ -315,6 +331,10 @@ string Command_Feedback::validNotificationViewType(int newViewType) {
 string Command_Feedback::validNotificationChangeSaveFileDirectory(string newDirectory) {
     sprintf_s(buffer, MESSAGE_CHANGE_FILE_DIRECTORY.c_str(), newDirectory.c_str());
     return buffer;
+}
+
+string Command_Feedback::validNotificationHelpPrompt() {
+    return MESSAGE_HELP;
 }
 
 /****************************************************************/

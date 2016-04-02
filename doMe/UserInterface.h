@@ -57,11 +57,13 @@ public:
 
     //Message display
     void printMessageDisplay(Command* command);
-    void printSearchDisplay();
     void printDefaultDisplay();
-
+    void printSearchDisplay();
+    void printHelpDisplay();
+    
     void printTaskList(int currentDate ,int viewType);
     void printSearchList(int currentDate, int viewType);
+    void printHelpList(int currentDate, int viewType);
 
     //notification
     void printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome);
@@ -85,6 +87,8 @@ public:
     };
     static const string COLOUR_DEFAULT;
     static const string COLOUR_NEW;
+    static const string COLOUR_SEARCH;
+    static const string COLOUR_HELP;
 
     void changeListColour(string colourCoding);
     void setConsoleColor(int background, int foreground);

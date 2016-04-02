@@ -18,15 +18,21 @@ const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
 
 const string UserInterface::COLOUR_DEFAULT = "DEFAULT";
 const string UserInterface::COLOUR_NEW = "NEW";
+const string UserInterface::COLOUR_SEARCH = "SEARCH";
+const string UserInterface::COLOUR_HELP = "HELP";
 
 const string UserInterface::MESSAGE_HELP_TIPS[] = { 
     "add <task description>", 
     "delete <index>",
     "clear",
-    "edit <task description>",
+    "edit <index> <task description>",
     "search <keyword>",
     "change <directory>",
     "undo",
+    "redo",
+    "change directory <directory>",
+    "viewtype <index>",
+    "help",
     "exit"
 }; 
 
@@ -142,6 +148,11 @@ void UserInterface::printMessageDisplay(Command* command) {
     case SEARCH:
         printSearchDisplay();
         break;
+    case HELP:
+        printHelpDisplay();
+        break;
+    case EXIT:
+        break;
     default:
         printDefaultDisplay();
         break;
@@ -154,6 +165,10 @@ void UserInterface::printDefaultDisplay() {
 
 void UserInterface::printSearchDisplay() {
     printSearchList(DATE, _memory->getViewType());
+}
+
+void UserInterface::printHelpDisplay() {
+    printHelpList(DATE, _memory->getViewType());
 }
 
 void UserInterface::printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome) {
@@ -205,9 +220,21 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
         taskListType = new ViewType(_taskList);
         break;
     }
+
+    changeListColour(COLOUR_SEARCH);
     printList(createDisplayBox(taskListType->createSearchList()));
+    changeListColour(COLOUR_DEFAULT);
 
     delete taskListType;
+}
+
+void UserInterface::printHelpList(int currentDate, int viewType) {
+    size_t size = (sizeof(MESSAGE_HELP_TIPS)/sizeof(*MESSAGE_HELP_TIPS));
+    vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
+
+    changeListColour(COLOUR_HELP);
+    printList(createDisplayBox(helpList));
+    changeListColour(COLOUR_DEFAULT);
 }
 
 /****************************************************************/
@@ -224,7 +251,7 @@ void UserInterface::printList(vector<string> displayList) {
 void UserInterface::printList(vector<string> displayList, vector<string> colourCoding) {
     vector<string>::iterator displayListIter = displayList.begin();
     vector<string>::iterator colourCodingIter = colourCoding.begin();
-  
+
     while(displayListIter != displayList.end()) {
         changeListColour(*colourCodingIter);
         showToUser(*displayListIter);
@@ -317,14 +344,25 @@ void UserInterface::changeListColour(string colourCoding) {
     if(colourCoding == COLOUR_NEW) {
         setConsoleColor(BLACK, LIGHT_RED);
         return;
-    } 
+    } else {
+        if(colourCoding == COLOUR_SEARCH) {
+            setConsoleColor(BLACK, LIGHT_GREEN);
+            return;
+        } else {
+            if(colourCoding == COLOUR_HELP) {
+                setConsoleColor(BLACK, LIGHT_YELLOW);
+                return;
+            }
+        }
+    }
     setConsoleColorDefault();
+
 }
 
 void UserInterface::setConsoleColor(int background, int foreground) {
-   HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-   int colour = background * 16 + foreground;
-   SetConsoleTextAttribute(hConsole, colour);
+    HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    int colour = background * 16 + foreground;
+    SetConsoleTextAttribute(hConsole, colour);
 }
 
 void UserInterface::setConsoleColorDefault() {
