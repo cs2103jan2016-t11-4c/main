@@ -2,17 +2,19 @@
 #include "Command_Exit.h"
 
 Command_Exit::Command_Exit()
-:Command() {
+	:Command() {
 }
 
 bool Command_Exit::execute() {
 	if(_memory->ramGetSearchState() == true) {
 		_searchTerm = _memory->ramUnsearch();
 		_commandType = ENDSEARCH;
-		return true;
+	}else {
+		_commandType = EXIT;
 	}
-	_commandType = EXIT;
-	return false;
+
+	Exception_InvalidCommand e(this);
+	throw e;
 }
 
 bool Command_Exit::undo() {

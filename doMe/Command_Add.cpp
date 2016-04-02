@@ -9,7 +9,8 @@ Command_Add::Command_Add(Task* task)
 bool Command_Add::execute() {
 
 	if(_task == NULL) {
-		return false;
+		Exception_InvalidCommand e(this);
+		throw e;
 	}
 
 	_memory->ramAdd(_task);

@@ -18,68 +18,75 @@ Logic* Logic::getInstance() {
 }
 
 Command* Logic::executeCommand(string commandText) {
-	if(commandText.empty()) {
-		Exception_InvalidCommand e(new Command_Invalid());
-		throw e;
-	}
-
-	LOG(__FILE__,"User enters: \" " + commandText + "\"");
+	throwExceptionIfEmpty(commandText);
 
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 
 	LOG(__FILE__, "Parser parses it to be " + command->getCommandTypeStr());
 
-	if(command->getCommandType() == UNDO) {
-		command->setUndoneCommand(undo());
+	if(command->getCommandType() == UNDO || command->getCommandType() == REDO) {
+		executeUndoRedo(command);
 		return command;
 	}
 
-	if(command->getCommandType() == REDO) {
-		command->setRedoneCommand(redo());
-		return command;
-	}
-
-	if(command->execute() == false) {
-		Exception_InvalidCommand e(command);
-		throw e;
-	}
-
+	command->execute();
 	_commandUndoStack.push(command);
 	clearCommandRedoStack();
 
 	return command;
 }
 
-Command* Logic::undo() {
+void Logic::executeUndoRedo(Command* command) {
+	switch(command->getCommandType()) {
+	case UNDO:
+		undo(command);
+		break;
+	case REDO:
+		redo(command);
+		break;
+	}
+}
+
+void Logic::undo(Command* command) {
 	if(_commandUndoStack.empty()) {
 		Exception_InvalidCommand e(new Command_Undo());
 		throw e;
 	}
 
-	Command* command = _commandUndoStack.top();
-	command->undo();
+	Command* undoneCommand = _commandUndoStack.top();
+	undoneCommand->undo();
+
+	command->setUndoneCommand(undoneCommand);
 	_commandUndoStack.pop();
+
 	_commandRedoStack.push(command);
 
-	return command;
 }
 
-Command* Logic::redo() {
+void Logic::redo(Command* command) {
 	if(_commandRedoStack.empty()) {
 //		Exception_InvalidCommand e(new Command_Redo());
 //		throw e;
 	}
-	Command* command = _commandRedoStack.top();
-	command->execute();
+	Command* redoneCommand = _commandRedoStack.top();
+	redoneCommand->execute();
+
+	command->setRedoneCommand(redoneCommand);
+
 	_commandRedoStack.pop();
 	_commandUndoStack.push(command);
-
-	return command;
 }
 
 void Logic::clearCommandRedoStack() {
 	while(!_commandRedoStack.empty()) {
 		_commandRedoStack.pop();
+	}
+}
+
+void Logic::throwExceptionIfEmpty(string commandText) {
+	if(commandText.empty()) {
+		Exception_InvalidCommand e(new Command_Invalid());
+		throw e;
 	}
 }

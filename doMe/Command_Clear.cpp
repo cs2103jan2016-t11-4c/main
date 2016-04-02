@@ -8,8 +8,8 @@ Command_Clear::Command_Clear(vector<int>* deleteList)
 
 bool Command_Clear::execute() {
 	if(outOfRange()) {
-		
-		return false;
+		Exception_InvalidCommand e(this);
+		throw e;
 	}
 
 	if(_deleteList.empty()) {

@@ -21,11 +21,13 @@ private:
 	Parser* _parser;
 	Memory* _memory;
 
-	Command* undo();
-	Command* redo();
-
+	void executeUndoRedo(Command* command);
+	void undo(Command* command);
+	void redo(Command* command);
 	void clearCommandRedoStack();
 
+
+	void throwExceptionIfEmpty(string commandText);
 public:
 	~Logic();
 	static Logic* getInstance();

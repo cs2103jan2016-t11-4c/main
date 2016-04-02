@@ -6,7 +6,8 @@ Command_Help::Command_Help()
 }
 
 bool Command_Help::execute() {
-	return false;
+		Exception_InvalidCommand e(this);
+		throw e;
 }
 
 CommandType Command_Help::getCommandType() {

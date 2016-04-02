@@ -2,13 +2,17 @@
 #include "Command_SaveDirectory.h"
 
 Command_SaveDirectory::Command_SaveDirectory(string newSaveDirectory)
-:Command() {
-	_oldSaveDirectory = _memory->getSaveDirectory();
-	_newSaveDirectory = newSaveDirectory;
+	:Command() {
+		_oldSaveDirectory = _memory->getSaveDirectory();
+		_newSaveDirectory = newSaveDirectory;
 }
 
 bool Command_SaveDirectory::execute() {
-	return _memory->changeSaveDirectory(_newSaveDirectory);
+	if(_memory->changeSaveDirectory(_newSaveDirectory)) {
+		return true;
+	}
+	Exception_InvalidCommand e(this);
+	throw e;
 }
 
 bool Command_SaveDirectory::undo() {

@@ -15,7 +15,8 @@ Command_Edit::Command_Edit(int index, Task* task)
 
 bool Command_Edit::execute() {
 	if(outOfRange()) {
-		return false;
+		Exception_InvalidCommand e(this);
+		throw e;
 	}
 
 	_task = _memory->ramGetTask(_index);

@@ -4,6 +4,7 @@
 #include <algorithm>
 #include "Memory.h"
 #include "Task.h"
+#include "Exception_InvalidCommand.h"
 using namespace std;
 
 class Memory;

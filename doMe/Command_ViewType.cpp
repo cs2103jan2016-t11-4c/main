@@ -2,13 +2,17 @@
 #include "Command_ViewType.h"
 
 Command_ViewType::Command_ViewType(int newViewType)
-:Command() {
-	_oldViewType = _memory->getViewType();
-	_newViewType = newViewType;
+	:Command() {
+		_oldViewType = _memory->getViewType();
+		_newViewType = newViewType;
 }
 
 bool Command_ViewType::execute() {
-	return _memory->changeViewType(_newViewType);
+	if(_memory->changeViewType(_newViewType)) {
+		return true;
+	}
+	Exception_InvalidCommand e(this);
+	throw e;
 }
 
 bool Command_ViewType::undo() {

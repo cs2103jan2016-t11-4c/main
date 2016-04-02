@@ -8,7 +8,8 @@ Command_Delete::Command_Delete(int index)
 
 bool Command_Delete::execute() {
 	if(outOfRange()) {
-		return false;
+		Exception_InvalidCommand e(this);
+		throw e;
 	}
 
 	_task = _memory->ramDel(_index);
