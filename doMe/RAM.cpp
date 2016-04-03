@@ -4,23 +4,6 @@
 const string RAM::LIST_DIVIDER = "__________";
 const string RAM::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 
-RAM* RAM::_instance = 0;
-
-RAM* RAM::getInstance() {
-	if (_instance == 0) {
-		_instance = new RAM;
-	}
-	return _instance;
-}
-
-RAM::RAM() {
-	_searchState = false;
-	_searchTerm = "";
-	_lastModifiedTask = NULL;
-	_storage = Storage::getInstance();
-	_settings = Settings::getInstance();
-}
-
 void RAM::loadRAM() {
 	loadData();
 }
@@ -44,14 +27,13 @@ void RAM::ramDel(Task* task) {
 	}
 }
 
-Task* RAM::ramDel(int index) {						//index must be guranteed to be valid
+Task* RAM::ramDel(int index) {
 	list<Task*>::iterator deleteIter = indexToTaskListIter(index);
 	Task* deletedTaskPtr = *deleteIter;
 
 	_taskList.erase(deleteIter);
 
 	ramUnsearch();
-
 	saveData();
 
 	return deletedTaskPtr;
@@ -60,17 +42,19 @@ Task* RAM::ramDel(int index) {						//index must be guranteed to be valid
 list<Task*> RAM::ramClear() {
 	list<Task*> oldTaskList = _taskList;
 	_taskList.clear();
+
 	ramUnsearch();
 	saveData();
 
 	return oldTaskList;
 }
 
-void RAM::ramInsert(list<Task*>& oldTaskList) {
+void RAM::ramInsert(list<Task*> oldTaskList) {
 	while(!oldTaskList.empty()) {
 		_taskList.push_back(oldTaskList.front());
 		oldTaskList.pop_front();
 	}
+
 	ramUnsearch();
 	sort();
 
@@ -81,7 +65,7 @@ int RAM::ramGetSize() {
 	return _taskList.size();
 }
 
-Task* RAM::ramGetTask(int index) {		//index must be valid
+Task* RAM::ramGetTask(int index) {
 	if(index == 0) {
 		return _lastModifiedTask;
 	}
@@ -214,13 +198,13 @@ void RAM::ramLoadVector(vector<string>& existingData) {
 string RAM::integerToString(int integer) {
 	ostringstream word;
 	word << integer;
+
 	return word.str();
 }
 
 int RAM::stringToInteger(string& text) {
 	stringstream ss(text);
 	int integer;
-
 	ss >> integer;
 
 	return integer;
@@ -244,9 +228,9 @@ bool RAM::foundInTask(Task* task, string searchTerm) {
 	string name = convertToLowerCase(task->getName());
 	string location = convertToLowerCase(task->getLocation());
 
-	searchTerm = searchTerm.insert(0, " ");
-	name = name.insert(0, " ");
-	location = location.insert(0, " ");
+	searchTerm = searchTerm.insert(0, " ");		//"Flo" 	-> " Flo"
+	name = name.insert(0, " ");			//"Buy Flowers"	-> " Buy Flowers"
+	location = location.insert(0, " ");		//"Florist"	-> " Florist"
 
 	size_t found = name.find(searchTerm);
 	if(found != string::npos) {
@@ -269,4 +253,23 @@ string RAM::convertToLowerCase(string sentence) {
 	}
 
 	return sentence;
+}
+
+/**********************************************************************/
+
+RAM* RAM::_instance = 0;
+
+RAM* RAM::getInstance() {
+	if (_instance == 0) {
+		_instance = new RAM;
+	}
+	return _instance;
+}
+
+RAM::RAM() {
+	_searchState = false;
+	_searchTerm = "";
+	_lastModifiedTask = NULL;
+	_storage = Storage::getInstance();
+	_settings = Settings::getInstance();
 }
