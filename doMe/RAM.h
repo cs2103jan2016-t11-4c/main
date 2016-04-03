@@ -8,7 +8,6 @@
 #include "Task.h"
 #include "Storage.h"
 #include "Command.h"
-//#include "Commons.h"
 #include "Settings.h"
 using namespace std;
 
@@ -50,7 +49,7 @@ public:
 	void ramDel(Task* task);
 	Task* ramDel(int index);
 	list<Task*> ramClear();
-	void ramInsert(list<Task*>& oldTaskList);
+	void ramInsert(list<Task*> oldTaskList);
 	int ramGetSize();
 	Task* ramGetTask(int index);
 	Task* ramGetLastModifiedTask();
