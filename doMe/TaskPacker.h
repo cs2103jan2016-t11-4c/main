@@ -39,7 +39,7 @@ private:
 	int _time2;
 	string _location;
 
-	void setAttributes(InputTokens* tokens);
+	void setEnvironment(InputTokens* tokens);
 	void findTaskDetails(int index);
 
 	void findDateAndTime(int index);

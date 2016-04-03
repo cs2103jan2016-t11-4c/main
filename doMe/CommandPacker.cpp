@@ -7,7 +7,6 @@ CommandPacker* CommandPacker::_theOne = NULL;
 CommandPacker::CommandPacker() {
 	_taskPacker = TaskPacker::getInstance();
 	_indexes = new vector<int>;
-	_chrono = ChronoInterpreter::getInstance();
 }
 
 CommandPacker::~CommandPacker(void) {
@@ -25,14 +24,14 @@ CommandPacker* CommandPacker::getInstance() {
 Command* CommandPacker::packCommand(InputTokens* tokens) {
 	assert(tokens);
 
-	initializeAttributes(tokens);
+	setEnvironment(tokens);
 	branchToNode(START_INDEX);
 
 	return _command;
 }
 
 
-void CommandPacker::initializeAttributes(InputTokens* tokens) {
+void CommandPacker::setEnvironment(InputTokens* tokens) {
 	assert(tokens);
 
 	_tokens = tokens;
@@ -503,10 +502,10 @@ void CommandPacker::postProcessTask() {
 	if(_task->getTime1() != NO_TIME && _task->getTime1() > _task->getTime2()) {
 		if(_task->getDate1() == NO_DATE) {
 			_task->setDate1(_task->getDate2());
-			_task->setDate2(_chrono->dateArithmetics(1,_task->getDate2()));
+			_task->setDate2(ADD_TO_DATE(1,_task->getDate2()));
 		} else if(_task->getDate1() == _task->getDate2()) {
 			_task->setDate1(_task->getDate2());
-			_task->setDate2(_chrono->dateArithmetics(1,_task->getDate2()));
+			_task->setDate2(ADD_TO_DATE(1,_task->getDate2()));
 		}
 	}
 

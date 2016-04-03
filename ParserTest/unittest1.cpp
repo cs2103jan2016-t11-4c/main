@@ -1,7 +1,10 @@
+//@@author A0122569B
+
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
 #include "Exception_FileCannotOpen.cpp"
+#include "Exception_InvalidCommand.cpp"
 #include "Task.cpp"
 #include "Memory.h"
 #include "Memory.cpp"

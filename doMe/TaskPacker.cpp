@@ -24,7 +24,7 @@ Task* TaskPacker::packTask(InputTokens* tokens, int index) {
 	assert(tokens);
 	assert(!tokens->isOutOfBounds(index));
 
-	setAttributes(tokens);
+	setEnvironment(tokens);
 	findTaskDetails(index);
 	
 //	return new Task(_name, _date1, _date2, _time1, _time2, _location);
@@ -32,7 +32,7 @@ Task* TaskPacker::packTask(InputTokens* tokens, int index) {
 }
 
 
-void TaskPacker::setAttributes(InputTokens* tokens) {
+void TaskPacker::setEnvironment(InputTokens* tokens) {
 	_tokens = tokens;
 	_name = NO_NAME;
 	_date1 = NO_DATE;

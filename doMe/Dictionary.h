@@ -96,6 +96,8 @@ private:
 	void addBy();
 	void addFrom();
 	void addOn();
+	void addDue();
+	void addPreposition();
 	void addFor();
 	void addThe();
 	void addAll();

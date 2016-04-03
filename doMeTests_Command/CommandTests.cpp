@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
+#include "Exception_InvalidCommand.cpp"
 #include "Exception_FileCannotOpen.cpp"
 #include "Task.cpp"
 #include "Memory.h"

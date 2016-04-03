@@ -33,11 +33,11 @@ private:
 	int _nextCount;
 	bool isPM;
 
+	void setEnvironment(InputTokens* tokens);
+	void traverseTokensForIntepretation(int index);
+	void removeNaturalLanguageTokens(int index);
 
-	void setTokens(InputTokens* tokens);
-	void traverseTokens(int index);
-	void postProcess(int index);
-
+	void interpretationNode(int index);
 	void integerNode(int index);
 	void alphabeticMonthNode(int index);
 	void thisNode(int index);
@@ -45,6 +45,8 @@ private:
 	void relationalDateNode(int index);
 	void dayOfTheWeekNode(int index);
 	void naturalLanguageNode(int index);
+	bool naturalLanguageNodeOne(int index);
+	bool naturalLanguageNodeTwo(int index);
 	
 	void twoDigitIntegerNode(int index);
 	void threeDigitIntegerNode(int index);
@@ -55,8 +57,6 @@ private:
 
 	bool timeFormatBNodeOne(int index);
 	bool timeFormatBNodeTwo(int index);
-
-	bool timeFormatCNodeOne(int index);
 
 	bool dateFormatANodeOne(int index);
 	bool dateFormatANodeTwo(int index);
@@ -88,7 +88,6 @@ private:
 	bool dateFormatENodeFour(int index);
 	bool dateFormatENodeFive(int index);
 
-
 	bool timeRangeFormatANodeOne(int index);
 	bool timeRangeFormatANodeTwo(int index);
 	bool timeRangeFormatANodeThree(int index);
@@ -116,28 +115,17 @@ private:
 	void insertTime(int index);
 	void insertDate(int index);
 
-	int generateTime(int hour, int minute);	
-	int generateDate(int day, int month, int year);
-
-	int getYear(int date);
-	int getMonth(int date);
-	int getDay(int date);
-
-	bool isPossibleYear(int index);
-
+	void adjustTo24HrsTime();
 	int inferYear();
 	int inferYear(int twoDigitYear);
-
-	void adjustTo24HrsTime();
-	
-	bool isExtensionOfDay(int index);
-	bool isReferToTime(int index);
 
 	bool isValid24HrsTime();
 	bool isValid12HrsTime();
 	bool isValidMinutes();
 	bool isValidDate();
 	bool isLeap(int year);
+	bool isYear(int index);
+	bool isDaySuffix(int index);
 
 	void clearCache();
 };

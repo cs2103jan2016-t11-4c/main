@@ -25,7 +25,6 @@
 #include "InputTokens.h"
 #include "TaskPacker.h"
 #include "Task.h"
-#include "ChronoInterpreter.h"
 #include "Exception_ExceededParameterLimit.h"
 #include <string>
 #include <assert.h>
@@ -49,15 +48,14 @@ private:
 	
 	TaskPacker* _taskPacker;
 	InputTokens* _tokens;
-	ChronoInterpreter* _chrono;
-	
+
 	string _description;
 	int _singleIndex;
 	vector<int>* _indexes;
 	Task* _task;
 	Command* _command;
 
-	void initializeAttributes(InputTokens* tokens);
+	void setEnvironment(InputTokens* tokens);
 	void branchToNode(int index);
 
 	void nodeOneOfDisplayCommand(int index);

@@ -512,6 +512,23 @@ void Dictionary::addOn() {
 	addToDictionary(list);
 }
 
+void Dictionary::addDue() {
+	SynonymList* list = new SynonymList("DUE");
+	list->add("DUE");
+	addToDictionary(list);
+}
+
+void Dictionary::addPreposition() {
+	SynonymList* list = new SynonymList("PREPOSITION");
+	list->add(getSynonyms("ON"));
+	list->add(getSynonyms("FROM"));
+	list->add(getSynonyms("TO"));
+	list->add(getSynonyms("BY"));
+	list->add(getSynonyms("TO"));
+	list->add(getSynonyms("DUE"));
+	addToDictionary(list);
+}
+
 void Dictionary::addNext() {
 	SynonymList* list = new SynonymList("NEXT");
 	list->add("NEXT");
