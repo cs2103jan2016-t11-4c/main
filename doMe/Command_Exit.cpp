@@ -3,14 +3,13 @@
 
 Command_Exit::Command_Exit()
 	:Command() {
+	_commandType = EXIT;
 }
 
 bool Command_Exit::execute() {
 	if(_memory->ramGetSearchState() == true) {
 		_searchTerm = _memory->ramUnsearch();
 		_commandType = ENDSEARCH;
-	}else {
-		_commandType = EXIT;
 	}
 
 	Exception_InvalidCommand e(this);
