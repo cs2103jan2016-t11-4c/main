@@ -4,7 +4,6 @@
 #include <stack>
 #include <assert.h>
 #include "Parser.h"
-#include "Memory.h"
 #include "Command.h"
 #include "Commons.h"
 
@@ -12,24 +11,23 @@ using namespace std;
 
 class Logic { 
 private:
-	static Logic* _instance;
 	Logic();
-
+	static Logic* _instance;
+	Parser* _parser;
 	stack<Command*> _commandUndoStack;
 	stack<Command*> _commandRedoStack;
 
-	Parser* _parser;
-	Memory* _memory;
+	static const string LOG_MESSAGE_PARSER;
 
+	bool isUndoOrRedo(Command* command);
 	void executeUndoRedo(Command* command);
+	void executeNormal(Command* command);
 	void undo(Command* command);
 	void redo(Command* command);
 	void clearCommandRedoStack();
-
-
 	void throwExceptionIfEmpty(string commandText);
 public:
-	~Logic();
 	static Logic* getInstance();
+
 	Command* executeCommand(string commandText);
 };
