@@ -63,8 +63,8 @@ void Logic::undo(Command* command) {
 
 void Logic::redo(Command* command) {
 	if(_commandRedoStack.empty()) {
-		Exception_InvalidCommand e(new Command_Redo());
-		throw e;
+		//Exception_InvalidCommand e(new Command_Redo());
+		//throw e;
 	}
 	Command* redoneCommand = _commandRedoStack.top();
 	redoneCommand->execute();

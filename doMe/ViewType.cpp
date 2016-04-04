@@ -8,7 +8,7 @@ const string ViewType::MESSAGE_TIMING_SEPERATOR = "- ";
 const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
-const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline> ";
+const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline>";
 const string ViewType::MESSAGE_EMPTY_LIST = "<list is empty!>";
 
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
@@ -51,12 +51,13 @@ vector<string> ViewType::createDisplayList() {
                 _displayList.push_back(complimentaryString);
                 _colourCoding.push_back(COLOUR_DEFAULT);
             }
-            _colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
+
             if(complimentaryString != MESSAGE_SPACE_STRING) {
+                _colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
                 _displayList.push_back(createTaskString(*taskListIter,index));
+                index++;
+                taskListIter++;
             }
-            index++;
-            taskListIter++;
         }
     }
     return _displayList;

@@ -20,3 +20,4 @@ CommandType Command_Redo::getCommandType() {
 string Command_Redo::getStringForm() {
 	return "Redo";
 }
+

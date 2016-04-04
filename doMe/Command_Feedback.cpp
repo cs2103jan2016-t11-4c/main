@@ -23,7 +23,7 @@ const string Command_Feedback::ERROR_INVALID_COMMAND = "Invalid command has been
 const string Command_Feedback::ERROR_INVALID_VIEWTYPE = "Invalid (Viewtype) has been inputted.";
 const string Command_Feedback::ERROR_INVALID_EDIT = "Invalid (EDIT) of task description.";
 const string Command_Feedback::ERROR_INVALID_UNDO = "Unable to undo previous command.";
-const string Command_Feedback::ERROR_INVALID_SAVE_FILE_DIRECTORY = "Invalid inputted file directory.";
+const string Command_Feedback::ERROR_INVALID_SAVE_FILE_DIRECTORY = "Invalid file directory.";
 
 const string Command_Feedback::MESSAGE_UNDO_COMMAND = "Undo previous command.";
 const string Command_Feedback::MESSAGE_UNDO_ADD = "Undo (ADD) of \"%s\"";
@@ -163,9 +163,8 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
             return validNotificationExitSearch();
             break;
         case ENDSEARCH:
-            //assert(0);
             return getNotificationSearchTerm(undoCommandMessage, commandOutcome, viewType);
-            return "No undo exit";
+            //return "No undo exit";
             break;
         case VIEWTYPE:
             return undoNotificationViewType(undoCommandMessage, viewType);
@@ -177,16 +176,14 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
             assert(0);
             break;
         case INVALID:
-            assert(0);
-            //return "Taken care of";
+            return invalidNotificationUndo();
             break;
         }
-        return MESSAGE_UNDO_COMMAND;
-        break;
     case INVALID_MESSAGE:
         return invalidNotificationUndo();
         break;
     }
+    return MESSAGE_UNDO_COMMAND;
 }
 
 string Command_Feedback::getNotificationRedo(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {

@@ -103,7 +103,7 @@ public:
 
     static const string SYSTEM_MODE_CON;
     static const string SYSTEM_COLOUR;
-    static string MESSAGE_WELCOME;
+    static const string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
     static unsigned int DISPLAY_WIDTH;

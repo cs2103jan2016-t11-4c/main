@@ -38,6 +38,7 @@ public:
 	static const string LOG_FILE_NAME;
 	static const string LOG_ENTRY;
 	static const string TIME_DIVIDER;
+    static const string DAYS[];
 
 	static void log(string file, string message);
 
@@ -58,4 +59,7 @@ public:
 	
 	static string integerToString(int integer);
 	static string trim(string file);
+
+    static int getDayNumber(int date); //0 = Monday ...
+    static string getDateStringDay(int dayNumber); //eg. Monday
 };

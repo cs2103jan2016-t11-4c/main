@@ -5,7 +5,7 @@ const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
 const string UserInterface::SYSTEM_COLOUR = "Color %s";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
-string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
+const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 unsigned int UserInterface::DISPLAY_WIDTH = 80;
 unsigned int UserInterface::DISPLAY_LENGTH = 25;
 
@@ -169,6 +169,7 @@ void UserInterface::printMessageDisplay(Command* command) {
         printDisplayType(_lastDisplayType);
         break;
     default:
+        _lastDisplayType = DEFAULT_DISPLAY;
         printDisplayType(DEFAULT_DISPLAY);
         break;
     }
@@ -258,7 +259,7 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
 
     changeListColour(COLOUR_SEARCH);
     printList(createDisplayBox(taskListType->createSearchList()));
-    changeListColour(COLOUR_DEFAULT);
+    //changeListColour(COLOUR_DEFAULT);
 
     delete taskListType;
 }

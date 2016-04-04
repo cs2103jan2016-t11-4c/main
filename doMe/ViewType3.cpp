@@ -1,12 +1,13 @@
 #include "ViewType3.h"
 
+const int ViewType3::END_OF_WEEK = 6;
 const string ViewType3::MESSAGE_NEW_LINE = "\n";
+const string ViewType3::MESSAGE_TIMING_SEPERATOR = "-";
 const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
     "-Today-",
     "-This Week-",
     "-Other Week-"
 };
-
 
 ViewType3::ViewType3(void) {
 }
@@ -18,7 +19,9 @@ ViewType3::ViewType3(list<Task*> *taskList) {
 }
 
 ViewType3::ViewType3(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
+    Commons commons;
     _headerMarker = 0;
+    _dayToEndOfWeek = END_OF_WEEK - commons.getDayNumber(_currentDate);
 }
 
 ViewType3::~ViewType3(void) {
@@ -53,7 +56,7 @@ string ViewType3::getComplimentaryString(Task* individualTask) {
         break;
     case 3:
         _headerMarker = 4;
-        if(commons.addToDate(7,_currentDate) < date) {
+        if(commons.addToDate(_dayToEndOfWeek,_currentDate) < date) {
             _headerMarker = 5;
         }
         return MESSAGE_DISPLAY_HEADER[1]; 
@@ -63,7 +66,7 @@ string ViewType3::getComplimentaryString(Task* individualTask) {
         return MESSAGE_VOID_STRING;
         //return MESSAGE_SPACE_STRING;
     case 5:
-        if(commons.addToDate(7,_currentDate) < date) {
+        if(commons.addToDate(_dayToEndOfWeek,_currentDate) < date) {
             _headerMarker = 6;
             return MESSAGE_SPACE_STRING;
             break;
@@ -86,4 +89,31 @@ string ViewType3::getComplimentaryString(Task* individualTask) {
 string ViewType3::getTimeTaskString(int time) {
     ViewType1 view;
     return view.getTimeTaskString(time);
+}
+
+string ViewType3::getDateTaskString(int date) {
+    string dateString;
+    string day;
+    string month;
+    string year;
+    Commons commons;
+
+    if(date < commons.addToDate(_dayToEndOfWeek, _currentDate)) {
+        return commons.getDateStringDay(commons.getDayNumber(date));
+    } else {
+        if(date > 0) {
+            day = getDay(date);
+            month = getMonth(date);
+            dateString = day + MESSAGE_TIMING_SEPERATOR + month;
+
+            return dateString;
+        } else {
+            return MESSAGE_VOID_STRING;
+        }
+    }
+}
+
+string ViewType3::getMonth(int date) {
+    ViewType2 view;
+    return view.getMonth(date);
 }

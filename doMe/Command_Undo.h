@@ -8,8 +8,8 @@ private:
 	Command* _undoneCommand;
 public:
 	Command_Undo();
-	bool execute();
-	bool undo();
+	//bool execute();
+	//bool undo();
 	void setUndoneCommand(Command* command);
 	Command* getUndoneCommand();
 	CommandType getCommandType();
