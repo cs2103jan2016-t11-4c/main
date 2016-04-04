@@ -13,6 +13,7 @@
 #define START_INDEX 0
 #define SECOND_INDEX 1
 #define NO_STRING ""
+#define IGNORE_MARKER "Ignore"
 
 using namespace std;
 

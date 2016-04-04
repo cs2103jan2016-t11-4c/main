@@ -25,9 +25,12 @@ using namespace std;
 #define TIME_SECOND Commons::getTime_Second()
 #define ADD_TO_DATE(days, date) Commons::addToDate(days, date)
 #define GENERATE_DATE(day, month, year) Commons::generateDate(day, month, year)
+#define GENERATE_TIME(hour, minute) Commons::generateTime(hour, minute)
 #define GET_DAY(date) Commons::getDay(date)
 #define GET_MONTH(date) Commons::getMonth(date)
 #define GET_YEAR(date) Commons::getYear(date)
+#define GET_MINUTE(time) Commons::getMinute(time)
+#define GET_HOUR(time) Commons::getHour(time)
 #define LOG(file, message) Commons::log(file, message)
 
 
@@ -42,20 +45,24 @@ public:
 
 	static void log(string file, string message);
 
-	static int getWeek_Day();		//eg. 2 = Tuesday
+	static int getWeek_Day();		//eg. 2 = Tuesday, 7 = Sunday
 	static int getDate();			//eg. 20161128
 	static int getDate_Day();		//eg. 2, 14, 30
-	static int getDate_Month();		//eg. 2, 14, 30
+	static int getDate_Month();		//eg. 2, 7, 12
 	static int getDate_Year();		//eg. 2016
 	static int getTime_Hour();		//eg. 2, 14, 23
 	static int getTime_Minute();		//eg. 2, 14, 56
 	static int getTime_Second();		//eg. 2, 14, 56
 	
-	static int addToDate(int days, int date);
-	static int generateDate(int day, int month, int year);
-	static int getYear(int date);
-	static int getMonth(int date);
-	static int getDay(int date);
+	static int addToDate(int days, int date);				//eg. 4 + 20160330 = 20160403
+	static int generateDate(int day, int month, int year);	//eg. 12 3 2016 -> 20160312
+	static int generateTime(int hour, int minute);			//eg. 8 14 -> 814
+	static int getYear(int date);	//eg. 20160403 -> 2016
+	static int getMonth(int date);	//eg. 20160403 -> 4
+	static int getDay(int date);	//eg. 20160403 -> 3
+	static int getHour(int time);	//eg. 1315 -> 13
+	static int getMinute(int time);	//eg. 1315 -> 15
+
 	
 	static string integerToString(int integer);
 	static string trim(string file);

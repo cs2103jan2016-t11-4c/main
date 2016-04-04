@@ -138,6 +138,10 @@ int Commons::generateDate(int day, int month, int year) {
 	return (day+month*100+year*10000);
 }
 
+int Commons::generateTime(int hour, int minute) {
+	return hour*100+minute;
+}
+
 int Commons::getYear(int date) {
 	return date/10000;
 }
@@ -149,6 +153,15 @@ int Commons::getMonth(int date) {
 int Commons::getDay(int date) {
 	return date%100;
 }
+
+int getHour(int time) {
+	return time/100;
+}
+
+int getMinute(int time) {
+	return time%100;
+}
+
 string Commons::trim(string file) {
 	size_t found = file.find_last_of("\\");
 

@@ -31,13 +31,18 @@ private:
 	int _hour;
 	int _minute;
 	int _nextCount;
-	bool isPM;
+	bool _isPM;
+	bool _isMeridiemTime;
+	int _dateCount;
+	int _date;
+	int _timeCount;
+	int _time;
 
+	void setEnvironment(InputTokens* tokens);
+	void traverseTokensForIntepretation(int index);
+	void removeNaturalLanguageTokens(int index);
 
-	void setTokens(InputTokens* tokens);
-	void traverseTokens(int index);
-	void postProcess(int index);
-
+	void interpretationNode(int index);
 	void integerNode(int index);
 	void alphabeticMonthNode(int index);
 	void thisNode(int index);
@@ -45,18 +50,35 @@ private:
 	void relationalDateNode(int index);
 	void dayOfTheWeekNode(int index);
 	void naturalLanguageNode(int index);
+	bool naturalLanguageNodeOne(int index);
+	bool naturalLanguageNodeTwo(int index);
 	
 	void twoDigitIntegerNode(int index);
 	void threeDigitIntegerNode(int index);
 	void fourDigitIntegerNode(int index);
-	
+	void sixDigitIntegerNode(int index);
+
 	bool timeFormatANodeOne(int index);
 	bool timeFormatANodeTwo(int index);
 
 	bool timeFormatBNodeOne(int index);
 	bool timeFormatBNodeTwo(int index);
+	
+	bool timeRangeFormatANodeOne(int index);
+	bool timeRangeFormatANodeTwo(int index);
+	bool timeRangeFormatANodeThree(int index);
 
 	bool timeFormatCNodeOne(int index);
+	bool timeFormatCNodeTwo(int index);
+	bool timeFormatCNodeThree(int index);
+	bool timeFormatCNodeFour(int index);
+
+	bool timeRangeFormatBNodeOne(int index);
+	bool timeRangeFormatBNodeTwo(int index);
+	bool timeRangeFormatBNodeThree(int index);
+	bool timeRangeFormatBNodeFour(int index);
+	bool timeRangeFormatBNodeFive(int index);
+	bool timeRangeFormatBNodeSix(int index);
 
 	bool dateFormatANodeOne(int index);
 	bool dateFormatANodeTwo(int index);
@@ -88,26 +110,19 @@ private:
 	bool dateFormatENodeFour(int index);
 	bool dateFormatENodeFive(int index);
 
-
-	bool timeRangeFormatANodeOne(int index);
-	bool timeRangeFormatANodeTwo(int index);
-	bool timeRangeFormatANodeThree(int index);
-	bool timeRangeFormatANodeFour(int index);
-
-	bool timeRangeFormatBNodeOne(int index);
-	bool timeRangeFormatBNodeTwo(int index);
-	bool timeRangeFormatBNodeThree(int index);
-	bool timeRangeFormatBNodeFour(int index);
+	bool dateFormatFNodeOne(int index);
 
 	bool dateRangeFormatANodeOne(int index);
 	bool dateRangeFormatANodeTwo(int index);
 	bool dateRangeFormatANodeThree(int index);
 	bool dateRangeFormatANodeFour(int index);
+	bool dateRangeFormatANodeFive(int index);
 
 	bool dateRangeFormatBNodeOne(int index);
 	bool dateRangeFormatBNodeTwo(int index);
 	bool dateRangeFormatBNodeThree(int index);
 	bool dateRangeFormatBNodeFour(int index);
+
 	
 	int getMonthFromWord(int index);	
 	int getDayOfWeekFromWord(int index);
@@ -116,28 +131,17 @@ private:
 	void insertTime(int index);
 	void insertDate(int index);
 
-	int generateTime(int hour, int minute);	
-	int generateDate(int day, int month, int year);
-
-	int getYear(int date);
-	int getMonth(int date);
-	int getDay(int date);
-
-	bool isPossibleYear(int index);
-
+	void adjustTo24HrsTime();
 	int inferYear();
 	int inferYear(int twoDigitYear);
-
-	void adjustTo24HrsTime();
-	
-	bool isExtensionOfDay(int index);
-	bool isReferToTime(int index);
 
 	bool isValid24HrsTime();
 	bool isValid12HrsTime();
 	bool isValidMinutes();
 	bool isValidDate();
 	bool isLeap(int year);
+	bool isYear(int index);
+	bool isDaySuffix(int index);
 
 	void clearCache();
 };

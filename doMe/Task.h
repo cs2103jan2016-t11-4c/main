@@ -17,6 +17,7 @@ using namespace std;
 #define NO_LOCATION ""
 #define NO_NAME ""
 #define NO_DONE 0
+#define DONE 1
 
 class Task {
 private:

@@ -13,6 +13,13 @@
 #define BLANK_SPACE " " 
 #define LOCATION_MARKER "location"
 #define NAME_MARKER "name"
+#define DONE_MARKER "done"
+#define NO_DATE_DETECTED -2
+#define NO_TIME_DETECTED -2
+#define NO_LOCATION_DETECTED " "
+#define NO_DONE_DETECTED -1
+#define FIRST_INDEX 0
+
 
 using namespace std;
 
@@ -21,7 +28,8 @@ class TaskPacker
 public:
 	~TaskPacker(void);
 	static TaskPacker* getInstance();
-	Task* packTask(InputTokens* tokens, int index);
+	Task* packAddTask(InputTokens* tokens, int index);
+	Task* packEditTask(InputTokens* tokens, int index);
 
 private:
 	TaskPacker(void);
@@ -30,6 +38,7 @@ private:
 	InputTokens* _tokens;
 	ChronoInterpreter* _chronoInterpreter;
 
+	Task* _task;
 	string _name;
 	vector<int> _dates;
 	vector<int> _times;
@@ -38,14 +47,20 @@ private:
 	int _time1;
 	int _time2;
 	string _location;
+	int _doneStatus;
 
-	void setAttributes(InputTokens* tokens);
+	void packStandardTask(InputTokens* tokens, int index);
+
+	void customizeTaskForAddCommand();
+	void customizeTaskForEditCommand();
+
+	void setEnvironment(InputTokens* tokens);
 	void findTaskDetails(int index);
 
 	void findDateAndTime(int index);
+	void findDoneStatus(int index);
 	void findLocation(int index);
 	void findName(int index);
-
 
 	void findDate(int index);
 	void extractDates(int index);

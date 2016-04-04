@@ -22,10 +22,11 @@
 #include "Command_Search.h"
 #include "Command_Undo.h"
 #include "Command_ViewType.h"
+#include "Command_Help.h"
+#include "Command_Redo.h"
 #include "InputTokens.h"
 #include "TaskPacker.h"
 #include "Task.h"
-#include "ChronoInterpreter.h"
 #include "Exception_ExceededParameterLimit.h"
 #include <string>
 #include <assert.h>
@@ -33,6 +34,7 @@
 
 #define LAST_INDEX 0
 #define NO_STRING ""
+
 
 using namespace std;
 
@@ -49,15 +51,18 @@ private:
 	
 	TaskPacker* _taskPacker;
 	InputTokens* _tokens;
-	ChronoInterpreter* _chrono;
-	
+
 	string _description;
 	int _singleIndex;
 	vector<int>* _indexes;
 	Task* _task;
 	Command* _command;
+	bool _isDeleteDate;
+	bool _isDeleteTime;
+	bool _isDeleteLocation;
+	int _doneStatus;
 
-	void initializeAttributes(InputTokens* tokens);
+	void setEnvironment(InputTokens* tokens);
 	void branchToNode(int index);
 
 	void nodeOneOfDisplayCommand(int index);
@@ -76,8 +81,13 @@ private:
 
 	void nodeOneOfDeleteCommand(int index);
 	void nodeTwoOfDeleteCommand(int index);	
+	void nodeThreeOfDeleteCommand(int index);
 
 	void nodeOneOfUndoCommand(int index);
+
+	void nodeOneOfRedoCommand(int index);
+
+	void nodeOneOfHelpCommand(int index);
 
 	void nodeOneOfExitCommand(int index);
 
@@ -92,7 +102,16 @@ private:
 	void nodeTwoOfSearchCommand(int index);
 	void nodeThreeOfSearchCommand(int index);
 
+	void nodeOneOfMarkCommand(int index);
+	void nodeTwoOfMarkCommand(int index);
+	void nodeThreeOfMarkCommand(int index);
+	void nodeFourOfMarkCommand(int index);
+	void nodeFiveOfMarkCommand(int index);
+	void nodeSixOfMarkCommand(int index);
+	void nodeSevenOfMarkCommand(int index);
+
 	void nodeOneOfAddCommand(int index);
+	void nodeTwoOfAddCommand(int index);
 
 	void nodeOneOfEditCommand(int index);
 	void nodeTwoOfEditCommand(int index);
@@ -102,16 +121,23 @@ private:
 	void packChangeViewTypeCommand();
 	void packChangeDirectoryCommand();
 	void packDeleteCommand();
+	void packDeleteTaskParametersCommand();
 	void packUndoCommand();
+	void packRedoCommand();
+	void packHelpCommand();
 	void packExitCommand();
 	void packClearCommand();
 	void packSearchCommand();
+	void packMarkCommand();
 	void packAddCommand();
 	void packEditCommand();
 	void packInvalidCommand();
 
+	void extractSearchTerm(int index);
+
+	void extractDeleteParameter(int index);
+	void packDeleteTask();
+
 	void addToIndexes(int index);
 	void addRangeToIndexes(int index);
-
-	void postProcessTask();
 };

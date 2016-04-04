@@ -10,6 +10,7 @@
 #pragma once
 
 #include "SynonymList.h"
+#include "Commons.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -43,6 +44,7 @@ private:
 	void addDirectory();		//methods that add vocabulary to the dictionary
 	void addDisplay();
 	void addDelete();
+	void addAdd();
 	void addEdit();
 	void addClear();
 	void addUndo();
@@ -51,9 +53,19 @@ private:
 	void addView();
 	void addChangeDirectory();
 	void addChangeViewType();	
-	void addHrs();
-	void addDivider();
+	void addDate();
+	void addLocation();
+	void addTime();
+	void addDeleteParameter();
+	void addDone();
+	void addUndone();
+	void addRedo();
+	void addHelp();
+	void addMark();
 
+	void addHrs();
+	void addDateDivider();
+	void addTimeDivider();
 	void addJanuary();
 	void addFebruary();
 	void addMarch();
@@ -88,17 +100,20 @@ private:
 	void addThird();
 	void addFourth();
 	void addNumberSuffix();
+	void addRange();
 	
-
 	void addNext();
 	void addThis();
 	void addTo();
 	void addBy();
 	void addFrom();
 	void addOn();
+	void addDue();
+	void addPreposition();
 	void addFor();
 	void addThe();
 	void addAll();
+	void addNot();
 
 	bool isFoundInVector(vector<string>* vector, string s);
 };
