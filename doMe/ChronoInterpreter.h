@@ -31,7 +31,12 @@ private:
 	int _hour;
 	int _minute;
 	int _nextCount;
-	bool isPM;
+	bool _isPM;
+	bool _isMeridiemTime;
+	int _dateCount;
+	int _date;
+	int _timeCount;
+	int _time;
 
 	void setEnvironment(InputTokens* tokens);
 	void traverseTokensForIntepretation(int index);
@@ -51,12 +56,29 @@ private:
 	void twoDigitIntegerNode(int index);
 	void threeDigitIntegerNode(int index);
 	void fourDigitIntegerNode(int index);
-	
+	void sixDigitIntegerNode(int index);
+
 	bool timeFormatANodeOne(int index);
 	bool timeFormatANodeTwo(int index);
 
 	bool timeFormatBNodeOne(int index);
 	bool timeFormatBNodeTwo(int index);
+	
+	bool timeRangeFormatANodeOne(int index);
+	bool timeRangeFormatANodeTwo(int index);
+	bool timeRangeFormatANodeThree(int index);
+
+	bool timeFormatCNodeOne(int index);
+	bool timeFormatCNodeTwo(int index);
+	bool timeFormatCNodeThree(int index);
+	bool timeFormatCNodeFour(int index);
+
+	bool timeRangeFormatBNodeOne(int index);
+	bool timeRangeFormatBNodeTwo(int index);
+	bool timeRangeFormatBNodeThree(int index);
+	bool timeRangeFormatBNodeFour(int index);
+	bool timeRangeFormatBNodeFive(int index);
+	bool timeRangeFormatBNodeSix(int index);
 
 	bool dateFormatANodeOne(int index);
 	bool dateFormatANodeTwo(int index);
@@ -88,25 +110,19 @@ private:
 	bool dateFormatENodeFour(int index);
 	bool dateFormatENodeFive(int index);
 
-	bool timeRangeFormatANodeOne(int index);
-	bool timeRangeFormatANodeTwo(int index);
-	bool timeRangeFormatANodeThree(int index);
-	bool timeRangeFormatANodeFour(int index);
-
-	bool timeRangeFormatBNodeOne(int index);
-	bool timeRangeFormatBNodeTwo(int index);
-	bool timeRangeFormatBNodeThree(int index);
-	bool timeRangeFormatBNodeFour(int index);
+	bool dateFormatFNodeOne(int index);
 
 	bool dateRangeFormatANodeOne(int index);
 	bool dateRangeFormatANodeTwo(int index);
 	bool dateRangeFormatANodeThree(int index);
 	bool dateRangeFormatANodeFour(int index);
+	bool dateRangeFormatANodeFive(int index);
 
 	bool dateRangeFormatBNodeOne(int index);
 	bool dateRangeFormatBNodeTwo(int index);
 	bool dateRangeFormatBNodeThree(int index);
 	bool dateRangeFormatBNodeFour(int index);
+
 	
 	int getMonthFromWord(int index);	
 	int getDayOfWeekFromWord(int index);

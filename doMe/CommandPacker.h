@@ -22,6 +22,8 @@
 #include "Command_Search.h"
 #include "Command_Undo.h"
 #include "Command_ViewType.h"
+#include "Command_Help.h"
+#include "Command_Redo.h"
 #include "InputTokens.h"
 #include "TaskPacker.h"
 #include "Task.h"
@@ -32,6 +34,7 @@
 
 #define LAST_INDEX 0
 #define NO_STRING ""
+
 
 using namespace std;
 
@@ -54,6 +57,9 @@ private:
 	vector<int>* _indexes;
 	Task* _task;
 	Command* _command;
+	bool _isDeleteDate;
+	bool _isDeleteTime;
+	bool _isDeleteLocation;
 
 	void setEnvironment(InputTokens* tokens);
 	void branchToNode(int index);
@@ -74,8 +80,13 @@ private:
 
 	void nodeOneOfDeleteCommand(int index);
 	void nodeTwoOfDeleteCommand(int index);	
+	void nodeThreeOfDeleteCommand(int index);
 
 	void nodeOneOfUndoCommand(int index);
+
+	void nodeOneOfRedoCommand(int index);
+
+	void nodeOneOfHelpCommand(int index);
 
 	void nodeOneOfExitCommand(int index);
 
@@ -100,7 +111,10 @@ private:
 	void packChangeViewTypeCommand();
 	void packChangeDirectoryCommand();
 	void packDeleteCommand();
+	void packDeleteTaskParametersCommand();
 	void packUndoCommand();
+	void packRedoCommand();
+	void packHelpCommand();
 	void packExitCommand();
 	void packClearCommand();
 	void packSearchCommand();
@@ -108,8 +122,9 @@ private:
 	void packEditCommand();
 	void packInvalidCommand();
 
+	void extractDeleteParameter(int index);
+	void packDeleteTask();
+
 	void addToIndexes(int index);
 	void addRangeToIndexes(int index);
-
-	void postProcessTask();
 };

@@ -25,6 +25,7 @@ Dictionary* Dictionary::getInstance() {
 }
 
 bool Dictionary::hasMeaning(string meaning, string s) {
+	LOG(__FILE__, "searching for word with meaning: " + meaning);
 	vector<string>* synonyms = getSynonyms(meaning);
 	return isFoundInVector(synonyms, s);
 }
@@ -49,13 +50,22 @@ void Dictionary::addBasicVocabularyPackage() {
 	addView();
 	addChangeDirectory();
 	addChangeViewType();
-	addHrs();
-	addDivider();
+	addDate();
+	addLocation();
+	addTime();
+	addDeleteParameter();
+	addDone();
+	addUndone();
+	addRedo();
+	addHelp();
 
 	return;
 }
 
 void Dictionary::addChronoVocabularyPackage() {
+	addHrs();
+	addDateDivider();
+	addTimeDivider();
 	addJanuary();
 	addFebruary();
 	addMarch();
@@ -90,6 +100,7 @@ void Dictionary::addChronoVocabularyPackage() {
 	addThird();
 	addFourth();
 	addNumberSuffix();
+	addRange();
 
 	return;
 }
@@ -101,9 +112,12 @@ void Dictionary::addNaturalLanguagePackage() {
 	addBy();
 	addFrom();
 	addOn();
+	addDue();
+	addPreposition();
 	addFor();
 	addThe();
 	addAll();
+	addNot();
 
 	return;
 }
@@ -218,16 +232,90 @@ void Dictionary::addChangeViewType() {
 	addToDictionary(list);
 }
 
-void Dictionary::addHrs() {
-	SynonymList* list = new SynonymList("HRS");
-	list->add("HRS");
+void Dictionary::addDate() {
+	SynonymList* list = new SynonymList("DATE");
+	list->add("DATE");
+	list->add("-D");
 	addToDictionary(list);
 }
 
-void Dictionary::addDivider() {
-	SynonymList* list = new SynonymList("DIVIDER");
+void Dictionary::addLocation() {
+	SynonymList* list = new SynonymList("LOCATION");
+	list->add("LOCATION");
+	list->add("ADDRESS");
+	list->add("-L");
+	list->add("PLACE");
+	addToDictionary(list);
+}
+
+void Dictionary::addTime() {
+	SynonymList* list = new SynonymList("TIME");
+	list->add("TIME");
+	list->add("-T");
+	addToDictionary(list);
+}
+
+void Dictionary::addDeleteParameter() {
+	SynonymList* list = new SynonymList("DELETEPARAMETER");
+	list->add(getSynonyms("DATE"));
+	list->add(getSynonyms("LOCATION"));
+	list->add(getSynonyms("TIME"));
+	addToDictionary(list);
+}
+
+void Dictionary::addDone() {
+	SynonymList* list = new SynonymList("DONE");
+	list->add("DONE");
+	list->add("FINISHED");
+	list->add("COMPLETED");
+	addToDictionary(list);
+}
+
+void Dictionary::addUndone() {
+	SynonymList* list = new SynonymList("UNDONE");
+	list->add("UNDONE");
+	list->add("UNFINISHED");
+	list->add("INCOMPLETED");
+	addToDictionary(list);
+}
+
+void Dictionary::addRedo() {
+	SynonymList* list = new SynonymList("REDO");
+	list->add("REDO");
+	list->add("R");
+	addToDictionary(list);
+}
+
+void Dictionary::addHelp() {
+	SynonymList* list = new SynonymList("HELP");
+	list->add("HELP");
+	list->add("H");
+	list->add("?");
+	addToDictionary(list);
+}
+
+
+
+void Dictionary::addHrs() {
+	SynonymList* list = new SynonymList("HRS");
+	list->add("HRS");
+	list->add("HR");
+	addToDictionary(list);
+}
+
+void Dictionary::addDateDivider() {
+	SynonymList* list = new SynonymList("DATEDIVIDER");
 	list->add("/");
 	addToDictionary(list);
+}
+
+void Dictionary::addTimeDivider() {
+	SynonymList* list = new SynonymList("TIMEDIVIDER");
+	list->add(":");
+	list->add(".");
+	addToDictionary(list);
+
+	return;
 }
 
 void Dictionary::addJanuary() {
@@ -485,11 +573,33 @@ void Dictionary::addNumberSuffix() {
 	addToDictionary(list);
 }
 
+void Dictionary::addRange() {
+	SynonymList* list = new SynonymList("RANGE");
+	list->add("TO");
+	list->add("-");
+	addToDictionary(list);
+}
+
+
+void Dictionary::addNext() {
+	SynonymList* list = new SynonymList("NEXT");
+	list->add("NEXT");
+	list->add("NXT");
+	addToDictionary(list);
+}
+
+void Dictionary::addThis() {
+	SynonymList* list = new SynonymList("THIS");
+	list->add("THIS");
+	list->add("TIS");
+	addToDictionary(list);
+}
 
 void Dictionary::addTo() {
 	SynonymList* list = new SynonymList("TO");
 	list->add("TO");
 	list->add("-");
+	list->add("AS");
 	addToDictionary(list);
 }
 
@@ -529,20 +639,6 @@ void Dictionary::addPreposition() {
 	addToDictionary(list);
 }
 
-void Dictionary::addNext() {
-	SynonymList* list = new SynonymList("NEXT");
-	list->add("NEXT");
-	list->add("NXT");
-	addToDictionary(list);
-}
-
-void Dictionary::addThis() {
-	SynonymList* list = new SynonymList("THIS");
-	list->add("THIS");
-	list->add("TIS");
-	addToDictionary(list);
-}
-
 void Dictionary::addFor() {
 	SynonymList* list = new SynonymList("FOR");
 	list->add("FOR");
@@ -571,6 +667,12 @@ void Dictionary::addAll() {
 	addToDictionary(list);
 }
 
+void Dictionary::addNot() {
+	SynonymList* list = new SynonymList("NOT");
+	list->add("NOT");
+	list->add("NT");
+	addToDictionary(list);
+}
 
 void Dictionary::addToDictionary(SynonymList* list) {
 		_wordMap.insert(pair<string, SynonymList*>(

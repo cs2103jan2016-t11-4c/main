@@ -128,13 +128,19 @@ void InputTokens::generateTokensFromCommandLine(string commandLine) {
 	istringstream is(commandLine);
 	string chunk;
 	while(is >> chunk) {
-		//if a word contains alphabets and numbers, this function split them to get the tokens
-		vector<string> tokens = getTokensFromChunk(makeAllCaps(chunk));
-		assert(tokens.size() != 0);
+		//words starting with * are ignored from parsing
+		if(chunk[START_INDEX] == '*') {
+			chunk.erase(chunk.begin());
+			addToVector(IGNORE_MARKER, chunk);
+		} else {
+			//if a word contains alphabets and numbers, this function split them to get the tokens
+			vector<string> tokens = getTokensFromChunk(makeAllCaps(chunk));
+			assert(tokens.size() != 0);
 		
-		addToVector(tokens[START_INDEX], chunk);
-		for(unsigned int i = 1; i < tokens.size(); i++) {
-			addToVector(tokens[i], NO_STRING);
+			addToVector(tokens[START_INDEX], chunk);
+			for(unsigned int i = 1; i < tokens.size(); i++) {
+				addToVector(tokens[i], NO_STRING);
+			}
 		}
 	}
 
@@ -173,7 +179,7 @@ size_t InputTokens::getAlphabets(size_t index, string chunk, vector<string>* tok
 	assert(chunk.size() > 0);
 	assert(chunk.size() > index);
 	
-	size_t next = chunk.find_first_of("0123456789-/", index);
+	size_t next = chunk.find_first_of("0123456789-/:.", index);
 	if(next == index) {
 	} else if(next != string::npos) {
 		tokens->push_back(chunk.substr(index,next-index));
@@ -181,7 +187,7 @@ size_t InputTokens::getAlphabets(size_t index, string chunk, vector<string>* tok
 		tokens->push_back(chunk.substr(index));
 	}
 	
-	if(next != string::npos && next == chunk.find_first_of("-/", index)) {
+	if(next != string::npos && next == chunk.find_first_of("-/:.", index)) {
 		tokens->push_back(chunk.substr(next,1));
 		next++;
 		if(next >= chunk.size()) {

@@ -20,17 +20,89 @@ TaskPacker* TaskPacker::getInstance() {
 }
 
 
-Task* TaskPacker::packTask(InputTokens* tokens, int index) {
+Task* TaskPacker::packAddTask(InputTokens* tokens, int index) {
+	assert(tokens);
+	assert(!tokens->isOutOfBounds(index));
+
+	packStandardTask(tokens, index);
+	customizeTaskForAddCommand();
+	
+	return _task;
+}
+
+Task* TaskPacker::packEditTask(InputTokens* tokens, int index) {
+	assert(tokens);
+	assert(!tokens->isOutOfBounds(index));
+
+	packStandardTask(tokens, index);
+	customizeTaskForEditCommand();
+	
+	return _task;
+}
+
+
+void TaskPacker::packStandardTask(InputTokens* tokens, int index) {
 	assert(tokens);
 	assert(!tokens->isOutOfBounds(index));
 
 	setEnvironment(tokens);
 	findTaskDetails(index);
+	_task = new Task(_name, _date1, _date2, _time1, _time2, _location, _doneStatus);
 	
-//	return new Task(_name, _date1, _date2, _time1, _time2, _location);
-	return new Task(_name, _date1, _date2, _time1, _time2, _location, false);
+	return;
 }
 
+void TaskPacker::customizeTaskForAddCommand() {
+	if(_task->getDate2() == NO_DATE && _task->getTime2() != NO_TIME) {
+		_task->setDate2(DATE);
+	}
+
+	if(_task->getTime1() != NO_TIME && _task->getTime1() > _task->getTime2()) {
+		if(_task->getDate1() == NO_DATE) {
+			_task->setDate1(_task->getDate2());
+			_task->setDate2(ADD_TO_DATE(1,_task->getDate2()));
+		} else if(_task->getDate1() == _task->getDate2()) {
+			_task->setDate1(_task->getDate2());
+			_task->setDate2(ADD_TO_DATE(1,_task->getDate2()));
+		}
+	}
+
+	if(_task->getTime1() != NO_TIME && _task->getDate1() != NO_DATE &&
+	   _task->getDate1() > _task->getDate2()) {
+		int tempTime = _task->getTime2();
+		int tempDate = _task->getDate2();
+		_task->setTime2(_task->getTime1());
+		_task->setDate2(_task->getTime1());
+		_task->setTime1(tempTime);
+		_task->setDate1(tempDate);
+	}
+	
+	if(_task->getDoneStatus() == NO_DONE_DETECTED) {
+		_task->setDoneStatus(NO_DONE);
+	}
+
+	return;
+}
+
+void TaskPacker::customizeTaskForEditCommand() {
+	if(_task->getTime1() == NO_TIME) {
+		_task->setTime1(NO_TIME_DETECTED);
+	}
+	if(_task->getTime2() == NO_TIME) {
+		_task->setTime2(NO_TIME_DETECTED);
+	}
+	if(_task->getDate1() == NO_DATE) {
+		_task->setDate1(NO_DATE_DETECTED);
+	}
+	if(_task->getDate2() == NO_DATE) {
+		_task->setDate2(NO_DATE_DETECTED);
+	}
+	if(_task->getLocation() == NO_LOCATION) {
+		_task->setLocation(NO_LOCATION_DETECTED);
+	}
+
+	return;
+}
 
 void TaskPacker::setEnvironment(InputTokens* tokens) {
 	_tokens = tokens;
@@ -42,12 +114,14 @@ void TaskPacker::setEnvironment(InputTokens* tokens) {
 	_location = NO_LOCATION;
 	_dates.clear();
 	_times.clear();
+	_doneStatus = NO_DONE_DETECTED;
 
 	return;
 }
 
 void TaskPacker::findTaskDetails(int index) {
 	findDateAndTime(index);
+	findDoneStatus(index);
 	findLocation(index);
 	findName(index);
 
@@ -86,10 +160,10 @@ void TaskPacker::finalizeDates() {
 		_date2 = NO_DATE;
 	} else if(_dates.size() == 1) {
 		_date1 = NO_DATE;
-		_date2 = _dates[0];
+		_date2 = _dates[FIRST_INDEX];
 	} else if(_dates.size() == 2) {
-		_date1 = _dates[0];
-		_date2 = _dates[1];
+		_date1 = _dates[FIRST_INDEX];
+		_date2 = _dates[SECOND_INDEX];
 	} else if(_dates.size() > 2) {
 		throw Exception_ExceededParameterLimit();
 	}
@@ -117,29 +191,56 @@ void TaskPacker::finalizeTimes() {
 		_time2 = NO_TIME;
 		_time1 = NO_TIME;
 	} else if(_times.size() == 1) {
-		_time2 = _times[0];
+		_time2 = _times[FIRST_INDEX];
 		_time1 = NO_TIME;
 	} else if(_times.size() == 2) {
-		_time1 = _times[0];
-		_time2 = _times[1];
+		_time1 = _times[FIRST_INDEX];
+		_time2 = _times[SECOND_INDEX];
 	}
 	return;
 }
 
+void TaskPacker::findDoneStatus(int index) {
+	for(unsigned int i = index; i < _tokens->getSize(); i++) {
+		if(_tokens->isExtensionOfAWord((int) i)) {
+			continue;
+		} else if(_tokens->hasMeaning("DONE", (int) i)) {
+			_doneStatus = DONE;
+			_tokens->markAs(DONE_MARKER, (int) i);
+			break;
+		} else if(_tokens->hasMeaning("UNDONE", (int) i)) {
+			_doneStatus = NO_DONE;
+			_tokens->markAs(DONE_MARKER, (int) i);
+			break;
+		} else if(_tokens->hasMeaning("NOT", (int) i)) {
+			if(!_tokens->isOutOfBounds((int) i+1) && !_tokens->hasMeaning("DONE", (int) i+1)) {
+			_doneStatus = NO_DONE;
+			_tokens->markAs(DONE_MARKER, (int) i);
+			_tokens->remove((int) i+1);
+			break;
+			}
+		}
+	}
+}
 
 void TaskPacker::findLocation(int index) {
 	for(unsigned int i = index; i < _tokens->getSize(); i++) {
 		if(hasLocationMarker(_tokens->getToken((int) i))) {
 			extractLocation((int) i);
-			break;
 		}
 	}
 }
 
 void TaskPacker::extractLocation(int index) {
 	assert(!_tokens->isOutOfBounds(index));
+	
 	string location = extractStringToBreakPoint(LOCATION_MARKER, index);
-	_location = removeLocationMarker(location);
+	if(_location.compare(NO_LOCATION) == 0) {
+		_location = removeLocationMarker(location);
+	} else if(_location.compare(NO_LOCATION) != 0) {
+		throw Exception_ExceededParameterLimit();
+	}
+
 	return;
 }
 
@@ -162,7 +263,6 @@ void TaskPacker::findName(int index) {
 	for(unsigned int i = index; i < _tokens->getSize(); i++) {
 		if(!_tokens->isParsed((int) i)) {
 			extractName((int) i);
-			break;
 		}
 	}
 }
@@ -170,7 +270,12 @@ void TaskPacker::findName(int index) {
 void TaskPacker::extractName(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	string name = extractStringToBreakPoint(NAME_MARKER, index);
-	_name = name;
+	if(_name == NO_NAME) {
+		_name = name;
+	} else if(_name.size() < name.size()) {
+		_name = name;
+	}
+
 	return;
 }
 

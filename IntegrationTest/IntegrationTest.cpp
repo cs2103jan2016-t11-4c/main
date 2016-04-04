@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-#include "TesterHeader.h"
-
+//#include "TesterHeader.h"
+/*
 string testStringDriver[5] = { 
     "Attend dance performance @museum 1/4 730pm", 
     "Conduct V0.3 demo on 31 march 11am",
@@ -11,12 +11,13 @@ string testStringDriver[5] = {
 }; 
 
 string testerClear = "clear";
-
+*/
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace IntegrationTest {	
     TEST_CLASS(Integration) {
 public:
+	/*
     TEST_METHOD(_Integration_Command_Add_Feedback_V0) {
         UserInterface sut;
         Command* testCommand;
@@ -136,5 +137,6 @@ public:
             i++;
         }
     }
+	*/
     };
 }

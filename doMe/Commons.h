@@ -29,8 +29,8 @@ using namespace std;
 #define GET_DAY(date) Commons::getDay(date)
 #define GET_MONTH(date) Commons::getMonth(date)
 #define GET_YEAR(date) Commons::getYear(date)
-#define GET_Minute(date) Commons::getMinute(date)
-#define GET_HOUR(date) Commons::getHour(date)
+#define GET_MINUTE(time) Commons::getMinute(time)
+#define GET_HOUR(time) Commons::getHour(time)
 #define LOG(file, message) Commons::log(file, message)
 
 

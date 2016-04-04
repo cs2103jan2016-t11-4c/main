@@ -10,6 +10,7 @@
 #pragma once
 
 #include "SynonymList.h"
+#include "Commons.h"
 #include <map>
 #include <string>
 #include <vector>
@@ -51,9 +52,18 @@ private:
 	void addView();
 	void addChangeDirectory();
 	void addChangeViewType();	
-	void addHrs();
-	void addDivider();
+	void addDate();
+	void addLocation();
+	void addTime();
+	void addDeleteParameter();
+	void addDone();
+	void addUndone();
+	void addRedo();
+	void addHelp();
 
+	void addHrs();
+	void addDateDivider();
+	void addTimeDivider();
 	void addJanuary();
 	void addFebruary();
 	void addMarch();
@@ -88,8 +98,8 @@ private:
 	void addThird();
 	void addFourth();
 	void addNumberSuffix();
+	void addRange();
 	
-
 	void addNext();
 	void addThis();
 	void addTo();
@@ -101,6 +111,7 @@ private:
 	void addFor();
 	void addThe();
 	void addAll();
+	void addNot();
 
 	bool isFoundInVector(vector<string>* vector, string s);
 };

@@ -39,6 +39,9 @@ void CommandPacker::setEnvironment(InputTokens* tokens) {
 	_singleIndex = NO_VALUE;
 	delete _indexes;
 	_indexes = new vector<int>;
+	_isDeleteDate = false;
+	_isDeleteTime = false;
+	_isDeleteLocation = false;
 
 	return;
 }
@@ -54,6 +57,10 @@ void CommandPacker::branchToNode(int index) {
 		nodeOneOfDeleteCommand(index+1);
 	} else if(_tokens->hasMeaning("UNDO", index)) {
 		nodeOneOfUndoCommand(index+1);
+	} else if(_tokens->hasMeaning("REDO", index)) {
+		nodeOneOfRedoCommand(index+1);
+	} else if(_tokens->hasMeaning("HELP", index)) {
+		nodeOneOfHelpCommand(index+1);
 	} else if(_tokens->hasMeaning("EXIT", index)) {
 		nodeOneOfExitCommand(index+1);
 	} else if(_tokens->hasMeaning("SEARCH", index)) {
@@ -73,7 +80,7 @@ void CommandPacker::branchToNode(int index) {
 
 
 void CommandPacker::nodeOneOfDisplayCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packDisplayCommand();
 	} else {
 		nodeTwoOfChangeViewTypeCommand(index);
@@ -84,7 +91,7 @@ void CommandPacker::nodeOneOfDisplayCommand(int index) {
 
 
 void CommandPacker::nodeOneOfChangeDirectoryCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("THE", index)) {
 		nodeTwoOfChangeDirectoryCommand(index+1);
@@ -96,7 +103,7 @@ void CommandPacker::nodeOneOfChangeDirectoryCommand(int index) {
 }
 
 void CommandPacker::nodeTwoOfChangeDirectoryCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("DIRECTORY", index)) {
 		nodeThreeOfChangeDirectoryCommand(index+1);
@@ -108,7 +115,7 @@ void CommandPacker::nodeTwoOfChangeDirectoryCommand(int index) {
 }
 
 void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("TO", index)) {
 		nodeFourOfChangeDirectoryCommand(index+1);
@@ -120,7 +127,7 @@ void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
 }
 
 void CommandPacker::nodeFourOfChangeDirectoryCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else {
 		_description = _tokens->getOriginalToken(index);
@@ -142,7 +149,7 @@ void CommandPacker::nodeFiveOfChangeDirectoryCommand(int index) {
 
 
 void CommandPacker::nodeOneOfChangeViewTypeCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("VIEW", index)) {
 		nodeTwoOfChangeViewTypeCommand(index+1);
@@ -154,7 +161,7 @@ void CommandPacker::nodeOneOfChangeViewTypeCommand(int index) {
 }
 
 void CommandPacker::nodeTwoOfChangeViewTypeCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("TO", index)) {
 		nodeThreeOfChangeViewTypeCommand(index+1);
@@ -166,7 +173,7 @@ void CommandPacker::nodeTwoOfChangeViewTypeCommand(int index) {
 }
 
 void CommandPacker::nodeThreeOfChangeViewTypeCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
@@ -179,7 +186,7 @@ void CommandPacker::nodeThreeOfChangeViewTypeCommand(int index) {
 }
 
 void CommandPacker::nodeFourOfChangeViewTypeCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packChangeViewTypeCommand();
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
@@ -190,12 +197,25 @@ void CommandPacker::nodeFourOfChangeViewTypeCommand(int index) {
 
 
 void CommandPacker::nodeOneOfDeleteCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		_singleIndex = LAST_INDEX;
 		packDeleteCommand();
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
 		nodeTwoOfDeleteCommand(index+1);
+	} else {
+		_singleIndex = LAST_INDEX;
+		nodeTwoOfDeleteCommand(index);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeTwoOfDeleteCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packDeleteCommand();
+	} else if(_tokens->hasMeaning("DELETEPARAMETER", index)) {
+		nodeThreeOfDeleteCommand(index);
 	} else {
 		nodeOneOfClearCommand(SECOND_INDEX);
 	}
@@ -203,9 +223,12 @@ void CommandPacker::nodeOneOfDeleteCommand(int index) {
 	return;
 }
 
-void CommandPacker::nodeTwoOfDeleteCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
-		packDeleteCommand();
+void CommandPacker::nodeThreeOfDeleteCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packDeleteTaskParametersCommand();
+	} else if(_tokens->hasMeaning("DELETEPARAMETER", index)) {
+		extractDeleteParameter(index);
+		nodeThreeOfDeleteCommand(index+1);
 	} else {
 		nodeOneOfClearCommand(SECOND_INDEX);
 	}
@@ -215,7 +238,7 @@ void CommandPacker::nodeTwoOfDeleteCommand(int index) {
 
 
 void CommandPacker::nodeOneOfUndoCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packUndoCommand();
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
@@ -225,8 +248,30 @@ void CommandPacker::nodeOneOfUndoCommand(int index) {
 }
 
 
+void CommandPacker::nodeOneOfRedoCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packRedoCommand();
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+
+void CommandPacker::nodeOneOfHelpCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packHelpCommand();
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+
 void CommandPacker::nodeOneOfExitCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packExitCommand();
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
@@ -309,6 +354,7 @@ void CommandPacker::nodeSixOfClearCommand(int index) {
 	return;
 }
 
+
 void CommandPacker::nodeOneOfSearchCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
@@ -345,8 +391,7 @@ void CommandPacker::nodeThreeOfSearchCommand(int index) {
 
 void CommandPacker::nodeOneOfAddCommand(int index) {	
 	try {
-		_task = _taskPacker->packTask(_tokens, index);
-		postProcessTask();
+		_task = _taskPacker->packAddTask(_tokens, index);
 		packAddCommand();
 	} catch (Exception_ExceededParameterLimit e) {
 		packInvalidCommand();
@@ -357,7 +402,7 @@ void CommandPacker::nodeOneOfAddCommand(int index) {
 
 
 void CommandPacker::nodeOneOfEditCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
@@ -371,7 +416,7 @@ void CommandPacker::nodeOneOfEditCommand(int index) {
 }
 
 void CommandPacker::nodeTwoOfEditCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("TO", index)) {
 		nodeThreeOfEditCommand(index+1);
@@ -383,11 +428,11 @@ void CommandPacker::nodeTwoOfEditCommand(int index) {
 }
 
 void CommandPacker::nodeThreeOfEditCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else {
 		try {
-			_task = _taskPacker->packTask(_tokens, index);
+			_task = _taskPacker->packEditTask(_tokens, index);
 			packEditCommand();
 		} catch (Exception_ExceededParameterLimit e) {
 			packInvalidCommand();
@@ -396,6 +441,7 @@ void CommandPacker::nodeThreeOfEditCommand(int index) {
 	
 	return;
 }
+
 
 void CommandPacker::packDisplayCommand() {
 	_command = new Command_Exit();
@@ -421,8 +467,27 @@ void CommandPacker::packDeleteCommand() {
 	return;
 }
 
+void CommandPacker::packDeleteTaskParametersCommand() {
+	packDeleteTask();
+	_command = new Command_Edit(_singleIndex, _task);
+	
+	return;
+}
+
 void CommandPacker::packUndoCommand() {
 	_command = new Command_Undo();
+	
+	return;
+}
+
+void CommandPacker::packRedoCommand() {
+	_command = new Command_Redo();
+	
+	return;
+}
+
+void CommandPacker::packHelpCommand() {
+	_command = new Command_Help();
 	
 	return;
 }
@@ -463,6 +528,45 @@ void CommandPacker::packInvalidCommand() {
 	return;
 }
 
+
+void CommandPacker::extractDeleteParameter(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("DELETEPARAMETER", index));
+
+	if(_tokens->hasMeaning("DATE", index)) {
+		_isDeleteDate = true;
+	} else if(_tokens->hasMeaning("TIME", index)) {
+		_isDeleteTime = true;
+	} else if(_tokens->hasMeaning("LOCATION", index)) {
+		_isDeleteLocation = true;
+	}
+	
+	assert(false); //method should return before reaching this line
+	return;
+}
+
+void CommandPacker::packDeleteTask() {
+	string name = NO_NAME;
+	int date = NO_DATE_DETECTED;
+	int time = NO_TIME_DETECTED;
+	string location = NO_LOCATION_DETECTED;
+	int doneStatus = NO_DONE_DETECTED;
+	
+	if(_isDeleteTime) {
+		time = NO_TIME;
+	}
+	if(_isDeleteDate) {
+		date = NO_DATE;
+	}
+	if(_isDeleteLocation) {
+		location = NO_LOCATION;
+	}
+
+	_task = new Task(name, date, date, time, time, location, doneStatus);
+
+	return;
+}
+
 void CommandPacker::addToIndexes(int index) {
 	vector<int>& indexRef = *_indexes;
 
@@ -489,34 +593,6 @@ void CommandPacker::addRangeToIndexes(int index) {
 
 	for(int i = start; i <= end; i++) {
 		addToIndexes(i);
-	}
-
-	return;
-}
-
-void CommandPacker::postProcessTask() {
-	if(_task->getDate2() == NO_DATE && _task->getTime2() != NO_TIME) {
-		_task->setDate2(DATE);
-	}
-
-	if(_task->getTime1() != NO_TIME && _task->getTime1() > _task->getTime2()) {
-		if(_task->getDate1() == NO_DATE) {
-			_task->setDate1(_task->getDate2());
-			_task->setDate2(ADD_TO_DATE(1,_task->getDate2()));
-		} else if(_task->getDate1() == _task->getDate2()) {
-			_task->setDate1(_task->getDate2());
-			_task->setDate2(ADD_TO_DATE(1,_task->getDate2()));
-		}
-	}
-
-	if(_task->getTime1() != NO_TIME && _task->getDate1() != NO_DATE &&
-	   _task->getDate1() > _task->getDate2()) {
-		int tempTime = _task->getTime2();
-		int tempDate = _task->getDate2();
-		_task->setTime2(_task->getTime1());
-		_task->setDate2(_task->getTime1());
-		_task->setTime1(tempTime);
-		_task->setDate1(tempDate);
 	}
 
 	return;
