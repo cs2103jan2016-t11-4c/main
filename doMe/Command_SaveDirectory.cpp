@@ -8,7 +8,7 @@ Command_SaveDirectory::Command_SaveDirectory(string newSaveDirectory)
 }
 
 bool Command_SaveDirectory::execute() {
-	if(_memory->changeSaveDirectory(_newSaveDirectory)) {
+	if(_memory->changeSaveDirectory(_newSaveDirectory) == true) {
 		return true;
 	}
 	Exception_InvalidCommand e(this);

@@ -4,7 +4,17 @@
 const string Commons::LOG_FILE_NAME = "doMeLog.txt";
 const string Commons::TIME_DIVIDER = ":";
 const string Commons::LOG_ENTRY = "%02d/%02d/%d %02d:%02d:%02d [%13s] : %s";
-
+/*
+const string Commons::DAYS[] = {
+    "Sun",
+    "Mon",
+    "Tues",
+    "Wed",
+    "Thurs",
+    "Fri",
+    "Sat"
+};
+*/
 Commons::Commons() {
 }
 
@@ -161,3 +171,23 @@ string Commons::trim(string file) {
 
 	return file.substr(0,found);
 }
+ 
+//someone?
+/*
+string getDateWeek(int date) {
+    int dd;
+    int mm;
+    int yy;
+    int dayNumber;
+
+    dd = getDay(date);
+    mm = getMonth(date);
+    yy = getYear(date);
+
+    static int t[] = {0, 3, 2, 5, 0, 3, 5, 1, 4, 6, 2, 4};
+    yy -= mm < 3;
+    dayNumber = (yy + yy/4 - yy/100 + yy/400 + t[mm-1] + dd) % 7;
+
+    return DAYS[dayNumber];
+}
+*/

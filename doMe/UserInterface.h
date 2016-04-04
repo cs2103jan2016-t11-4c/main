@@ -19,6 +19,7 @@
 #include "ViewType.h"
 #include "ViewType1.h"
 #include "ViewType2.h"
+#include "ViewType3.h"
 
 using namespace std;
 
@@ -37,11 +38,15 @@ private:
 #else 
 public: 
 #endif
-
+    enum DisplayType {
+        DEFAULT_DISPLAY, SEARCH_DISPLAY, HELP_DISPLAY
+    };
+    DisplayType _lastDisplayType;
     Logic* _logic;
     Memory* _memory;
     Command_Feedback* _commandFeedback;
     list<Task*>* _taskList;
+
 
     int _maxWindowWidth;
     int _maxWindowLength;
@@ -49,7 +54,7 @@ public:
 
     //Initial programme page
     void printProgramWelcomePage();
-    void printNotificationWelcome();
+    void printNotificationWelcome(vector<string> welcomeStringVector);
 
     //prompts
     void printPromptCommand();	
@@ -57,10 +62,11 @@ public:
 
     //Message display
     void printMessageDisplay(Command* command);
+    void printDisplayType(DisplayType display);
     void printDefaultDisplay();
     void printSearchDisplay();
     void printHelpDisplay();
-    
+
     void printTaskList(int currentDate ,int viewType);
     void printSearchList(int currentDate, int viewType);
     void printHelpList(int currentDate, int viewType);
@@ -87,6 +93,7 @@ public:
     };
     static const string COLOUR_DEFAULT;
     static const string COLOUR_NEW;
+    static const string COLOUR_DONE;
     static const string COLOUR_SEARCH;
     static const string COLOUR_HELP;
 

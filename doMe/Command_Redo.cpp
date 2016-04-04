@@ -5,14 +5,6 @@ Command_Redo::Command_Redo()
 :Command() {
 }
 
-bool Command_Redo::execute() {
-	return true;
-}
-
-bool Command_Redo::undo() {
-	return true;
-}
-
 void Command_Redo::setRedoneCommand(Command* command) {
 	_redoneCommand = command;
 }

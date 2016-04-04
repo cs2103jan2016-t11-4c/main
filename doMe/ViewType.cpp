@@ -13,6 +13,7 @@ const string ViewType::MESSAGE_EMPTY_LIST = "<list is empty!>";
 
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
+const string ViewType::COLOUR_DONE = "DONE";
 
 ViewType::ViewType(void) {
 }
@@ -43,7 +44,7 @@ vector<string> ViewType::createDisplayList() {
 
         memory = Memory::getInstance();
         Task* recentTask = memory->ramGetLastModifiedTask();
-        
+
         while(taskListIter != (*_taskList).end()) {
             complimentaryString = getComplimentaryString(*taskListIter);
             if(complimentaryString != MESSAGE_VOID_STRING) {
@@ -51,7 +52,9 @@ vector<string> ViewType::createDisplayList() {
                 _colourCoding.push_back(COLOUR_DEFAULT);
             }
             _colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
-            _displayList.push_back(createTaskString(*taskListIter,index));
+            if(complimentaryString != MESSAGE_SPACE_STRING) {
+                _displayList.push_back(createTaskString(*taskListIter,index));
+            }
             index++;
             taskListIter++;
         }
@@ -63,6 +66,10 @@ vector<string> ViewType::createDisplayList() {
 string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
     if(recentTask == individualTask) {
         return COLOUR_NEW;
+    } else {
+        if(individualTask->getDoneStatus() == true) {
+            return COLOUR_NEW;
+        }
     }
     return COLOUR_DEFAULT;
 }
@@ -143,7 +150,7 @@ string ViewType::formatTaskString(string name , string date1 , string date2 , st
     dateString = formateDateString(time1 + date1 , time2 + date2);
     taskString = name + location + dateString;
 
-    taskString.pop_back();
+    //taskString.pop_back();
     return taskString;
 }
 
@@ -163,13 +170,21 @@ string ViewType::formateAddBracket(string s) {
 }
 
 string ViewType::formateDateString(string s1, string s2) {
+    string time;
     if((s1.empty()) && (s2.empty())) {
         return MESSAGE_FLOATING_TASK;
     }
     if((s1.empty()) || (s2.empty())) {
-        return s1 + s2;
+        time = s1 + s2;
+        time.pop_back();
+        sprintf_s(buffer, MESSAGE_BRACKETS.c_str(),time.c_str());
+        return buffer;
     } else {
-        return s1 + MESSAGE_TIMING_SEPERATOR + s2;
+        time = s1 + MESSAGE_TIMING_SEPERATOR + s2;
+        time.pop_back();
+        sprintf_s(buffer, MESSAGE_BRACKETS.c_str(),time.c_str());
+        return buffer;
+
     }
 }
 

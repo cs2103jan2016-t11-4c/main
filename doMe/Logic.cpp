@@ -4,7 +4,6 @@
 const string Logic::LOG_MESSAGE_PARSER = "Parser parses it to be ";
 
 Command* Logic::executeCommand(string commandText) {
-
 	throwExceptionIfEmpty(commandText);
 
 	Command* command = _parser->parse(commandText);
@@ -21,38 +20,35 @@ Command* Logic::executeCommand(string commandText) {
 	return command;
 }
 
-bool Logic::isUndoOrRedo(Command* command) {
+void Logic::executeUndoRedo(Command* command) {
+	switch(command->getCommandType()) {
+		case UNDO:
+			undo(command);
+			break;
+		case REDO:
+			redo(command);
+			break;
+	}
+}
 
+void Logic::executeNormal(Command* command) {
+	if(command->execute() == true) {		//Objects that return true are pushed onto the _commandUndoStack
+		_commandUndoStack.push(command);
+		clearCommandRedoStack();
+	}
+}
+
+bool Logic::isUndoOrRedo(Command* command) {
 	if(command->getCommandType() == UNDO || command->getCommandType() == REDO) {
 		return true;
 	}
 	return false;
 }
 
-void Logic::executeUndoRedo(Command* command) {
-
-	switch(command->getCommandType()) {
-	case UNDO:
-		undo(command);
-		break;
-	case REDO:
-		redo(command);
-		break;
-	}
-}
-
-void Logic::executeNormal(Command* command) {
-
-	command->execute();
-	_commandUndoStack.push(command);
-	clearCommandRedoStack();
-}
-
 void Logic::undo(Command* command) {
-
 	if(_commandUndoStack.empty()) {
-		Exception_InvalidCommand e(new Command_Undo());
-		throw e;
+//		Exception_InvalidCommand e(new Command_Undo());
+//		throw e;
 	}
 
 	Command* undoneCommand = _commandUndoStack.top();
@@ -66,10 +62,9 @@ void Logic::undo(Command* command) {
 }
 
 void Logic::redo(Command* command) {
-
 	if(_commandRedoStack.empty()) {
-//		Exception_InvalidCommand e(new Command_Redo());
-//		throw e;
+		Exception_InvalidCommand e(new Command_Redo());
+		throw e;
 	}
 	Command* redoneCommand = _commandRedoStack.top();
 	redoneCommand->execute();
@@ -81,7 +76,6 @@ void Logic::redo(Command* command) {
 }
 
 void Logic::clearCommandRedoStack() {
-
 	while(!_commandRedoStack.empty()) {
 		_commandRedoStack.pop();
 	}
@@ -104,7 +98,6 @@ Logic::Logic() {
 }
 
 Logic* Logic::getInstance() {
-
 	if (_instance == NULL) {
 		_instance = new Logic;
 	}

@@ -18,6 +18,7 @@ const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
 
 const string UserInterface::COLOUR_DEFAULT = "DEFAULT";
 const string UserInterface::COLOUR_NEW = "NEW";
+const string UserInterface::COLOUR_DONE = "DONE";
 const string UserInterface::COLOUR_SEARCH = "SEARCH";
 const string UserInterface::COLOUR_HELP = "HELP";
 
@@ -57,23 +58,28 @@ UserInterface::~UserInterface(void) {
 void UserInterface::setEnvironment() {
     setConsoleColorDefault();
     printProgramWelcomePage();
+    vector<string> welcomeStringVector;
 
     try {
         _memory->loadSettings();
     } catch(Exception_FileCannotOpen e) {
-        MESSAGE_WELCOME = e.getString();
+        welcomeStringVector.push_back(e.getString());
     }
     try {
         _memory->loadRam();
     } catch(Exception_FileCannotOpen e) {
-        MESSAGE_WELCOME = e.getString();
+        welcomeStringVector.push_back(e.getString());
+    }
+
+    if(welcomeStringVector.empty()) {
+        welcomeStringVector.push_back(MESSAGE_WELCOME);
     }
 
     int length,width;
     _memory->getWindowSize(width,length);
     resizeWindow(width,length);
 
-    printNotificationWelcome();
+    printNotificationWelcome(welcomeStringVector);
 }
 
 void UserInterface::printProgramWelcomePage() {
@@ -100,9 +106,13 @@ void UserInterface::printProgramWelcomePage() {
     _getch();
 }
 
-void UserInterface::printNotificationWelcome() {
+void UserInterface::printNotificationWelcome(vector<string> welcomeStringVector) {
     printDefaultDisplay();
-    showToUser(MESSAGE_WELCOME);
+    vector<string>::iterator welcomeStringIter = welcomeStringVector.begin();
+    while(welcomeStringIter != welcomeStringVector.end()){
+        showToUser(*welcomeStringIter);
+        welcomeStringIter++;
+    }
 }
 
 /****************************************************************/
@@ -146,12 +156,31 @@ void UserInterface::printMessageDisplay(Command* command) {
 
     switch(commandType) {
     case SEARCH:
-        printSearchDisplay();
+        _lastDisplayType = SEARCH_DISPLAY;
+        printDisplayType(SEARCH_DISPLAY);
         break;
     case HELP:
-        printHelpDisplay();
+        _lastDisplayType = HELP_DISPLAY;
+        printDisplayType(HELP_DISPLAY);
         break;
     case EXIT:
+        break;
+    case INVALID:
+        printDisplayType(_lastDisplayType);
+        break;
+    default:
+        printDisplayType(DEFAULT_DISPLAY);
+        break;
+    }
+}
+
+void UserInterface::printDisplayType(DisplayType display) {
+    switch(display) {
+    case SEARCH_DISPLAY:
+        printSearchDisplay();
+        break;
+    case HELP_DISPLAY:
+        printHelpDisplay();
         break;
     default:
         printDefaultDisplay();
@@ -192,6 +221,9 @@ void UserInterface::printTaskList(int currentDate, int viewType) {
     case 2:
         taskListType = new ViewType2(_taskList , currentDate);
         break;
+    case 3:
+        taskListType = new ViewType3(_taskList , currentDate);
+        break;
     default:
         taskListType = new ViewType(_taskList , currentDate);
         break;
@@ -215,6 +247,9 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
         break;
     case 2:
         taskListType = new ViewType2(_taskList);
+        break;
+    case 3:
+        taskListType = new ViewType3(_taskList , currentDate);
         break;
     default:
         taskListType = new ViewType(_taskList);
@@ -345,18 +380,22 @@ void UserInterface::changeListColour(string colourCoding) {
         setConsoleColor(BLACK, LIGHT_RED);
         return;
     } else {
-        if(colourCoding == COLOUR_SEARCH) {
-            setConsoleColor(BLACK, LIGHT_GREEN);
+        if(colourCoding == COLOUR_DONE) {
+            setConsoleColor(BLACK, GRAY);
             return;
         } else {
-            if(colourCoding == COLOUR_HELP) {
-                setConsoleColor(BLACK, LIGHT_YELLOW);
+            if(colourCoding == COLOUR_SEARCH) {
+                setConsoleColor(BLACK, LIGHT_GREEN);
                 return;
+            } else {
+                if(colourCoding == COLOUR_HELP) {
+                    setConsoleColor(BLACK, LIGHT_YELLOW);
+                    return;
+                }
             }
         }
     }
     setConsoleColorDefault();
-
 }
 
 void UserInterface::setConsoleColor(int background, int foreground) {

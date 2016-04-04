@@ -11,9 +11,7 @@ bool Command_Exit::execute() {
 		_searchTerm = _memory->ramUnsearch();
 		_commandType = ENDSEARCH;
 	}
-
-	Exception_InvalidCommand e(this);
-	throw e;
+	return false;
 }
 
 bool Command_Exit::undo() {
