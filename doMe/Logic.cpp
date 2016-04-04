@@ -47,8 +47,8 @@ bool Logic::isUndoOrRedo(Command* command) {
 
 void Logic::undo(Command* command) {
 	if(_commandUndoStack.empty()) {
-//		Exception_InvalidCommand e(new Command_Undo());
-//		throw e;
+		Exception_InvalidCommand e(new Command_Undo());
+		throw e;
 	}
 
 	Command* undoneCommand = _commandUndoStack.top();
@@ -63,8 +63,8 @@ void Logic::undo(Command* command) {
 
 void Logic::redo(Command* command) {
 	if(_commandRedoStack.empty()) {
-		//Exception_InvalidCommand e(new Command_Redo());
-		//throw e;
+		Exception_InvalidCommand e(new Command_Redo());
+		throw e;
 	}
 	Command* redoneCommand = _commandRedoStack.top();
 	redoneCommand->execute();

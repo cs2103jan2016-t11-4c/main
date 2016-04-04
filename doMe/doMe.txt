@@ -6,14 +6,6 @@ Apply for Edusave withdrawal
 
 0
 __________
-assignment
--1
--1
--1
--1
-
-0
-__________
 Fix Endsearch issue
 -1
 -1
@@ -41,38 +33,6 @@ __________
 Study OC function curve
 -1
 -1
--1
--1
-
-0
-__________
-uuuuuu
--1
--1
--1
--1
-
-0
-__________
-SSA3201 Read Cooling Off Day Alfian Saat
--1
-20160403
--1
--1
-
-0
-__________
-IE2150 reading
--1
-20160404
--1
--1
-
-0
-__________
-SSA Project
--1
-20160404
 -1
 -1
 
@@ -110,15 +70,7 @@ IE2100 Homework 4
 
 0
 __________
-cake eating
--1
-20160409
--1
--1
-
-0
-__________
-hw
+SSA3201 Read Cooling Off Day Alfian Saat
 -1
 20160410
 -1
@@ -126,7 +78,7 @@ hw
 
 0
 __________
-dinner
+IE2150 Project Deadline
 -1
 20160411
 -1
@@ -134,7 +86,15 @@ dinner
 
 0
 __________
-IE2150 Project Deadline
+IE2150 reading
+-1
+20160411
+-1
+-1
+
+0
+__________
+SSA Project
 -1
 20160411
 -1
