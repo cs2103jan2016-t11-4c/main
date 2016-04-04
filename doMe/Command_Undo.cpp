@@ -5,14 +5,6 @@ Command_Undo::Command_Undo()
 :Command() {
 }
 
-bool Command_Undo::execute() {
-	return true;
-}
-
-bool Command_Undo::undo() {
-	return true;
-}
-
 void Command_Undo::setUndoneCommand(Command* command) {
 	_undoneCommand = command;
 }

@@ -6,7 +6,8 @@ Command_Invalid::Command_Invalid()
 }
 
 bool Command_Invalid::execute() {
-	return false;
+	Exception_InvalidCommand e(this);
+	throw e;
 }
 
 CommandType Command_Invalid::getCommandType() {

@@ -8,7 +8,7 @@ Command_ViewType::Command_ViewType(int newViewType)
 }
 
 bool Command_ViewType::execute() {
-	if(_memory->changeViewType(_newViewType)) {
+	if(_memory->changeViewType(_newViewType) == true) {
 		return true;
 	}
 	Exception_InvalidCommand e(this);

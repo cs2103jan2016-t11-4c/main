@@ -7,7 +7,9 @@ Command_Search::Command_Search(string searchTerm)
 }
 
 bool Command_Search::execute() {
-	return _memory->ramSearch(_searchTerm);
+	_memory->ramSearch(_searchTerm);
+
+	return true;
 }
 
 bool Command_Search::undo() {
