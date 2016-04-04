@@ -65,6 +65,8 @@ void CommandPacker::branchToNode(int index) {
 		nodeOneOfExitCommand(index+1);
 	} else if(_tokens->hasMeaning("MARK", index)) {
 		nodeOneOfMarkCommand(index+1);
+	} else if(_tokens->hasMeaning("ADD", index)) {
+		nodeTwoOfAddCommand(index+1);	
 	} else if(_tokens->hasMeaning("SEARCH", index)) {
 		nodeOneOfSearchCommand(index+1);
 	} else if(_tokens->hasMeaning("CLEAR", index)) {
@@ -360,7 +362,7 @@ void CommandPacker::nodeSixOfClearCommand(int index) {
 
 
 void CommandPacker::nodeOneOfSearchCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else if(_tokens->hasMeaning("FOR", index)) {
 		nodeTwoOfSearchCommand(index+1);
@@ -375,23 +377,12 @@ void CommandPacker::nodeTwoOfSearchCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
 	} else {
-		_description = _tokens->getOriginalToken(index);
-		nodeThreeOfSearchCommand(index+1);
-	}
-	
-	return;
-}
-
-void CommandPacker::nodeThreeOfSearchCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+		extractSearchTerm(index);
 		packSearchCommand();
-	} else {
-		nodeOneOfAddCommand(START_INDEX);
 	}
 	
 	return;
 }
-
 
 void CommandPacker::nodeOneOfMarkCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
@@ -490,8 +481,22 @@ void CommandPacker::nodeSevenOfMarkCommand(int index) {
 	return;
 }
 
+void CommandPacker::nodeOneOfAddCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("ADD", index)) {
+		nodeTwoOfAddCommand(index+1);
+	} else {
+		nodeTwoOfAddCommand(index);
+	}
+	
+	return;
+}
 
-void CommandPacker::nodeOneOfAddCommand(int index) {	
+void CommandPacker::nodeTwoOfAddCommand(int index) {	
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	}
 	try {
 		_task = _taskPacker->packAddTask(_tokens, index);
 		packAddCommand();
@@ -638,6 +643,21 @@ void CommandPacker::packInvalidCommand() {
 }
 
 
+void CommandPacker::extractSearchTerm(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	_description = _tokens->getOriginalToken(index);
+
+	for(index++; !_tokens->isOutOfBounds(index); index++) {
+		if(!_tokens->isExtensionOfAWord(index)) {
+			_description += BLANK_SPACE;
+		}
+	_description += _tokens->getOriginalToken(index);
+	}
+
+	return;
+}
+
+
 void CommandPacker::extractDeleteParameter(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->hasMeaning("DELETEPARAMETER", index));
@@ -675,6 +695,7 @@ void CommandPacker::packDeleteTask() {
 
 	return;
 }
+
 
 void CommandPacker::addToIndexes(int index) {
 	vector<int>& indexRef = *_indexes;

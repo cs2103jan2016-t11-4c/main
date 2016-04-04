@@ -111,6 +111,7 @@ private:
 	void nodeSevenOfMarkCommand(int index);
 
 	void nodeOneOfAddCommand(int index);
+	void nodeTwoOfAddCommand(int index);
 
 	void nodeOneOfEditCommand(int index);
 	void nodeTwoOfEditCommand(int index);
@@ -131,6 +132,8 @@ private:
 	void packAddCommand();
 	void packEditCommand();
 	void packInvalidCommand();
+
+	void extractSearchTerm(int index);
 
 	void extractDeleteParameter(int index);
 	void packDeleteTask();

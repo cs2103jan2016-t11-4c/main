@@ -44,6 +44,7 @@ private:
 	void addDirectory();		//methods that add vocabulary to the dictionary
 	void addDisplay();
 	void addDelete();
+	void addAdd();
 	void addEdit();
 	void addClear();
 	void addUndo();

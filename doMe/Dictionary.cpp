@@ -42,6 +42,7 @@ void Dictionary::addBasicVocabularyPackage() {
 	addDisplay();
 	addDirectory();
 	addDelete();
+	addAdd();
 	addEdit();
 	addClear();
 	addUndo();
@@ -145,6 +146,13 @@ void Dictionary::addDelete() {
 	list->add("D");
 	list->add("DELETE");
 	list->add("DEL");
+	addToDictionary(list);
+}
+
+void Dictionary::addAdd() {
+	SynonymList* list = new SynonymList("ADD");
+	list->add("A");
+	list->add("ADD");
 	addToDictionary(list);
 }
 

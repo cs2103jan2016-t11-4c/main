@@ -285,11 +285,11 @@ string TaskPacker::extractStringToBreakPoint(string marker, int index) {
 	string s = _tokens->getOriginalToken(index);
 	_tokens->markAs(marker, index);
 	for(index++; !_tokens->isBreakPoint(index); index++) {
-	if(!_tokens->isExtensionOfAWord(index)) {
-	s += BLANK_SPACE;
-	}
-	s += _tokens->getOriginalToken(index);
-	_tokens->markAs(marker, index);
+		if(!_tokens->isExtensionOfAWord(index)) {
+			s += BLANK_SPACE;
+		}
+		s += _tokens->getOriginalToken(index);
+		_tokens->markAs(marker, index);
 	}
 	return s;
 }
