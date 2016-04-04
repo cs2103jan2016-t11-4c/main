@@ -112,6 +112,9 @@
     <ClCompile Include="Command_Help.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
+    <ClCompile Include="ViewType3.cpp">
+      <Filter>Source Files\UserInterface Classes\ViewType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -224,6 +227,9 @@
     </ClInclude>
     <ClInclude Include="Exception_CorruptedFile.h">
       <Filter>Header Files\Exception Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewType3.h">
+      <Filter>Header Files\UserInterface Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

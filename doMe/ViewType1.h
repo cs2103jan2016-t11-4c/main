@@ -16,7 +16,6 @@ private:
 
     //overiding functions
     string getComplimentaryString(Task* individualTask);
-    string getTimeTaskString(int time);
 
 public:
     ViewType1(void);
@@ -24,5 +23,6 @@ public:
     ViewType1(list<Task*> *taskList, int currentDate);
     ~ViewType1(void);
 
+    string getTimeTaskString(int time);
 };
 

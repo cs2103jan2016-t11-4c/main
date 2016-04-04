@@ -15,7 +15,6 @@ private:
     static const int TIME_STRING_INT;
     static const int TIME_MIDDAY;
     static const string MESSAGE_BOX;
-    static const int BOX_LENGTH; 
 
     static const string MESSAGE_MONTH_JANUARY;
     static const string MESSAGE_MONTH_FEBUARY;
@@ -33,8 +32,7 @@ private:
 
     //overiding functions
     string getComplimentaryString(Task* individualTask);
-    string getTimeTaskString(int time);
-
+   
 public:
     ViewType2(void);
     ViewType2(list<Task*> *taskList);
@@ -42,6 +40,7 @@ public:
     ~ViewType2(void);
 
     string getDateTaskString(int date);
+    string getTimeTaskString(int time);
     string getMonth(int date);
 
 };

@@ -9,7 +9,6 @@ const string ViewType2::MESSAGE_TIMING_SEPERATOR = "-";
 const int ViewType2::TIME_STRING_INT = 4;//Meridiem size (am/pm) + 2
 const int ViewType2::TIME_MIDDAY = 1200;
 const string ViewType2::MESSAGE_BOX = "======================================================================";
-const int ViewType2::BOX_LENGTH = 21; 
 const string ViewType2::MESSAGE_MONTH[] = { 
     "Jan", 
     "Feb",
@@ -71,31 +70,12 @@ string ViewType2::getComplimentaryString(Task* individualTask) {
     return MESSAGE_VOID_STRING;
 }
 
-string ViewType2::getTimeTaskString(int time) {
-    string timeString;
-
-    if(time >= 0) {
-        if(time > TIME_MIDDAY) {
-            time = time - TIME_MIDDAY;
-            timeString = integerToString(time);
-            timeString = timeString + MESSAGE_PM;
-        } else {
-            if(time < 100) {
-                time = time + TIME_MIDDAY;
-            } 
-
-            timeString = integerToString(time);
-            timeString = timeString + MESSAGE_AM;
-        }
-        timeString.insert(timeString.size() - TIME_STRING_INT, MESSAGE_TIME_SEPERATOR);
-        return timeString;
-
-    } else {
-        return MESSAGE_VOID_STRING;
-    }
-}
-
 /****************************************************************/
+
+string ViewType2::getTimeTaskString(int time) {
+    ViewType1 view;
+    return view.getTimeTaskString(time);
+}
 
 string ViewType2::getDateTaskString(int date) {
     string dateString;

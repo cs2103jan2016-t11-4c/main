@@ -48,6 +48,7 @@
     <ClCompile Include="ViewType.cpp" />
     <ClCompile Include="ViewType1.cpp" />
     <ClCompile Include="ViewType2.cpp" />
+    <ClCompile Include="ViewType3.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command_Feedback.h" />
@@ -87,6 +88,7 @@
     <ClInclude Include="ViewType.h" />
     <ClInclude Include="ViewType1.h" />
     <ClInclude Include="ViewType2.h" />
+    <ClInclude Include="ViewType3.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{521D8F24-850F-497F-B7E0-CF8940425FB0}</ProjectGuid>
