@@ -58,6 +58,7 @@ void Dictionary::addBasicVocabularyPackage() {
 	addUndone();
 	addRedo();
 	addHelp();
+	addMark();
 
 	return;
 }
@@ -276,6 +277,9 @@ void Dictionary::addUndone() {
 	list->add("UNDONE");
 	list->add("UNFINISHED");
 	list->add("INCOMPLETED");
+	list->add("NOTDONE");
+	list->add("NOTFINISHED");
+	list->add("NOTCOMPLETE");
 	addToDictionary(list);
 }
 
@@ -294,6 +298,13 @@ void Dictionary::addHelp() {
 	addToDictionary(list);
 }
 
+void Dictionary::addMark() {
+	SynonymList* list = new SynonymList("MARK");
+	list->add("MARK");
+	list->add("SET");
+	list->add("MRK");
+	addToDictionary(list);
+}
 
 
 void Dictionary::addHrs() {

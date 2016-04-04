@@ -60,6 +60,7 @@ private:
 	bool _isDeleteDate;
 	bool _isDeleteTime;
 	bool _isDeleteLocation;
+	int _doneStatus;
 
 	void setEnvironment(InputTokens* tokens);
 	void branchToNode(int index);
@@ -101,6 +102,14 @@ private:
 	void nodeTwoOfSearchCommand(int index);
 	void nodeThreeOfSearchCommand(int index);
 
+	void nodeOneOfMarkCommand(int index);
+	void nodeTwoOfMarkCommand(int index);
+	void nodeThreeOfMarkCommand(int index);
+	void nodeFourOfMarkCommand(int index);
+	void nodeFiveOfMarkCommand(int index);
+	void nodeSixOfMarkCommand(int index);
+	void nodeSevenOfMarkCommand(int index);
+
 	void nodeOneOfAddCommand(int index);
 
 	void nodeOneOfEditCommand(int index);
@@ -118,6 +127,7 @@ private:
 	void packExitCommand();
 	void packClearCommand();
 	void packSearchCommand();
+	void packMarkCommand();
 	void packAddCommand();
 	void packEditCommand();
 	void packInvalidCommand();

@@ -60,6 +60,7 @@ private:
 	void addUndone();
 	void addRedo();
 	void addHelp();
+	void addMark();
 
 	void addHrs();
 	void addDateDivider();

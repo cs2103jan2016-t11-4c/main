@@ -63,6 +63,8 @@ void CommandPacker::branchToNode(int index) {
 		nodeOneOfHelpCommand(index+1);
 	} else if(_tokens->hasMeaning("EXIT", index)) {
 		nodeOneOfExitCommand(index+1);
+	} else if(_tokens->hasMeaning("MARK", index)) {
+		nodeOneOfMarkCommand(index+1);
 	} else if(_tokens->hasMeaning("SEARCH", index)) {
 		nodeOneOfSearchCommand(index+1);
 	} else if(_tokens->hasMeaning("CLEAR", index)) {
@@ -71,6 +73,8 @@ void CommandPacker::branchToNode(int index) {
 		nodeThreeOfChangeDirectoryCommand(index+1);
 	} else if(_tokens->hasMeaning("CHANGEVIEWTYPE", index)) {
 		nodeTwoOfChangeViewTypeCommand(index+1);
+	} else if(_tokens->isInteger(index)) {
+		nodeOneOfMarkCommand(index);
 	} else {
 		nodeOneOfAddCommand(index);
 	}
@@ -389,6 +393,104 @@ void CommandPacker::nodeThreeOfSearchCommand(int index) {
 }
 
 
+void CommandPacker::nodeOneOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->isInteger(index)) {
+		_singleIndex = stoi(_tokens->getToken(index));
+		nodeTwoOfMarkCommand(index+1);
+	} else {
+		_singleIndex = LAST_INDEX;
+		nodeFourOfMarkCommand(index);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeTwoOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("TO", index)) {
+		nodeThreeOfMarkCommand(index+1);
+	} else {
+		nodeThreeOfMarkCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeThreeOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("DONE", index)) {
+		_doneStatus = 1;
+		nodeSevenOfMarkCommand(index+1);
+	} else if(_tokens->hasMeaning("UNDONE", index)) {
+		_doneStatus = 0;
+		nodeSevenOfMarkCommand(index+1);
+	} else if(_tokens->hasMeaning("NOT", index)) {
+		nodeSixOfMarkCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeFourOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("TO", index)) {
+		nodeFiveOfMarkCommand(index+1);
+	} else {
+		nodeFiveOfMarkCommand(index);
+	}
+
+	return;
+}
+
+void CommandPacker::nodeFiveOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("DONE", index)) {
+		_doneStatus = 1;
+		nodeSevenOfMarkCommand(index+1);
+	} else if(_tokens->hasMeaning("UNDONE", index)) {
+		_doneStatus = 0;
+		nodeSevenOfMarkCommand(index+1);
+	} else if(_tokens->hasMeaning("NOT", index)) {
+		nodeSixOfMarkCommand(index+1);
+	} else {
+		nodeOneOfChangeDirectoryCommand(index);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeSixOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("DONE", index)) {
+		_doneStatus = 0;
+		nodeSevenOfMarkCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeSevenOfMarkCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packMarkCommand();
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+
 void CommandPacker::nodeOneOfAddCommand(int index) {	
 	try {
 		_task = _taskPacker->packAddTask(_tokens, index);
@@ -506,6 +608,13 @@ void CommandPacker::packClearCommand() {
 
 void CommandPacker::packSearchCommand() {
 	_command = new Command_Search(_description);
+	
+	return;
+}
+
+void CommandPacker::packMarkCommand() {
+	_task = new Task(NO_NAME, NO_DATE_DETECTED, NO_DATE_DETECTED, NO_TIME_DETECTED, NO_TIME_DETECTED, NO_LOCATION_DETECTED, _doneStatus);
+	_command = new Command_Edit(_singleIndex, _task);
 	
 	return;
 }
