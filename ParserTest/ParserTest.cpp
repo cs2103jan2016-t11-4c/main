@@ -64,6 +64,14 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
+		TEST_METHOD(Parser_Add_NaturalLanguage)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("add go home");
+			Command* expected = new Command_Add(new Task("go home"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
 		TEST_METHOD(Parser_Add_1Date)
 		{
 			Parser* sut = Parser::getInstance();
@@ -117,6 +125,59 @@ namespace ParserTest
 			Parser* sut = Parser::getInstance();
 			Command* actual = sut->parse("go on holiday 03/2/2016 800hrs @the grand buddapest hotel 04/02 1800hrs ");
 			Command* expected = new Command_Add(new Task("go on holiday", 20160203, 20160204, 800, 1800, "the grand buddapest hotel"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Add_All_doneStatus)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go on holiday 03/2/2016 800hrs @the grand buddapest hotel 04/02 1800hrs done");
+			Command* expected = new Command_Add(new Task("go on holiday", 20160203, 20160204, 800, 1800, "the grand buddapest hotel", 1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+	};
+
+		TEST_CLASS(IgnoreTest)
+	{
+	public:
+		//these cases are to test different pathways when adding tasks
+		TEST_METHOD(Parser_Ignore_Search)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("*search for house keys");
+			Command* expected = new Command_Add(new Task("search for house keys"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Ignore_Digits)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("hit target of making a *1000 sales");
+			Command* expected = new Command_Add(new Task("hit target of making a 1000 sales"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Ambiguity_4Digits)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("hit target of making a $1000 worth of sales");
+			Command* expected = new Command_Add(new Task("hit target of making a $1000 worth of sales"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Ambiguity_4Digits_Back)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("hit target of making a 1000dollas worth of sales");
+			Command* expected = new Command_Add(new Task("hit target of making a 1000dollas worth of sales"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Ambiguity_6Digits)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go friends house @blah blah blk blah S160405");
+			Command* expected = new Command_Add(new Task("go friends house", -1, -1, -1, -1, "blah blah blk blah S160405"));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 	};
@@ -431,11 +492,27 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
-		TEST_METHOD(Parser_TimeRangeFormatB)
+		TEST_METHOD(Parser_TimeRangeFormatA_24Hrs)
 		{
 			Parser* sut = Parser::getInstance();
 			Command* actual = sut->parse("go home 800-1130hrs");
 			Command* expected = new Command_Add(new Task("go home", NO_DATE, DATE, 800, 1130));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_TimeRangeFormatA_24Hrs_Reversed)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go home 1100-1030hrs");
+			Command* expected = new Command_Add(new Task("go home", DATE, DATE+1, 1100, 1030));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_TimeRangeFormatA_24Hrs_1digit)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go home 8-1030hrs");
+			Command* expected = new Command_Add(new Task("go home", NO_DATE, DATE, 800, 1030));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
@@ -633,11 +710,43 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
+		TEST_METHOD(Parser_DateRangeFormatA_Type2)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go home 5th to 3rd feb 17");
+			Command* expected = new Command_Add(new Task("go home", 20170203, 20170205));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_DateRangeFormatA_Type3)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go home 8pm 5th to 1000 3rd feb 17");
+			Command* expected = new Command_Add(new Task("go home", 20170203, 20170205, 1000, 2000));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
 		TEST_METHOD(Parser_DateRangeFormatB_Type1)
 		{
 			Parser* sut = Parser::getInstance();
 			Command* actual = sut->parse("go home feb 17th-19th");
 			Command* expected = new Command_Add(new Task("go home", 20160217, 20160219));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_DateRangeFormatB_Type2)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go home feb 19th-17th");
+			Command* expected = new Command_Add(new Task("go home", 20160217, 20160219));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_DateRangeFormatB_Type3)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("go home feb 19th 2000hrs -17th 7 pm");
+			Command* expected = new Command_Add(new Task("go home", 20160217, 20160219, 1900, 2000));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 	};
@@ -805,6 +914,57 @@ namespace ParserTest
 		}
 	};
 
+
+	TEST_CLASS(RedoTest)
+	{
+	public:
+		
+		TEST_METHOD(Parser_Redo_Valid)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("redo");
+			Command* expected = new Command_Redo();
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Redo_Invalid)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("redo doMe.txt");
+			Command* expected = new Command_Add(new Task("redo doMe.txt"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+	};
+
+	TEST_CLASS(HelpTest)
+	{
+	public:
+		
+		TEST_METHOD(Parser_Help_Valid)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("HELP");
+			Command* expected = new Command_Help();
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Help_Valid2)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("?");
+			Command* expected = new Command_Help();
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Help_Invalid)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("? the hell you looking at?");
+			Command* expected = new Command_Add(new Task("? the hell you looking at?"));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+	};
+
 	TEST_CLASS(DeleteTest)
 	{
 	public:
@@ -824,6 +984,30 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
+		TEST_METHOD(Parser_Delete_Parameters)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("delete 1 -l -d -t");
+			Command* expected = new Command_Edit(1, new Task("", -1, -1, -1, -1, "", -1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Delete_Parameters2)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("delete 1 -l -t");
+			Command* expected = new Command_Edit(1, new Task("", -2, -2, -1, -1, "", -1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Delete_Parameters3)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("delete -t");
+			Command* expected = new Command_Edit(0, new Task("", -2, -2, -1, -1, " ", -1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
 		TEST_METHOD(Parser_Delete_InValid)
 		{
 			Parser* sut = Parser::getInstance();
@@ -831,6 +1015,8 @@ namespace ParserTest
 			Command* expected = new Command_Add(new Task("delete my browser history"));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
+
+
 	};
 
 	TEST_CLASS(ChangeDirectoryTest)
@@ -926,11 +1112,80 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
+		TEST_METHOD(Parser_Search_Valid_NaturalLanguage)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("search for water");
+			Command* expected = new Command_Search("water");
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Search_Valid_MultiWord)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("search for water in the sahara desert");
+			Command* expected = new Command_Search("water in the sahara desert");
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
 		TEST_METHOD(Parser_Search_InValid)
 		{
 			Parser* sut = Parser::getInstance();
 			Command* actual = sut->parse("s");
 			Command* expected = new Command_Invalid();
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+	};
+
+	TEST_CLASS(MarkTest)
+	{
+	public:
+		
+		TEST_METHOD(Parser_Mark_LastIndex)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("done");
+			Command* expected = new Command_Edit(0, new Task("", -2, -2, -2, -2, " ", 1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+		
+		TEST_METHOD(Parser_Mark_LastIndex_notDone)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("not done");
+			Command* expected = new Command_Edit(0, new Task("", -2, -2, -2, -2, " ", 0));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Mark)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("1 done");
+			Command* expected = new Command_Edit(1, new Task("", -2, -2, -2, -2, " ", 1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Mark_NaturalLanguage_LastIndex)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("mark as done");
+			Command* expected = new Command_Edit(0, new Task("", -2, -2, -2, -2, " ", 1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Mark_NaturalLanguage_LastIndex_notDone)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("mark as not done");
+			Command* expected = new Command_Edit(0, new Task("", -2, -2, -2, -2, " ", 0));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_Mark_NaturalLanguage)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("mark 1 as done");
+			Command* expected = new Command_Edit(1, new Task("", -2, -2, -2, -2, " ", 1));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 	};

@@ -73,6 +73,15 @@ void CommandPacker::branchToNode(int index) {
 		nodeOneOfClearCommand(index+1);
 	} else if(_tokens->hasMeaning("CHANGEDIRECTORY", index)) {
 		nodeThreeOfChangeDirectoryCommand(index+1);
+	} else if(_tokens->hasMeaning("DONE", index)) {
+		_singleIndex = LAST_INDEX;
+		nodeFiveOfMarkCommand(index);
+	} else if(_tokens->hasMeaning("UNDONE", index)) {
+		_singleIndex = LAST_INDEX;
+		nodeFiveOfMarkCommand(index);
+	} else if(_tokens->hasMeaning("NOT", index)) {
+		_singleIndex = LAST_INDEX;
+		nodeFiveOfMarkCommand(index);
 	} else if(_tokens->hasMeaning("CHANGEVIEWTYPE", index)) {
 		nodeTwoOfChangeViewTypeCommand(index+1);
 	} else if(_tokens->isInteger(index)) {
@@ -480,6 +489,7 @@ void CommandPacker::nodeSevenOfMarkCommand(int index) {
 	
 	return;
 }
+
 
 void CommandPacker::nodeOneOfAddCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
