@@ -87,6 +87,7 @@ public:
     static const string MESSAGE_VIEW_TYPE;
     static const string MESSAGE_CHANGE_FILE_DIRECTORY;
     static const string MESSAGE_HELP;
+    static const string MESSAGE_REDO;
 
     static const string ERROR_INVALID_ADD;
     static const string ERROR_INVALID_DELETE;

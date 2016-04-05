@@ -15,6 +15,7 @@ const string Command_Feedback::MESSAGE_CHANGE_FILE_DIRECTORY = "New save directo
 const string Command_Feedback::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
 const string Command_Feedback::MESSAGE_EXIT_SEARCH = "Exited search module.";
 const string Command_Feedback::MESSAGE_HELP = "Showing available commands and how to use them.";
+const string Command_Feedback::MESSAGE_REDO = "Redo - <%s>";
 
 const string Command_Feedback::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
 const string Command_Feedback::ERROR_INVALID_DELETE = "Invalid (DELETE) has been inputted.";
@@ -187,8 +188,9 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
 }
 
 string Command_Feedback::getNotificationRedo(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
-    return "REDO was either done or not done lolol"; 
-		//		getCommandFeedback(executionMessage, commandOutcome, viewType);
+    string redoString = getCommandFeedback(executionMessage->getRedoneCommand(), commandOutcome, viewType);
+    sprintf_s(buffer, MESSAGE_REDO.c_str(),redoString.c_str());
+    return buffer;
 }
 
 string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
