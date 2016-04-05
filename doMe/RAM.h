@@ -24,6 +24,7 @@ private:
 	list<Task*> _tempTaskList;
 	bool _searchState;
 	string _searchTerm;
+	Task* _lastAddedTask;
 	Task* _lastModifiedTask;
 
 	static const string LIST_DIVIDER;

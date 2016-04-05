@@ -187,7 +187,8 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
 }
 
 string Command_Feedback::getNotificationRedo(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
-    return getCommandFeedback(executionMessage, commandOutcome, viewType);
+    return "REDO was either done or not done lolol"; 
+		//		getCommandFeedback(executionMessage, commandOutcome, viewType);
 }
 
 string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {

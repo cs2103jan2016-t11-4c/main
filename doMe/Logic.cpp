@@ -57,7 +57,7 @@ void Logic::undo(Command* command) {
 	command->setUndoneCommand(undoneCommand);
 	_commandUndoStack.pop();
 
-	_commandRedoStack.push(command);
+	_commandRedoStack.push(undoneCommand);
 
 }
 
@@ -72,7 +72,7 @@ void Logic::redo(Command* command) {
 	command->setRedoneCommand(redoneCommand);
 
 	_commandRedoStack.pop();
-	_commandUndoStack.push(command);
+	_commandUndoStack.push(redoneCommand);
 }
 
 void Logic::clearCommandRedoStack() {
