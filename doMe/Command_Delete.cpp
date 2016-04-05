@@ -31,7 +31,7 @@ CommandType Command_Delete::getCommandType() {
 }
 
 bool Command_Delete::outOfRange() {
-	if(_index > _memory->ramGetSize() || _index < 1) {
+	if(_index > _memory->ramGetSize() || _index < 0) {
 		return true;
 	}
 	return false;

@@ -10,6 +10,7 @@ void RAM::loadRAM() {
 
 void RAM::ramAdd(Task* task) {
 	_taskList.push_back(task);
+	_lastAddedTask = task;
 	_lastModifiedTask = task;
 	ramUnsearch();
 	sort();
