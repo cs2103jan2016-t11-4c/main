@@ -41,7 +41,8 @@ private:
 	void addChronoVocabularyPackage();
 	void addNaturalLanguagePackage();
 
-	void addDirectory();		//methods that add vocabulary to the dictionary
+	void addSpecialCase();		//methods that add vocabulary to the dictionary
+	void addDirectory();		
 	void addDisplay();
 	void addDelete();
 	void addAdd();

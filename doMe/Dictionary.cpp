@@ -38,6 +38,7 @@ void Dictionary::generateVocabulary() {
 }
 
 void Dictionary::addBasicVocabularyPackage() {
+	addSpecialCase();
 	addDisplay();
 	addDirectory();
 	addDelete();
@@ -121,6 +122,15 @@ void Dictionary::addNaturalLanguagePackage() {
 	addNot();
 
 	return;
+}
+
+
+void Dictionary::addSpecialCase() {
+	SynonymList* list = new SynonymList("SPECIALCASE");
+	list->add("-L");
+	list->add("-D");
+	list->add("-T");
+	addToDictionary(list);
 }
 
 void Dictionary::addDisplay() {

@@ -132,6 +132,8 @@ void InputTokens::generateTokensFromCommandLine(string commandLine) {
 		if(chunk[START_INDEX] == '*') {
 			chunk.erase(chunk.begin());
 			addToVector(IGNORE_MARKER, chunk);
+		} else if(_dictionary->hasMeaning("SPECIALCASE", makeAllCaps(chunk))) {
+			addToVector(makeAllCaps(chunk), chunk);
 		} else {
 			//if a word contains alphabets and numbers, this function split them to get the tokens
 			vector<string> tokens = getTokensFromChunk(makeAllCaps(chunk));

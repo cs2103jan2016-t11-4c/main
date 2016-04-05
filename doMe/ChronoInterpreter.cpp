@@ -1156,12 +1156,29 @@ bool ChronoInterpreter::dateRangeFormatANodeFive(int index) {
 bool ChronoInterpreter::dateRangeFormatBNodeOne(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		return false;
-	} else if(!_tokens->hasMeaning("RANGE", index)) {
-		return false;
-	} else if(dateRangeFormatBNodeTwo(index+1)) {
-		_tokens->remove(index);
-		return true;
+	} else if (!_tokens->isInteger(index)) {
+		return dateRangeFormatBNodeTwo(index);
+	} else if(_tokens->getSize(index) > 4) {
+		return dateRangeFormatBNodeTwo(index);
+	}
+	
+	int size = _tokens->getSize(index);
+	if(timeFormatBNodeOne(index)) {
+		return dateRangeFormatBNodeTwo(index+1);
+	} else if(size > 2) {
+		if(timeFormatANodeOne(index)) {
+			return dateRangeFormatBNodeTwo(index+1);
+		} else {
+			return dateRangeFormatBNodeTwo(index);
+		}
+	} else if(size < 3) {
+		if(timeFormatCNodeOne(index)) {
+			return dateRangeFormatBNodeTwo(index+1);
+		} else {
+			return dateRangeFormatBNodeTwo(index);
+		}
 	} else {
+		assert(false);
 		return false;
 	}
 }
@@ -1169,29 +1186,12 @@ bool ChronoInterpreter::dateRangeFormatBNodeOne(int index) {
 bool ChronoInterpreter::dateRangeFormatBNodeTwo(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		return false;
-	} else if (!_tokens->isInteger(index)) {
+	} else if(!_tokens->hasMeaning("RANGE", index)) {
 		return false;
-	} else if(_tokens->getSize(index) > 4) {
-		return dateRangeFormatBNodeThree(index);
-	}
-	
-	int size = _tokens->getSize(index);
-	if(timeFormatBNodeOne(index)) {
-		return dateRangeFormatBNodeThree(index+1);
-	} else if(size > 2) {
-		if(timeFormatANodeOne(index)) {
-			return dateRangeFormatBNodeThree(index+1);
-		} else {
-			return dateRangeFormatBNodeThree(index);
-		}
-	} else if(size < 3) {
-		if(timeFormatCNodeOne(index)) {
-			return dateRangeFormatBNodeThree(index+1);
-		} else {
-			return dateRangeFormatBNodeThree(index);
-		}
+	} else if(dateRangeFormatBNodeThree(index+1)) {
+		_tokens->remove(index);
+		return true;
 	} else {
-		assert(false);
 		return false;
 	}
 }

@@ -87,6 +87,7 @@ string Command_Edit::getStringForm() {
 	s += ", date1: " + to_string(_newDate1);
 	s += ", date2: " + to_string(_newDate2);
 	s += ", time1: " + to_string(_newTime1);
-	s += ", time1: " + to_string(_newTime2);
+	s += ", time2: " + to_string(_newTime2);
+	s += ", doneStatus: " + to_string(_newDoneStatus);
 	return s;
 }

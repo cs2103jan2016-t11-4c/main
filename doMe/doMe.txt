@@ -30,6 +30,14 @@ Plan daily finances
 
 0
 __________
+search read cooling
+-1
+-1
+-1
+-1
+
+0
+__________
 Study OC function curve
 -1
 -1

@@ -664,10 +664,13 @@ void CommandPacker::extractDeleteParameter(int index) {
 
 	if(_tokens->hasMeaning("DATE", index)) {
 		_isDeleteDate = true;
+		return;
 	} else if(_tokens->hasMeaning("TIME", index)) {
 		_isDeleteTime = true;
+		return;
 	} else if(_tokens->hasMeaning("LOCATION", index)) {
 		_isDeleteLocation = true;
+		return;
 	}
 	
 	assert(false); //method should return before reaching this line

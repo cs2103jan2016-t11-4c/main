@@ -37,6 +37,8 @@ string Command_Add::getStringForm() {
 	s += ", date1: " + to_string(_task->getDate1());
 	s += ", date2: " + to_string(_task->getDate2());
 	s += ", time1: " + to_string(_task->getTime1());
-	s += ", time1: " + to_string(_task->getTime2());
+	s += ", time2: " + to_string(_task->getTime2());
+	s += ", doneStatus: " + to_string(_task->getDoneStatus());
+	
 	return s;
 }
