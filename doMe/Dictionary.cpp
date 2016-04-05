@@ -25,7 +25,6 @@ Dictionary* Dictionary::getInstance() {
 }
 
 bool Dictionary::hasMeaning(string meaning, string s) {
-	LOG(__FILE__, "searching for word with meaning: " + meaning);
 	vector<string>* synonyms = getSynonyms(meaning);
 	return isFoundInVector(synonyms, s);
 }
