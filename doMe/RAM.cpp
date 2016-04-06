@@ -69,10 +69,10 @@ int RAM::ramGetSize() {
 Task* RAM::ramGetTask(int index) {
 	if(index == 0) {
 		_lastModifiedTask = _lastAddedTask;
-		return _lastAddedTask;
+	}else {
+		_lastModifiedTask = indexToTask(index);	
 	}
 
-	_lastModifiedTask = indexToTask(index);
 	return _lastModifiedTask;
 }
 
