@@ -66,14 +66,14 @@ vector<string> ViewType::createDisplayList() {
 }
 
 string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
-    if(recentTask == individualTask) {
-        return COLOUR_NEW;
+    if(individualTask->getDoneStatus() == true) {
+        return COLOUR_DONE;
     } else {
-        if(individualTask->getDoneStatus() == true) {
-            return COLOUR_DONE;
-        }
+        if(recentTask == individualTask) {
+            return COLOUR_NEW;
+        } 
+        return COLOUR_DEFAULT;
     }
-    return COLOUR_DEFAULT;
 }
 
 //search list without complimentary string

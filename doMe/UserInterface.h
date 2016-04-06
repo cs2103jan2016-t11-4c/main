@@ -86,6 +86,8 @@ public:
     //window size related function
     void resizeWindow(int width, int length);
     void setWindowsRowsColumns(int size);
+    int getBiggerDisplaySize(int size1, int size2);
+    void synchronizeWindowsDisplaySize(int width, int length);
 
     //window text colour
     enum Colour {
@@ -106,8 +108,15 @@ public:
     static const string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
+
     static unsigned int DISPLAY_WIDTH;
     static unsigned int DISPLAY_LENGTH;
+    static unsigned int DISPLAY_BOX_WIDTH;
+    static unsigned int DISPLAY_BOX_LENGTH;
+    static const int DISPLAY_DEFAULT_WIDTH;
+    static const int DISPLAY_DEFAULT_LENGTH;
+    static const int DISPLAY_SYNC_WIDTH;
+    static const int DISPLAY_SYNC_LENGTH;
 
     static const string MESSAGE_FIRST_TIME;
     static const string MESSAGE_SAVE_FILE_NAME;

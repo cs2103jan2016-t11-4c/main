@@ -8,6 +8,12 @@ const string UserInterface::MESSAGE_VOID_STRING = "";
 const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 unsigned int UserInterface::DISPLAY_WIDTH = 80;
 unsigned int UserInterface::DISPLAY_LENGTH = 25;
+unsigned int UserInterface::DISPLAY_BOX_WIDTH = 80;
+unsigned int UserInterface::DISPLAY_BOX_LENGTH = 25;
+const int UserInterface::DISPLAY_DEFAULT_WIDTH = 80;
+const int UserInterface::DISPLAY_DEFAULT_LENGTH = 25;
+const int UserInterface::DISPLAY_SYNC_WIDTH = 0;
+const int UserInterface::DISPLAY_SYNC_LENGTH = 6;
 
 const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
 const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
@@ -84,7 +90,7 @@ void UserInterface::setEnvironment() {
 }
 
 void UserInterface::printProgramWelcomePage() {
-    resizeWindow(DISPLAY_WIDTH,DISPLAY_LENGTH);
+    resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
     string space = "               ";
     cout << endl;
     cout << endl;
@@ -315,8 +321,8 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     vector<string>::iterator displayListIter;
     string messageBox;
 
-    setWindowsRowsColumns(displayList.size()+2);
-    messageBox.assign(DISPLAY_WIDTH,MESSAGE_BOX_CHARACTER);
+    setWindowsRowsColumns(displayList.size());
+    messageBox.assign(DISPLAY_WIDTH, MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 
     displayList.insert(displayList.begin(),messageBox);
@@ -324,7 +330,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     displayListIter = displayList.begin();
     displayListIter++;
 
-    while(displayList.size() < DISPLAY_LENGTH) {
+    while(displayList.size() < DISPLAY_BOX_LENGTH) {
         displayList.push_back(MESSAGE_VOID_STRING);
     }
 
@@ -363,26 +369,34 @@ void UserInterface::resizeWindow(int width, int length) {
 }
 
 void UserInterface::setWindowsRowsColumns(int size) {
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    int width;
-    int length;
+    resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
 
+    DISPLAY_LENGTH = getBiggerDisplaySize(DISPLAY_DEFAULT_LENGTH, size + DISPLAY_SYNC_LENGTH);
+
+    synchronizeWindowsDisplaySize(DISPLAY_WIDTH, DISPLAY_LENGTH);
+    resizeWindow(DISPLAY_WIDTH, DISPLAY_LENGTH);
+    _memory->changeWindowSize(DISPLAY_WIDTH, DISPLAY_LENGTH);
+
+    /*current window size
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     length = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    */
+}
 
-    DISPLAY_WIDTH = width;
-    DISPLAY_LENGTH = length - 4;
-
-    while((size < _maxWindowLength) && (size > DISPLAY_LENGTH)) {
-        if(size < _maxWindowLength) {
-            if(size > DISPLAY_LENGTH) {
-                resizeWindow(width,length+1);
-                DISPLAY_LENGTH++;
-            }
-        } 
+int UserInterface::getBiggerDisplaySize(int size1, int size2) {
+    if(size1 < size2) {
+        return size2;
+    } else {
+        return size1;
     }
-    _memory->changeWindowSize(DISPLAY_WIDTH,DISPLAY_LENGTH + 4);
+}
+
+void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
+    DISPLAY_BOX_WIDTH = width - DISPLAY_SYNC_WIDTH;
+    DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH + 1;
+    length = DISPLAY_BOX_LENGTH;
 }
 
 /****************************************************************/
