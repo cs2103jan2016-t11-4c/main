@@ -118,7 +118,7 @@ string Command_Feedback::getCommandFeedback(Command* executionMessage, CommandOu
         //showToUser("Do I even need a exiting message? Nope");
         break;
     case HELP:
-        return getNotificationHelpPrompt(executionMessage, commandOutcome, viewType);
+        //return getNotificationHelpPrompt(executionMessage, commandOutcome, viewType);
         break;
     case INVALID:
         return getNotificationInvalidCommand(executionMessage, commandOutcome, viewType);

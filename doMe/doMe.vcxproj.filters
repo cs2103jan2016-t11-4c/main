@@ -115,6 +115,7 @@
     <ClCompile Include="ViewType3.cpp">
       <Filter>Source Files\UserInterface Classes\ViewType</Filter>
     </ClCompile>
+    <ClCompile Include="HelpPrompt.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -231,6 +232,7 @@
     <ClInclude Include="ViewType3.h">
       <Filter>Header Files\UserInterface Classes</Filter>
     </ClInclude>
+    <ClInclude Include="HelpPrompt.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

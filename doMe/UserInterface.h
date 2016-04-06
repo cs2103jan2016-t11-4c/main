@@ -13,6 +13,7 @@
 
 #include "Logic.h"
 #include "Memory.h"
+#include "HelpPrompt.h"
 #include "Command_Feedback.h"
 #include "Command.h"
 #include "Task.h"
@@ -57,7 +58,8 @@ public:
     void printNotificationWelcome(vector<string> welcomeStringVector);
 
     //prompts
-    void printPromptCommand();	
+    void printPromptCommand();
+    void printPromptNext();
     void printPromptHelp();
 
     //Message display
@@ -124,6 +126,8 @@ public:
     static const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_COMMAND_PROMPT;
+    static const string MESSAGE_NEXT_PROMPT;
+    static const string MESSAGE_HELP;
     static const string MESSAGE_HELP_TIPS[];
 };
 

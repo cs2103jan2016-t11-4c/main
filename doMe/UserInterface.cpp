@@ -22,12 +22,15 @@ const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is sa
 const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
 
+const string UserInterface::MESSAGE_NEXT_PROMPT = "press any key: ";
+const string UserInterface::MESSAGE_HELP = "Showing available commands and how to use them.";
+
 const string UserInterface::COLOUR_DEFAULT = "DEFAULT";
 const string UserInterface::COLOUR_NEW = "NEW";
 const string UserInterface::COLOUR_DONE = "DONE";
 const string UserInterface::COLOUR_SEARCH = "SEARCH";
 const string UserInterface::COLOUR_HELP = "HELP";
-
+/*
 const string UserInterface::MESSAGE_HELP_TIPS[] = { 
     "add <task description>", 
     "delete <index>",
@@ -42,6 +45,37 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
     "help",
     "exit"
 }; 
+*/
+const string UserInterface::MESSAGE_HELP_TIPS[] = { 
+"                         +-----------------------------------------------+",
+"Adding a task            |              OPTIONAL PARAMETERS*             |",
+"+----------+-------------+--------------------+--------------+-----------+",
+"| MODIFIER | TASK NAME   | DATE               | TIME         | LOCATION  |",
+"+----------+-------------+--------------------+--------------+-----------+",
+"| <empty>  | Cycling     | 14/02/2016         | 1100         | @Florist  |",
+"| add      | Buy flowers | 14/02/16           | 2359         | @the park |",
+"| a        |             | 14/02              | 11am         |           |",
+"|          |             | 14 Feb             | 1159pm       |           |",
+"|          |             | 14 Feb to 16 Feb   | 1100 to 2359 |           |",
+"|          |             | 14 Feb - 16 Feb    | 1100 - 2359  |           |",
+"|          |             |                    |              |           |",
+"|          |             | today              |              |           |",
+"|          |             | tmr, tomorrow      |              |           |",
+"|          |             | mon, tue...        |              |           |",
+"|          |             | monday, tuesday... |              |           |",
+"|          |             | next mon           |              |           |",
+"|          |             | next tuesday       |              |           |",
+"|          |             | mon to wed         |              |           |",
+"|          |             | mon - wed          |              |           |",
+"|          |             |                    |              |           |",
+"+----------+-------------+--------------------+--------------+-----------+",
+"*Optional parameters can be input in any order eg. \"cycling 7pm @park today\"."
+"",
+"",
+"",
+"",
+
+};
 
 UserInterface::UserInterface(void) {
     system(SYSTEM_COLOUR.c_str());
@@ -127,6 +161,10 @@ void UserInterface::printNotificationWelcome(vector<string> welcomeStringVector)
 void UserInterface::printPromptCommand() {
     showToUserMessageBox();
     cout << MESSAGE_COMMAND_PROMPT;
+}
+
+void UserInterface::printPromptNext() {
+    cout << MESSAGE_NEXT_PROMPT;
 }
 
 string UserInterface::getStringCommand() {
@@ -287,7 +325,22 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
 
     changeListColour(COLOUR_HELP);
-    printList(createDisplayBox(helpList));
+    HelpPrompt* helpPrompt;
+    helpPrompt = HelpPrompt::getInstance();
+    vector<vector<string>*>* helpPromptList;
+    helpPromptList = helpPrompt->getHelpList();
+    
+    vector<vector<string>*>::iterator helpListIter = helpPromptList->begin();
+    while(helpListIter != helpPromptList->end()) {
+        printList(createDisplayBox(*(*helpListIter)));
+        //showToUser(MESSAGE_HELP);
+        _getch();
+        helpListIter++;
+    }
+    //printList(createDisplayBox(helpList));
+    printTaskList(currentDate, viewType);
+    showToUser("Exit Help Engine");
+    _lastDisplayType = DEFAULT_DISPLAY;
 }
 
 /****************************************************************/
@@ -336,16 +389,6 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
 
     displayList.insert(displayList.end(),messageBox);
     return displayList;
-}
-
-vector<string> UserInterface::synchronizeColourCodingWithDisplayBox(vector<string> colourCoding) {
-    int i = 0;
-    while(i < 2) {
-        colourCoding.insert(colourCoding.begin(),COLOUR_DEFAULT);
-        i++;
-    }
-    colourCoding.insert(colourCoding.end(),COLOUR_DEFAULT);
-    return colourCoding;
 }
 
 void UserInterface::showToUser(string message) {
@@ -400,6 +443,16 @@ void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
 }
 
 /****************************************************************/
+
+vector<string> UserInterface::synchronizeColourCodingWithDisplayBox(vector<string> colourCoding) {
+    int i = 0;
+    while(i < 2) {
+        colourCoding.insert(colourCoding.begin(),COLOUR_DEFAULT);
+        i++;
+    }
+    colourCoding.insert(colourCoding.end(),COLOUR_DEFAULT);
+    return colourCoding;
+}
 
 void UserInterface::changeListColour(string colourCoding) {
     if(colourCoding == COLOUR_NEW) {
