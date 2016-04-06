@@ -68,9 +68,10 @@ int RAM::ramGetSize() {
 
 Task* RAM::ramGetTask(int index) {
 	if(index == 0) {
-		return _lastModifiedTask;
+		_lastModifiedTask = _lastAddedTask;
+		return _lastAddedTask;
 	}
-	
+
 	_lastModifiedTask = indexToTask(index);
 	return _lastModifiedTask;
 }
@@ -99,7 +100,7 @@ bool RAM::ramSearch(string& searchTerm) {
 			iter++;
 		}
 	}
-	
+
 	_searchTerm = searchTerm;
 	_searchState = true;
 
@@ -139,10 +140,10 @@ void RAM::loadData() {
 		saveData();
 		throw e;
 	}
-//	catch(Exception_CorruptedFile e) {
-//		saveData();
-//		throw e;
-//	}
+	//	catch(Exception_CorruptedFile e) {
+	//		saveData();
+	//		throw e;
+	//	}
 }
 
 void RAM::saveData() {
@@ -178,8 +179,8 @@ vector<string> RAM::ramGetVector() {
 void RAM::ramLoadVector(vector<string>& existingData) {
 	if(existingData.size() % 8 != 0) {
 		return;
-//		Exception_CorruptedFile e();
-//		throw e;
+		//		Exception_CorruptedFile e();
+		//		throw e;
 	}
 
 	for(unsigned int i = 0; i < existingData.size(); i+=8) {
@@ -230,8 +231,8 @@ bool RAM::foundInTask(Task* task, string searchTerm) {
 	string location = convertToLowerCase(task->getLocation());
 
 	searchTerm = searchTerm.insert(0, " ");		//"Flo" 	-> " Flo"
-	name = name.insert(0, " ");			//"Buy Flowers"	-> " Buy Flowers"
-	location = location.insert(0, " ");		//"Florist"	-> " Florist"
+	name = name.insert(0, " ");					//"Buy Flowers"	-> " Buy Flowers"
+	location = location.insert(0, " ");			//"Florist"	-> " Florist"
 
 	size_t found = name.find(searchTerm);
 	if(found != string::npos) {
