@@ -50,6 +50,10 @@ void Memory::loadRam() {
     _ram->loadRAM();
 }
 
+void Memory::saveRam() {
+    _ram->saveRAM();
+}
+
 void Memory::ramAdd(Task* task) {
 	_ram->ramAdd(task);
 }
