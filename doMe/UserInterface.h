@@ -59,7 +59,7 @@ public:
 
     //prompts
     void printPromptCommand();
-    void printPromptNext();
+    void printCurrentDirectory();
     void printPromptHelp();
 
     //Message display
@@ -126,8 +126,8 @@ public:
     static const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_COMMAND_PROMPT;
-    static const string MESSAGE_NEXT_PROMPT;
-    static const string MESSAGE_HELP;
+    static const string MESSAGE_DEFAULT_DIRECTORY;
+    static const string MESSAGE_DIRECTORY_BOX;
     static const string MESSAGE_HELP_TIPS[];
 };
 

@@ -21,9 +21,8 @@ const string UserInterface::MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT = "Set your s
 const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is save at the current directory.";
 const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
-
-const string UserInterface::MESSAGE_NEXT_PROMPT = "press any key: ";
-const string UserInterface::MESSAGE_HELP = "Showing available commands and how to use them.";
+const string UserInterface::MESSAGE_DEFAULT_DIRECTORY = "DEFAULT";
+const string UserInterface::MESSAGE_DIRECTORY_BOX = "<%s>";
 
 const string UserInterface::COLOUR_DEFAULT = "DEFAULT";
 const string UserInterface::COLOUR_NEW = "NEW";
@@ -32,48 +31,99 @@ const string UserInterface::COLOUR_SEARCH = "SEARCH";
 const string UserInterface::COLOUR_HELP = "HELP";
 /*
 const string UserInterface::MESSAGE_HELP_TIPS[] = { 
-    "add <task description>", 
-    "delete <index>",
-    "clear",
-    "edit <index> <task description>",
-    "search <keyword>",
-    "change <directory>",
-    "undo",
-    "redo",
-    "change directory <directory>",
-    "viewtype <index>",
-    "help",
-    "exit"
+"add <task description>", 
+"delete <index>",
+"clear",
+"edit <index> <task description>",
+"search <keyword>",
+"change <directory>",
+"undo",
+"redo",
+"change directory <directory>",
+"viewtype <index>",
+"help",
+"exit"
 }; 
 */
-const string UserInterface::MESSAGE_HELP_TIPS[] = { 
-"                         +-----------------------------------------------+",
-"Adding a task            |              OPTIONAL PARAMETERS*             |",
-"+----------+-------------+--------------------+--------------+-----------+",
-"| MODIFIER | TASK NAME   | DATE               | TIME         | LOCATION  |",
-"+----------+-------------+--------------------+--------------+-----------+",
-"| <empty>  | Cycling     | 14/02/2016         | 1100         | @Florist  |",
-"| add      | Buy flowers | 14/02/16           | 2359         | @the park |",
-"| a        |             | 14/02              | 11am         |           |",
-"|          |             | 14 Feb             | 1159pm       |           |",
-"|          |             | 14 Feb to 16 Feb   | 1100 to 2359 |           |",
-"|          |             | 14 Feb - 16 Feb    | 1100 - 2359  |           |",
-"|          |             |                    |              |           |",
-"|          |             | today              |              |           |",
-"|          |             | tmr, tomorrow      |              |           |",
-"|          |             | mon, tue...        |              |           |",
-"|          |             | monday, tuesday... |              |           |",
-"|          |             | next mon           |              |           |",
-"|          |             | next tuesday       |              |           |",
-"|          |             | mon to wed         |              |           |",
-"|          |             | mon - wed          |              |           |",
-"|          |             |                    |              |           |",
-"+----------+-------------+--------------------+--------------+-----------+",
-"*Optional parameters can be input in any order eg. \"cycling 7pm @park today\"."
-"",
-"",
-"",
-"",
+const string UserInterface::MESSAGE_HELP_TIPS[] = {
+    "",
+    "                            +-----------------------------------------------+",
+    "   Adding a task            |              OPTIONAL PARAMETERS*             |",
+    "   +----------+-------------+--------------------+--------------+-----------+",
+    "   | MODIFIER | TASK NAME   | DATE               | TIME         | LOCATION  |",
+    "   +----------+-------------+--------------------+--------------+-----------+",
+    "   | <empty>  | Cycling     | 14/02/2016         | 1100         | @Florist  |",
+    "   | add      | Buy flowers | 14/02/16           | 2359         | @the park |",
+    "   | a        |             | 14/02              | 11am         |           |",
+    "   |          |             | 14 Feb             | 1159pm       |           |",
+    "   |          |             | 14 Feb to 16 Feb   | 1100 to 2359 |           |",
+    "   |          |             | 14 Feb - 16 Feb    | 1100 - 2359  |           |",
+    "   |          |             |                    |              |           |",
+    "   |          |             | today              |              |           |",
+    "   |          |             | tmr, tomorrow      |              |           |",
+    "   |          |             | mon, tue...        |              |           |",
+    "   |          |             | monday, tuesday... |              |           |",
+    "   |          |             | next mon           |              |           |",
+    "   |          |             | next tuesday       |              |           |",
+    "   |          |             | mon to wed         |              |           |",
+    "   |          |             | mon - wed          |              |           |",
+    "   |          |             |                    |              |           |",
+    "   +----------+-------------+--------------------+--------------+-----------+",
+    "",
+    "  *Optional parameters can be input in any order eg. \"cycling 7pm @park today\"."
+    "",
+    "",
+    "===============================================================================",
+    "",
+    "",
+    "              Deleting Task           +------------------------+",
+    "              & Task Parameters       |   OPTIONAL PARAMETERS  |",
+    "              +----------+------------+------+------+----------+",
+    "              | MODIFIER | TASK INDEX | DATE | TIME | LOCATION |",
+    "              +----------+------------+------+------+----------+",
+    "              | delete   | <empty>*   | date | time | location |",
+    "              | del      | 1          | d    | t    | l        |",
+    "              | d        | 12         |      |      |          |",
+    "              |          | 1-12       |      |      |          |",
+    "              |          | 1 - 12     |      |      |          |",
+    "              |          |            |      |      |          |",
+    "              |          |            |      |      |          |",
+    "              | clear    | <empty>**  | n/a  | n/a  | n/a      |",
+    "              |          | 1          |      |      |          |",
+    "              |          | 12         |      |      |          |",
+    "              |          | 1-12       |      |      |          |",
+    "              |          | 1 - 12     |      |      |          |",
+    "              |          |            |      |      |          |",
+    "              +----------+------------+------+------+----------+",
+    "",
+    "           *Deleting <empty> index directs program to Last Added Task.",
+    "           **Clearing <empty> index clears all tasks in view.",
+    "",
+    "",
+    "===============================================================================",
+    "",
+    "",
+    "      Editting                +-------------------------------------------+",
+    "      a Task                  |           ADDITIONAL PARAMETERS           |",
+    "      +----------+------------+------------+------------------+-----------+",
+    "      | MODIFIER | TASK INDEX | TASK NAME  | DATE & TIME      | LOCATION  |",
+    "      +----------+------------+------------+------------------+-----------+",
+    "      | edit     | <empty>*   | <new name> | <date>           | @location |",
+    "      | change   | 1          |            | <date> to <date> |           |",
+    "      | update   | 12         |            | <time>           |           |",
+    "      | e, c     |            |            | <time> to <time> |           |",
+    "      |          |            |            |                  |           |",
+    "      +----------+------------+------------+------------------+-----------+",
+    "",
+    "",
+    "                *<empty> index directs program to Last Added Task.",
+    "                **edits Second Date of Task.",
+    "",
+    "",
+    "===============================================================================",
+    "",
+    "                          Press any key to continue",
+    "",
 
 };
 
@@ -160,11 +210,18 @@ void UserInterface::printNotificationWelcome(vector<string> welcomeStringVector)
 
 void UserInterface::printPromptCommand() {
     showToUserMessageBox();
+    printCurrentDirectory();
     cout << MESSAGE_COMMAND_PROMPT;
 }
 
-void UserInterface::printPromptNext() {
-    cout << MESSAGE_NEXT_PROMPT;
+void UserInterface::printCurrentDirectory() {
+    string saveDirectory = _memory->getSaveDirectory();
+    if(saveDirectory.empty()) {
+        sprintf_s(buffer, MESSAGE_DIRECTORY_BOX.c_str(), MESSAGE_DEFAULT_DIRECTORY.c_str());
+    } else {
+        sprintf_s(buffer, MESSAGE_DIRECTORY_BOX.c_str(), (_memory->getSaveDirectory()).c_str());
+    }
+    showToUser(buffer);
 }
 
 string UserInterface::getStringCommand() {
@@ -325,21 +382,23 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
 
     changeListColour(COLOUR_HELP);
+    /*
     HelpPrompt* helpPrompt;
     helpPrompt = HelpPrompt::getInstance();
     vector<vector<string>*>* helpPromptList;
     helpPromptList = helpPrompt->getHelpList();
-    
+
     vector<vector<string>*>::iterator helpListIter = helpPromptList->begin();
     while(helpListIter != helpPromptList->end()) {
-        printList(createDisplayBox(*(*helpListIter)));
-        //showToUser(MESSAGE_HELP);
-        _getch();
-        helpListIter++;
+    printList(createDisplayBox(*(*helpListIter)));
+    _getch();
+    helpListIter++;
     }
-    //printList(createDisplayBox(helpList));
+    */
+    printList(createDisplayBox(helpList));
+    _getch();
+
     printTaskList(currentDate, viewType);
-    showToUser("Exit Help Engine");
     _lastDisplayType = DEFAULT_DISPLAY;
 }
 
@@ -373,6 +432,7 @@ void UserInterface::printList(vector<string> displayList, vector<string> colourC
 vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     vector<string>::iterator displayListIter;
     string messageBox;
+    COORD c;
 
     setWindowsRowsColumns(displayList.size());
     messageBox.assign(DISPLAY_WIDTH, MESSAGE_BOX_CHARACTER);
@@ -386,8 +446,12 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     while(displayList.size() < DISPLAY_BOX_LENGTH) {
         displayList.push_back(MESSAGE_VOID_STRING);
     }
-
     displayList.insert(displayList.end(),messageBox);
+
+    c.X = DISPLAY_WIDTH;
+    c.Y = (displayList.size()+3);
+    SetConsoleScreenBufferSize(GetStdHandle( STD_OUTPUT_HANDLE), c);
+
     return displayList;
 }
 
@@ -438,7 +502,7 @@ int UserInterface::getBiggerDisplaySize(int size1, int size2) {
 
 void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
     DISPLAY_BOX_WIDTH = width - DISPLAY_SYNC_WIDTH;
-    DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH + 1;
+    DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH + 2;
     length = DISPLAY_BOX_LENGTH;
 }
 
@@ -500,3 +564,5 @@ void UserInterface::printPromptHelp() {
         helpListIter++;
     }
 }
+
+

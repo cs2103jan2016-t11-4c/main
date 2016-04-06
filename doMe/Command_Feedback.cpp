@@ -3,18 +3,21 @@
 
 const string Command_Feedback::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string Command_Feedback::MESSAGE_VOID_STRING = "";
+const string Command_Feedback::MESSAGE_TASK_INDEX = ", ";
 
 const string Command_Feedback::MESSAGE_ADD = "Added \"%s\" into %s";
 //const string Command_Feedback::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
 const string Command_Feedback::MESSAGE_DELETE = "Deleted \"%s\" from %s";
+const string Command_Feedback::MESSAGE_DELETE_MULTIPLE = "Deleted tasks \"%s\" from %s";
 const string Command_Feedback::MESSAGE_EDIT = "Edited inputted task description to \"%s\"";
-const string Command_Feedback::MESSAGE_CLEAR = "All contents cleared from the list in %s";
+const string Command_Feedback::MESSAGE_EDIT_DONE = "Marked \"%s\" as DONE";
+const string Command_Feedback::MESSAGE_CLEAR = "All tasks in view cleared.";
 const string Command_Feedback::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit\" to exit the search module~";
 //const string Command_Feedback::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
 const string Command_Feedback::MESSAGE_CHANGE_FILE_DIRECTORY = "New save directory: %s";
 const string Command_Feedback::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
 const string Command_Feedback::MESSAGE_EXIT_SEARCH = "Exited search module.";
-const string Command_Feedback::MESSAGE_HELP = "Showing available commands and how to use them.";
+const string Command_Feedback::MESSAGE_EXIT_HELP = "Exited help module";
 const string Command_Feedback::MESSAGE_REDO = "Redo - <%s>";
 
 const string Command_Feedback::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
@@ -118,7 +121,7 @@ string Command_Feedback::getCommandFeedback(Command* executionMessage, CommandOu
         //showToUser("Do I even need a exiting message? Nope");
         break;
     case HELP:
-        //return getNotificationHelpPrompt(executionMessage, commandOutcome, viewType);
+        return getNotificationHelpPrompt(executionMessage, commandOutcome, viewType);
         break;
     case INVALID:
         return getNotificationInvalidCommand(executionMessage, commandOutcome, viewType);
@@ -204,6 +207,7 @@ string Command_Feedback::getNotificationRedo(Command* executionMessage, CommandO
         return invalidNotificationRedo();
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -215,18 +219,25 @@ string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOu
         return invalidNotificationAdd();
         break;
     }
-
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationDelete(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
+    vector<int> deleteList;
     switch(commandOutcome) {
     case VALID_MESSAGE:
-        return validNotificationDelete(executionMessage->getTask(), viewType, DEFAULT_TEXT_FILE_NAME);
+        //deleteList = executionMessage->getDeleteList();
+        if(deleteList.size() > 1) {
+            return validNotificationDeleteMultiple(deleteList, viewType, DEFAULT_TEXT_FILE_NAME);
+        } else {
+            return validNotificationDelete(executionMessage->getTask(), viewType, DEFAULT_TEXT_FILE_NAME);
+        }
         break;
     case INVALID_MESSAGE:
         return invalidNotificationDelete();
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationEdit(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -238,6 +249,7 @@ string Command_Feedback::getNotificationEdit(Command* executionMessage, CommandO
         return invalidNotificationEdit();
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationClear(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -249,6 +261,7 @@ string Command_Feedback::getNotificationClear(Command* executionMessage, Command
         return ERROR_INVALID_COMMAND;
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationSearchTerm(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -266,6 +279,7 @@ string Command_Feedback::getNotificationEndSearch(Command* executionMessage, Com
         return ERROR_INVALID_COMMAND;
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationViewType(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -277,6 +291,7 @@ string Command_Feedback::getNotificationViewType(Command* executionMessage, Comm
         return invalidNotificationViewtype();
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -288,6 +303,7 @@ string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executi
         return invalidNotificationSaveFileDirectory();
         break;
     }
+    return ERROR_INVALID_COMMAND;
 }
 
 string Command_Feedback::getNotificationHelpPrompt(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -314,16 +330,30 @@ string Command_Feedback::validNotificationDelete(Task* task, int viewType, strin
     return buffer;
 }
 
+string Command_Feedback::validNotificationDeleteMultiple(vector<int> deleteIndex, int viewType, string textFileName) {
+    string taskString;
+    vector<int>::iterator intIter = deleteIndex.begin();
+    while(intIter != deleteIndex.end()) {
+        taskString = taskString + taskIndexToString(*intIter);
+        intIter++;
+    }
+    sprintf_s(buffer, MESSAGE_DELETE_MULTIPLE.c_str(), taskString.c_str(), textFileName.c_str());
+    return buffer;
+}
+
 string Command_Feedback::validNotificationEdit(Task* task, int viewType) {
     string taskString;
     taskString = getTaskString(task,viewType);
-    sprintf_s(buffer, MESSAGE_EDIT.c_str(),taskString.c_str());
+    if(task->getDoneStatus() == true) {
+        sprintf_s(buffer, MESSAGE_EDIT_DONE.c_str(),taskString.c_str());
+    } else {
+        sprintf_s(buffer, MESSAGE_EDIT.c_str(),taskString.c_str());
+    }
     return buffer;
 }
 
 string Command_Feedback::validNotificationClear(string textFileName) {
-    sprintf_s(buffer, MESSAGE_CLEAR.c_str(), textFileName.c_str());
-    return buffer;
+    return MESSAGE_CLEAR;
 }
 
 string Command_Feedback::validNotificationSearchTerm(string searchTerm) {
@@ -347,7 +377,7 @@ string Command_Feedback::validNotificationChangeSaveFileDirectory(string newDire
 }
 
 string Command_Feedback::validNotificationHelpPrompt() {
-    return MESSAGE_HELP;
+    return MESSAGE_EXIT_HELP;
 }
 
 string Command_Feedback::validNotificationRedo(string redoString) {
@@ -427,3 +457,10 @@ string Command_Feedback::undoNotificationChangDirectory(Command* executionMessag
 }
 
 /****************************************************************/
+string Command_Feedback::taskIndexToString(int index) {
+    ostringstream oss;
+    oss << index;  
+    string indexString = oss.str();
+
+    return indexString + MESSAGE_TASK_INDEX;
+}
