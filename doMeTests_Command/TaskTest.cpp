@@ -10,7 +10,8 @@ namespace doMeTests_Command
 	{
 	public:
 		
-/*		TEST_METHOD(Task_Info_Test)
+/*		@@author A0115391L
+		TEST_METHOD(Task_Info_Test)
 		{
 			Task* tsk1("",0,0,-1,1500,"");
 			Task* tsk2("",0,0,1300,1500,"");

@@ -2,6 +2,7 @@
 
 /*
 *  Default constructor and destructor
+* @@author A0115391L
 */
 Task::Task(string name, int date1, int date2, int time1, int time2, string location, int doneStatus) {
 	_name = name;
