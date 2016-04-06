@@ -131,7 +131,8 @@ void CommandPacker::nodeTwoOfChangeDirectoryCommand(int index) {
 
 void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
-		packInvalidCommand();
+		_description = BLANK_SPACE;
+		nodeFiveOfChangeDirectoryCommand(index);
 	} else if(_tokens->hasMeaning("TO", index)) {
 		nodeFourOfChangeDirectoryCommand(index+1);
 	} else {

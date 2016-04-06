@@ -1165,6 +1165,14 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 
+		TEST_METHOD(Parser_Mark_Alternate)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("done 1");
+			Command* expected = new Command_Edit(1, new Task("", -2, -2, -2, -2, " ", 1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
 		TEST_METHOD(Parser_Mark_NaturalLanguage_LastIndex)
 		{
 			Parser* sut = Parser::getInstance();
