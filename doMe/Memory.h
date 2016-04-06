@@ -1,3 +1,5 @@
+//@@author Joan
+
 #pragma once
 #include <list>
 #include <string>

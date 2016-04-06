@@ -1,3 +1,5 @@
+//@@author Joan
+
 #include "Storage.h"
 
 Storage* Storage::_instance = 0;

@@ -1,3 +1,5 @@
+//@@author Joan
+
 #include "Exception_FileCannotOpen.h"
 
 Exception_FileCannotOpen::Exception_FileCannotOpen(string errorMsg)
