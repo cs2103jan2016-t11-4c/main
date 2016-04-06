@@ -109,6 +109,9 @@ private:
 	void nodeFiveOfMarkCommand(int index);
 	void nodeSixOfMarkCommand(int index);
 	void nodeSevenOfMarkCommand(int index);
+	void nodeEightOfMarkCommand(int index);
+	void nodeNineOfMarkCommand(int index);
+	void nodeTenOfMarkCommand(int index);
 
 	void nodeOneOfAddCommand(int index);
 	void nodeTwoOfAddCommand(int index);
