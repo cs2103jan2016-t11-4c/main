@@ -8,6 +8,10 @@ void RAM::loadRAM() {
 	loadData();
 }
 
+void RAM::saveRAM() {
+	saveData();
+}
+
 void RAM::ramAdd(Task* task) {
 	_taskList.push_back(task);
 	_lastAddedTask = task;
@@ -69,10 +73,10 @@ int RAM::ramGetSize() {
 Task* RAM::ramGetTask(int index) {
 	if(index == 0) {
 		_lastModifiedTask = _lastAddedTask;
-		return _lastAddedTask;
+	}else {
+		_lastModifiedTask = indexToTask(index);	
 	}
 
-	_lastModifiedTask = indexToTask(index);
 	return _lastModifiedTask;
 }
 
@@ -130,7 +134,7 @@ void RAM::sort() {
 	_taskList.sort([&](Task* a, Task* b) {return convertToLowerCase(a->getName()) < convertToLowerCase(b->getName());});
 	_taskList.sort([](Task* a, Task* b) {return a->getTime2() < b->getTime2();});
 	_taskList.sort([](Task* a, Task* b) {return a->getDate2() < b->getDate2();});
-	_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() < b->getDoneStatus();});
+	_taskList.sort([](Task* a, Task* b) {return a->getDoneStatus() > b->getDoneStatus();});
 }
 
 void RAM::loadData() {

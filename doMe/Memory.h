@@ -30,6 +30,7 @@ public:
 
 	//accessing RAM class object
     void loadRam();
+	void saveRam();
 	void ramAdd(Task* task);
 	void ramDel(Task* task);
 	Task* ramDel(int index);
