@@ -2,15 +2,15 @@
 #include "Command_Edit.h"
 
 Command_Edit::Command_Edit(int index, Task* task)
-:Command() {
-	_index = index;
-	_newName = task->getName();
-	_newDate1 = task->getDate1();
-	_newDate2 = task->getDate2();
-	_newTime1 = task->getTime1();
-	_newTime2 = task->getTime2();
-	_newLocation = task->getLocation();
-	_newDoneStatus = task->getDoneStatus();	
+	:Command() {
+		_index = index;
+		_newName = task->getName();
+		_newDate1 = task->getDate1();
+		_newDate2 = task->getDate2();
+		_newTime1 = task->getTime1();
+		_newTime2 = task->getTime2();
+		_newLocation = task->getLocation();
+		_newDoneStatus = task->getDoneStatus();	
 }
 
 bool Command_Edit::execute() {
@@ -51,6 +51,7 @@ bool Command_Edit::execute() {
 		_task->setDoneStatus(_newDoneStatus);
 	}
 	_memory->ramSort();
+	_memory->saveRam();
 	return true;
 }
 
@@ -61,7 +62,10 @@ bool Command_Edit::undo() {
 	_task->setDate1(_oldDate1);
 	_task->setDate2(_oldDate2);
 	_task->setLocation(_oldLocation);
+	_task->setDoneStatus(_oldDoneStatus);
+
 	_memory->ramSort();
+	_memory->saveRam();
 	return true;
 }
 

@@ -2,7 +2,7 @@
 #include "UserInterface.h"
 
 const string UserInterface::SYSTEM_MODE_CON = "mode CON: COLS=%d lines=%d";
-const string UserInterface::SYSTEM_COLOUR = "Color %s";
+const string UserInterface::SYSTEM_COLOUR = "Color 0F";
 const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
@@ -38,6 +38,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 }; 
 
 UserInterface::UserInterface(void) {
+    system(SYSTEM_COLOUR.c_str());
     COORD windowSize;
     windowSize = GetLargestConsoleWindowSize(GetStdHandle(STD_OUTPUT_HANDLE));
 
@@ -150,9 +151,12 @@ void UserInterface::executeCommandUntilExit() {
     } while(command->getCommandType() != EXIT);      
 }
 
+/****************************************************************/
+
 void UserInterface::printMessageDisplay(Command* command) {
 
     CommandType commandType = command->getCommandType();
+    Command* commandRedo;
 
     switch(commandType) {
     case SEARCH:
@@ -167,6 +171,14 @@ void UserInterface::printMessageDisplay(Command* command) {
         break;
     case INVALID:
         printDisplayType(_lastDisplayType);
+        break;
+    case REDO:
+        commandRedo = command->getRedoneCommand();
+        if(commandRedo) {
+            printDisplayType(DEFAULT_DISPLAY);
+        } else {
+            printMessageDisplay(commandRedo);
+        }
         break;
     default:
         _lastDisplayType = DEFAULT_DISPLAY;
@@ -270,7 +282,6 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
 
     changeListColour(COLOUR_HELP);
     printList(createDisplayBox(helpList));
-    changeListColour(COLOUR_DEFAULT);
 }
 
 /****************************************************************/

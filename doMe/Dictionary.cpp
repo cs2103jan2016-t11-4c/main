@@ -173,6 +173,7 @@ void Dictionary::addEdit() {
 	list->add("C");
 	list->add("CHNG");
 	list->add("EDIT");
+    list->add("POSTPONE");
 	addToDictionary(list);
 }
 

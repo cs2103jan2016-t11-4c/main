@@ -15,6 +15,7 @@ const string Command_Feedback::MESSAGE_CHANGE_FILE_DIRECTORY = "New save directo
 const string Command_Feedback::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
 const string Command_Feedback::MESSAGE_EXIT_SEARCH = "Exited search module.";
 const string Command_Feedback::MESSAGE_HELP = "Showing available commands and how to use them.";
+const string Command_Feedback::MESSAGE_REDO = "Redo - <%s>";
 
 const string Command_Feedback::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
 const string Command_Feedback::ERROR_INVALID_DELETE = "Invalid (DELETE) has been inputted.";
@@ -22,8 +23,10 @@ const string Command_Feedback::ERROR_INVALID_COMMAND_FORMAT = "Invalid command f
 const string Command_Feedback::ERROR_INVALID_COMMAND = "Invalid command has been inputted.";
 const string Command_Feedback::ERROR_INVALID_VIEWTYPE = "Invalid (Viewtype) has been inputted.";
 const string Command_Feedback::ERROR_INVALID_EDIT = "Invalid (EDIT) of task description.";
-const string Command_Feedback::ERROR_INVALID_UNDO = "Unable to undo previous command.";
+const string Command_Feedback::ERROR_INVALID_UNDO = "Invalid (UNDO) of previous command.";
+const string Command_Feedback::ERROR_INVALID_REDO = "Invalid (REDO) of command.";
 const string Command_Feedback::ERROR_INVALID_SAVE_FILE_DIRECTORY = "Invalid file directory.";
+
 
 const string Command_Feedback::MESSAGE_UNDO_COMMAND = "Undo previous command.";
 const string Command_Feedback::MESSAGE_UNDO_ADD = "Undo (ADD) of \"%s\"";
@@ -59,6 +62,9 @@ string Command_Feedback::getTaskString(Task* task, int viewType) {
         break;
     case 2:
         taskListType = new ViewType2();
+        break;
+    case 3:
+        taskListType = new ViewType3();
         break;
     default:
         taskListType = new ViewType();
@@ -187,8 +193,17 @@ string Command_Feedback::getNotificationUndo(Command* executionMessage, CommandO
 }
 
 string Command_Feedback::getNotificationRedo(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
-    return "REDO was either done or not done lolol"; 
-		//		getCommandFeedback(executionMessage, commandOutcome, viewType);
+    string redoString;
+
+    switch(commandOutcome) {
+    case VALID_MESSAGE:
+        redoString = getCommandFeedback(executionMessage->getRedoneCommand(), commandOutcome, viewType);
+        return validNotificationRedo(redoString);
+        break;
+    case INVALID_MESSAGE:
+        return invalidNotificationRedo();
+        break;
+    }
 }
 
 string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -276,7 +291,7 @@ string Command_Feedback::getNotificationChangeSaveFileDirectory(Command* executi
 }
 
 string Command_Feedback::getNotificationHelpPrompt(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
-        return validNotificationHelpPrompt();
+    return validNotificationHelpPrompt();
 }
 
 string Command_Feedback::getNotificationInvalidCommand(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
@@ -335,6 +350,11 @@ string Command_Feedback::validNotificationHelpPrompt() {
     return MESSAGE_HELP;
 }
 
+string Command_Feedback::validNotificationRedo(string redoString) {
+    sprintf_s(buffer, MESSAGE_REDO.c_str(),redoString.c_str());
+    return buffer;
+}
+
 /****************************************************************/
 
 string Command_Feedback::invalidNotificationAdd() {
@@ -363,6 +383,10 @@ string Command_Feedback::invalidNotificationCommand() {
 
 string Command_Feedback::invalidNotificationUndo() {
     return ERROR_INVALID_UNDO;
+}
+
+string Command_Feedback::invalidNotificationRedo() {
+    return ERROR_INVALID_REDO;
 }
 
 /****************************************************************/
