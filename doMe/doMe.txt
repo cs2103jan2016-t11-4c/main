@@ -1,11 +1,3 @@
-DINNER
--1
--1
--1
--1
-
-0
-__________
 Fix Endsearch issue
 -1
 -1
@@ -15,14 +7,6 @@ Fix Endsearch issue
 0
 __________
 IE2150 Revision
--1
--1
--1
--1
-
-0
-__________
-me
 -1
 -1
 -1
@@ -59,14 +43,6 @@ NUSSSU WELFARE
 20160406
 -1
 -1
-
-0
-__________
-IE2150 Project Research
--1
-20160407
--1
-1300
 
 0
 __________
