@@ -9,7 +9,7 @@ const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
 const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline>";
-const string ViewType::MESSAGE_EMPTY_LIST = "<list is empty! Type [HELP] to see list of available commands>";
+const string ViewType::MESSAGE_EMPTY_LIST = "                               <list is empty!>\n                 Type [HELP] to see list of available commands.";
 
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
