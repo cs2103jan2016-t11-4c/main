@@ -5,10 +5,6 @@ Command_Help::Command_Help()
 :Command() {
 }
 
-bool Command_Help::execute() {
-	return false;
-}
-
 CommandType Command_Help::getCommandType() {
 	return HELP;
 }
