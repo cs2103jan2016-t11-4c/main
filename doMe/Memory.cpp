@@ -1,3 +1,5 @@
+//@@author Joan
+
 #include "Memory.h"
 
 Memory* Memory::_instance = NULL;

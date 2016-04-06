@@ -9,7 +9,7 @@
 // if the order is name,time1,date1,time2,date2,location, it's Task task1("shower,1700,20160211);
 //example 2: Meeting 11feb 1300-1700
 // task("meeting",1300,20160211,1700) vs task("meeting",20160211,0,1300,1700)
-
+//@@author A0115391L
 using namespace std;
 
 #define NO_DATE -1
