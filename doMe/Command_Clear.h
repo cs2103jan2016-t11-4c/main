@@ -7,6 +7,7 @@ class Command_Clear : public Command {
 private:
 	list<Task*> _oldTaskList;
 	vector<int> _deleteList;
+	Task* _deletedTask;
 	CommandType _commandType;
 
 	bool outOfRange();
@@ -17,6 +18,7 @@ public:
 	bool execute();
 	bool undo();
 	vector<int>* getDeleteList();
+	Task* getTask();
 	CommandType getCommandType();
 	string getStringForm();
 };

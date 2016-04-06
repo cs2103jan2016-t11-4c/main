@@ -7,11 +7,8 @@
 #include <locale>
 #include "Task.h"
 #include "Storage.h"
-#include "Command.h"
 #include "Settings.h"
 using namespace std;
-
-class Command;
 
 class RAM {
 private:

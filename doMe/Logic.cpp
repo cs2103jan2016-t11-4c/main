@@ -82,11 +82,24 @@ void Logic::clearCommandRedoStack() {
 }
 
 void Logic::throwExceptionIfEmpty(string commandText) {
-
-	if(commandText.empty()) {
+	if(isBlank(commandText)) {
 		Exception_InvalidCommand e(new Command_Invalid());
 		throw e;
 	}
+}
+
+bool Logic::isBlank(string commandText) {
+	if(commandText.empty()) {
+		return true;
+	}
+
+	for(int i = 0; i < commandText.size(); i++) {
+		if(commandText[i] != ' ') {
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**********************************************************************/

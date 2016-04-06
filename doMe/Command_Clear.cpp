@@ -2,9 +2,9 @@
 #include "Command_Clear.h"
 
 Command_Clear::Command_Clear(vector<int>* deleteList)
-:Command() {
-	_deleteList = *deleteList;
-	_commandType = DEL;
+	:Command() {
+		_deleteList = *deleteList;
+		_commandType = DEL;
 }
 
 bool Command_Clear::execute() {
@@ -33,6 +33,10 @@ vector<int>* Command_Clear::getDeleteList() {
 	return &_deleteList;
 }
 
+Task* Command_Clear::getTask() {
+	return _deletedTask;
+}
+
 CommandType Command_Clear::getCommandType() {
 	return _commandType;
 }
@@ -48,7 +52,7 @@ string Command_Clear::getStringForm() {
 
 bool Command_Clear::outOfRange() {
 	int biggestInteger = 0;
-	int smallestInteger = 1;
+	int smallestInteger = 0;
 
 	for(unsigned int i = 0; i < _deleteList.size(); i++) {
 		if(_deleteList[i] > biggestInteger) {
@@ -71,7 +75,16 @@ void Command_Clear::clearAllTasks() {
 }
 
 void Command_Clear::clearSelectedTasks() {
+	Task* deletedTask;
 	for(int i = _deleteList.size() - 1; i >= 0; i--) {			//delete from the back of tasklist
-		_oldTaskList.push_back(_memory->ramDel(_deleteList[i]));
+		deletedTask = _memory->ramDel(_deleteList[i]);
+
+		if(deletedTask == NULL) {
+			Exception_InvalidCommand e(this);
+			throw e;	
+		}
+		_oldTaskList.push_back(deletedTask);
 	}
+
+	_deletedTask = deletedTask;
 }

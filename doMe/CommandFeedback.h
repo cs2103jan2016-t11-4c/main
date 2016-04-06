@@ -15,19 +15,19 @@ enum CommandOutcome {
 };
 
 
-class Command_Feedback {
+class CommandFeedback {
 public:
-    ~Command_Feedback(void);
-    static Command_Feedback* getInstance();
+    ~CommandFeedback(void);
+    static CommandFeedback* getInstance();
     string getCommandFeedback(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
 #ifndef TESTMODE 
 private: 
 #else 
 public: 
 #endif
-    static Command_Feedback* _instance;
+    static CommandFeedback* _instance;
     char buffer[255];
-    Command_Feedback(void);
+    CommandFeedback(void);
 
     string getTaskString(Task* task, int viewType); 
 
@@ -118,4 +118,3 @@ public:
     static const string MESSAGE_UNDO_VIEW_TYPE;
     static const string MESSAGE_UNDO_CHANGE_DIRECTORY;
 };
-

@@ -13,8 +13,7 @@
 
 #include "Logic.h"
 #include "Memory.h"
-#include "HelpPrompt.h"
-#include "Command_Feedback.h"
+#include "CommandFeedback.h"
 #include "Command.h"
 #include "Task.h"
 #include "ViewType.h"
@@ -45,7 +44,7 @@ public:
     DisplayType _lastDisplayType;
     Logic* _logic;
     Memory* _memory;
-    Command_Feedback* _commandFeedback;
+    CommandFeedback* _commandFeedback;
     list<Task*>* _taskList;
 
 

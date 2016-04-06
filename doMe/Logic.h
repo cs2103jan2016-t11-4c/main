@@ -26,6 +26,7 @@ private:
 	void redo(Command* command);
 	void clearCommandRedoStack();
 	void throwExceptionIfEmpty(string commandText);
+	bool isBlank(string commandText);
 public:
 	static Logic* getInstance();
 

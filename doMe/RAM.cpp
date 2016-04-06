@@ -33,6 +33,19 @@ void RAM::ramDel(Task* task) {
 }
 
 Task* RAM::ramDel(int index) {
+	//if(index == LAST_ADDED_INDEX) {
+	if(index == 0) {
+		//return deleteLastAddedTask();
+		Task* lastAddedTask = _lastAddedTask;
+		if(lastAddedTask == NULL) {
+			return NULL;
+		}
+		ramDel(lastAddedTask);
+		_lastAddedTask = NULL;
+
+		return lastAddedTask;
+	}
+
 	list<Task*>::iterator deleteIter = indexToTaskListIter(index);
 	Task* deletedTaskPtr = *deleteIter;
 
@@ -275,6 +288,7 @@ RAM* RAM::getInstance() {
 RAM::RAM() {
 	_searchState = false;
 	_searchTerm = "";
+	_lastAddedTask = NULL;
 	_lastModifiedTask = NULL;
 	_storage = Storage::getInstance();
 	_settings = Settings::getInstance();

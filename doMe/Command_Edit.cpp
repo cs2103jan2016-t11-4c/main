@@ -25,6 +25,11 @@ bool Command_Edit::execute() {
 
 	_task = _memory->ramGetTask(_index);
 
+	if(_task == NULL) {
+		Exception_InvalidCommand e(this);
+		throw e;
+	}
+
 	_oldName = _task->getName();
 	_oldDate1 = _task->getDate1();
 	_oldDate2 = _task->getDate2();

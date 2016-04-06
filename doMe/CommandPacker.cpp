@@ -625,7 +625,13 @@ void CommandPacker::packChangeViewTypeCommand() {
 }
 
 void CommandPacker::packDeleteCommand() {
-	_command = new Command_Delete(_singleIndex);
+	vector<int>* deleteList = new vector<int>;
+
+	deleteList->push_back(_singleIndex);
+
+	_command = new Command_Clear(deleteList);
+	
+	//	_command = new Command_Delete(_singleIndex);
 	
 	return;
 }

@@ -11,11 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Command_Feedback.cpp" />
+    <ClCompile Include="CommandFeedback.cpp" />
     <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Exception_ExceededParameterLimit.cpp" />
     <ClCompile Include="Exception_FileCannotOpen.cpp" />
-    <ClCompile Include="HelpPrompt.cpp" />
     <ClCompile Include="InputTokens.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -32,7 +31,6 @@
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Command_Add.cpp" />
-    <ClCompile Include="Command_Delete.cpp" />
     <ClCompile Include="Command_Edit.cpp" />
     <ClCompile Include="Command_Clear.cpp" />
     <ClCompile Include="Command_ViewType.cpp" />
@@ -52,7 +50,7 @@
     <ClCompile Include="ViewType3.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Command_Feedback.h" />
+    <ClInclude Include="CommandFeedback.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Exception_ExceededParameterLimit.h" />
     <ClInclude Include="Exception_FileCannotOpen.h" />
@@ -60,11 +58,9 @@
     <ClInclude Include="Command_Redo.h" />
     <ClInclude Include="Command_Help.h" />
     <ClInclude Include="Exception_CorruptedFile.h" />
-    <ClInclude Include="HelpPrompt.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />
-    <ClInclude Include="Command_Delete.h" />
     <ClInclude Include="Command_Edit.h" />
     <ClInclude Include="Command_Clear.h" />
     <ClInclude Include="Command_ViewType.h" />

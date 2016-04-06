@@ -13,9 +13,6 @@
     <ClCompile Include="Command_Clear.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Command_Delete.cpp">
-      <Filter>Source Files\Command Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Command_Edit.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
@@ -103,9 +100,6 @@
     <ClCompile Include="Commons.cpp">
       <Filter>Source Files\Commons Classes</Filter>
     </ClCompile>
-    <ClCompile Include="Command_Feedback.cpp">
-      <Filter>Source Files\UserInterface Classes</Filter>
-    </ClCompile>
     <ClCompile Include="Command_Redo.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
@@ -115,7 +109,9 @@
     <ClCompile Include="ViewType3.cpp">
       <Filter>Source Files\UserInterface Classes\ViewType</Filter>
     </ClCompile>
-    <ClCompile Include="HelpPrompt.cpp" />
+    <ClCompile Include="CommandFeedback.cpp">
+      <Filter>Source Files\UserInterface Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -125,9 +121,6 @@
       <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
     <ClInclude Include="Command_Clear.h">
-      <Filter>Header Files\Command Classes</Filter>
-    </ClInclude>
-    <ClInclude Include="Command_Delete.h">
       <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
     <ClInclude Include="Command_Edit.h">
@@ -217,9 +210,6 @@
     <ClInclude Include="Commons.h">
       <Filter>Header Files\Commons Classes</Filter>
     </ClInclude>
-    <ClInclude Include="Command_Feedback.h">
-      <Filter>Header Files\UserInterface Classes</Filter>
-    </ClInclude>
     <ClInclude Include="Command_Redo.h">
       <Filter>Header Files\Command Classes</Filter>
     </ClInclude>
@@ -232,7 +222,9 @@
     <ClInclude Include="ViewType3.h">
       <Filter>Header Files\UserInterface Classes</Filter>
     </ClInclude>
-    <ClInclude Include="HelpPrompt.h" />
+    <ClInclude Include="CommandFeedback.h">
+      <Filter>Header Files\UserInterface Classes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
