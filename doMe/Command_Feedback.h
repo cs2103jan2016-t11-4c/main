@@ -6,6 +6,7 @@
 #include "ViewType.h"
 #include "ViewType1.h"
 #include "ViewType2.h"
+#include "ViewType3.h"
 
 using namespace std;
 
@@ -55,6 +56,7 @@ public:
     string validNotificationViewType(int newViewType);
     string validNotificationChangeSaveFileDirectory(string newDirectory);
     string validNotificationHelpPrompt();
+    string validNotificationRedo(string redoString);
 
     //Invalid notification
     string invalidNotificationCommand();
@@ -64,6 +66,8 @@ public:
     string invalidNotificationViewtype();
     string invalidNotificationSaveFileDirectory();
     string invalidNotificationUndo();
+    string invalidNotificationRedo();
+    
 
     //undo notification
     string undoNotificationAdd(Command* executionMessage, int viewType);
@@ -97,6 +101,7 @@ public:
     static const string ERROR_INVALID_EDIT;
     static const string ERROR_INVALID_UNDO;
     static const string ERROR_INVALID_SAVE_FILE_DIRECTORY;
+    static const string ERROR_INVALID_REDO;
 
     static const string MESSAGE_UNDO_COMMAND;
     static const string MESSAGE_UNDO_ADD;

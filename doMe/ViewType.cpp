@@ -15,6 +15,7 @@ const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
 const string ViewType::COLOUR_DONE = "DONE";
 
+
 ViewType::ViewType(void) {
 }
 
@@ -69,7 +70,7 @@ string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
         return COLOUR_NEW;
     } else {
         if(individualTask->getDoneStatus() == true) {
-            return COLOUR_NEW;
+            return COLOUR_DONE;
         }
     }
     return COLOUR_DEFAULT;
@@ -114,6 +115,7 @@ string ViewType::getTaskString(Task* individualTask) {
 
     return taskString;
 }
+
 /****************************************************************/
 
 string ViewType::integerToString(int integer) {

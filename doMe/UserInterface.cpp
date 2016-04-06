@@ -151,9 +151,12 @@ void UserInterface::executeCommandUntilExit() {
     } while(command->getCommandType() != EXIT);      
 }
 
+/****************************************************************/
+
 void UserInterface::printMessageDisplay(Command* command) {
 
     CommandType commandType = command->getCommandType();
+    Command* commandRedo;
 
     switch(commandType) {
     case SEARCH:
@@ -169,8 +172,13 @@ void UserInterface::printMessageDisplay(Command* command) {
     case INVALID:
         printDisplayType(_lastDisplayType);
         break;
-    case REDO:   
-        printMessageDisplay(command->getRedoneCommand());
+    case REDO:
+        commandRedo = command->getRedoneCommand();
+        if(commandRedo) {
+            printDisplayType(DEFAULT_DISPLAY);
+        } else {
+            printMessageDisplay(commandRedo);
+        }
         break;
     default:
         _lastDisplayType = DEFAULT_DISPLAY;
