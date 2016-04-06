@@ -9,7 +9,7 @@ using namespace std;
 
 class Memory;
 
-enum CommandType { ADD, DISPLAY, DEL, EDIT, CLEAR, UNDO, REDO, SORT, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, HELP, INVALID};
+enum CommandType{ADD, DEL, EDIT, CLEAR, UNDO, REDO, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, HELP, INVALID, DISPLAY, SORT};
 
 class Command {
 protected:
@@ -26,6 +26,7 @@ public:
 	virtual	string getSearchTerm() {return "";}
 	virtual	string getSaveDirectory() {return "";}
 	virtual int getViewType() {return 0;}
+	virtual vector<int>* getDeleteList() {return NULL;}
 	virtual string getStringForm() {return "";}
 
 	virtual void setUndoneCommand(Command* command) {}

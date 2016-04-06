@@ -7,6 +7,11 @@ class Command_Edit : public Command {
 private:
 	Task* _task;
 	int _index;
+
+	static const int DATE_NO_CHANGE;
+	static const int TIME_NO_CHANGE;
+	static const string LOCATION_NO_CHANGE;
+
 	string _newName;
 	int _newDate1;
 	int _newDate2;
@@ -24,6 +29,7 @@ private:
 	int _oldDoneStatus;
 
 	bool outOfRange();
+	bool isDeleteTaskParametersCommand();
 public:
 	Command_Edit(int index, Task* task);
 	bool execute();

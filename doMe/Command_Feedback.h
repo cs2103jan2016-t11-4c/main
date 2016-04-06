@@ -49,7 +49,7 @@ public:
     //valid notification
     string validNotificationAdd(Task* task, int viewType, string textFileName); 
     string validNotificationDelete(Task* task, int viewType, string textFileName);
-    string validNotificationDeleteMultiple(vector<int> deleteIndex, int viewType, string textFileName);
+    string validNotificationDeleteMultiple(vector<int>* deleteIndex, int viewType, string textFileName);
     string validNotificationEdit(Task* task, int viewType);
     string validNotificationClear(string textFileName);
     string validNotificationSearchTerm(string searchTerm);

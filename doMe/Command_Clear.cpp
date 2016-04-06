@@ -4,6 +4,7 @@
 Command_Clear::Command_Clear(vector<int>* deleteList)
 :Command() {
 	_deleteList = *deleteList;
+	_commandType = DEL;
 }
 
 bool Command_Clear::execute() {
@@ -13,13 +14,11 @@ bool Command_Clear::execute() {
 	}
 
 	if(_deleteList.empty()) {
-		//clearAllTask();
-		_oldTaskList = _memory->ramClear();
+		clearAllTasks();
+		_commandType = CLEAR;
 	}else {
-		//clearSelectedTasks();
-		for(int i = _deleteList.size() - 1; i >= 0; i--) {
-			_oldTaskList.push_back(_memory->ramDel(_deleteList[i]));
-		}
+		clearSelectedTasks();
+		_commandType = DEL;
 	}
 
 	return true;
@@ -30,8 +29,21 @@ bool Command_Clear::undo() {
 	return true;
 }
 
+vector<int>* Command_Clear::getDeleteList() {
+	return &_deleteList;
+}
+
 CommandType Command_Clear::getCommandType() {
-	return CLEAR;
+	return _commandType;
+}
+
+string Command_Clear::getStringForm() {
+	string s = "Clear index: ";
+	for(unsigned int i = 0; i < _deleteList.size(); i++) {
+		s += to_string(_deleteList[i]);
+		s += ", ";
+	}
+	return s;
 }
 
 bool Command_Clear::outOfRange() {
@@ -54,11 +66,12 @@ bool Command_Clear::outOfRange() {
 	return false;
 }
 
-string Command_Clear::getStringForm() {
-	string s = "Clear index: ";
-	for(unsigned int i = 0; i < _deleteList.size(); i++) {
-		s += to_string(_deleteList[i]);
-		s += ", ";
+void Command_Clear::clearAllTasks() {
+	_oldTaskList = _memory->ramClear();
+}
+
+void Command_Clear::clearSelectedTasks() {
+	for(int i = _deleteList.size() - 1; i >= 0; i--) {			//delete from the back of tasklist
+		_oldTaskList.push_back(_memory->ramDel(_deleteList[i]));
 	}
-	return s;
 }

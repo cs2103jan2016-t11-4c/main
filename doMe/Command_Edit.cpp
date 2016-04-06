@@ -1,16 +1,20 @@
 //@@author A0125290M
 #include "Command_Edit.h"
 
+const int Command_Edit::DATE_NO_CHANGE = -2;
+const int Command_Edit::TIME_NO_CHANGE = -2;
+const string Command_Edit::LOCATION_NO_CHANGE = " ";
+
 Command_Edit::Command_Edit(int index, Task* task)
-	:Command() {
-		_index = index;
-		_newName = task->getName();
-		_newDate1 = task->getDate1();
-		_newDate2 = task->getDate2();
-		_newTime1 = task->getTime1();
-		_newTime2 = task->getTime2();
-		_newLocation = task->getLocation();
-		_newDoneStatus = task->getDoneStatus();	
+:Command() {
+	_index = index;
+	_newName = task->getName();
+	_newDate1 = task->getDate1();
+	_newDate2 = task->getDate2();
+	_newTime1 = task->getTime1();
+	_newTime2 = task->getTime2();
+	_newLocation = task->getLocation();
+	_newDoneStatus = task->getDoneStatus();
 }
 
 bool Command_Edit::execute() {
@@ -32,24 +36,25 @@ bool Command_Edit::execute() {
 	if(!_newName.empty()) {
 		_task->setName(_newName);
 	}
-	if(_newDate1 != -2) {
+	if(_newDate1 != DATE_NO_CHANGE) {
 		_task->setDate1(_newDate1);
 	}
-	if(_newDate2 != -2) {
+	if(_newDate2 != DATE_NO_CHANGE) {
 		_task->setDate2(_newDate2);
 	}
-	if(_newTime1 != -2) {
+	if(_newTime1 != TIME_NO_CHANGE) {
 		_task->setTime1(_newTime1);
 	}
-	if(_newTime2 != -2) {
+	if(_newTime2 != TIME_NO_CHANGE) {
 		_task->setTime2(_newTime2);
 	}
-	if(_newLocation != " ") {
+	if(_newLocation != LOCATION_NO_CHANGE) {
 		_task->setLocation(_newLocation);
 	}
 	if(_newDoneStatus != -1) {
 		_task->setDoneStatus(_newDoneStatus);
 	}
+
 	_memory->ramSort();
 	_memory->saveRam();
 	return true;
@@ -77,13 +82,6 @@ CommandType Command_Edit::getCommandType() {
 	return EDIT;
 }
 
-bool Command_Edit::outOfRange() {
-	if(_index > _memory->ramGetSize() || _index < 0) {
-		return true;
-	}
-	return false;
-}
-
 string Command_Edit::getStringForm() {
 	string s = "Edit index: " + to_string(_index) + " task- ";
 	s += "name: " + _newName;
@@ -94,4 +92,11 @@ string Command_Edit::getStringForm() {
 	s += ", time2: " + to_string(_newTime2);
 	s += ", doneStatus: " + to_string(_newDoneStatus);
 	return s;
+}
+
+bool Command_Edit::outOfRange() {
+	if(_index > _memory->ramGetSize() || _index < 0) {
+		return true;
+	}
+	return false;
 }

@@ -223,11 +223,11 @@ string Command_Feedback::getNotificationAdd(Command* executionMessage, CommandOu
 }
 
 string Command_Feedback::getNotificationDelete(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
-    vector<int> deleteList;
+    vector<int>* deleteList;
     switch(commandOutcome) {
     case VALID_MESSAGE:
-        //deleteList = executionMessage->getDeleteList();
-        if(deleteList.size() > 1) {
+        deleteList = executionMessage->getDeleteList();
+        if(deleteList->size() > 1) {
             return validNotificationDeleteMultiple(deleteList, viewType, DEFAULT_TEXT_FILE_NAME);
         } else {
             return validNotificationDelete(executionMessage->getTask(), viewType, DEFAULT_TEXT_FILE_NAME);
@@ -330,10 +330,10 @@ string Command_Feedback::validNotificationDelete(Task* task, int viewType, strin
     return buffer;
 }
 
-string Command_Feedback::validNotificationDeleteMultiple(vector<int> deleteIndex, int viewType, string textFileName) {
+string Command_Feedback::validNotificationDeleteMultiple(vector<int>* deleteIndex, int viewType, string textFileName) {
     string taskString;
-    vector<int>::iterator intIter = deleteIndex.begin();
-    while(intIter != deleteIndex.end()) {
+    vector<int>::iterator intIter = deleteIndex->begin();
+    while(intIter != deleteIndex->end()) {
         taskString = taskString + taskIndexToString(*intIter);
         intIter++;
     }
