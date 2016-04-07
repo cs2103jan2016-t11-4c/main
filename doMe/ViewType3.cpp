@@ -96,10 +96,12 @@ string ViewType3::getDateTaskString(int date) {
     string day;
     string month;
     string year;
-    int dateWeek;
+    int weekRange;
     Commons commons;
-    dateWeek = commons.addToDate(_dayToEndOfWeek, _currentDate);
-    if(date <= dateWeek) {
+
+    weekRange = commons.addToDate(_dayToEndOfWeek, _currentDate);
+
+    if(date <= weekRange && date != -1) {
         return commons.getDateStringDay(commons.getDayNumber(date));
     } else {
         if(date > 0) {
