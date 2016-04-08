@@ -10,6 +10,7 @@ const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
 const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline>";
 const string ViewType::MESSAGE_EMPTY_LIST = "                               <list is empty!>\n                 Type [HELP] to see list of available commands.";
+//const string ViewType::MESSAGE_DISPLAY_HEADER[] = {""};
 
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
@@ -33,40 +34,88 @@ ViewType::~ViewType(void) {
 }
 
 /****************************************************************/
+/*
+vector<string> ViewType::createDisplayList() {
+if((*_taskList).empty()) {
+_displayList.push_back(MESSAGE_EMPTY_LIST);
+} else {
+list<Task*>::iterator taskListIter = ((*_taskList).begin());
+string complimentaryString;
+Memory* memory;
+int index = 1;
+
+memory = Memory::getInstance();
+Task* recentTask = memory->ramGetLastModifiedTask();
+
+while(taskListIter != (*_taskList).end()) {
+complimentaryString = getComplimentaryString(*taskListIter);
+
+if(complimentaryString != MESSAGE_VOID_STRING) {
+_displayList.push_back(complimentaryString);
+_colourCoding.push_back(COLOUR_DEFAULT);
+}
+
+if(complimentaryString != MESSAGE_SPACE_STRING) {
+_colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
+_displayList.push_back(createTaskString(*taskListIter,index));
+index++;
+taskListIter++;
+}
+}
+}
+return _displayList;
+}
+*/
 
 vector<string> ViewType::createDisplayList() {
     if((*_taskList).empty()) {
         _displayList.push_back(MESSAGE_EMPTY_LIST);
     } else {
         list<Task*>::iterator taskListIter = ((*_taskList).begin());
-        string complimentaryString;
         Memory* memory;
         int index = 1;
+        unsigned int i = 0;
 
         memory = Memory::getInstance();
         Task* recentTask = memory->ramGetLastModifiedTask();
 
+        vector<string> categoryHeader = getCategoryHeader();
+
+        if(!categoryHeader.empty()) {
+        _displayList.push_back(categoryHeader[i]);
+        _colourCoding.push_back(COLOUR_DEFAULT);
+        i++;
+        }
         while(taskListIter != (*_taskList).end()) {
-            complimentaryString = getComplimentaryString(*taskListIter);
-            if(complimentaryString != MESSAGE_VOID_STRING) {
-                _displayList.push_back(complimentaryString);
+            while((isInNextCategory(*taskListIter, i)) && (i < categoryHeader.size())) {
+                _displayList.push_back("");
                 _colourCoding.push_back(COLOUR_DEFAULT);
+
+                _displayList.push_back(categoryHeader[i]);
+                _colourCoding.push_back(COLOUR_DEFAULT);
+                i++;
             }
 
-            if(complimentaryString != MESSAGE_SPACE_STRING) {
-                _colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
-                _displayList.push_back(createTaskString(*taskListIter,index));
-                index++;
-                taskListIter++;
-            }
+            _displayList.push_back(createTaskString(*taskListIter,index));
+            _colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
+            index++;
+            taskListIter++;
         }
     }
     return _displayList;
+}
 
+vector<string> ViewType::getCategoryHeader() {
+    vector<string> null;
+    return null;
+}
+
+bool ViewType::isInNextCategory(Task* individualTask, int i) {
+        return true;
 }
 
 string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
-    if(individualTask->getDoneStatus() == true) {
+    if(individualTask->getDoneStatus() == 1) {
         return COLOUR_DONE;
     } else {
         if(recentTask == individualTask) {
@@ -195,9 +244,6 @@ string ViewType::formateDateString(string s1, string s2) {
 /*Overriding functions*/
 /****************************************************************/
 //headers + additional lines to compliment to viewtype (default void)
-string ViewType::getComplimentaryString(Task* individualTask) {
-    return MESSAGE_VOID_STRING;
-}
 
 string ViewType::getDateTaskString(int date) {
     string dateString;

@@ -76,6 +76,10 @@ vector<string> Settings::settingsGetVector() {
 bool Settings::changeSaveDirectory(string directory) {
     string newDirectory;
     newDirectory = createValidFileDirectoryString(directory);
+    if(directory.empty()) {
+        _saveDirectory = directory;
+        return true;
+    }
     if(checkValidityOfDirectory(newDirectory)) {
         _saveDirectory = newDirectory;
         saveSettings(); //adding saveSettings() to all setter functions in Settings class; some redundancy may need further refactoring -joan

@@ -7,7 +7,8 @@ class ViewType1 : public ViewType {
 private:
     int _headerMarker;
 
-    static const string MESSAGE_DISPLAY_HEADER;
+    //static const string MESSAGE_DISPLAY_HEADER;
+    static const string MESSAGE_DISPLAY_HEADER[];
     static const string MESSAGE_NEW_LINE;
     static const string MESSAGE_AM;
     static const string MESSAGE_PM;
@@ -15,7 +16,9 @@ private:
     static const int TIME_MIDDAY;
 
     //overiding functions
-    string getComplimentaryString(Task* individualTask);
+    //string getComplimentaryString(Task* individualTask);
+    bool isInNextCategory(Task* individualTask, int i);
+    vector<string> getCategoryHeader();
 
 public:
     ViewType1(void);
