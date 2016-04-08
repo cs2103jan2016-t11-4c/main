@@ -3,6 +3,9 @@
 
 const string RAM::LIST_DIVIDER = "__________";
 const string RAM::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
+const string RAM::SPACE = " ";
+const string RAM::DONESTATUS_DONE = "*done";
+const string RAM::DONESTATUS_UNDONE = "*undone";
 
 void RAM::loadRAM() {
 	loadData();
@@ -243,25 +246,43 @@ list<Task*>::iterator RAM::indexToTaskListIter(int index) {
 }
 
 bool RAM::foundInTask(Task* task, string searchTerm) {
-	searchTerm = convertToLowerCase(searchTerm);
+	vector<string> searchTokenList;
+	createSearchTokenList(searchTerm, searchTokenList);
+
 	string name = convertToLowerCase(task->getName());
 	string location = convertToLowerCase(task->getLocation());
+	string date1 = to_string(task->getDate1());
+	string date2 = to_string(task->getDate2());
+	string time1 = to_string(task->getTime1());
+	string time2 = to_string(task->getTime2());
+	string doneStatus = getDoneStatusString(task->getDoneStatus());
 
-	searchTerm = searchTerm.insert(0, " ");		//"Flo" 	-> " Flo"
-	name = name.insert(0, " ");					//"Buy Flowers"	-> " Buy Flowers"
-	location = location.insert(0, " ");			//"Florist"	-> " Florist"
+	string searchString = SPACE + name + SPACE + location + SPACE + date1 + SPACE + date2 + SPACE + time1 + SPACE + time2 + SPACE + doneStatus;	
 
-	size_t found = name.find(searchTerm);
-	if(found != string::npos) {
-		return true;
+	for(unsigned int i = 0; i < searchTokenList.size(); i++) {
+		size_t found = searchString.find(searchTokenList[i]);
+		if(found == string::npos) {
+			return false;
+		}
 	}
+	return true;
+}
 
-	found = location.find(searchTerm);
-	if(found != string::npos) {
-		return true;
+void RAM::createSearchTokenList(string searchTerm, vector<string>& searchTokenList) {
+	istringstream is(searchTerm);
+
+	string token;
+	while(is >> token) {
+		token.insert(0, " ");				//Insert a space at the start
+		searchTokenList.push_back(token);
 	}
+}
 
-	return false;
+string RAM::getDoneStatusString(int doneStatus) {
+	if(doneStatus == 1) {
+		return "DONESTATUS_DONE";
+	}
+	return "DONESTATUS_UNDONE";
 }
 
 string RAM::convertToLowerCase(string sentence) {

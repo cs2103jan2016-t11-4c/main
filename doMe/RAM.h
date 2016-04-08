@@ -26,6 +26,9 @@ private:
 
 	static const string LIST_DIVIDER;
 	static const string DEFAULT_TEXT_FILE_NAME;
+	static const string SPACE;
+	static const string DONESTATUS_DONE;
+	static const string DONESTATUS_UNDONE;
 
 	void sort();
 	void loadData();
@@ -37,8 +40,10 @@ private:
 	Task* indexToTask(int index);
 	list<Task*>::iterator indexToTaskListIter(int index);
 	bool foundInTask(Task* task, string searchTerm);
+	void createSearchTokenList(string searchTerm, vector<string>& searchTokenList);
+	string getDoneStatusString(int doneStatus);
 	string convertToLowerCase(string sentence);
-	
+
 public:
 	static RAM* getInstance();
 

@@ -225,6 +225,7 @@
     <ClInclude Include="CommandFeedback.h">
       <Filter>Header Files\UserInterface Classes</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -290,5 +291,11 @@
     <Filter Include="Header Files\Exception Classes\Commons Classes">
       <UniqueIdentifier>{399d6735-2ae3-492b-b9ed-c74def425afc}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="doMe.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="C:\Michael\Downloads\icon1.ico" />
   </ItemGroup>
 </Project>
