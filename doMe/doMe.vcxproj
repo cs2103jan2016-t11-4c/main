@@ -77,7 +77,6 @@
     <ClInclude Include="Parser.h" />
     <ClInclude Include="CommandPacker.h" />
     <ClInclude Include="ChronoInterpreter.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="TaskPacker.h" />
     <ClInclude Include="Settings.h" />
     <ClInclude Include="Storage.h" />
@@ -88,12 +87,6 @@
     <ClInclude Include="ViewType1.h" />
     <ClInclude Include="ViewType2.h" />
     <ClInclude Include="ViewType3.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="doMe.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="C:\Michael\Downloads\icon1.ico" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{521D8F24-850F-497F-B7E0-CF8940425FB0}</ProjectGuid>
