@@ -7,9 +7,9 @@ const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 unsigned int UserInterface::DISPLAY_WIDTH = 80;
-unsigned int UserInterface::DISPLAY_LENGTH = 25;
+unsigned int UserInterface::DISPLAY_LENGTH = 30;
 unsigned int UserInterface::DISPLAY_BOX_WIDTH = 80;
-unsigned int UserInterface::DISPLAY_BOX_LENGTH = 25;
+unsigned int UserInterface::DISPLAY_BOX_LENGTH = 30;
 const int UserInterface::DISPLAY_DEFAULT_WIDTH = 80;
 const int UserInterface::DISPLAY_DEFAULT_LENGTH = 25;
 const int UserInterface::DISPLAY_SYNC_WIDTH = 0;
@@ -47,12 +47,13 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 */
 const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                            LIST OF AVAILABLE COMMANDS",
+	"                            PRESS <ENTER> TO CONTINUE...",
 	"===============================================================================",
 	"",
 	"                                  _   ___  ___  ",
 	"                                 /_\\ |   \\|   \\ ",
 	"                                / _ \\| |) | |) |",
-	"                               /_/ \\_\\___/|___/ ",
+	"                               /_/ \\_\\___/|___/  eg. \"Jog tmr 6am @the park\"",
 	"                            +-----------------------------------------------+",
 	"                            |              OPTIONAL PARAMETERS*             |",
 	"   +----------+-------------+--------------------+--------------+-----------+",
@@ -83,7 +84,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                          ___  ___ _    ___ _____ ___ ",
 	"                         |   \\| __| |  | __|_   _| __|",
 	"                         | |) | _|| |__| _|  | | | _| ",
-	"                         |___/|___|____|___| |_| |___|",
+	"                         |___/|___|____|___| |_| |___| eg. \"delete 5\"",
 	"                                       +------------------------+",
 	"                                       |   OPTIONAL PARAMETERS  |",
 	"               +----------+------------+------+------+----------+",
@@ -92,9 +93,9 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"               | delete   | <empty>*   | date | time | location |",
 	"               | del      | 1          | d    | t    | l        |",
 	"               | d        | 12         |      |      |          |",
-	"               |          | 1-12       |      |      |          |",
-	"               |          | 1 - 12     |      |      |          |",
-	"               |          |            |      |      |          |",
+	"               |          | 1-5        |      |      |          |",
+	"               |          | 1 - 5      |      |      |          |",
+	"               |          | 1 2 3 4 5  |      |      |          |",
 	"               |          |            |      |      |          |",
 	"               | clear    | <empty>**  | n/a  | n/a  | n/a      |",
 	"               |          | 1          |      |      |          |",
@@ -111,7 +112,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                                ___ ___ ___ _____ ",
 	"                               | __|   \\_ _|_   _|",
 	"                               | _|| |) | |  | |  ",
-	"                               |___|___/___| |_| ",
+	"                               |___|___/___| |_|   eg. \"edit 1 sleep 12pm\"",
 	"                             +-------------------------------------------+",
 	"                             |            ADDITIONAL PARAMETERS          |",
 	"     +----------+------------+------------+------------------+-----------+",
@@ -127,27 +128,29 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"     **edits Second Date of Task.",
 	"",
 	"          ============================================================",
-	"",
 	"                           ___ ___   _   ___  ___ _  _ ",
 	"                          / __| __| /_\\ | _ \\/ __| || |",
 	"                          \\__ \\ _| / _ \\|   / (__| __ |",
 	"                          |___/___/_/ \\_\\_|_\\\\___|_||_|",
+	"",
+	"                               eg. \"search car keys\"",
 	"                         +----------+-----------------+",
 	"                         | MODIFIER | SEARCH TERM(S)  |",
 	"                         +----------+-----------------+",
 	"                         | search   | Waldo           |",
-	"                         | find     | Nemo            |",
+	"                         | find     | Nemo Sea        |",
 	"                         | s, f     | Meaning in life |",
 	"                         |          |                 |",
 	"                         |          |                 |",
 	"                         +----------+-----------------+",
 	"",
 	"          ============================================================",
-	"",
 	"               _   _ _  _ ___   ___      __  ___ ___ ___   ___  ",
 	"              | | | | \\| |   \\ / _ \\    / / | _ \\ __|   \\ / _ \\ ",
 	"              | |_| | .` | |) | (_) |  / /  |   / _|| |) | (_) |",
 	"               \\___/|_|\\_|___/ \\___/  /_/   |_|_\\___|___/ \\___/ ",
+	"",
+	"                                    eg.\"undo\"",
 	"                                  +----------+",
 	"                                  | MODIFIER |",
 	"                                  +----------+",
@@ -157,13 +160,13 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                                  | redo     |",
 	"                                  | r        |",
 	"                                  +----------+",
-	"",
 	"          ============================================================",
-	"",
 	"          ___   ___   _____   ___ ___ ___ ___ ___ _____ ___  _____   __",
 	"         / __| /_\\ \\ / / __| |   \\_ _| _ \\ __/ __|_   _/ _ \\| _ \\ \\ / /",
 	"         \\__ \\/ _ \\ V /| _|  | |) | ||   / _| (__  | || (_) |   /\\ V / ",
 	"         |___/_/ \\_\\_/ |___| |___/___|_|_\\___\\___| |_| \\___/|_|_\\ |_| ",
+	"",
+	"                           eg.\"cd D:/Top secret stuff\"",
 	"                      +------------------+---------------+",
 	"                      | MODIFIER         | DIRECTORY     |",
 	"                      +------------------+---------------+",
@@ -172,13 +175,13 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                      |                  |               |",
 	"                      |                  |               |",
 	"                      +------------------+---------------+",
-	"",
 	"          ============================================================",
-	"",
 	"                 __   _____ _____      _________   _____ ___ ",
 	"                 \\ \\ / /_ _| __\\ \\    / /_   _\\ \\ / / _ \\ __|",
 	"                  \\ V / | || _| \\ \\/\\/ /  | |  \\ V /|  _/ _| ",
 	"                   \\_/ |___|___| \\_/\\_/   |_|   |_| |_| |___|",
+	"",
+	"                                    eg.\"v 3\"",
 	"                            +----------+-----------+",
 	"                            | MODIFIER | VIEWTYPES |",
 	"                            +----------+-----------+",
@@ -187,11 +190,9 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                            |          |           |",
 	"                            +----------+-----------+",
 	"",
-	"",
-	"",
 	"===============================================================================",
 	"",
-	"                          PRESS ANY KEY TO CONTINUE...",
+	"                          PRESS <ENTER> TO CONTINUE...",
 	""
 };
 
@@ -466,7 +467,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
 	}
 	*/
 	printList(createDisplayBox(helpList));
-	//scrollByAbsoluteCoord(126);
+	scrollByAbsoluteCoord(121);
 	keyboardCommandScroll();
 
 	printTaskList(currentDate, viewType);
@@ -595,11 +596,11 @@ void UserInterface::changeListColour(string colourCoding) {
 		return;
 	} else {
 		if(colourCoding == COLOUR_DONE) {
-			setConsoleColor(BLACK, GRAY);
+			setConsoleColor(BLACK, BLUE);
 			return;
 		} else {
 			if(colourCoding == COLOUR_SEARCH) {
-				setConsoleColor(BLACK, LIGHT_GREEN);
+				setConsoleColor(BLACK, LIGHT_AQUA);
 				return;
 			} else {
 				if(colourCoding == COLOUR_HELP) {
@@ -633,7 +634,7 @@ int UserInterface::scrollByAbsoluteCoord(int iRows) {
 	GetConsoleScreenBufferInfo(hStdout, &csbiInfo);
 	srctWindow = csbiInfo.srWindow; 
 
-	if (srctWindow.Top == 126 && iRows == -1) {
+	if (srctWindow.Top == 121 && iRows == -1) {
 		return 0;
 	} 
 

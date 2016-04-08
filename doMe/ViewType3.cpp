@@ -5,10 +5,10 @@ const int ViewType3::END_OF_WEEK = 6;
 const string ViewType3::MESSAGE_NEW_LINE = "\n";
 const string ViewType3::MESSAGE_TIMING_SEPERATOR = "-";
 const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
-    "-Past-",
-    "-Today-",
-    "-This Week-",
-    "-Other Week-"
+    "<Past>",
+    "<Today>",
+    "<This Week>",
+	"<Future>"
 };
 
 ViewType3::ViewType3(void) {

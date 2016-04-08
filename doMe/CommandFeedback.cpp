@@ -5,40 +5,40 @@ const string CommandFeedback::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string CommandFeedback::MESSAGE_VOID_STRING = "";
 const string CommandFeedback::MESSAGE_TASK_INDEX = ", ";
 
-const string CommandFeedback::MESSAGE_ADD = "Added \"%s\" into %s";
+const string CommandFeedback::MESSAGE_ADD = "Added \"%s\" into %s.";
 //const string CommandFeedback::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
-const string CommandFeedback::MESSAGE_DELETE = "Deleted \"%s\" from %s";
-const string CommandFeedback::MESSAGE_DELETE_MULTIPLE = "Deleted tasks \"%s\" from %s";
-const string CommandFeedback::MESSAGE_EDIT = "Edited inputted task description to \"%s\"";
-const string CommandFeedback::MESSAGE_EDIT_DONE = "Marked \"%s\" as DONE";
+const string CommandFeedback::MESSAGE_DELETE = "Deleted \"%s\" from %s.";
+const string CommandFeedback::MESSAGE_DELETE_MULTIPLE = "Deleted tasks \"%s\" from %s.";
+const string CommandFeedback::MESSAGE_EDIT = "Editted task to \"%s\".";
+const string CommandFeedback::MESSAGE_EDIT_DONE = "Marked \"%s\" as DONE.";
 const string CommandFeedback::MESSAGE_CLEAR = "All tasks in view cleared.";
 const string CommandFeedback::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit\" to exit the search module~";
 //const string CommandFeedback::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
-const string CommandFeedback::MESSAGE_CHANGE_FILE_DIRECTORY = "New save directory: %s";
-const string CommandFeedback::MESSAGE_DEFAULT_FILE_DIRECTORY = "New save directory: Program file directory";
-const string CommandFeedback::MESSAGE_VIEW_TYPE = "Your current default view type is changed to (%d).";
-const string CommandFeedback::MESSAGE_EXIT_SEARCH = "Exited search module.";
-const string CommandFeedback::MESSAGE_EXIT_HELP = "Exited help module";
-const string CommandFeedback::MESSAGE_REDO = "Redo - <%s>";
+const string CommandFeedback::MESSAGE_CHANGE_FILE_DIRECTORY = "Save Directory changed to %s.";
+const string CommandFeedback::MESSAGE_DEFAULT_FILE_DIRECTORY = "Save directory changed to <Default Directory>";
+const string CommandFeedback::MESSAGE_VIEW_TYPE = "Viewtype has been changed to (%d).";
+const string CommandFeedback::MESSAGE_EXIT_SEARCH = "Exited SEARCH module.";
+const string CommandFeedback::MESSAGE_EXIT_HELP = "Exited HELP module";
+const string CommandFeedback::MESSAGE_REDO = "Redo <%s>";
 
 const string CommandFeedback::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
-const string CommandFeedback::ERROR_INVALID_DELETE = "Invalid (DELETE) has been inputted.";
-const string CommandFeedback::ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been inputted.";
-const string CommandFeedback::ERROR_INVALID_COMMAND = "Invalid command has been inputted.";
-const string CommandFeedback::ERROR_INVALID_VIEWTYPE = "Invalid (Viewtype) has been inputted.";
-const string CommandFeedback::ERROR_INVALID_EDIT = "Invalid (EDIT) of task description.";
-const string CommandFeedback::ERROR_INVALID_UNDO = "Invalid (UNDO) of previous command.";
-const string CommandFeedback::ERROR_INVALID_REDO = "Invalid (REDO) of command.";
-const string CommandFeedback::ERROR_INVALID_SAVE_FILE_DIRECTORY = "Invalid file directory.";
+const string CommandFeedback::ERROR_INVALID_DELETE = "Invalid (DELETE) index has been entered.";
+const string CommandFeedback::ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been entered.";
+const string CommandFeedback::ERROR_INVALID_COMMAND = "Invalid command has been entered.";
+const string CommandFeedback::ERROR_INVALID_VIEWTYPE = "Invalid (Viewtype) has been entered.";
+const string CommandFeedback::ERROR_INVALID_EDIT = "Invalid (EDIT) index has been entered.";
+const string CommandFeedback::ERROR_INVALID_UNDO = "No UNDOs found.";
+const string CommandFeedback::ERROR_INVALID_REDO = "No REDOs found.";
+const string CommandFeedback::ERROR_INVALID_SAVE_FILE_DIRECTORY = "Invalid directory has been entered.";
 
 
-const string CommandFeedback::MESSAGE_UNDO_COMMAND = "Undo previous command.";
-const string CommandFeedback::MESSAGE_UNDO_ADD = "Undo (ADD) of \"%s\"";
-const string CommandFeedback::MESSAGE_UNDO_DELETE = "Undo (DELETE) of \"%s\"";
-const string CommandFeedback::MESSAGE_UNDO_EDIT = "Undo (EDIT) of \"%s\"";
-const string CommandFeedback::MESSAGE_UNDO_CLEAR = "Undo (CLEAR)";
-const string CommandFeedback::MESSAGE_UNDO_VIEW_TYPE = "Undo (Viewtype) change of \"%d\"";
-const string CommandFeedback::MESSAGE_UNDO_CHANGE_DIRECTORY = "Undo (Change Directory) of \"%s\"";
+const string CommandFeedback::MESSAGE_UNDO_COMMAND = "Previous command undone.";
+const string CommandFeedback::MESSAGE_UNDO_ADD = "Undid (ADD) of \"%s\".";
+const string CommandFeedback::MESSAGE_UNDO_DELETE = "Undid (DELETE) of \"%s\".";
+const string CommandFeedback::MESSAGE_UNDO_EDIT = "Undid (EDIT) of \"%s\".";
+const string CommandFeedback::MESSAGE_UNDO_CLEAR = "Undid (CLEAR).";
+const string CommandFeedback::MESSAGE_UNDO_VIEW_TYPE = "Undid (Viewtype) change of \"%d\".";
+const string CommandFeedback::MESSAGE_UNDO_CHANGE_DIRECTORY = "Undid (Change Directory) of \"%s\".";
 
 CommandFeedback* CommandFeedback::_instance = 0;
 
