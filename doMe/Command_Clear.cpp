@@ -1,6 +1,8 @@
 //@@author A0125290M
 #include "Command_Clear.h"
 
+const int Command_Clear::LAST_ADDED_TASK_INDEX = 0;
+
 Command_Clear::Command_Clear(vector<int>* deleteList)
 	:Command() {
 		_deleteList = *deleteList;
@@ -72,6 +74,7 @@ bool Command_Clear::outOfRange() {
 
 void Command_Clear::clearAllTasks() {
 	_oldTaskList = _memory->ramClear();
+	_memory->ramDel(LAST_ADDED_TASK_INDEX);
 }
 
 void Command_Clear::clearSelectedTasks() {
