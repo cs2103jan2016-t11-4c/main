@@ -77,6 +77,10 @@ int Commons::getDate_Year() {
 	return localTime.tm_year + 1900;
 }
 
+int Commons::getTime() {
+	return generateTime(getTime_Hour(), getTime_Minute());
+}
+
 int Commons::getTime_Hour() {
 	time_t currentTime;
 	struct tm localTime;

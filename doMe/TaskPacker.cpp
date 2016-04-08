@@ -55,6 +55,13 @@ void TaskPacker::packStandardTask(InputTokens* tokens, int index) {
 void TaskPacker::customizeTaskForAddCommand() {
 	if(_task->getDate2() == NO_DATE && _task->getTime2() != NO_TIME) {
 		_task->setDate2(DATE);
+		if(_task->getTime1() == NO_TIME && _task->getTime2() < TIME ) {
+			_task->setDate2(ADD_TO_DATE(1, DATE));
+		} else if(_task->getTime1() != NO_TIME && 
+				  _task->getTime1() < TIME &&
+				  _task->getTime2() < TIME) {
+			_task->setDate2(ADD_TO_DATE(1, DATE));
+		}
 	}
 
 	if(_task->getTime1() != NO_TIME && _task->getTime1() > _task->getTime2()) {

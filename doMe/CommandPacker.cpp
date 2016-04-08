@@ -132,7 +132,7 @@ void CommandPacker::nodeTwoOfChangeDirectoryCommand(int index) {
 void CommandPacker::nodeThreeOfChangeDirectoryCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		_description = NO_STRING;
-		nodeFiveOfChangeDirectoryCommand(index);
+		packChangeDirectoryCommand();
 	} else if(_tokens->hasMeaning("TO", index)) {
 		nodeFourOfChangeDirectoryCommand(index+1);
 	} else {
@@ -146,18 +146,8 @@ void CommandPacker::nodeFourOfChangeDirectoryCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
 	} else {
-		_description = _tokens->getOriginalToken(index);
-		nodeFiveOfChangeDirectoryCommand(index+1);
-	}
-	
-	return;
-}
-
-void CommandPacker::nodeFiveOfChangeDirectoryCommand(int index) {
-	if(_tokens->hasNoMoreWord(index)) {
+		extractTerm(index);
 		packChangeDirectoryCommand();
-	} else {
-		nodeOneOfAddCommand(START_INDEX);
 	}
 	
 	return;
@@ -387,7 +377,7 @@ void CommandPacker::nodeTwoOfSearchCommand(int index) {
 	if(_tokens->hasNoMoreWord(index)) {
 		packInvalidCommand();
 	} else {
-		extractSearchTerm(index);
+		extractTerm(index);
 		packSearchCommand();
 	}
 	
@@ -704,7 +694,7 @@ void CommandPacker::packInvalidCommand() {
 }
 
 
-void CommandPacker::extractSearchTerm(int index) {
+void CommandPacker::extractTerm(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	_description = _tokens->getOriginalToken(index);
 

@@ -71,7 +71,6 @@ private:
 	void nodeTwoOfChangeDirectoryCommand(int index);
 	void nodeThreeOfChangeDirectoryCommand(int index);
 	void nodeFourOfChangeDirectoryCommand(int index);
-	void nodeFiveOfChangeDirectoryCommand(int index);
 
 	void nodeOneOfChangeViewTypeCommand(int index);
 	void nodeTwoOfChangeViewTypeCommand(int index);
@@ -135,7 +134,7 @@ private:
 	void packEditCommand();
 	void packInvalidCommand();
 
-	void extractSearchTerm(int index);
+	void extractTerm(int index);
 
 	void extractDeleteParameter(int index);
 	void packDeleteTask();

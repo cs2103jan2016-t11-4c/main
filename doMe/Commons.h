@@ -20,6 +20,7 @@ using namespace std;
 #define DATE_DAY Commons::getDate_Day()
 #define DATE_MONTH Commons::getDate_Month()
 #define DATE_YEAR Commons::getDate_Year()
+#define TIME Commons::getTime()
 #define TIME_HOUR Commons::getTime_Hour()
 #define TIME_MINUTE Commons::getTime_Minute()
 #define TIME_SECOND Commons::getTime_Second()
@@ -50,6 +51,7 @@ public:
 	static int getDate_Day();		//eg. 2, 14, 30
 	static int getDate_Month();		//eg. 2, 7, 12
 	static int getDate_Year();		//eg. 2016
+	static int getTime();
 	static int getTime_Hour();		//eg. 2, 14, 23
 	static int getTime_Minute();		//eg. 2, 14, 56
 	static int getTime_Second();		//eg. 2, 14, 56
