@@ -21,12 +21,12 @@ const string CommandFeedback::MESSAGE_EXIT_SEARCH = "Exited SEARCH module.";
 const string CommandFeedback::MESSAGE_EXIT_HELP = "Exited HELP module";
 const string CommandFeedback::MESSAGE_REDO = "Redo <%s>";
 
-const string CommandFeedback::ERROR_INVALID_ADD = "Invalid (ADD) has been inputted.";
-const string CommandFeedback::ERROR_INVALID_DELETE = "Invalid (DELETE) index has been entered.";
+const string CommandFeedback::ERROR_INVALID_ADD = "Invalid (ADD) command been inputted.";
+const string CommandFeedback::ERROR_INVALID_DELETE = "Invalid (DELETE) command has been entered.";
 const string CommandFeedback::ERROR_INVALID_COMMAND_FORMAT = "Invalid command format has been entered.";
 const string CommandFeedback::ERROR_INVALID_COMMAND = "Invalid command has been entered.";
 const string CommandFeedback::ERROR_INVALID_VIEWTYPE = "Invalid (Viewtype) has been entered.";
-const string CommandFeedback::ERROR_INVALID_EDIT = "Invalid (EDIT) index has been entered.";
+const string CommandFeedback::ERROR_INVALID_EDIT = "Invalid (EDIT) command has been entered.";
 const string CommandFeedback::ERROR_INVALID_UNDO = "No UNDOs found.";
 const string CommandFeedback::ERROR_INVALID_REDO = "No REDOs found.";
 const string CommandFeedback::ERROR_INVALID_SAVE_FILE_DIRECTORY = "Invalid directory has been entered.";

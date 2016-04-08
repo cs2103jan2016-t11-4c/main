@@ -72,6 +72,12 @@ void Command_Edit::editAllTasks() {
 void Command_Edit::editSelectedTasks() {
 	for(unsigned int i = 0; i < _editList.size(); i++) {
 		_edittedTaskPtrList.push_back(_memory->ramGetTask(_editList[i]));
+
+		if(_edittedTaskPtrList.back() == NULL) {
+			Exception_InvalidCommand e(this);
+			throw e;	
+		}
+
 		_oldTaskList.push_back(*_edittedTaskPtrList.back());
 
 		if(!_newName.empty()) {
