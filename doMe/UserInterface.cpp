@@ -77,6 +77,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "   +----------+-------------+--------------------+--------------+-----------+",
 "   *Optional parameters can be input in any order eg. \"cycling 7pm @park today\".",
 "   **<This week> sets the deadline to be the end of the week, Sunday.",
+"________________________________________________________________________________",
 "                          ___  ___ _    ___ _____ ___ ",
 "                         |   \\| __| |  | __|_   _| __|",
 "                         | |) | _|| |__| _|  | | | _| ",
@@ -102,6 +103,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "               +----------+------------+------+------+----------+",
 "               *Deleting <empty> index directs program to Last Added Task.",
 "               **Clearing <empty> index clears all tasks in view.",
+"________________________________________________________________________________",
 "                                ___ ___ ___ _____ ",
 "                               | __|   \\_ _|_   _|",
 "                               | _|| |) | |  | |  ",
@@ -119,6 +121,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "     +----------+------------+------------+------------------+-----------+",
 "     *<empty> index directs program to Last Added Task.",
 "     **edits Second Date of Task.",
+"________________________________________________________________________________",
 "                           ___ ___   _   ___  ___ _  _ ",
 "                          / __| __| /_\\ | _ \\/ __| || |",
 "                          \\__ \\ _| / _ \\|   / (__| __ |",
@@ -132,6 +135,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "                         |          |                 |",
 "                         |          |                 |",
 "                         +----------+-----------------+",
+"________________________________________________________________________________",
 "               _   _ _  _ ___   ___      __  ___ ___ ___   ___  ",
 "              | | | | \\| |   \\ / _ \\    / / | _ \\ __|   \\ / _ \\ ",
 "              | |_| | .` | |) | (_) |  / /  |   / _|| |) | (_) |",
@@ -145,6 +149,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "                                  | redo     |",
 "                                  | r        |",
 "                                  +----------+",
+"________________________________________________________________________________",
 "          ___   ___   _____   ___ ___ ___ ___ ___ _____ ___  _____   __",
 "         / __| /_\\ \\ / / __| |   \\_ _| _ \\ __/ __|_   _/ _ \\| _ \\ \\ / /",
 "         \\__ \\/ _ \\ V /| _|  | |) | ||   / _| (__  | || (_) |   /\\ V / ",
@@ -157,6 +162,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "                      |                  |               |",
 "                      |                  |               |",
 "                      +------------------+---------------+",
+"________________________________________________________________________________",
 "                 __   _____ _____      _________   _____ ___ ",
 "                 \\ \\ / /_ _| __\\ \\    / /_   _\\ \\ / / _ \\ __|",
 "                  \\ V / | || _| \\ \\/\\/ /  | |  \\ V /|  _/ _| ",
@@ -173,7 +179,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 "",
 "================================================================================",
 "",
-"                          PRESS ANY KEY TO CONTINUE...",
+"                          PRESS ANY ENTER TO CONTINUE...",
 ""
 };
 
@@ -210,7 +216,9 @@ void UserInterface::setEnvironment() {
 		_memory->loadRam();
 	} catch(Exception_FileCannotOpen e) {
 		welcomeStringVector.push_back(e.getString());
-	}
+	} catch(Exception_CorruptedFile e) {
+        //welcomeStringVector.push_back(e.getString());
+    }
 
 	if(welcomeStringVector.empty()) {
 		welcomeStringVector.push_back(MESSAGE_WELCOME);
@@ -446,7 +454,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
 	}
 	*/
 	printList(createDisplayBox(helpList));
-	_getch();
+	keyboardCommandScroll();
 
 	printTaskList(currentDate, viewType);
 	_lastDisplayType = DEFAULT_DISPLAY;
@@ -499,7 +507,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
 	displayList.insert(displayList.end(),messageBox);
 
 	c.X = DISPLAY_WIDTH;
-	c.Y = (displayList.size()+3);
+	c.Y = (displayList.size()+4);
 	SetConsoleScreenBufferSize(GetStdHandle( STD_OUTPUT_HANDLE), c);
 
 	return displayList;
@@ -528,7 +536,7 @@ void UserInterface::resizeWindow(int width, int length) {
 void UserInterface::setWindowsRowsColumns(int size) {
 	resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
 
-	DISPLAY_LENGTH = getBiggerDisplaySize(DISPLAY_DEFAULT_LENGTH, size + DISPLAY_SYNC_LENGTH);
+	//DISPLAY_LENGTH = getBiggerDisplaySize(DISPLAY_DEFAULT_LENGTH, size + DISPLAY_SYNC_LENGTH);
 
 	synchronizeWindowsDisplaySize(DISPLAY_WIDTH, DISPLAY_LENGTH);
 	resizeWindow(DISPLAY_WIDTH, DISPLAY_LENGTH);
@@ -552,7 +560,7 @@ int UserInterface::getBiggerDisplaySize(int size1, int size2) {
 
 void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
 	DISPLAY_BOX_WIDTH = width - DISPLAY_SYNC_WIDTH;
-	DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH + 2;
+	DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH +1;
 	length = DISPLAY_BOX_LENGTH;
 }
 
@@ -599,6 +607,46 @@ void UserInterface::setConsoleColor(int background, int foreground) {
 
 void UserInterface::setConsoleColorDefault() {
 	setConsoleColor(BLACK, LIGHT_WHITE);
+}
+
+/****************************************************************/
+
+int UserInterface::scrollByAbsoluteCoord(int iRows) {
+    HANDLE hStdout;
+    CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
+    SMALL_RECT srctWindow; 
+ 
+    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	GetConsoleScreenBufferInfo(hStdout, &csbiInfo);
+    srctWindow = csbiInfo.srWindow; 
+ 
+    if ( srctWindow.Top >= iRows ) { 
+        srctWindow.Top -= (SHORT)iRows;
+        srctWindow.Bottom -= (SHORT)iRows;
+	}
+
+	SetConsoleWindowInfo(hStdout, TRUE, &srctWindow);
+
+    return iRows;
+}
+
+void UserInterface::keyboardCommandScroll() {
+    char a;
+
+	do {
+	a = getch();
+
+	if(a == 72) {				     //Up Arrow
+		scrollByAbsoluteCoord(1);
+	}else if(a == 80) {				//Down Arrow
+		scrollByAbsoluteCoord(-1);
+	}else if(a == 73) {				//Page Up
+		scrollByAbsoluteCoord(1);
+	}else if(a == 81) {				//Page Down
+		scrollByAbsoluteCoord(-1);
+	}
+
+	} while(a != 13);
 }
 
 /*************************Unused*********************************/

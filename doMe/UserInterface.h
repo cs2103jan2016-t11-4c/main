@@ -104,6 +104,10 @@ public:
     void setConsoleColor(int background, int foreground);
     void setConsoleColorDefault();
 
+    //help scroll
+    int scrollByAbsoluteCoord(int iRows);
+    void keyboardCommandScroll();
+
     static const string SYSTEM_MODE_CON;
     static const string SYSTEM_COLOUR;
     static const string MESSAGE_WELCOME;
