@@ -10,6 +10,8 @@ private:
 	Task* _deletedTask;
 	CommandType _commandType;
 
+	static const int LAST_ADDED_TASK_INDEX;
+
 	bool outOfRange();
 	void clearAllTasks();
 	void clearSelectedTasks();
