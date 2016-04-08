@@ -2,6 +2,7 @@
 #pragma once
 #include <list>
 #include <algorithm>
+#include <assert.h>
 #include "Memory.h"
 #include "Task.h"
 #include "Exception_InvalidCommand.h"
@@ -9,7 +10,7 @@ using namespace std;
 
 class Memory;
 
-enum CommandType{ADD, DEL, EDIT, CLEAR, UNDO, REDO, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, HELP, INVALID, DISPLAY, SORT};
+enum CommandType{ADD, DEL, EDIT, EDIT_MULTIPLE, CLEAR, UNDO, REDO, SEARCH, ENDSEARCH, VIEWTYPE, SAVEDIRECTORY, EXIT, HELP, INVALID, DISPLAY, SORT};
 
 class Command {
 protected:
@@ -27,6 +28,7 @@ public:
 	virtual	string getSaveDirectory() {return "";}
 	virtual int getViewType() {return 0;}
 	virtual vector<int>* getDeleteList() {return NULL;}
+	virtual vector<int>* getEditList() {return NULL;}
 	virtual string getStringForm() {return "";}
 
 	virtual void setUndoneCommand(Command* command) {}

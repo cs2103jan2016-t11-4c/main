@@ -627,7 +627,12 @@ void CommandPacker::packDeleteCommand() {
 
 void CommandPacker::packDeleteTaskParametersCommand() {
 	packDeleteTask();
-	_command = new Command_Edit(_singleIndex, _task);
+
+	vector<int>* editList = new vector<int>;
+
+	editList->push_back(_singleIndex);
+
+	_command = new Command_Edit(editList, _task);
 	
 	return;
 }
@@ -670,7 +675,11 @@ void CommandPacker::packSearchCommand() {
 
 void CommandPacker::packMarkCommand() {
 	_task = new Task(NO_NAME, NO_DATE_DETECTED, NO_DATE_DETECTED, NO_TIME_DETECTED, NO_TIME_DETECTED, NO_LOCATION_DETECTED, _doneStatus);
-	_command = new Command_Edit(_singleIndex, _task);
+	vector<int>* editList = new vector<int>;
+
+	editList->push_back(_singleIndex);
+
+	_command = new Command_Edit(editList, _task);
 	
 	return;
 }
@@ -682,7 +691,11 @@ void CommandPacker::packAddCommand() {
 }
 
 void CommandPacker::packEditCommand() {
-	_command = new Command_Edit(_singleIndex, _task);
+		vector<int>* editList = new vector<int>;
+
+	editList->push_back(_singleIndex);
+
+	_command = new Command_Edit(editList, _task);
 	
 	return;
 }

@@ -5,8 +5,11 @@ using namespace std;
 
 class Command_Edit : public Command {
 private:
-	Task* _task;
 	int _index;
+	CommandType _commandType;
+	vector<int> _editList;
+	vector<Task> _oldTaskList;
+	vector<Task*> _edittedTaskPtrList;
 
 	static const int DATE_NO_CHANGE;
 	static const int TIME_NO_CHANGE;
@@ -20,21 +23,16 @@ private:
 	string _newLocation;
 	int _newDoneStatus;
 
-	string _oldName;
-	int _oldDate1;
-	int _oldDate2;
-	int _oldTime1;
-	int _oldTime2;
-	string _oldLocation;
-	int _oldDoneStatus;
-
 	bool outOfRange();
 	bool isDeleteTaskParametersCommand();
+	void editAllTasks();
+	void editSelectedTasks();
 public:
-	Command_Edit(int index, Task* task);
+	Command_Edit(vector<int>* editList, Task* task);
 	bool execute();
 	bool undo();
 	Task* getTask();
+	vector<int>* getEditList();
 	CommandType getCommandType();
 	string getStringForm();
 };
