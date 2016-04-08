@@ -598,7 +598,7 @@ void CommandPacker::nodeThreeOfEditCommand(int index) {
 
 
 void CommandPacker::packDisplayCommand() {
-	_command = new Command_Exit();
+	_command = new Command_Invalid();
 	
 	return;
 }
