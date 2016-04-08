@@ -21,7 +21,7 @@ const string UserInterface::MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT = "Set your s
 const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is save at the current directory.";
 const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
-const string UserInterface::MESSAGE_DEFAULT_DIRECTORY = "DEFAULT";
+const string UserInterface::MESSAGE_DEFAULT_DIRECTORY = "Default Directory";
 const string UserInterface::MESSAGE_DIRECTORY_BOX = "<%s>";
 
 const string UserInterface::COLOUR_DEFAULT = "DEFAULT";
@@ -46,141 +46,153 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 }; 
 */
 const string UserInterface::MESSAGE_HELP_TIPS[] = {
-"",
-"                            LIST OF AVAILABLE COMMANDS",
-"",
-"================================================================================",
-"                                  _   ___  ___  ",
-"                                 /_\\ |   \\|   \\ ",
-"                                / _ \\| |) | |) |",
-"                               /_/ \\_\\___/|___/ ",
-"                            +-----------------------------------------------+",
-"                            |              OPTIONAL PARAMETERS*             |",
-"   +----------+-------------+--------------------+--------------+-----------+",
-"   | MODIFIER | TASK NAME   | DATE               | TIME         | LOCATION  |",
-"   +----------+-------------+--------------------+--------------+-----------+",
-"   | <empty>  | Cycling     | 14/02/2016         | 1100         | @Florist  |",
-"   | add      | Buy flowers | 14/02/16           | 2359         | @the park |",
-"   | a        |             | 14/02              | 11am         |           |",
-"   |          |             | 14 Feb             | 1159pm       |           |",
-"   |          |             | 14 Feb to 16 Feb   | 1100 to 2359 |           |",
-"   |          |             | 14 Feb - 16 Feb    | 1100 - 2359  |           |",
-"   |          |             | 14 - 16 Feb        |              |           |",
-"   |          |             |                    |              |           |",
-"   |          |             | today              |              |           |",
-"   |          |             | tmr, tomorrow      |              |           |",
-"   |          |             | mon, monday...     |              |           |",
-"   |          |             | next tuesday       |              |           |",
-"   |          |             | mon to wed         |              |           |",
-"   |          |             | mon - wed          |              |           |",
-"   |          |             | this week**        |              |           |",
-"   +----------+-------------+--------------------+--------------+-----------+",
-"   *Optional parameters can be input in any order eg. \"cycling 7pm @park today\".",
-"   **<This week> sets the deadline to be the end of the week, Sunday.",
-"________________________________________________________________________________",
-"                          ___  ___ _    ___ _____ ___ ",
-"                         |   \\| __| |  | __|_   _| __|",
-"                         | |) | _|| |__| _|  | | | _| ",
-"                         |___/|___|____|___| |_| |___|",
-"                                       +------------------------+",
-"                                       |   OPTIONAL PARAMETERS  |",
-"               +----------+------------+------+------+----------+          ",
-"               | MODIFIER | TASK INDEX | DATE | TIME | LOCATION |",
-"               +----------+------------+------+------+----------+",
-"               | delete   | <empty>*   | date | time | location |",
-"               | del      | 1          | d    | t    | l        | ",
-"               | d        | 12         |      |      |          |",
-"               |          | 1-12       |      |      |          |",
-"               |          | 1 - 12     |      |      |          |",
-"               |          |            |      |      |          |",
-"               |          |            |      |      |          |",
-"               | clear    | <empty>**  | n/a  | n/a  | n/a      |",
-"               |          | 1          |      |      |          | ",
-"               |          | 12         |      |      |          |",
-"               |          | 1-12       |      |      |          |",
-"               |          | 1 - 12     |      |      |          |",
-"               |          |            |      |      |          |",
-"               +----------+------------+------+------+----------+",
-"               *Deleting <empty> index directs program to Last Added Task.",
-"               **Clearing <empty> index clears all tasks in view.",
-"________________________________________________________________________________",
-"                                ___ ___ ___ _____ ",
-"                               | __|   \\_ _|_   _|",
-"                               | _|| |) | |  | |  ",
-"                               |___|___/___| |_| ",
-"                             +-------------------------------------------+",
-"                             |            ADDITIONAL PARAMETERS          |",
-"     +----------+------------+------------+------------------+-----------+",
-"     | MODIFIER | TASK INDEX | TASK NAME  | DATE & TIME      | LOCATION  |",
-"     +----------+------------+------------+------------------+-----------+",
-"     | edit     | <empty>*   | <new name> | <date>           | @location |",
-"     | change   | 1          |            | <date> to <date> |           |",
-"     | update   | 12         |            | <time>           |           |",
-"     | e, c, u  |            |            | <time> to <time> |           |",
-"     |          |            |            |                  |           |",
-"     +----------+------------+------------+------------------+-----------+",
-"     *<empty> index directs program to Last Added Task.",
-"     **edits Second Date of Task.",
-"________________________________________________________________________________",
-"                           ___ ___   _   ___  ___ _  _ ",
-"                          / __| __| /_\\ | _ \\/ __| || |",
-"                          \\__ \\ _| / _ \\|   / (__| __ |",
-"                          |___/___/_/ \\_\\_|_\\\\___|_||_|",
-"                         +----------+-----------------+",
-"                         | MODIFIER | SEARCH TERM(S)  |",
-"                         +----------+-----------------+",
-"                         | search   | Waldo           |",
-"                         | find     | Nemo            |",
-"                         | s, f     | Meaning in life |",
-"                         |          |                 |",
-"                         |          |                 |",
-"                         +----------+-----------------+",
-"________________________________________________________________________________",
-"               _   _ _  _ ___   ___      __  ___ ___ ___   ___  ",
-"              | | | | \\| |   \\ / _ \\    / / | _ \\ __|   \\ / _ \\ ",
-"              | |_| | .` | |) | (_) |  / /  |   / _|| |) | (_) |",
-"               \\___/|_|\\_|___/ \\___/  /_/   |_|_\\___|___/ \\___/ ",
-"                                  +----------+",
-"                                  | MODIFIER |",
-"                                  +----------+",
-"                                  | undo     |",
-"                                  | u        |",
-"                                  |          |",
-"                                  | redo     |",
-"                                  | r        |",
-"                                  +----------+",
-"________________________________________________________________________________",
-"          ___   ___   _____   ___ ___ ___ ___ ___ _____ ___  _____   __",
-"         / __| /_\\ \\ / / __| |   \\_ _| _ \\ __/ __|_   _/ _ \\| _ \\ \\ / /",
-"         \\__ \\/ _ \\ V /| _|  | |) | ||   / _| (__  | || (_) |   /\\ V / ",
-"         |___/_/ \\_\\_/ |___| |___/___|_|_\\___\\___| |_| \\___/|_|_\\ |_| ",
-"                      +------------------+---------------+",
-"                      | MODIFIER         | DIRECTORY     |",
-"                      +------------------+---------------+",
-"                      | change directory | C:/           |",
-"                      | cd               | D:/new_folder |",
-"                      |                  |               |",
-"                      |                  |               |",
-"                      +------------------+---------------+",
-"________________________________________________________________________________",
-"                 __   _____ _____      _________   _____ ___ ",
-"                 \\ \\ / /_ _| __\\ \\    / /_   _\\ \\ / / _ \\ __|",
-"                  \\ V / | || _| \\ \\/\\/ /  | |  \\ V /|  _/ _| ",
-"                   \\_/ |___|___| \\_/\\_/   |_|   |_| |_| |___|",
-"                            +----------+-----------+",
-"                            | MODIFIER | VIEWTYPES |",
-"                            +----------+-----------+",
-"                            | view     | 0, 1, 2, 3|",
-"                            | v        |           |",
-"                            |          |           |",
-"                            +----------+-----------+",
-"",
-"",
-"",
-"================================================================================",
-"",
-"                          PRESS ANY ENTER TO CONTINUE...",
-""
+	"                            LIST OF AVAILABLE COMMANDS",
+	"===============================================================================",
+	"",
+	"                                  _   ___  ___  ",
+	"                                 /_\\ |   \\|   \\ ",
+	"                                / _ \\| |) | |) |",
+	"                               /_/ \\_\\___/|___/ ",
+	"                            +-----------------------------------------------+",
+	"                            |              OPTIONAL PARAMETERS*             |",
+	"   +----------+-------------+--------------------+--------------+-----------+",
+	"   | MODIFIER | TASK NAME   | DATE               | TIME         | LOCATION  |",
+	"   +----------+-------------+--------------------+--------------+-----------+",
+	"   | <empty>  | Cycling     | 14/02/2016         | 1100         | @Florist  |",
+	"   | add      | Buy flowers | 14/02/16           | 2359         | @the park |",
+	"   | a        | *tuesday**  | 14/02              | 23.59        |           |",
+	"   |          |             | 14 Feb             | 23:59        |           |",
+	"   |          |             | 14 Feb to 16 Feb   | 11am         |           |",
+	"   |          |             | 14 Feb - 16 Feb    | 1159pm       |           |",
+	"   |          |             | 14 - 16 Feb        | 1100 to 2359 |           |",
+	"   |          |             |                    | 1100 - 2359  |           |",
+	"   |          |             | today              |              |           |",
+	"   |          |             | tmr, tomorrow      |              |           |",
+	"   |          |             | mon, monday...     |              |           |",
+	"   |          |             | next tuesday       |              |           |",
+	"   |          |             | mon to wed         |              |           |",
+	"   |          |             | mon - wed          |              |           |",
+	"   |          |             | this week***       |              |           |",
+	"   +----------+-------------+--------------------+--------------+-----------+",
+	"  *Optional parameters can be input in any order eg. \"cycling 7pm @park today\".",
+	"  **Asterisks turn keywords into normal text eg . \"thank god its *friday\"",
+	"  ***<This week> sets the deadline to be the end of the week, Sunday.",
+	"",
+	"          ============================================================",
+	"",
+	"                          ___  ___ _    ___ _____ ___ ",
+	"                         |   \\| __| |  | __|_   _| __|",
+	"                         | |) | _|| |__| _|  | | | _| ",
+	"                         |___/|___|____|___| |_| |___|",
+	"                                       +------------------------+",
+	"                                       |   OPTIONAL PARAMETERS  |",
+	"               +----------+------------+------+------+----------+",
+	"               | MODIFIER | TASK INDEX | DATE | TIME | LOCATION |",
+	"               +----------+------------+------+------+----------+",
+	"               | delete   | <empty>*   | date | time | location |",
+	"               | del      | 1          | d    | t    | l        |",
+	"               | d        | 12         |      |      |          |",
+	"               |          | 1-12       |      |      |          |",
+	"               |          | 1 - 12     |      |      |          |",
+	"               |          |            |      |      |          |",
+	"               |          |            |      |      |          |",
+	"               | clear    | <empty>**  | n/a  | n/a  | n/a      |",
+	"               |          | 1          |      |      |          |",
+	"               |          | 12         |      |      |          |",
+	"               |          | 1-12       |      |      |          |",
+	"               |          | 1 - 12     |      |      |          |",
+	"               |          |            |      |      |          |",
+	"               +----------+------------+------+------+----------+",
+	"               *Deleting <empty> index directs program to Last Added Task.",
+	"               **Clearing <empty> index clears all tasks in view.",
+	"",
+	"          ============================================================",
+	"",
+	"                                ___ ___ ___ _____ ",
+	"                               | __|   \\_ _|_   _|",
+	"                               | _|| |) | |  | |  ",
+	"                               |___|___/___| |_| ",
+	"                             +-------------------------------------------+",
+	"                             |            ADDITIONAL PARAMETERS          |",
+	"     +----------+------------+------------+------------------+-----------+",
+	"     | MODIFIER | TASK INDEX | TASK NAME  | DATE & TIME      | LOCATION  |",
+	"     +----------+------------+------------+------------------+-----------+",
+	"     | edit     | <empty>*   | <new name> | <date>           | @location |",
+	"     | change   | 1          |            | <date> to <date> |           |",
+	"     | update   | 12         |            | <time>           |           |",
+	"     | e, c, u  |            |            | <time> to <time> |           |",
+	"     |          |            |            |                  |           |",
+	"     +----------+------------+------------+------------------+-----------+",
+	"     *<empty> index directs program to Last Added Task.",
+	"     **edits Second Date of Task.",
+	"",
+	"          ============================================================",
+	"",
+	"                           ___ ___   _   ___  ___ _  _ ",
+	"                          / __| __| /_\\ | _ \\/ __| || |",
+	"                          \\__ \\ _| / _ \\|   / (__| __ |",
+	"                          |___/___/_/ \\_\\_|_\\\\___|_||_|",
+	"                         +----------+-----------------+",
+	"                         | MODIFIER | SEARCH TERM(S)  |",
+	"                         +----------+-----------------+",
+	"                         | search   | Waldo           |",
+	"                         | find     | Nemo            |",
+	"                         | s, f     | Meaning in life |",
+	"                         |          |                 |",
+	"                         |          |                 |",
+	"                         +----------+-----------------+",
+	"",
+	"          ============================================================",
+	"",
+	"               _   _ _  _ ___   ___      __  ___ ___ ___   ___  ",
+	"              | | | | \\| |   \\ / _ \\    / / | _ \\ __|   \\ / _ \\ ",
+	"              | |_| | .` | |) | (_) |  / /  |   / _|| |) | (_) |",
+	"               \\___/|_|\\_|___/ \\___/  /_/   |_|_\\___|___/ \\___/ ",
+	"                                  +----------+",
+	"                                  | MODIFIER |",
+	"                                  +----------+",
+	"                                  | undo     |",
+	"                                  | u        |",
+	"                                  |          |",
+	"                                  | redo     |",
+	"                                  | r        |",
+	"                                  +----------+",
+	"",
+	"          ============================================================",
+	"",
+	"          ___   ___   _____   ___ ___ ___ ___ ___ _____ ___  _____   __",
+	"         / __| /_\\ \\ / / __| |   \\_ _| _ \\ __/ __|_   _/ _ \\| _ \\ \\ / /",
+	"         \\__ \\/ _ \\ V /| _|  | |) | ||   / _| (__  | || (_) |   /\\ V / ",
+	"         |___/_/ \\_\\_/ |___| |___/___|_|_\\___\\___| |_| \\___/|_|_\\ |_| ",
+	"                      +------------------+---------------+",
+	"                      | MODIFIER         | DIRECTORY     |",
+	"                      +------------------+---------------+",
+	"                      | change directory | C:/           |",
+	"                      | cd               | D:/new_folder |",
+	"                      |                  |               |",
+	"                      |                  |               |",
+	"                      +------------------+---------------+",
+	"",
+	"          ============================================================",
+	"",
+	"                 __   _____ _____      _________   _____ ___ ",
+	"                 \\ \\ / /_ _| __\\ \\    / /_   _\\ \\ / / _ \\ __|",
+	"                  \\ V / | || _| \\ \\/\\/ /  | |  \\ V /|  _/ _| ",
+	"                   \\_/ |___|___| \\_/\\_/   |_|   |_| |_| |___|",
+	"                            +----------+-----------+",
+	"                            | MODIFIER | VIEWTYPES |",
+	"                            +----------+-----------+",
+	"                            | view     | 0, 1, 2, 3|",
+	"                            | v        |           |",
+	"                            |          |           |",
+	"                            +----------+-----------+",
+	"",
+	"",
+	"",
+	"===============================================================================",
+	"",
+	"                          PRESS ANY KEY TO CONTINUE...",
+	""
 };
 
 UserInterface::UserInterface(void) {
@@ -217,8 +229,8 @@ void UserInterface::setEnvironment() {
 	} catch(Exception_FileCannotOpen e) {
 		welcomeStringVector.push_back(e.getString());
 	} catch(Exception_CorruptedFile e) {
-        welcomeStringVector.push_back(e.getString());
-    }
+		welcomeStringVector.push_back(e.getString());
+	}
 
 	if(welcomeStringVector.empty()) {
 		welcomeStringVector.push_back(MESSAGE_WELCOME);
@@ -454,6 +466,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
 	}
 	*/
 	printList(createDisplayBox(helpList));
+	//scrollByAbsoluteCoord(126);
 	keyboardCommandScroll();
 
 	printTaskList(currentDate, viewType);
@@ -612,39 +625,52 @@ void UserInterface::setConsoleColorDefault() {
 /****************************************************************/
 
 int UserInterface::scrollByAbsoluteCoord(int iRows) {
-    HANDLE hStdout;
-    CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
-    SMALL_RECT srctWindow; 
- 
-    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+	HANDLE hStdout;
+	CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
+	SMALL_RECT srctWindow; 
+
+	hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
 	GetConsoleScreenBufferInfo(hStdout, &csbiInfo);
-    srctWindow = csbiInfo.srWindow; 
- 
-    if ( srctWindow.Top >= iRows ) { 
-        srctWindow.Top -= (SHORT)iRows;
-        srctWindow.Bottom -= (SHORT)iRows;
+	srctWindow = csbiInfo.srWindow; 
+
+	if (srctWindow.Top == 126 && iRows == -1) {
+		return 0;
+	} 
+
+	if ( srctWindow.Top >= iRows ) { 
+		srctWindow.Top -= (SHORT)iRows;
+		srctWindow.Bottom -= (SHORT)iRows;
 	}
 
 	SetConsoleWindowInfo(hStdout, TRUE, &srctWindow);
 
-    return iRows;
+	return iRows;
 }
 
 void UserInterface::keyboardCommandScroll() {
-    char a;
+	char a;
 
 	do {
-	a = getch();
+		a = _getch();
 
-	if(a == 72) {				     //Up Arrow
-		scrollByAbsoluteCoord(1);
-	}else if(a == 80) {				//Down Arrow
-		scrollByAbsoluteCoord(-1);
-	}else if(a == 73) {				//Page Up
-		scrollByAbsoluteCoord(1);
-	}else if(a == 81) {				//Page Down
-		scrollByAbsoluteCoord(-1);
-	}
+		if(a == 72) {				    //Up Arrow
+			scrollByAbsoluteCoord(1);
+		}else if(a == 80) {				//Down Arrow
+			scrollByAbsoluteCoord(-1);
+		}else if(a == 73) {				//Page Up
+			scrollByAbsoluteCoord(1);
+			scrollByAbsoluteCoord(1);
+			scrollByAbsoluteCoord(1);
+			scrollByAbsoluteCoord(1);
+			scrollByAbsoluteCoord(1);
+			scrollByAbsoluteCoord(1);
+		}else if(a == 81) {				//Page Down
+			scrollByAbsoluteCoord(-1);
+			scrollByAbsoluteCoord(-1);
+			scrollByAbsoluteCoord(-1);
+			scrollByAbsoluteCoord(-1);
+			scrollByAbsoluteCoord(-1);
+		}
 
 	} while(a != 13);
 }
