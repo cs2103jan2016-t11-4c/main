@@ -14,7 +14,6 @@
 #include "Command.h"
 #include "Command_Add.h"
 #include "Command_Clear.h"
-#include "Command_Delete.h"
 #include "Command_Edit.h"
 #include "Command_Exit.h"
 #include "Command_Invalid.h"
