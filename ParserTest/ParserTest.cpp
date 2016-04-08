@@ -19,7 +19,6 @@
 #include "Command_help.cpp"
 #include "Command_Redo.cpp"
 #include "Command_Clear.cpp"
-#include "Command_Delete.cpp"
 #include "Command_Edit.cpp"
 #include "Command_Exit.cpp"
 #include "Command_Invalid.cpp"
@@ -964,7 +963,7 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 	};
-
+	/*
 	TEST_CLASS(DeleteTest)
 	{
 	public:
@@ -1018,7 +1017,8 @@ namespace ParserTest
 
 
 	};
-
+	*/
+	
 	TEST_CLASS(ChangeDirectoryTest)
 	{
 	public:

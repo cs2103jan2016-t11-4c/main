@@ -552,14 +552,15 @@ void CommandPacker::nodeOneOfAddCommand(int index) {
 void CommandPacker::nodeTwoOfAddCommand(int index) {	
 	if(_tokens->isOutOfBounds(index)) {
 		packInvalidCommand();
+	} else {
+		try {
+			_task = _taskPacker->packAddTask(_tokens, index);
+			packAddCommand();
+		} catch (Exception_ExceededParameterLimit e) {
+			packInvalidCommand();
+		}
 	}
-	try {
-		_task = _taskPacker->packAddTask(_tokens, index);
-		packAddCommand();
-	} catch (Exception_ExceededParameterLimit e) {
-		packInvalidCommand();
-	}
-	
+
 	return;
 }
 
@@ -630,8 +631,6 @@ void CommandPacker::packDeleteCommand() {
 	deleteList->push_back(_singleIndex);
 
 	_command = new Command_Clear(deleteList);
-	
-	//	_command = new Command_Delete(_singleIndex);
 	
 	return;
 }

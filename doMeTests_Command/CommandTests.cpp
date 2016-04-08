@@ -15,7 +15,6 @@
 #include "Command.cpp"
 #include "Command_Add.cpp"
 #include "Command_Clear.cpp"
-#include "Command_Delete.cpp"
 #include "Command_Edit.cpp"
 #include "Command_Exit.cpp"
 #include "Command_Invalid.cpp"
@@ -61,7 +60,7 @@ namespace doMeTests_Command
 	TEST_CLASS(Command_DeleteTests)
 	{
 	public:
-
+		/*
 		TEST_METHOD(Command_DeleteTest_OutOfRange_LowValid)
 		{
 			Memory* memory = Memory::getInstance();
@@ -128,8 +127,9 @@ namespace doMeTests_Command
 			memory->ramAdd(task);
 			memory->ramAdd(task);
 			memory->ramAdd(task);
-
-			Command* command = new Command_Delete(5);
+			vector<int>* intVect = new vector<int>;
+			intVect->push_back(5);
+			Command* command = new Command_Clear(intVect);
 			bool executionStatus = command->execute();
 
 			Assert::AreEqual(true, executionStatus);
@@ -142,11 +142,13 @@ namespace doMeTests_Command
 			memory->ramAdd(task);
 			memory->ramAdd(task);
 			memory->ramAdd(task);
-
-			Command* command = new Command_Delete(100000);
+			vector<int>* intVect = new vector<int>;
+			intVect->push_back(100000);
+			Command* command = new Command_Clear(intVect);
 			bool executionStatus = command->execute();
 
 			Assert::AreEqual(true, executionStatus);
 		}
+		*/
 	};
 }
