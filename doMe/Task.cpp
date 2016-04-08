@@ -53,8 +53,19 @@ void Task::setDate1(int newDate) {
 	_date1 = newDate;		
 }
 
+//@@author A0125290M
 void Task::setDate2(int newDate) {
 	_date2 = newDate;
+
+	if(_date2 == _date1) {
+		_date1 = -1;
+	}
+
+	if(_date2 < _date1) {
+		int temp = _date1;
+		_date1 = _date2;
+		_date2 = temp;
+	}
 }
 
 void Task::setTime1(int newTime) {
@@ -68,7 +79,6 @@ void Task::setTime2(int newTime) {
 void Task::setLocation(std::string newLocation) {
 	_location = newLocation;
 }
-
 
 void Task::setDoneStatus(int newDoneStatus) {
 	_doneStatus = newDoneStatus;
