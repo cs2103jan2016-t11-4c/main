@@ -44,12 +44,15 @@ public:
     string createTaskString(Task* individualTask, int index);
 
     //overiding functions
-    virtual string getComplimentaryString(Task* individualTask);
+    virtual vector<string> getCategoryHeader();
+    virtual bool isInNextCategory(Task* individualTask, int i);
     virtual string getTimeTaskString(int time);
     virtual string getDateTaskString(int date);
     virtual string getDay(int date);
     virtual string getMonth(int date);
     virtual string getYear(int date);
+
+
 
     string integerToString(int integer);
     string timeToString(string time);
@@ -69,6 +72,7 @@ public:
 
     virtual vector<string> createDisplayList();
     vector<string> createSearchList();
+
     string getTaskString(Task* individualTask);
     vector<string> getColourCoding();
 };

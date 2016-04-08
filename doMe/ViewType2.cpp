@@ -1,7 +1,8 @@
 //@@author A0130475L
 #include "ViewType2.h"
 
-const string ViewType2::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
+//const string ViewType2::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
+const string ViewType2::MESSAGE_DISPLAY_HEADER[] = {"Today's date is %s"};
 const string ViewType2::MESSAGE_NEW_LINE = "\n";
 const string ViewType2::MESSAGE_AM = "am";
 const string ViewType2::MESSAGE_PM = "pm";
@@ -44,30 +45,24 @@ ViewType2::~ViewType2(void) {
 
 /****************************************************************/
 
-string ViewType2::getComplimentaryString(Task* individualTask) {
-    int date;
-    date = individualTask->getDate2();
+vector<string> ViewType2::getCategoryHeader() {
+    vector<string> categoryHeader;
+    sprintf_s(buffer, MESSAGE_DISPLAY_HEADER[0].c_str(), (getDateTaskString(_currentDate)).c_str());
+    categoryHeader.push_back(buffer);
 
-    switch (_headerMarker) {
+    return categoryHeader;
+}
+
+bool ViewType2::isInNextCategory(Task* individualTask, int i) {
+    switch(i) {
     case 0:
-        sprintf_s(buffer, MESSAGE_DISPLAY_HEADER.c_str(), (getDateTaskString(_currentDate)).c_str());
-        _headerMarker = 1;
-        if(_currentDate < date) {
-            _headerMarker = 2;
-             return buffer + MESSAGE_NEW_LINE;
-        } else {
-        return buffer;
+        return true;
+        break;
+    default:
+        return false;
         break;
     }
-    case 1:
-        if(_currentDate < date) {    
-            _headerMarker = 2;
-            return MESSAGE_SPACE_STRING;
-            break;
-        } 
-        break;
-    }
-    return MESSAGE_VOID_STRING;
+    return false;
 }
 
 /****************************************************************/
@@ -103,4 +98,5 @@ string ViewType2::getMonth(int date) {
 
     return MESSAGE_MONTH[month-1];
 }
+
 

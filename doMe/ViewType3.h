@@ -1,3 +1,4 @@
+//@@author A0130475L
 #pragma once
 #include "ViewType.h"
 #include "ViewType1.h"
@@ -9,7 +10,9 @@ private:
     int _headerMarker;
     int _dayToEndOfWeek;
 
-    string getComplimentaryString(Task* individualTask);
+    //overwriting funciton
+    bool isInNextCategory(Task* individualTask, int i);
+    vector<string> getCategoryHeader();
 
     static const int END_OF_WEEK;
     static const string MESSAGE_NEW_LINE;

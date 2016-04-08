@@ -1,3 +1,4 @@
+//@@author A0130475L
 #pragma once
 #include <string>
 
@@ -97,6 +98,7 @@ public:
     static const string MESSAGE_EXIT_SEARCH;
     static const string MESSAGE_VIEW_TYPE;
     static const string MESSAGE_CHANGE_FILE_DIRECTORY;
+    static const string MESSAGE_DEFAULT_FILE_DIRECTORY;
     static const string MESSAGE_EXIT_HELP;
     static const string MESSAGE_REDO;
 
