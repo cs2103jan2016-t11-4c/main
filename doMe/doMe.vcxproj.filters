@@ -112,6 +112,9 @@
     <ClCompile Include="CommandFeedback.cpp">
       <Filter>Source Files\UserInterface Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Exception_CorruptedFile.cpp">
+      <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">

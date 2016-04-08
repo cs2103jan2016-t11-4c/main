@@ -26,6 +26,7 @@
     <ClCompile Include="Exception_InvalidCommand.cpp" />
     <ClCompile Include="Command_Redo.cpp" />
     <ClCompile Include="Command_Help.cpp" />
+    <ClCompile Include="Exception_CorruptedFile.cpp" />
     <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />

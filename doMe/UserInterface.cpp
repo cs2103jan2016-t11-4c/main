@@ -217,7 +217,7 @@ void UserInterface::setEnvironment() {
 	} catch(Exception_FileCannotOpen e) {
 		welcomeStringVector.push_back(e.getString());
 	} catch(Exception_CorruptedFile e) {
-        //welcomeStringVector.push_back(e.getString());
+        welcomeStringVector.push_back(e.getString());
     }
 
 	if(welcomeStringVector.empty()) {

@@ -40,7 +40,7 @@ bool Command_Edit::execute() {
 }
 
 void Command_Edit::editAllTasks() {
-	for(unsigned int i = 0; i < _memory->ramGetSize(); i++) {
+	for(int i = 0; i < _memory->ramGetSize(); i++) {
 		_edittedTaskPtrList.push_back(_memory->ramGetTask(i));
 		_oldTaskList.push_back(*_edittedTaskPtrList.back());
 

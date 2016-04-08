@@ -8,7 +8,10 @@
 #include "Task.h"
 #include "Storage.h"
 #include "Settings.h"
+#include "Exception_CorruptedFile.h"
 using namespace std;
+
+class Exception_CorruptedFile;
 
 class RAM {
 private:

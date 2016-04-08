@@ -28,7 +28,7 @@ vector<string> Storage::retrieveData(string directory) {
         }
         readFile.close();
     }else {
-//    	throw Exception_FileCannotOpen(directory + " file does not exist yet and will be created after first save.");
+    	throw Exception_FileCannotOpen(directory + " file does not exist yet and will be created after first save.");
     }
 	
 	return dataVector;
@@ -45,7 +45,7 @@ void Storage::saveData(vector<string> updatedData, string directory) {
         writeFile.close();
     }
     else {
- //   	throw Exception_FileCannotOpen("Error opening " + directory);
+    	throw Exception_FileCannotOpen("Error opening " + directory);
     }
 }
 

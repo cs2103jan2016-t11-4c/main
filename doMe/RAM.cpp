@@ -159,11 +159,10 @@ void RAM::loadData() {
 	}catch(Exception_FileCannotOpen e) {
 		saveData();
 		throw e;
+	}catch(Exception_CorruptedFile e) {
+		saveData();
+		throw e;
 	}
-	//	catch(Exception_CorruptedFile e) {
-	//		saveData();
-	//		throw e;
-	//	}
 }
 
 void RAM::saveData() {
@@ -198,9 +197,7 @@ vector<string> RAM::ramGetVector() {
 
 void RAM::ramLoadVector(vector<string>& existingData) {
 	if(existingData.size() % 8 != 0) {
-		return;
-		//		Exception_CorruptedFile e();
-		//		throw e;
+		throw Exception_CorruptedFile();
 	}
 
 	for(unsigned int i = 0; i < existingData.size(); i+=8) {
