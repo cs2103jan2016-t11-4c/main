@@ -15,6 +15,7 @@
     <ClCompile Include="Commons.cpp" />
     <ClCompile Include="Exception_ExceededParameterLimit.cpp" />
     <ClCompile Include="Exception_FileCannotOpen.cpp" />
+    <ClCompile Include="Exception_FirstTimeUser.cpp" />
     <ClCompile Include="InputTokens.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -55,6 +56,7 @@
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Exception_ExceededParameterLimit.h" />
     <ClInclude Include="Exception_FileCannotOpen.h" />
+    <ClInclude Include="Exception_FirstTimeUser.h" />
     <ClInclude Include="Exception_InvalidCommand.h" />
     <ClInclude Include="Command_Redo.h" />
     <ClInclude Include="Command_Help.h" />

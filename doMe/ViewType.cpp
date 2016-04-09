@@ -15,7 +15,7 @@ const string ViewType::MESSAGE_EMPTY_LIST = "                               <lis
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
 const string ViewType::COLOUR_DONE = "DONE";
-
+const string ViewType::COLOUR_CATEGORY = "CATEGORY";
 
 ViewType::ViewType(void) {
 }
@@ -83,7 +83,7 @@ vector<string> ViewType::createDisplayList() {
 
         if(!categoryHeader.empty()) {
         _displayList.push_back(categoryHeader[i]);
-        _colourCoding.push_back(COLOUR_DEFAULT);
+        _colourCoding.push_back(COLOUR_CATEGORY);
         i++;
         }
         while(taskListIter != (*_taskList).end()) {
@@ -92,7 +92,7 @@ vector<string> ViewType::createDisplayList() {
                 _colourCoding.push_back(COLOUR_DEFAULT);
 
                 _displayList.push_back(categoryHeader[i]);
-                _colourCoding.push_back(COLOUR_DEFAULT);
+                _colourCoding.push_back(COLOUR_CATEGORY);
                 i++;
             }
 

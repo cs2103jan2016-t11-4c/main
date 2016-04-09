@@ -7,7 +7,6 @@
 
 class ViewType3 : public ViewType {
 private:
-    int _headerMarker;
     int _dayToEndOfWeek;
 
     //overwriting funciton
@@ -17,6 +16,7 @@ private:
     static const int END_OF_WEEK;
     static const string MESSAGE_NEW_LINE;
     static const string MESSAGE_TIMING_SEPERATOR;
+    static const string MESSAGE_TODAY;
     static const string MESSAGE_DISPLAY_HEADER[];
     
 public:

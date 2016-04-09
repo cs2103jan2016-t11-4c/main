@@ -40,6 +40,7 @@ public:
     static const string COLOUR_DEFAULT;
     static const string COLOUR_NEW;
     static const string COLOUR_DONE;
+    static const string COLOUR_CATEGORY;
 
     string createTaskString(Task* individualTask, int index);
 

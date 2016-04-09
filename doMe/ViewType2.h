@@ -5,8 +5,6 @@
 
 class ViewType2 : public ViewType {
 private:
-    int _headerMarker;
-
     static const string MESSAGE_DISPLAY_HEADER[];
     static const string MESSAGE_TIMING_SEPERATOR;
     static const string MESSAGE_NEW_LINE;

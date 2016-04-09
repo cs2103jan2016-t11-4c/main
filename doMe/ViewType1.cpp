@@ -16,11 +16,9 @@ ViewType1::ViewType1(void) {
 ViewType1::ViewType1(list<Task*> *taskList) {
     _taskList = taskList;
     _currentDate = 0;
-    _headerMarker = 0;
 }
 
 ViewType1::ViewType1(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
-    _headerMarker = 0;
 }
 
 ViewType1::~ViewType1(void) {

@@ -35,6 +35,7 @@ void Settings::loadSettings() {
             settingsLoadVector(storage->retrieveData(FILE_SETTINGS_NAME));
         } else {
             saveSettings();
+            throw Exception_FirstTimeUser();
         }
     } catch (Exception_FileCannotOpen e) {
         saveSettings();

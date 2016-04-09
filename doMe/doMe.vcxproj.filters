@@ -115,6 +115,9 @@
     <ClCompile Include="Exception_CorruptedFile.cpp">
       <Filter>Source Files\Exception Classes</Filter>
     </ClCompile>
+    <ClCompile Include="Exception_FirstTimeUser.cpp">
+      <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -227,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="CommandFeedback.h">
       <Filter>Header Files\UserInterface Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception_FirstTimeUser.h">
+      <Filter>Header Files\Exception Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

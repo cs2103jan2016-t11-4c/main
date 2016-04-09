@@ -6,6 +6,7 @@
 #include <sstream>
 #include <windows.h>
 #include "Storage.h"
+#include "Exception_FirstTimeUser.h"
 using namespace std;
 
 

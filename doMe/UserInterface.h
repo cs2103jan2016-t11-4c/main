@@ -92,13 +92,14 @@ public:
 
     //window text colour
     enum Colour {
-        BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GRAY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_AQUA, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
+        BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GREY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_AQUA, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
     };
     static const string COLOUR_DEFAULT;
     static const string COLOUR_NEW;
     static const string COLOUR_DONE;
     static const string COLOUR_SEARCH;
     static const string COLOUR_HELP;
+    static const string COLOUR_CATEGORY;
 
     void changeListColour(string colourCoding);
     void setConsoleColor(int background, int foreground);

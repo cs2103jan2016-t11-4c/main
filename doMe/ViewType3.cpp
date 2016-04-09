@@ -4,8 +4,10 @@
 const int ViewType3::END_OF_WEEK = 6;
 const string ViewType3::MESSAGE_NEW_LINE = "\n";
 const string ViewType3::MESSAGE_TIMING_SEPERATOR = "-";
+const string ViewType3::MESSAGE_TODAY = "Today";
 const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
-    "<Past>",
+    "<Done>",
+    "<No Deadlines>",
     "<Today>",
     "<This Week>",
 	"<Future>"
@@ -17,12 +19,10 @@ ViewType3::ViewType3(void) {
 ViewType3::ViewType3(list<Task*> *taskList) {
     _taskList = taskList;
     _currentDate = 0;
-    _headerMarker = 0;
 }
 
 ViewType3::ViewType3(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
     Commons commons;
-    _headerMarker = 0;
     _dayToEndOfWeek = END_OF_WEEK - commons.getDayNumber(_currentDate);
 }
 
@@ -45,8 +45,16 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
     switch(i) {
     case 0:
         return true;
-        break;
+        break; 
     case 1:
+        if(individualTask->getDoneStatus() == false) {
+        return true;
+        break;
+        } else {
+            return false;
+            break;
+        }
+    case 2:
         if(date >= _currentDate) {
             return true;
             break;
@@ -54,7 +62,7 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
             return false;
             break;
         }
-    case 2:
+    case 3:
         if(date > _currentDate) {
             return true;
             break;
@@ -63,7 +71,7 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
             break;
         }
 
-    case 3:
+    case 4:
         if(date > commons.addToDate(_dayToEndOfWeek,_currentDate) ) {
             return true;
             break;
@@ -96,7 +104,11 @@ string ViewType3::getDateTaskString(int date) {
     weekRange = commons.addToDate(_dayToEndOfWeek, _currentDate);
 
     if(_currentDate <= date && date <= weekRange && date != -1) {
+        if(_currentDate == date) {
+            return MESSAGE_TODAY;
+        } else {
         return commons.getDateStringDay(commons.getDayNumber(date));
+        }
     } else {
         if(date > 0) {
             day = getDay(date);
