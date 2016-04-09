@@ -35,7 +35,8 @@ ViewType::ViewType(list<Task*> *taskList, int currentDate) {
     Commons commons;
     _taskList = taskList;
     _currentDate = currentDate;
-    _dayToEndOfWeek = END_OF_WEEK - commons.getDayNumber(_currentDate);
+
+    _dayToEndOfWeek  = END_OF_WEEK - commons.getDayNumber(_currentDate);
 }
 
 ViewType::~ViewType(void) {

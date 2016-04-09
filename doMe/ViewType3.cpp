@@ -83,7 +83,7 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
 /****************************************************************/
 
 string ViewType3::getTimeTaskString(int time) {
-    ViewType1 view;
+    ViewType1 view(_taskList, _currentDate);
     return view.getTimeTaskString(time);
 }
 
@@ -117,6 +117,6 @@ string ViewType3::getDateTaskString(int date) {
 }
 
 string ViewType3::getMonth(int date) {
-    ViewType2 view;
+    ViewType2 view(_taskList, _currentDate);
     return view.getMonth(date);
 }

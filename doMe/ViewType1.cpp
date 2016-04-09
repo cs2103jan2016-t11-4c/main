@@ -136,6 +136,7 @@ string ViewType1::getDateTaskString(int date) {
     int weekRange;
     Commons commons;
 
+    int test = _dayToEndOfWeek;
     weekRange = commons.addToDate(_dayToEndOfWeek, _currentDate);
 
     if(_currentDate <= date && date <= weekRange && date > 0) {
@@ -146,7 +147,7 @@ string ViewType1::getDateTaskString(int date) {
         }
     } else {
         if(date > 0) {
-            if(date <= weekRange + NO_OF_DAYS_IN_WEEK) {
+            if(weekRange < date && date <= weekRange + NO_OF_DAYS_IN_WEEK) {
                 return MESSAGE_NEXT + commons.getDateStringDay(commons.getDayNumber(date));
             } else {
                 day = getDay(date);

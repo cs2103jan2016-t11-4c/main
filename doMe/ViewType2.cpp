@@ -110,7 +110,9 @@ string ViewType2::getTimeTaskString(int time) {
 }
 
 string ViewType2::getDateTaskString(int date) {
-    ViewType1 view;
+    ViewType1 view(_taskList, _currentDate);
+
+    string s = view.getDateTaskString(date);
     return view.getDateTaskString(date);
 }
 
