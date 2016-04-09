@@ -3,32 +3,45 @@
 
 const int ViewType::END_OF_WEEK = 6;
 const int ViewType::NO_OF_DAYS_IN_WEEK = 7;
+const int ViewType::TIME_STRING_INT = 4;//Meridiem size (am/pm) + 2
+const int ViewType::TIME_MIDDAY = 1200;
 const string ViewType::MESSAGE_TODAY = "Today";
 const string ViewType::MESSAGE_DISPLAY_CONTENTS = "%d. %s";
 const string ViewType::MESSAGE_DATE_SEPERATOR = "/";
 const string ViewType::MESSAGE_TIME_SEPERATOR = ":";
 const string ViewType::MESSAGE_TIMING_SEPERATOR = "- ";
+const string ViewType::MESSAGE_MONTH_SEPERATOR = "-";
+const string ViewType::MESSAGE_NEXT = "Next ";
+const string ViewType::MESSAGE_AM = "am";
+const string ViewType::MESSAGE_PM = "pm";
 const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
 const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline>";
-const string ViewType::MESSAGE_EMPTY_LIST[] = {
-    "                               <list is empty!>",
-    "                 Type \"HELP\" to see list of available commands."
-};
-//const string ViewType::MESSAGE_DISPLAY_HEADER[] = {""};
-
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
 const string ViewType::COLOUR_DONE = "DONE";
 const string ViewType::COLOUR_CATEGORY = "CATEGORY";
+const string ViewType::MESSAGE_EMPTY_LIST[] = {
+    "                               <list is empty!>",
+    "                 Type \"HELP\" to see list of available commands."
+};
+const string ViewType::MESSAGE_MONTH[] = { 
+    "Jan", 
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+}; 
 
 ViewType::ViewType(void) {
-}
-
-ViewType::ViewType(list<Task*> *taskList) {
-    _taskList = taskList;
-    _currentDate = 0;
 }
 
 ViewType::ViewType(list<Task*> *taskList, int currentDate) {
@@ -43,38 +56,6 @@ ViewType::~ViewType(void) {
 }
 
 /****************************************************************/
-/*
-vector<string> ViewType::createDisplayList() {
-if((*_taskList).empty()) {
-_displayList.push_back(MESSAGE_EMPTY_LIST);
-} else {
-list<Task*>::iterator taskListIter = ((*_taskList).begin());
-string complimentaryString;
-Memory* memory;
-int index = 1;
-
-memory = Memory::getInstance();
-Task* recentTask = memory->ramGetLastModifiedTask();
-
-while(taskListIter != (*_taskList).end()) {
-complimentaryString = getComplimentaryString(*taskListIter);
-
-if(complimentaryString != MESSAGE_VOID_STRING) {
-_displayList.push_back(complimentaryString);
-_colourCoding.push_back(COLOUR_DEFAULT);
-}
-
-if(complimentaryString != MESSAGE_SPACE_STRING) {
-_colourCoding.push_back(colourCoderTag(*taskListIter, recentTask));
-_displayList.push_back(createTaskString(*taskListIter,index));
-index++;
-taskListIter++;
-}
-}
-}
-return _displayList;
-}
-*/
 
 vector<string> ViewType::createDisplayList() {
     if((*_taskList).empty()) {
@@ -116,27 +97,7 @@ vector<string> ViewType::createDisplayList() {
     return _displayList;
 }
 
-vector<string> ViewType::getCategoryHeader() {
-    vector<string> null;
-    return null;
-}
-
-bool ViewType::isInNextCategory(Task* individualTask, int i) {
-    return true;
-}
-
-string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
-    if(individualTask->getDoneStatus() == 1) {
-        return COLOUR_DONE;
-    } else {
-        if(recentTask == individualTask) {
-            return COLOUR_NEW;
-        } 
-        return COLOUR_DEFAULT;
-    }
-}
-
-//search list without complimentary string
+//search list without category
 vector<string> ViewType::createSearchList() {
     if((*_taskList).empty()) {
         size_t size = (sizeof(MESSAGE_EMPTY_LIST)/sizeof(*MESSAGE_EMPTY_LIST));
@@ -178,27 +139,23 @@ string ViewType::getTaskString(Task* individualTask) {
     return taskString;
 }
 
-/****************************************************************/
-
-string ViewType::integerToString(int integer) {
-    ostringstream oss;
-    oss << integer;  
-    return oss.str();
+string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
+    if(individualTask->getDoneStatus() == 1) {
+        return COLOUR_DONE;
+    } else {
+        if(recentTask == individualTask) {
+            return COLOUR_NEW;
+        } 
+        return COLOUR_DEFAULT;
+    }
 }
 
-string ViewType::timeToString(string time) {
-    string timeString = time;
-    if(time.size() < 3) {
-        timeString.insert(0,"0");
-    }
-    if(time.size()  < 2) {
-        timeString.insert(0,"0");
-    }
-    return timeString;
+vector<string> ViewType::getColourCoding() {
+    return _colourCoding;
 }
 
 /****************************************************************/
-//default format of ordering: name - (location) time1 date1 - time2 date2
+
 string ViewType::formatTaskString(string name , string date1 , string date2 , string time1 , string time2 , string location) {
     string taskString;
     string dateString;
@@ -254,25 +211,68 @@ string ViewType::formateDateString(string s1, string s2) {
 }
 
 /****************************************************************/
+
+string ViewType::integerToString(int integer) {
+    ostringstream oss;
+    oss << integer;  
+    return oss.str();
+}
+
+string ViewType::timeToString(string time) {
+    string timeString = time;
+    if(time.size() < 3) {
+        timeString.insert(0,"0");
+    }
+    if(time.size()  < 2) {
+        timeString.insert(0,"0");
+    }
+    return timeString;
+}
+
+/****************************************************************/
 /*Overriding functions*/
 /****************************************************************/
-//headers + additional lines to compliment to viewtype (default void)
+
+vector<string> ViewType::getCategoryHeader() {
+    vector<string> null;
+    return null;
+}
+
+bool ViewType::isInNextCategory(Task* individualTask, int i) {
+    return true;
+}
 
 string ViewType::getDateTaskString(int date) {
     string dateString;
     string day;
     string month;
     string year;
+    int weekRange;
+    Commons commons;
 
-    if(date > 0) {
-        day = getDay(date);
-        month = getMonth(date);
-        year = getYear(date);
-        dateString = day + MESSAGE_DATE_SEPERATOR + month + MESSAGE_DATE_SEPERATOR + year;
+    int test = _dayToEndOfWeek;
+    weekRange = commons.addToDate(_dayToEndOfWeek, _currentDate);
 
-        return dateString;
+    if(_currentDate <= date && date <= weekRange && date > 0) {
+        if(_currentDate == date) {
+            return MESSAGE_TODAY;
+        } else {
+            return commons.getDateStringDay(commons.getDayNumber(date));
+        }
     } else {
-        return MESSAGE_VOID_STRING;
+        if(date > 0) {
+            if(weekRange < date && date <= weekRange + NO_OF_DAYS_IN_WEEK) {
+                return MESSAGE_NEXT + commons.getDateStringDay(commons.getDayNumber(date));
+            } else {
+                day = getDay(date);
+                month = getMonth(date);
+                dateString = day + MESSAGE_MONTH_SEPERATOR + month;
+
+                return dateString;
+            }
+        } else {
+            return MESSAGE_VOID_STRING;
+        }
     }
 }
 
@@ -280,22 +280,25 @@ string ViewType::getTimeTaskString(int time) {
     string timeString;
 
     if(time >= 0) {
-        timeString = integerToString(time);
-        timeString = timeToString(timeString);
+        if(time > TIME_MIDDAY) {
+            time = time - TIME_MIDDAY;
+            timeString = integerToString(time);
+            timeString = timeString + MESSAGE_PM;
+        } else {
+            if(time < 100) {
+                time = time + TIME_MIDDAY;
+            } 
 
-        timeString.insert(timeString.size() - 2,MESSAGE_TIME_SEPERATOR);
-
+            timeString = integerToString(time);
+            timeString = timeString + MESSAGE_AM;
+        }
+        timeString.insert(timeString.size() - TIME_STRING_INT, MESSAGE_TIME_SEPERATOR);
         return timeString;
+
     } else {
         return MESSAGE_VOID_STRING;
     }
 }
-
-vector<string> ViewType::getColourCoding() {
-    return _colourCoding;
-}
-
-/****************************************************************/
 
 string ViewType::getDay(int date) {
     ostringstream oss;
@@ -304,10 +307,12 @@ string ViewType::getDay(int date) {
 }
 
 string ViewType::getMonth(int date) {
-    ostringstream oss;
+    int month;
     date = date / 100;
-    oss << date % 100;
-    return oss.str();
+    month = date % 100;
+    assert((month <= 12) && (month > 0));
+
+    return MESSAGE_MONTH[month-1];
 }
 
 string ViewType::getYear(int date) {

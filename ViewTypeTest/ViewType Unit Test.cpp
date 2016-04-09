@@ -1,35 +1,34 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-//#include "TesterHeader.h"
+#include "TesterHeader.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace ViewTypeTest{		
-    TEST_CLASS(ViewTypeCLASS) {
-		/*
+    TEST_CLASS(ViewType0CLASS) {		
 public:
-    TEST_METHOD(ViewType_getTaskString) {
+    TEST_METHOD(ViewType0_getTaskString) {
         Task* task;
-        ViewType testView;
-        string expectedString = "read book (home) 13:00 19/8/2016 - 16:00 21/8/2016";
+        ViewType0 testView;
+        string expectedString = "read book (home) (13:00 19/8/2016 - 16:00 21/8/2016)";
         string actualString;
 
         task = new Task("read book" , 20160819 , 20160821 , 1300 , 1600 , "home");
         actualString = testView.getTaskString(task);
         Assert::AreEqual(expectedString, actualString);
     }
-
-    TEST_METHOD(ViewType_CreateDisplayList) {
+    
+    TEST_METHOD(ViewType0_CreateDisplayList) {
         vector<string> actualDisplayList;
         int i = 0;
-        ViewType testView;
+        ViewType0 testView;
         list<Task*> ls;
         string expectedString[6] = { 
-            "1. read book (home) 13:00 21/8/2016", 
-            "2. read book (home) 13:00 19/8/2016 - 16:00 21/8/2016",             
-            "3. read book (home) 21/9/2016",
-            "4. read book (college) 1:00 - 2:00 22/9/2016",
-            "5. read book 1:00 - 2:00 23/10/2016",
+            "1. read book (home) (13:00 21/8/2016)", 
+            "2. read book (home) (13:00 19/8/2016 - 16:00 21/8/2016)",             
+            "3. read book (home) (21/9/2016)",
+            "4. read book (college) (1:00 - 2:00 22/9/2016)",
+            "5. read book (1:00 - 2:00 23/10/2016)",
             "6. read book (college) <No deadline>"
         };
 
@@ -52,18 +51,18 @@ public:
         }
 
     }
-
-    TEST_METHOD(ViewType_CreateSearchList) {
+    
+    TEST_METHOD(ViewType0_CreateSearchList) {
         vector<string> actualDisplayList;
         int i = 0;
-        ViewType testView;
+        ViewType0 testView;
         list<Task*> ls;
         string expectedString[6] = { 
-            "1. read book (home) 13:00 21/8/2016", 
-            "2. read book (home) 13:00 19/8/2016 - 16:00 21/8/2016",             
-            "3. read book (home) 21/9/2016",
-            "4. read book (college) 1:00 - 2:00 22/9/2016",
-            "5. read book 1:00 - 2:00 23/10/2016",
+            "1. read book (home) (13:00 21/8/2016)", 
+            "2. read book (home) (13:00 19/8/2016 - 16:00 21/8/2016)",             
+            "3. read book (home) (21/9/2016)",
+            "4. read book (college) (1:00 - 2:00 22/9/2016)",
+            "5. read book (1:00 - 2:00 23/10/2016)",
             "6. read book (college) <No deadline>"
         };
 
@@ -90,17 +89,18 @@ public:
 
     TEST_CLASS(ViewType1CLASS) {
 public:
+    
     TEST_METHOD(ViewType1_getTaskString) {
         Task* task;
         ViewType1 testView;
-        string expectedString = "read book (home) 1:00pm 19/8/2016 - 4:00pm 21/8/2016";
+        string expectedString = "read book (home) (1:00pm 19-Aug - 4:00pm 21-Aug)";
         string actualString;
 
         task = new Task("read book" , 20160819 , 20160821 , 1300 , 1600 , "home");
         actualString = testView.getTaskString(task);
         Assert::AreEqual(expectedString, actualString);
     }
-
+    /*
     TEST_METHOD(ViewType1_CreateDisplayList) {
         vector<string> actualDisplayList;
         int i = 0;

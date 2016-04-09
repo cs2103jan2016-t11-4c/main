@@ -118,6 +118,9 @@
     <ClCompile Include="Exception_FirstTimeUser.cpp">
       <Filter>Source Files\Exception Classes</Filter>
     </ClCompile>
+    <ClCompile Include="ViewType0.cpp">
+      <Filter>Source Files\UserInterface Classes\ViewType</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Command.h">
@@ -233,6 +236,9 @@
     </ClInclude>
     <ClInclude Include="Exception_FirstTimeUser.h">
       <Filter>Header Files\Exception Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="ViewType0.h">
+      <Filter>Header Files\UserInterface Classes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -74,7 +74,7 @@ string CommandFeedback::getTaskString(Task* task, int viewType) {
         taskListType = new ViewType3();
         break;
     default:
-        taskListType = new ViewType();
+        taskListType = new ViewType0();
         break;
     }
 

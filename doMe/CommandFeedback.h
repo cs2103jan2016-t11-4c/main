@@ -5,6 +5,7 @@
 #include "Command.h"
 #include "Task.h"
 #include "ViewType.h"
+#include "ViewType0.h"
 #include "ViewType1.h"
 #include "ViewType2.h"
 #include "ViewType3.h"

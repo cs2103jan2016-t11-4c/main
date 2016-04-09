@@ -416,7 +416,7 @@ void UserInterface::printTaskList(int currentDate, int viewType) {
         taskListType = new ViewType3(_taskList , currentDate);
         break;
     default:
-        taskListType = new ViewType(_taskList , currentDate);
+        taskListType = new ViewType0(_taskList , currentDate);
         break;
     }
 
@@ -435,16 +435,16 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
 
     switch(viewType) {
     case 1:
-        taskListType = new ViewType1(_taskList);
+        taskListType = new ViewType1(_taskList, currentDate);
         break;
     case 2:
-        taskListType = new ViewType2(_taskList);
+        taskListType = new ViewType2(_taskList, currentDate);
         break;
     case 3:
-        taskListType = new ViewType3(_taskList , currentDate);
+        taskListType = new ViewType3(_taskList, currentDate);
         break;
     default:
-        taskListType = new ViewType(_taskList);
+        taskListType = new ViewType0(_taskList, currentDate);
         break;
     }
 
@@ -467,7 +467,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     changeListColour(COLOUR_HELP);
     printList(helpList);
 
-    scrollByAbsoluteCoord(120);
+    scrollByAbsoluteCoord(121);
     keyboardCommandScroll();
 
     printTaskList(currentDate, viewType);
@@ -552,37 +552,6 @@ void UserInterface::setDisplayBoxLength(int size) {
 void UserInterface::resizeWindow(int width, int length) {
     sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), width, length);
     system(buffer);
-}
-/*
-void UserInterface::setWindowsRowsColumns(int size) {
-    resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
-
-    //DISPLAY_LENGTH = getBiggerDisplaySize(DISPLAY_DEFAULT_LENGTH, size + DISPLAY_SYNC_LENGTH);
-
-    synchronizeWindowsDisplaySize(DISPLAY_WIDTH, DISPLAY_LENGTH);
-    resizeWindow(DISPLAY_WIDTH, DISPLAY_LENGTH);
-    _memory->changeWindowSize(DISPLAY_WIDTH, DISPLAY_LENGTH);
-
-    /*current window size
-    CONSOLE_SCREEN_BUFFER_INFO csbi;
-    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
-    width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
-    length = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-    */
-/*
-}
-
-int UserInterface::getBiggerDisplaySize(int size1, int size2) {
-    if(size1 < size2) {
-        return size2;
-    } else {
-        return size1;
-    }
-}
-
-void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
-    DISPLAY_BOX_WIDTH = width - DISPLAY_SYNC_WIDTH;
-    DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH + 1;
 }
 
 /****************************************************************/

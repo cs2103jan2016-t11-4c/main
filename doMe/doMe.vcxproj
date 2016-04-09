@@ -47,6 +47,7 @@
     <ClCompile Include="Task.cpp" />
     <ClCompile Include="UserInterface.cpp" />
     <ClCompile Include="ViewType.cpp" />
+    <ClCompile Include="ViewType0.cpp" />
     <ClCompile Include="ViewType1.cpp" />
     <ClCompile Include="ViewType2.cpp" />
     <ClCompile Include="ViewType3.cpp" />
@@ -87,6 +88,7 @@
     <ClInclude Include="Task.h" />
     <ClInclude Include="UserInterface.h" />
     <ClInclude Include="ViewType.h" />
+    <ClInclude Include="ViewType0.h" />
     <ClInclude Include="ViewType1.h" />
     <ClInclude Include="ViewType2.h" />
     <ClInclude Include="ViewType3.h" />

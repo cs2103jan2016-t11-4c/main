@@ -1,7 +1,6 @@
 //@@author A0130475L
 #include "ViewType3.h"
 
-const string ViewType3::MESSAGE_TIMING_SEPERATOR = "-";
 const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
     "<Done>",
     "<No Deadlines>",
@@ -11,11 +10,6 @@ const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
 };
 
 ViewType3::ViewType3(void) {
-}
-
-ViewType3::ViewType3(list<Task*> *taskList) {
-    _taskList = taskList;
-    _currentDate = 0;
 }
 
 ViewType3::ViewType3(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
@@ -81,42 +75,3 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
 }
 
 /****************************************************************/
-
-string ViewType3::getTimeTaskString(int time) {
-    ViewType1 view(_taskList, _currentDate);
-    return view.getTimeTaskString(time);
-}
-
-string ViewType3::getDateTaskString(int date) {
-    string dateString;
-    string day;
-    string month;
-    string year;
-    int weekRange;
-    Commons commons;
-
-    weekRange = commons.addToDate(_dayToEndOfWeek, _currentDate);
-
-    if(_currentDate <= date && date <= weekRange && date != -1) {
-        if(_currentDate == date) {
-            return MESSAGE_TODAY;
-        } else {
-            return commons.getDateStringDay(commons.getDayNumber(date));
-        }
-    } else {
-        if(date > 0) {
-            day = getDay(date);
-            month = getMonth(date);
-            dateString = day + MESSAGE_TIMING_SEPERATOR + month;
-
-            return dateString;
-        } else {
-            return MESSAGE_VOID_STRING;
-        }
-    }
-}
-
-string ViewType3::getMonth(int date) {
-    ViewType2 view(_taskList, _currentDate);
-    return view.getMonth(date);
-}

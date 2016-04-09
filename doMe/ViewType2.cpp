@@ -1,27 +1,6 @@
 //@@author A0130475L
 #include "ViewType2.h"
 
-//const string ViewType2::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
-const string ViewType2::MESSAGE_AM = "am";
-const string ViewType2::MESSAGE_PM = "pm";
-const string ViewType2::MESSAGE_TIMING_SEPERATOR = "-";
-const int ViewType2::TIME_STRING_INT = 4;//Meridiem size (am/pm) + 2
-const int ViewType2::TIME_MIDDAY = 1200;
-const string ViewType2::MESSAGE_MONTH[] = { 
-    "Jan", 
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec"
-}; 
-
 const string ViewType2::MESSAGE_DISPLAY_HEADER[] = {
     "<Done, No Deadlines, Past>",
     "<TODAY>",
@@ -30,14 +9,7 @@ const string ViewType2::MESSAGE_DISPLAY_HEADER[] = {
     "<Future>"
 };
 
-
-
 ViewType2::ViewType2(void) {
-}
-
-ViewType2::ViewType2(list<Task*> *taskList) {
-    _taskList = taskList;
-    _currentDate = 0;
 }
 
 ViewType2::ViewType2(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
@@ -103,26 +75,5 @@ bool ViewType2::isInNextCategory(Task* individualTask, int i) {
 }
 
 /****************************************************************/
-
-string ViewType2::getTimeTaskString(int time) {
-    ViewType1 view;
-    return view.getTimeTaskString(time);
-}
-
-string ViewType2::getDateTaskString(int date) {
-    ViewType1 view(_taskList, _currentDate);
-
-    string s = view.getDateTaskString(date);
-    return view.getDateTaskString(date);
-}
-
-string ViewType2::getMonth(int date) {
-    int month;
-    date = date / 100;
-    month = date % 100;
-    assert((month <= 12) && (month > 0));
-
-    return MESSAGE_MONTH[month-1];
-}
 
 
