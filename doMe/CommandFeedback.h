@@ -50,7 +50,7 @@ public:
     string validNotificationAdd(Task* task, int viewType, string textFileName); 
     string validNotificationDelete(Task* task, int viewType, string textFileName);
     string validNotificationDeleteMultiple(vector<int>* deleteIndex, int viewType, string textFileName);
-    string validNotificationEdit(Task* task, int viewType);
+    string validNotificationEdit(Task* task, int viewType, int doneStatus);
     string validNotificationClear(string textFileName);
     string validNotificationSearchTerm(string searchTerm);
     string validNotificationExitSearch(); 
@@ -68,7 +68,7 @@ public:
     string invalidNotificationSaveFileDirectory();
     string invalidNotificationUndo();
     string invalidNotificationRedo();
-    
+
 
     //undo notification
     string undoNotificationAdd(Command* executionMessage, int viewType);
@@ -116,6 +116,8 @@ public:
     static const string MESSAGE_UNDO_ADD;
     static const string MESSAGE_UNDO_DELETE;
     static const string MESSAGE_UNDO_EDIT;
+    static const string MESSAGE_UNDO_EDIT_DONE;
+    static const string MESSAGE_UNDO_EDIT_UNDONE;
     static const string MESSAGE_UNDO_CLEAR;
     static const string MESSAGE_UNDO_VIEW_TYPE;
     static const string MESSAGE_UNDO_CHANGE_DIRECTORY;

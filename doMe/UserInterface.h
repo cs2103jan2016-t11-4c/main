@@ -137,6 +137,7 @@ public:
     static const string MESSAGE_COMMAND_PROMPT;
     static const string MESSAGE_DEFAULT_DIRECTORY;
     static const string MESSAGE_DIRECTORY_BOX;
+    static const string MESSAGE_WELCOME_SCREEN[];
     static const string MESSAGE_HELP_TIPS[];
 };
 

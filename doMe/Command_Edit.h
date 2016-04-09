@@ -34,5 +34,6 @@ public:
 	Task* getTask();
 	vector<int>* getEditList();
 	CommandType getCommandType();
+    int getDoneStatus();
 	string getStringForm();
 };

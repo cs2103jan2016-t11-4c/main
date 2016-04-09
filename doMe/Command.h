@@ -29,6 +29,7 @@ public:
 	virtual int getViewType() {return 0;}
 	virtual vector<int>* getDeleteList() {return NULL;}
 	virtual vector<int>* getEditList() {return NULL;}
+    virtual int getDoneStatus() {return 0;}
 	virtual string getStringForm() {return "";}
 
 	virtual void setUndoneCommand(Command* command) {}

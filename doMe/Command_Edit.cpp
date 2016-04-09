@@ -131,6 +131,10 @@ CommandType Command_Edit::getCommandType() {
 	return _commandType;
 }
 
+int Command_Edit::getDoneStatus() {
+    return _newDoneStatus;
+}
+
 string Command_Edit::getStringForm() {
 	string s = "Edit index: " + to_string(_index) + " task- ";
 	s += "name: " + _newName;

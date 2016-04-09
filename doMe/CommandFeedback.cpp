@@ -37,6 +37,8 @@ const string CommandFeedback::MESSAGE_UNDO_COMMAND = "Previous command undone.";
 const string CommandFeedback::MESSAGE_UNDO_ADD = "Undid (ADD) of \"%s\".";
 const string CommandFeedback::MESSAGE_UNDO_DELETE = "Undid (DELETE) of \"%s\".";
 const string CommandFeedback::MESSAGE_UNDO_EDIT = "Undid (EDIT) of \"%s\".";
+const string CommandFeedback::MESSAGE_UNDO_EDIT_DONE = "Undid (DONE) of \"%s\".";
+const string CommandFeedback::MESSAGE_UNDO_EDIT_UNDONE = "Undid (UNDONE) of \"%s\".";
 const string CommandFeedback::MESSAGE_UNDO_CLEAR = "Undid (CLEAR).";
 const string CommandFeedback::MESSAGE_UNDO_VIEW_TYPE = "Undid (Viewtype) change of \"%d\".";
 const string CommandFeedback::MESSAGE_UNDO_CHANGE_DIRECTORY = "Undid (Change Directory) of \"%s\".";
@@ -245,7 +247,7 @@ string CommandFeedback::getNotificationDelete(Command* executionMessage, Command
 string CommandFeedback::getNotificationEdit(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
-        return validNotificationEdit(executionMessage->getTask(), viewType);
+        return validNotificationEdit(executionMessage->getTask(), viewType, executionMessage->getDoneStatus());
         break;
     case INVALID_MESSAGE:
         return invalidNotificationEdit();
@@ -343,13 +345,17 @@ string CommandFeedback::validNotificationDeleteMultiple(vector<int>* deleteIndex
     return buffer;
 }
 
-string CommandFeedback::validNotificationEdit(Task* task, int viewType) {
+string CommandFeedback::validNotificationEdit(Task* task, int viewType, int doneStatus) {
     string taskString;
     taskString = getTaskString(task,viewType);
-    if(task->getDoneStatus() == 1) {
+    if(doneStatus == 1) {
         sprintf_s(buffer, MESSAGE_EDIT_DONE.c_str(),taskString.c_str());
     } else {
-        sprintf_s(buffer, MESSAGE_EDIT.c_str(),taskString.c_str());
+        if(doneStatus == -1) {
+            sprintf_s(buffer, MESSAGE_EDIT.c_str(),taskString.c_str());
+        } else {
+            sprintf_s(buffer, MESSAGE_EDIT_UNDONE.c_str(),taskString.c_str());
+        }
     }
     return buffer;
 }
@@ -444,9 +450,25 @@ string CommandFeedback::undoNotificationDel(Command* executionMessage, int viewT
 
 string CommandFeedback::undoNotificationEdit(Command* executionMessage, int viewType) {
     string taskString;
-    taskString = getTaskString(executionMessage->getTask(), viewType);
-    sprintf_s(buffer, MESSAGE_UNDO_EDIT.c_str(),taskString.c_str());
-    return buffer;
+    int doneStatus = executionMessage->getDoneStatus();
+    switch(doneStatus) {
+    case -1:
+        taskString = getTaskString(executionMessage->getTask(), viewType);
+        sprintf_s(buffer, MESSAGE_UNDO_EDIT.c_str(),taskString.c_str());
+        return buffer;
+        break;
+    case 0:
+        taskString = getTaskString(executionMessage->getTask(), viewType);
+        sprintf_s(buffer, MESSAGE_UNDO_EDIT_UNDONE.c_str(),taskString.c_str());
+        return buffer;
+        break;
+    case 1:
+        taskString = getTaskString(executionMessage->getTask(), viewType);
+        sprintf_s(buffer, MESSAGE_UNDO_EDIT_DONE.c_str(),taskString.c_str());
+        return buffer;
+        break;
+    }
+
 }
 
 string CommandFeedback::undoNotificationClear(Command* executionMessage, int viewType) {

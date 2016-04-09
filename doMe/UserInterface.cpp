@@ -13,7 +13,7 @@ unsigned int UserInterface::DISPLAY_BOX_LENGTH = 30;
 const int UserInterface::DISPLAY_DEFAULT_WIDTH = 80;
 const int UserInterface::DISPLAY_DEFAULT_LENGTH = 25;
 const int UserInterface::DISPLAY_SYNC_WIDTH = 0;
-const int UserInterface::DISPLAY_SYNC_LENGTH = 6;
+const int UserInterface::DISPLAY_SYNC_LENGTH = 5;
 
 const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
 const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
@@ -32,7 +32,37 @@ const string UserInterface::COLOUR_HELP = "HELP";
 const string UserInterface::COLOUR_CATEGORY = "CATEGORY";
 const string UserInterface::COLOUR_FEEDBACK = "FEEDBACK";
 
+const string UserInterface::MESSAGE_WELCOME_SCREEN[] = {
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+    "                                  Welcome to",
+    "                     _         __  __                          ",
+    "                    | |       |  \\/  |                         ",
+    "                  __| |  ___  | \\  / |  ___     ___ __  __ ___ ",
+    "                 / _` | / _ \\ | |\\/| | / _ \\   / _ \\  \\/ // _ \\",
+    "                | (_| || (_) || |  | ||  __/ _|  __/ >  <|  __/",
+    "                 \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|",
+    "",
+    "                         <Press any key to continue>",
+    "",
+    "", 
+    "", 
+    "", 
+    "", 
+    "", 
+    "", 
+    "", 
+    "",
+};
+
 const string UserInterface::MESSAGE_HELP_TIPS[] = {
+    "",
+    "===============================================================================",
     "                            List of Available Commands",
     "",
     "                            PRESS ANY KEY TO CONTINUE...",
@@ -180,7 +210,8 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
     "===============================================================================",
     "",
     "                          PRESS ANY KEY TO CONTINUE...",
-    ""
+    "",
+    "===============================================================================",
 };
 
 UserInterface::UserInterface(void) {
@@ -234,26 +265,11 @@ void UserInterface::setEnvironment() {
 }
 
 void UserInterface::printProgramWelcomePage() {
-    resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
-    string space = "               ";
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << endl;
-    cout << space; cout << "                   Welcome to" << endl; 
-    cout << space; cout << "      _         __  __                          " << endl;
-    cout << space; cout << "     | |       |  \\/  |                         " << endl;
-    cout << space; cout << "   __| |  ___  | \\  / |  ___     ___ __  __ ___ " << endl;
-    cout << space; cout << "  / _` | / _ \\ | |\\/| | / _ \\   / _ \\  \\/ // _ \\" << endl;
-    cout << space; cout << " | (_| || (_) || |  | ||  __/ _|  __/ >  <|  __/" << endl;
-    cout << space; cout << "  \\__,_| \\___/ |_|  |_| \\___|(_)\\___|/_/\\_\\___|" << endl;
+    size_t size = (sizeof(MESSAGE_WELCOME_SCREEN)/sizeof(*MESSAGE_WELCOME_SCREEN));
+    vector<string> welcomeList(MESSAGE_WELCOME_SCREEN, MESSAGE_WELCOME_SCREEN+size);
 
-    cout << endl;
-    cout << space; cout << "          <Press any key to continue>" << endl;
-    cout << endl << endl << endl << endl << endl << endl << endl << endl << endl;
+    resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
+    printList(welcomeList);
     _getch();
 }
 
@@ -403,7 +419,6 @@ void UserInterface::printTaskList(int currentDate, int viewType) {
         taskListType = new ViewType(_taskList , currentDate);
         break;
     }
-    showToUser("VIEW: ALL");
 
     displayList = taskListType->createDisplayList();
     colourCoding = taskListType->getColourCoding();
@@ -442,11 +457,16 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
 
 void UserInterface::printHelpList(int currentDate, int viewType) {
     size_t size = (sizeof(MESSAGE_HELP_TIPS)/sizeof(*MESSAGE_HELP_TIPS));
-    vector<string> helpList(MESSAGE_HELP_TIPS,MESSAGE_HELP_TIPS+size);
+    vector<string> helpList(MESSAGE_HELP_TIPS, MESSAGE_HELP_TIPS+size);
+    COORD c;
+
+    c.X = DISPLAY_WIDTH;
+    c.Y = helpList.size();
+    SetConsoleScreenBufferSize(GetStdHandle( STD_OUTPUT_HANDLE), c);
 
     changeListColour(COLOUR_HELP);
+    printList(helpList);
 
-    printList(createDisplayBox(helpList));
     scrollByAbsoluteCoord(120);
     keyboardCommandScroll();
 
@@ -490,15 +510,16 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
 
     messageBox.assign(DISPLAY_WIDTH, MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
-
-    displayList.insert(displayList.begin(),messageBox);
+    
+    displayList.insert(displayList.begin(), messageBox);
+    displayList.insert(displayList.begin(), MESSAGE_VOID_STRING);
     displayListIter = displayList.begin();
     displayListIter++;
 
     while(displayList.size() < DISPLAY_BOX_LENGTH) {
         displayList.push_back(MESSAGE_VOID_STRING);
     }
-    displayList.insert(displayList.end(),messageBox);
+    displayList.insert(displayList.end(), messageBox);
 
     c.X = DISPLAY_WIDTH;
     c.Y = (displayList.size()+ 4);
@@ -524,7 +545,7 @@ void UserInterface::showToUserMessageBox() {
 
 void UserInterface::setDisplayBoxLength(int size) {
     DISPLAY_BOX_WIDTH = DISPLAY_WIDTH - DISPLAY_SYNC_WIDTH;
-    DISPLAY_BOX_LENGTH = DISPLAY_LENGTH - DISPLAY_SYNC_LENGTH + 1;
+    DISPLAY_BOX_LENGTH = DISPLAY_LENGTH - DISPLAY_SYNC_LENGTH;
      _memory->changeWindowSize(DISPLAY_WIDTH, DISPLAY_LENGTH);
 }
 
@@ -568,7 +589,7 @@ void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
 
 vector<string> UserInterface::synchronizeColourCodingWithDisplayBox(vector<string> colourCoding) {
     int i = 0;
-    while(i < 1) {
+    while(i < 2) {
         colourCoding.insert(colourCoding.begin(),COLOUR_DEFAULT);
         i++;
     }
