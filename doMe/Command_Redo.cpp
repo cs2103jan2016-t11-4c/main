@@ -3,6 +3,7 @@
 
 Command_Redo::Command_Redo()
 :Command() {
+	_redoneCommand = new Command_Invalid();
 }
 
 void Command_Redo::setRedoneCommand(Command* command) {
