@@ -1,6 +1,7 @@
 //@@author A0125290M
 #pragma once
 #include "Command.h"
+#include "Command_Invalid.h"
 using namespace std;
 
 class Command_Redo : public Command {
