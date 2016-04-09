@@ -1,6 +1,9 @@
 //@@author A0130475L
 #include "ViewType.h"
 
+const int ViewType::END_OF_WEEK = 6;
+const int ViewType::NO_OF_DAYS_IN_WEEK = 7;
+const string ViewType::MESSAGE_TODAY = "Today";
 const string ViewType::MESSAGE_DISPLAY_CONTENTS = "%d. %s";
 const string ViewType::MESSAGE_DATE_SEPERATOR = "/";
 const string ViewType::MESSAGE_TIME_SEPERATOR = ":";
@@ -9,7 +12,10 @@ const string ViewType::MESSAGE_VOID_STRING = "";
 const string ViewType::MESSAGE_SPACE_STRING = " ";
 const string ViewType::MESSAGE_BRACKETS = "(%s)";
 const string ViewType::MESSAGE_FLOATING_TASK = "<No deadline>";
-const string ViewType::MESSAGE_EMPTY_LIST = "                               <list is empty!>\n                 Type \"HELP\" to see list of available commands.";
+const string ViewType::MESSAGE_EMPTY_LIST[] = {
+    "                               <list is empty!>",
+    "                 Type \"HELP\" to see list of available commands."
+};
 //const string ViewType::MESSAGE_DISPLAY_HEADER[] = {""};
 
 const string ViewType::COLOUR_DEFAULT = "DEFAULT";
@@ -26,8 +32,10 @@ ViewType::ViewType(list<Task*> *taskList) {
 }
 
 ViewType::ViewType(list<Task*> *taskList, int currentDate) {
+    Commons commons;
     _taskList = taskList;
     _currentDate = currentDate;
+    _dayToEndOfWeek = END_OF_WEEK - commons.getDayNumber(_currentDate);
 }
 
 ViewType::~ViewType(void) {
@@ -69,7 +77,9 @@ return _displayList;
 
 vector<string> ViewType::createDisplayList() {
     if((*_taskList).empty()) {
-        _displayList.push_back(MESSAGE_EMPTY_LIST);
+        size_t size = (sizeof(MESSAGE_EMPTY_LIST)/sizeof(*MESSAGE_EMPTY_LIST));
+        vector<string> emptyList(MESSAGE_EMPTY_LIST,MESSAGE_EMPTY_LIST+size);
+        _displayList = emptyList;
     } else {
         list<Task*>::iterator taskListIter = ((*_taskList).begin());
         Memory* memory;
@@ -82,9 +92,9 @@ vector<string> ViewType::createDisplayList() {
         vector<string> categoryHeader = getCategoryHeader();
 
         if(!categoryHeader.empty()) {
-        _displayList.push_back(categoryHeader[i]);
-        _colourCoding.push_back(COLOUR_CATEGORY);
-        i++;
+            _displayList.push_back(categoryHeader[i]);
+            _colourCoding.push_back(COLOUR_CATEGORY);
+            i++;
         }
         while(taskListIter != (*_taskList).end()) {
             while((isInNextCategory(*taskListIter, i)) && (i < categoryHeader.size())) {
@@ -111,7 +121,7 @@ vector<string> ViewType::getCategoryHeader() {
 }
 
 bool ViewType::isInNextCategory(Task* individualTask, int i) {
-        return true;
+    return true;
 }
 
 string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
@@ -128,7 +138,9 @@ string ViewType::colourCoderTag(Task* individualTask, Task* recentTask) {
 //search list without complimentary string
 vector<string> ViewType::createSearchList() {
     if((*_taskList).empty()) {
-        _displayList.push_back(MESSAGE_EMPTY_LIST);
+        size_t size = (sizeof(MESSAGE_EMPTY_LIST)/sizeof(*MESSAGE_EMPTY_LIST));
+        vector<string> emptyList(MESSAGE_EMPTY_LIST,MESSAGE_EMPTY_LIST+size);
+        _displayList = emptyList;
     } else {
         list<Task*>::iterator taskListIter = (*_taskList).begin();
         int index = 1;

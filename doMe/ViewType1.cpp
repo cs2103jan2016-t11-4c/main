@@ -1,14 +1,22 @@
 //@@author A0130475L
 #include "ViewType1.h"
 
-//const string ViewType1::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
-const string ViewType1::MESSAGE_DISPLAY_HEADER[] = {"Today's date is %s"};
-const string ViewType1::MESSAGE_NEW_LINE = "\n";
+const string ViewType1::MESSAGE_TIMING_SEPERATOR = "/";
+const string ViewType1::MESSAGE_NEXT = "Next ";
 const string ViewType1::MESSAGE_AM = "am";
 const string ViewType1::MESSAGE_PM = "pm";
 const int ViewType1::TIME_STRING_INT = 4;//Meridiem size (am/pm) + 2
 const int ViewType1::TIME_MIDDAY = 1200;
 
+const string ViewType1::MESSAGE_DISPLAY_HEADER[] = {
+    "<Done>",
+    "<No Deadlines>",
+    "<Past>",
+    "<TODAY>",
+    "<This Week>",
+    "<Next Week>",
+    "<Future>"
+};
 
 ViewType1::ViewType1(void) {
 }
@@ -23,33 +31,9 @@ ViewType1::ViewType1(list<Task*> *taskList, int currentDate) : ViewType(taskList
 
 ViewType1::~ViewType1(void) {
 }
-/*
-string ViewType1::getComplimentaryString(Task* individualTask) {
-int date;
-date = individualTask->getDate2();
 
-switch (_headerMarker) {
-case 0:
-sprintf_s(buffer, MESSAGE_DISPLAY_HEADER.c_str(), (getDateTaskString(_currentDate)).c_str());
-_headerMarker = 1;
-if(_currentDate < date) {
-_headerMarker = 2;
-return buffer + MESSAGE_NEW_LINE;
-} else {
-return buffer;
-break;
-}
-case 1:
-if(_currentDate < date) {    
-_headerMarker = 2;
-return MESSAGE_SPACE_STRING;
-break;
-} 
-break;
-}
-return MESSAGE_VOID_STRING;
-}
-*/
+/****************************************************************/
+
 string ViewType1::getTimeTaskString(int time) {
     string timeString;
 
@@ -75,23 +59,106 @@ string ViewType1::getTimeTaskString(int time) {
 }
 
 vector<string> ViewType1::getCategoryHeader() {
-    vector<string> categoryHeader;
-    sprintf_s(buffer, MESSAGE_DISPLAY_HEADER[0].c_str(), (getDateTaskString(_currentDate)).c_str());
-    categoryHeader.push_back(buffer);
+    size_t size = (sizeof(MESSAGE_DISPLAY_HEADER)/sizeof(*MESSAGE_DISPLAY_HEADER));
+    vector<string> categoryHeader(MESSAGE_DISPLAY_HEADER, MESSAGE_DISPLAY_HEADER+size);
 
     return categoryHeader;
 }
 
 bool ViewType1::isInNextCategory(Task* individualTask, int i) {
+    int date = individualTask->getDate2();
+    Commons commons;
+
     switch(i) {
     case 0:
         return true;
-        break;
+        break; 
+    case 1:
+        if(individualTask->getDoneStatus() == false) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 2:
+        if(date >= 0) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 3:
+        if(date >= _currentDate) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 4:
+        if(date > _currentDate) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 5:
+        if(date > commons.addToDate(_dayToEndOfWeek,_currentDate) ) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 6:
+        if(date > commons.addToDate(_dayToEndOfWeek + NO_OF_DAYS_IN_WEEK,_currentDate) ) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
     default:
         return false;
         break;
     }
     return false;
+}
+
+string ViewType1::getDateTaskString(int date) {
+    string dateString;
+    string day;
+    string month;
+    string year;
+    int weekRange;
+    Commons commons;
+
+    weekRange = commons.addToDate(_dayToEndOfWeek, _currentDate);
+
+    if(_currentDate <= date && date <= weekRange && date > 0) {
+        if(_currentDate == date) {
+            return MESSAGE_TODAY;
+        } else {
+            return commons.getDateStringDay(commons.getDayNumber(date));
+        }
+    } else {
+        if(date > 0) {
+            if(date <= weekRange + NO_OF_DAYS_IN_WEEK) {
+                return MESSAGE_NEXT + commons.getDateStringDay(commons.getDayNumber(date));
+            } else {
+                day = getDay(date);
+                month = getMonth(date);
+                dateString = day + MESSAGE_TIMING_SEPERATOR + month;
+
+                return dateString;
+            }
+        } else {
+            return MESSAGE_VOID_STRING;
+        }
+    }
 }
 
 

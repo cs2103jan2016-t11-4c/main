@@ -85,11 +85,14 @@ public:
     void printList(vector<string> displayList, vector<string> colourCoding);
 
     //window size related function
+    void setDisplayBoxLength(int size);
+    
     void resizeWindow(int width, int length);
+    /*
     void setWindowsRowsColumns(int size);
     int getBiggerDisplaySize(int size1, int size2);
     void synchronizeWindowsDisplaySize(int width, int length);
-
+    */
     //window text colour
     enum Colour {
         BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GREY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_AQUA, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
@@ -100,6 +103,7 @@ public:
     static const string COLOUR_SEARCH;
     static const string COLOUR_HELP;
     static const string COLOUR_CATEGORY;
+    static const string COLOUR_FEEDBACK;
 
     void changeListColour(string colourCoding);
     void setConsoleColor(int background, int foreground);

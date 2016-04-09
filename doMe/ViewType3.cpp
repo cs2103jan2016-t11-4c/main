@@ -1,16 +1,13 @@
 //@@author A0130475L
 #include "ViewType3.h"
 
-const int ViewType3::END_OF_WEEK = 6;
-const string ViewType3::MESSAGE_NEW_LINE = "\n";
 const string ViewType3::MESSAGE_TIMING_SEPERATOR = "-";
-const string ViewType3::MESSAGE_TODAY = "Today";
 const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
     "<Done>",
     "<No Deadlines>",
-    "<Today>",
-    "<This Week>",
-	"<Future>"
+    "<Past>",
+    "<TODAY>",
+    "<Future>"
 };
 
 ViewType3::ViewType3(void) {
@@ -22,8 +19,6 @@ ViewType3::ViewType3(list<Task*> *taskList) {
 }
 
 ViewType3::ViewType3(list<Task*> *taskList, int currentDate) : ViewType(taskList,currentDate) {
-    Commons commons;
-    _dayToEndOfWeek = END_OF_WEEK - commons.getDayNumber(_currentDate);
 }
 
 ViewType3::~ViewType3(void) {
@@ -48,14 +43,14 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
         break; 
     case 1:
         if(individualTask->getDoneStatus() == false) {
-        return true;
-        break;
+            return true;
+            break;
         } else {
             return false;
             break;
         }
     case 2:
-        if(date >= _currentDate) {
+        if(date >= 0) {
             return true;
             break;
         } else {
@@ -63,16 +58,15 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
             break;
         }
     case 3:
-        if(date > _currentDate) {
+        if(date >= _currentDate) {
             return true;
             break;
         } else {
             return false;
             break;
         }
-
     case 4:
-        if(date > commons.addToDate(_dayToEndOfWeek,_currentDate) ) {
+        if(date > _currentDate) {
             return true;
             break;
         } else {
@@ -107,7 +101,7 @@ string ViewType3::getDateTaskString(int date) {
         if(_currentDate == date) {
             return MESSAGE_TODAY;
         } else {
-        return commons.getDateStringDay(commons.getDayNumber(date));
+            return commons.getDateStringDay(commons.getDayNumber(date));
         }
     } else {
         if(date > 0) {

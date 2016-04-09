@@ -7,12 +7,10 @@ class ViewType2 : public ViewType {
 private:
     static const string MESSAGE_DISPLAY_HEADER[];
     static const string MESSAGE_TIMING_SEPERATOR;
-    static const string MESSAGE_NEW_LINE;
     static const string MESSAGE_AM;
     static const string MESSAGE_PM;
     static const int TIME_STRING_INT;
     static const int TIME_MIDDAY;
-    static const string MESSAGE_BOX;
 
     static const string MESSAGE_MONTH_JANUARY;
     static const string MESSAGE_MONTH_FEBUARY;

@@ -7,6 +7,7 @@
 #include <list>
 #include <assert.h>
 
+#include "Commons.h"
 #include "Task.h"
 #include "Memory.h"
 
@@ -23,8 +24,12 @@ public:
     vector<string> _colourCoding;
     vector<string> _displayList;
     int _currentDate;
+    int _dayToEndOfWeek;
     char buffer[255];
 
+    static const int END_OF_WEEK;
+    static const int NO_OF_DAYS_IN_WEEK;
+    static const string MESSAGE_TODAY;
     static const string MESSAGE_DISPLAY_CONTENTS;
     static const string MESSAGE_DATE_SEPERATOR;
     static const string MESSAGE_TIME_SEPERATOR;
@@ -35,7 +40,7 @@ public:
     static const string MESSAGE_FLOATING_TASK;
     static const string MESSAGE_DISPLAY_HEADER;
     static const string MESSAGE_NEW_LINE;
-    static const string MESSAGE_EMPTY_LIST;
+    static const string MESSAGE_EMPTY_LIST[];
 
     static const string COLOUR_DEFAULT;
     static const string COLOUR_NEW;

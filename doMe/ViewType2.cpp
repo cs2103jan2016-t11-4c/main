@@ -2,14 +2,11 @@
 #include "ViewType2.h"
 
 //const string ViewType2::MESSAGE_DISPLAY_HEADER = "Today's date is %s";
-const string ViewType2::MESSAGE_DISPLAY_HEADER[] = {"Today's date is %s"};
-const string ViewType2::MESSAGE_NEW_LINE = "\n";
 const string ViewType2::MESSAGE_AM = "am";
 const string ViewType2::MESSAGE_PM = "pm";
 const string ViewType2::MESSAGE_TIMING_SEPERATOR = "-";
 const int ViewType2::TIME_STRING_INT = 4;//Meridiem size (am/pm) + 2
 const int ViewType2::TIME_MIDDAY = 1200;
-const string ViewType2::MESSAGE_BOX = "======================================================================";
 const string ViewType2::MESSAGE_MONTH[] = { 
     "Jan", 
     "Feb",
@@ -24,6 +21,14 @@ const string ViewType2::MESSAGE_MONTH[] = {
     "Nov",
     "Dec"
 }; 
+
+const string ViewType2::MESSAGE_DISPLAY_HEADER[] = {
+    "<Done, No Deadlines, Past>",
+    "<TODAY>",
+    "<This Week>",
+    "<Next Week>",
+    "<Future>"
+};
 
 
 
@@ -44,18 +49,52 @@ ViewType2::~ViewType2(void) {
 /****************************************************************/
 
 vector<string> ViewType2::getCategoryHeader() {
-    vector<string> categoryHeader;
-    sprintf_s(buffer, MESSAGE_DISPLAY_HEADER[0].c_str(), (getDateTaskString(_currentDate)).c_str());
-    categoryHeader.push_back(buffer);
+    size_t size = (sizeof(MESSAGE_DISPLAY_HEADER)/sizeof(*MESSAGE_DISPLAY_HEADER));
+    vector<string> categoryHeader(MESSAGE_DISPLAY_HEADER, MESSAGE_DISPLAY_HEADER+size);
 
     return categoryHeader;
 }
 
 bool ViewType2::isInNextCategory(Task* individualTask, int i) {
+    int date = individualTask->getDate2();
+    Commons commons;
+
     switch(i) {
     case 0:
         return true;
-        break;
+        break; 
+    case 1:
+        if(individualTask->getDoneStatus() == false && date >= _currentDate) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 2:
+        if(date > _currentDate) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 3:
+        if(date > commons.addToDate(_dayToEndOfWeek,_currentDate) ) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 4:
+        if(date > commons.addToDate(_dayToEndOfWeek + NO_OF_DAYS_IN_WEEK,_currentDate) ) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
     default:
         return false;
         break;
@@ -71,21 +110,8 @@ string ViewType2::getTimeTaskString(int time) {
 }
 
 string ViewType2::getDateTaskString(int date) {
-    string dateString;
-    string day;
-    string month;
-    string year;
-
-    if(date > 0) {
-        day = getDay(date);
-        month = getMonth(date);
-        //year = getYear(date);
-        dateString = day + MESSAGE_TIMING_SEPERATOR + month;
-
-        return dateString;
-    } else {
-        return MESSAGE_VOID_STRING;
-    }
+    ViewType1 view;
+    return view.getDateTaskString(date);
 }
 
 string ViewType2::getMonth(int date) {

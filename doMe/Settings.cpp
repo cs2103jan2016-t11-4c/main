@@ -2,6 +2,7 @@
 #include "Settings.h"
 const string Settings::FILE_SETTINGS_NAME = "doMeSettings.txt";
 const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
+const int Settings::DEFAULT_VIEWTYPE = 1;
 const int Settings::DEFAULT_WINDOWS_WIDTH = 80;
 const int Settings::DEFAULT_WINDOWS_LENGTH = 25; 
 
@@ -16,7 +17,7 @@ Settings* Settings::getInstance() {
 
 Settings::Settings(void) {
     _textFileName = DEFAULT_TEXT_FILE_NAME;
-    _viewType = 0;
+    _viewType = DEFAULT_VIEWTYPE;
     _width = DEFAULT_WINDOWS_WIDTH;
     _length = DEFAULT_WINDOWS_LENGTH;
 }

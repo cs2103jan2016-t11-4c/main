@@ -15,7 +15,6 @@ enum CommandOutcome {
     VALID_MESSAGE, INVALID_MESSAGE
 };
 
-
 class CommandFeedback {
 public:
     ~CommandFeedback(void);
@@ -92,6 +91,7 @@ public:
     static const string MESSAGE_DELETE_MULTIPLE;
     static const string MESSAGE_EDIT;
     static const string MESSAGE_EDIT_DONE;
+    static const string MESSAGE_EDIT_UNDONE;
     static const string MESSAGE_CLEAR;
     static const string MESSAGE_SEARCH;
     //static const string MESSAGE_CLEAR_SEARCH;

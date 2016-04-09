@@ -30,6 +30,7 @@ const string UserInterface::COLOUR_DONE = "DONE";
 const string UserInterface::COLOUR_SEARCH = "SEARCH";
 const string UserInterface::COLOUR_HELP = "HELP";
 const string UserInterface::COLOUR_CATEGORY = "CATEGORY";
+const string UserInterface::COLOUR_FEEDBACK = "FEEDBACK";
 
 const string UserInterface::MESSAGE_HELP_TIPS[] = {
     "                            List of Available Commands",
@@ -224,11 +225,11 @@ void UserInterface::setEnvironment() {
     if(welcomeStringVector.empty()) {
         welcomeStringVector.push_back(MESSAGE_WELCOME);
     }
-
+    
     int length,width;
     _memory->getWindowSize(width,length);
     resizeWindow(width,length);
-
+    
     printNotificationWelcome(welcomeStringVector);
 }
 
@@ -376,8 +377,9 @@ void UserInterface::printHelpDisplay() {
 void UserInterface::printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome) {
     string message;
     message = _commandFeedback->getCommandFeedback(executionMessage, commandOutcome, _memory->getViewType());
+    changeListColour(COLOUR_CATEGORY);
     showToUser(message);
-
+    changeListColour(COLOUR_DEFAULT);
 }
 
 /****************************************************************/
@@ -401,6 +403,8 @@ void UserInterface::printTaskList(int currentDate, int viewType) {
         taskListType = new ViewType(_taskList , currentDate);
         break;
     }
+    showToUser("VIEW: ALL");
+
     displayList = taskListType->createDisplayList();
     colourCoding = taskListType->getColourCoding();
 
@@ -443,7 +447,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     changeListColour(COLOUR_HELP);
 
     printList(createDisplayBox(helpList));
-    scrollByAbsoluteCoord(121);
+    scrollByAbsoluteCoord(120);
     keyboardCommandScroll();
 
     printTaskList(currentDate, viewType);
@@ -482,12 +486,12 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     string messageBox;
     COORD c;
 
-    setWindowsRowsColumns(displayList.size());
+    setDisplayBoxLength(displayList.size());
+
     messageBox.assign(DISPLAY_WIDTH, MESSAGE_BOX_CHARACTER);
     messageBox.pop_back();
 
     displayList.insert(displayList.begin(),messageBox);
-    displayList.insert(displayList.begin(),MESSAGE_VOID_STRING);
     displayListIter = displayList.begin();
     displayListIter++;
 
@@ -497,7 +501,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     displayList.insert(displayList.end(),messageBox);
 
     c.X = DISPLAY_WIDTH;
-    c.Y = (displayList.size()+4);
+    c.Y = (displayList.size()+ 4);
     SetConsoleScreenBufferSize(GetStdHandle( STD_OUTPUT_HANDLE), c);
 
     return displayList;
@@ -518,11 +522,17 @@ void UserInterface::showToUserMessageBox() {
 
 /****************************************************************/
 
+void UserInterface::setDisplayBoxLength(int size) {
+    DISPLAY_BOX_WIDTH = DISPLAY_WIDTH - DISPLAY_SYNC_WIDTH;
+    DISPLAY_BOX_LENGTH = DISPLAY_LENGTH - DISPLAY_SYNC_LENGTH + 1;
+     _memory->changeWindowSize(DISPLAY_WIDTH, DISPLAY_LENGTH);
+}
+
 void UserInterface::resizeWindow(int width, int length) {
     sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), width, length);
     system(buffer);
 }
-
+/*
 void UserInterface::setWindowsRowsColumns(int size) {
     resizeWindow(DISPLAY_DEFAULT_WIDTH, DISPLAY_DEFAULT_LENGTH);
 
@@ -538,6 +548,7 @@ void UserInterface::setWindowsRowsColumns(int size) {
     width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     length = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
     */
+/*
 }
 
 int UserInterface::getBiggerDisplaySize(int size1, int size2) {
@@ -550,15 +561,14 @@ int UserInterface::getBiggerDisplaySize(int size1, int size2) {
 
 void UserInterface::synchronizeWindowsDisplaySize(int width, int length) {
     DISPLAY_BOX_WIDTH = width - DISPLAY_SYNC_WIDTH;
-    DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH +1;
-    length = DISPLAY_BOX_LENGTH;
+    DISPLAY_BOX_LENGTH = length - DISPLAY_SYNC_LENGTH + 1;
 }
 
 /****************************************************************/
 
 vector<string> UserInterface::synchronizeColourCodingWithDisplayBox(vector<string> colourCoding) {
     int i = 0;
-    while(i < 2) {
+    while(i < 1) {
         colourCoding.insert(colourCoding.begin(),COLOUR_DEFAULT);
         i++;
     }
@@ -587,7 +597,11 @@ void UserInterface::changeListColour(string colourCoding) {
                         setConsoleColor(BLACK, LIGHT_AQUA);
                         return;
                     } else {
-                        setConsoleColorDefault();
+                        if(colourCoding == COLOUR_FEEDBACK) {
+                            setConsoleColor(BLACK, LIGHT_AQUA);
+                        } else {
+                            setConsoleColorDefault();
+                        }
                     }
                 }
             }

@@ -11,6 +11,7 @@ const string CommandFeedback::MESSAGE_DELETE = "Deleted \"%s\" from %s.";
 const string CommandFeedback::MESSAGE_DELETE_MULTIPLE = "Deleted tasks \"%s\" from %s.";
 const string CommandFeedback::MESSAGE_EDIT = "Editted task to \"%s\".";
 const string CommandFeedback::MESSAGE_EDIT_DONE = "Marked \"%s\" as DONE.";
+const string CommandFeedback::MESSAGE_EDIT_UNDONE = "Marked \"%s\" as UNDONE.";
 const string CommandFeedback::MESSAGE_CLEAR = "All tasks in view cleared.";
 const string CommandFeedback::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit\" to exit the search module~";
 //const string CommandFeedback::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";

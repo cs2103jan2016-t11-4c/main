@@ -35,16 +35,17 @@ public:
     static const string FILE_SETTINGS_NAME;
     static const string DEFAULT_TEXT_FILE_NAME;
     static const string SYSTEM_MODE_CON;
+    static const int DEFAULT_VIEWTYPE;
     static const int DEFAULT_WINDOWS_WIDTH;
     static const int DEFAULT_WINDOWS_LENGTH; 
 
+    static Settings* _instance;
     string _textFileName;
     string _saveDirectory;
     int _viewType; 
     int _width;
     int _length;
     char buffer[255];
-    static Settings* _instance;
 
     Settings(void);
     ~Settings(void);
