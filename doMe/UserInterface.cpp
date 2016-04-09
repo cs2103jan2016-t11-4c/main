@@ -48,7 +48,8 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                            List of Available Commands",
 	"",
-	"                            PRESS <ENTER> TO CONTINUE...",
+	"                            PRESS ANY KEY TO CONTINUE...",
+	"                          (Arrow Keys/PgUp PgDn to Scroll)",
 	"===============================================================================",
 	"",
 	"                                  _   ___  ___  ",
@@ -173,7 +174,6 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                      | change directory | C:/           |",
 	"                      | cd               | D:/new_folder |",
 	"                      |                  |               |",
-	"                      |                  |               |",
 	"                      +------------------+---------------+",
 	"          ============================================================",
 	"                 __   _____ _____      _________   _____ ___ ",
@@ -192,7 +192,7 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"",
 	"===============================================================================",
 	"",
-	"                          PRESS <ENTER> TO CONTINUE...",
+	"                          PRESS ANY KEY TO CONTINUE...",
 	""
 };
 
@@ -625,7 +625,7 @@ void UserInterface::setConsoleColorDefault() {
 
 /****************************************************************/
 
-int UserInterface::scrollByAbsoluteCoord(int iRows) {
+void UserInterface::scrollByAbsoluteCoord(int iRows) {
 	HANDLE hStdout;
 	CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
 	SMALL_RECT srctWindow; 
@@ -635,7 +635,7 @@ int UserInterface::scrollByAbsoluteCoord(int iRows) {
 	srctWindow = csbiInfo.srWindow; 
 
 	if (srctWindow.Top == 121 && iRows == -1) {
-		return 0;
+		return;
 	} 
 
 	if ( srctWindow.Top >= iRows ) { 
@@ -644,8 +644,6 @@ int UserInterface::scrollByAbsoluteCoord(int iRows) {
 	}
 
 	SetConsoleWindowInfo(hStdout, TRUE, &srctWindow);
-
-	return iRows;
 }
 
 void UserInterface::keyboardCommandScroll() {
@@ -676,8 +674,34 @@ void UserInterface::keyboardCommandScroll() {
 			scrollByAbsoluteCoord(-1);
 			break;
 		}
-	} while(keyPress != 13);
+	} while(notExitKey(keyPress));
 
+}
+
+bool UserInterface::notExitKey(int keyPress) {
+	if(keyPress == 224
+		|| keyPress == 72
+		|| keyPress == 224
+		|| keyPress == 80
+		|| keyPress == 224
+		|| keyPress == 75
+		|| keyPress == 224
+		|| keyPress == 77
+		|| keyPress == 224
+		|| keyPress == 73
+		|| keyPress == 224
+		|| keyPress == 81
+		|| keyPress == 224
+		|| keyPress == 71
+		|| keyPress == 224
+		|| keyPress == 79
+		|| keyPress == 224
+		|| keyPress == 82
+		|| keyPress == 224
+		|| keyPress == 83) {
+			return true;
+	}	
+	return false;
 }
 
 /*************************Unused*********************************/

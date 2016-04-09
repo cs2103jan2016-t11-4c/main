@@ -105,8 +105,9 @@ public:
     void setConsoleColorDefault();
 
     //help scroll
-    int scrollByAbsoluteCoord(int iRows);
+    void scrollByAbsoluteCoord(int iRows);
     void keyboardCommandScroll();
+	bool notExitKey(int keyPress);
 
     static const string SYSTEM_MODE_CON;
     static const string SYSTEM_COLOUR;

@@ -28,7 +28,7 @@ vector<string> Storage::retrieveData(string directory) {
         }
         readFile.close();
     }else {
-    	throw Exception_FileCannotOpen(directory + " file does not exist yet and will be created after first save.");
+    	throw Exception_FileCannotOpen(directory + " New doMe.txt created.");
     }
 	
 	return dataVector;
