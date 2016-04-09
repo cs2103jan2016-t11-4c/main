@@ -46,7 +46,8 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 }; 
 */
 const string UserInterface::MESSAGE_HELP_TIPS[] = {
-	"                            LIST OF AVAILABLE COMMANDS",
+	"                            List of Available Commands",
+	"",
 	"                            PRESS <ENTER> TO CONTINUE...",
 	"===============================================================================",
 	"",
@@ -140,7 +141,6 @@ const string UserInterface::MESSAGE_HELP_TIPS[] = {
 	"                         | search   | Waldo           |",
 	"                         | find     | Nemo Sea        |",
 	"                         | s, f     | Meaning in life |",
-	"                         |          |                 |",
 	"                         |          |                 |",
 	"                         +----------+-----------------+",
 	"",
@@ -649,31 +649,35 @@ int UserInterface::scrollByAbsoluteCoord(int iRows) {
 }
 
 void UserInterface::keyboardCommandScroll() {
-	char a;
-
+	int keyPress;
 	do {
-		a = _getch();
-
-		if(a == 72) {				    //Up Arrow
+		keyPress = _getch();
+		switch(keyPress) {
+		case 72:
 			scrollByAbsoluteCoord(1);
-		}else if(a == 80) {				//Down Arrow
+			break;
+		case 80:
 			scrollByAbsoluteCoord(-1);
-		}else if(a == 73) {				//Page Up
+			break;
+		case 73:
 			scrollByAbsoluteCoord(1);
 			scrollByAbsoluteCoord(1);
 			scrollByAbsoluteCoord(1);
 			scrollByAbsoluteCoord(1);
 			scrollByAbsoluteCoord(1);
 			scrollByAbsoluteCoord(1);
-		}else if(a == 81) {				//Page Down
+			break;
+		case 81:
 			scrollByAbsoluteCoord(-1);
 			scrollByAbsoluteCoord(-1);
 			scrollByAbsoluteCoord(-1);
 			scrollByAbsoluteCoord(-1);
 			scrollByAbsoluteCoord(-1);
+			scrollByAbsoluteCoord(-1);
+			break;
 		}
+	} while(keyPress != 13);
 
-	} while(a != 13);
 }
 
 /*************************Unused*********************************/
