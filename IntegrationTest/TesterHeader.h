@@ -8,6 +8,7 @@
 #include "Exception_FileCannotOpen.cpp"
 #include "Exception_FirstTimeUser.cpp"
 #include "Exception_InvalidCommand.cpp"
+#include "Exception_CommandScroll.cpp"
 
 #include "Logic.cpp"
 #include "Commons.cpp"

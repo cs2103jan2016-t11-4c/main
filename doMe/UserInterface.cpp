@@ -16,6 +16,8 @@ const int UserInterface::DISPLAY_SYNC_WIDTH = 0;
 const int UserInterface::DISPLAY_SYNC_LENGTH = 7;
 
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
+const string UserInterface::MESSAGE_SCROLL_PROMPT = "scroll: ";
+const string UserInterface::MESSAGE_SCROLL_EXIT = "Exited Scroll Engine";
 const string UserInterface::MESSAGE_DEFAULT_DIRECTORY = "Default Directory";
 const string UserInterface::MESSAGE_DIRECTORY_BOX = "<%s>";
 
@@ -32,6 +34,7 @@ const string UserInterface::COLOUR_HELP = "HELP";
 const string UserInterface::COLOUR_CATEGORY = "CATEGORY";
 const string UserInterface::COLOUR_FEEDBACK = "FEEDBACK";
 const string UserInterface::COLOUR_VIEW_INDICATOR = "VIEW";
+const string UserInterface::COLOUR_SCROLL = "SCROLL";
 
 const string UserInterface::MESSAGE_WELCOME_SCREEN[] = {
     "",
@@ -396,10 +399,18 @@ void UserInterface::printHelpDisplay() {
 
 void UserInterface::printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome) {
     string message;
-    message = _commandFeedback->getCommandFeedback(executionMessage, commandOutcome, _memory->getViewType());
-    changeListColour(COLOUR_CATEGORY);
-    showToUser(message);
-    changeListColour(COLOUR_DEFAULT);
+    try {
+        message = _commandFeedback->getCommandFeedback(executionMessage, commandOutcome, _memory->getViewType());
+        changeListColour(COLOUR_CATEGORY);
+        showToUser(message);
+        changeListColour(COLOUR_DEFAULT);
+    } catch(Exception_CommandScroll e) {
+        system(SYSTEM_COLOUR.c_str());
+        changeListColour(COLOUR_SCROLL);
+        showToUser(e.getString());
+        changeListColour(COLOUR_DEFAULT);
+        scrollEngine();
+    }
 }
 
 /****************************************************************/
@@ -649,6 +660,10 @@ void UserInterface::changeListColour(string colourCoding) {
         setConsoleColor(BLACK, LIGHT_GREEN);
         return;
     }
+    if(colourCoding == COLOUR_SCROLL) {
+        setConsoleColor(BLACK, LIGHT_RED);
+        return;
+    }
 
 }
 
@@ -664,25 +679,14 @@ void UserInterface::setConsoleColorDefault() {
 
 /****************************************************************/
 
-void UserInterface::scrollByAbsoluteCoord(int iRows) {
-    HANDLE hStdout;
-    CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
-    SMALL_RECT srctWindow; 
+void UserInterface::scrollEngine() {
+    showToUserMessageBox();
+    cout << MESSAGE_SCROLL_PROMPT;
+    keyboardCommandScroll();
 
-    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
-    GetConsoleScreenBufferInfo(hStdout, &csbiInfo);
-    srctWindow = csbiInfo.srWindow; 
-
-    if (srctWindow.Top == 124 && iRows == -1) {
-        return;
-    } 
-
-    if ( srctWindow.Top >= iRows ) { 
-        srctWindow.Top -= (SHORT)iRows;
-        srctWindow.Bottom -= (SHORT)iRows;
-    }
-
-    SetConsoleWindowInfo(hStdout, TRUE, &srctWindow);
+    printDefaultDisplay();
+    showToUser(MESSAGE_SCROLL_EXIT);
+    executeCommandUntilExit();
 }
 
 void UserInterface::keyboardCommandScroll() {
@@ -715,6 +719,27 @@ void UserInterface::keyboardCommandScroll() {
         }
     } while(notExitKey(keyPress));
 
+}
+
+void UserInterface::scrollByAbsoluteCoord(int iRows) {
+    HANDLE hStdout;
+    CONSOLE_SCREEN_BUFFER_INFO csbiInfo; 
+    SMALL_RECT srctWindow; 
+
+    hStdout = GetStdHandle(STD_OUTPUT_HANDLE);
+    GetConsoleScreenBufferInfo(hStdout, &csbiInfo);
+    srctWindow = csbiInfo.srWindow; 
+
+    if (srctWindow.Top == 124 && iRows == -1) {
+        return;
+    } 
+
+    if ( srctWindow.Top >= iRows ) { 
+        srctWindow.Top -= (SHORT)iRows;
+        srctWindow.Bottom -= (SHORT)iRows;
+    }
+
+    SetConsoleWindowInfo(hStdout, TRUE, &srctWindow);
 }
 
 bool UserInterface::notExitKey(int keyPress) {

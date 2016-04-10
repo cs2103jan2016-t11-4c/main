@@ -12,7 +12,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CommandFeedback.cpp" />
+    <ClCompile Include="Command_Scroll.cpp" />
     <ClCompile Include="Commons.cpp" />
+    <ClCompile Include="Exception_CommandScroll.cpp" />
     <ClCompile Include="Exception_ExceededParameterLimit.cpp" />
     <ClCompile Include="Exception_FileCannotOpen.cpp" />
     <ClCompile Include="Exception_FirstTimeUser.cpp" />
@@ -28,7 +30,6 @@
     <ClCompile Include="Command_Redo.cpp" />
     <ClCompile Include="Command_Help.cpp" />
     <ClCompile Include="Exception_CorruptedFile.cpp" />
-    <ClCompile Include="Command_Scroll.cpp" />
     <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -55,7 +56,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CommandFeedback.h" />
+    <ClInclude Include="Command_Scroll.h" />
     <ClInclude Include="Commons.h" />
+    <ClInclude Include="Exception_CommandScroll.h" />
     <ClInclude Include="Exception_ExceededParameterLimit.h" />
     <ClInclude Include="Exception_FileCannotOpen.h" />
     <ClInclude Include="Exception_FirstTimeUser.h" />
@@ -63,7 +66,6 @@
     <ClInclude Include="Command_Redo.h" />
     <ClInclude Include="Command_Help.h" />
     <ClInclude Include="Exception_CorruptedFile.h" />
-    <ClInclude Include="Command_Scroll.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />

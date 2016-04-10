@@ -2,6 +2,7 @@
 #pragma once
 #include <string>
 
+#include "Exception_CommandScroll.h"
 #include "Command.h"
 #include "Task.h"
 #include "ViewType.h"
@@ -87,7 +88,6 @@ public:
     static const string MESSAGE_TASK_INDEX;
 
     static const string MESSAGE_ADD;
-    //static const string MESSAGE_EMPTY;
     static const string MESSAGE_DELETE;
     static const string MESSAGE_DELETE_MULTIPLE;
     static const string MESSAGE_EDIT;
@@ -95,7 +95,6 @@ public:
     static const string MESSAGE_EDIT_UNDONE;
     static const string MESSAGE_CLEAR;
     static const string MESSAGE_SEARCH;
-    //static const string MESSAGE_CLEAR_SEARCH;
     static const string MESSAGE_EXIT_SEARCH;
     static const string MESSAGE_VIEW_TYPE;
     static const string MESSAGE_CHANGE_FILE_DIRECTORY;

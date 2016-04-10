@@ -6,7 +6,6 @@ const string CommandFeedback::MESSAGE_VOID_STRING = "";
 const string CommandFeedback::MESSAGE_TASK_INDEX = ", ";
 
 const string CommandFeedback::MESSAGE_ADD = "Added \"%s\" into %s";
-//const string CommandFeedback::MESSAGE_EMPTY = "Your text file \"%s\" is currently empty.";
 const string CommandFeedback::MESSAGE_DELETE = "Deleted \"%s\" from %s";
 const string CommandFeedback::MESSAGE_DELETE_MULTIPLE = "Deleted tasks \"%s\" from %s";
 const string CommandFeedback::MESSAGE_EDIT = "Editted task to \"%s\".";
@@ -14,7 +13,6 @@ const string CommandFeedback::MESSAGE_EDIT_DONE = "Marked \"%s\" as DONE.";
 const string CommandFeedback::MESSAGE_EDIT_UNDONE = "Marked \"%s\" as UNDONE.";
 const string CommandFeedback::MESSAGE_CLEAR = "All tasks in view cleared.";
 const string CommandFeedback::MESSAGE_SEARCH = "~Showing all results for \"%s\". Type \"exit\" to exit the search module~";
-//const string CommandFeedback::MESSAGE_CLEAR_SEARCH = "All task with the search term \"%s\" is cleared.";
 const string CommandFeedback::MESSAGE_CHANGE_FILE_DIRECTORY = "Save Directory changed to %s";
 const string CommandFeedback::MESSAGE_DEFAULT_FILE_DIRECTORY = "Save directory changed to <Default Directory>";
 const string CommandFeedback::MESSAGE_VIEW_TYPE = "Viewtype has been changed to (%d).";
@@ -89,7 +87,6 @@ string CommandFeedback::getCommandFeedback(Command* executionMessage, CommandOut
         return getNotificationAdd(executionMessage, commandOutcome, viewType);
         break;
     case DISPLAY:
-        //return "no display UI";
         break;
     case DEL:
         return getNotificationDelete(executionMessage, commandOutcome, viewType);
@@ -107,7 +104,6 @@ string CommandFeedback::getCommandFeedback(Command* executionMessage, CommandOut
         return getNotificationRedo(executionMessage, commandOutcome, viewType);
         break;
     case SORT:
-        //return "auto sort?";
         break;
     case SEARCH:
         return getNotificationSearchTerm(executionMessage, commandOutcome, viewType);
@@ -122,7 +118,6 @@ string CommandFeedback::getCommandFeedback(Command* executionMessage, CommandOut
         return getNotificationChangeSaveFileDirectory(executionMessage, commandOutcome, viewType);
         break;
     case EXIT:
-        //showToUser("Do I even need a exiting message? Nope");
         break;
     case HELP:
         return getNotificationHelpPrompt(executionMessage, commandOutcome, viewType);
@@ -130,6 +125,9 @@ string CommandFeedback::getCommandFeedback(Command* executionMessage, CommandOut
     case INVALID:
         return getNotificationInvalidCommand(executionMessage, commandOutcome, viewType);
         break;
+    case SCROLL:
+        throw Exception_CommandScroll();
+        break;        
     default:
         break;
     }
@@ -152,7 +150,6 @@ string CommandFeedback::getNotificationUndo(Command* executionMessage, CommandOu
             break;
         case DISPLAY:
             assert(0);
-            //return "no display UI";
             break;
         case DEL:
             return undoNotificationDel(undoCommandMessage, viewType);
@@ -165,19 +162,15 @@ string CommandFeedback::getNotificationUndo(Command* executionMessage, CommandOu
             break;
         case UNDO:
             assert(0);
-            //return "Unable to undo a undo";
             break;
         case SORT:
             assert(0);
-            //return "auto sort?";
             break;
         case SEARCH:
-            //return "Can you even undo a search?";
             return validNotificationExitSearch();
             break;
         case ENDSEARCH:
             return getNotificationSearchTerm(undoCommandMessage, commandOutcome, viewType);
-            //return "No undo exit";
             break;
         case VIEWTYPE:
             return undoNotificationViewType(undoCommandMessage, viewType);
@@ -467,6 +460,8 @@ string CommandFeedback::undoNotificationEdit(Command* executionMessage, int view
         sprintf_s(buffer, MESSAGE_UNDO_EDIT_DONE.c_str(),taskString.c_str());
         return buffer;
         break;
+    default:
+        return MESSAGE_VOID_STRING;
     }
 
 }

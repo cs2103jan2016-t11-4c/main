@@ -90,11 +90,16 @@ public:
     void setDisplayBoxLength(int size);
     int getLargerValue(int value1, int value2);
     void resizeWindow(int width, int length);
-    /*
-    void setWindowsRowsColumns(int size);
-    int getBiggerDisplaySize(int size1, int size2);
-    void synchronizeWindowsDisplaySize(int width, int length);
-    */
+
+    static unsigned int DISPLAY_WIDTH;
+    static unsigned int DISPLAY_LENGTH;
+    static unsigned int DISPLAY_BOX_WIDTH;
+    static unsigned int DISPLAY_BOX_LENGTH;
+    static const int DISPLAY_DEFAULT_WIDTH;
+    static const int DISPLAY_DEFAULT_LENGTH;
+    static const int DISPLAY_SYNC_WIDTH;
+    static const int DISPLAY_SYNC_LENGTH;
+
     //window text colour
     enum Colour {
         BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GREY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_AQUA, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
@@ -108,30 +113,24 @@ public:
     static const string COLOUR_CATEGORY;
     static const string COLOUR_FEEDBACK;
     static const string COLOUR_VIEW_INDICATOR;
+    static const string COLOUR_SCROLL;
 
     void changeListColour(string colourCoding);
     void setConsoleColor(int background, int foreground);
     void setConsoleColorDefault();
 
     //help scroll
-    void scrollByAbsoluteCoord(int iRows);
+    void scrollEngine(); 
     void keyboardCommandScroll();
+    void scrollByAbsoluteCoord(int iRows);
 	bool notExitKey(int keyPress);
 
+    //Text Strings
     static const string SYSTEM_MODE_CON;
     static const string SYSTEM_COLOUR;
     static const string MESSAGE_WELCOME;
     static const char MESSAGE_BOX_CHARACTER;
     static const string MESSAGE_VOID_STRING; 
-
-    static unsigned int DISPLAY_WIDTH;
-    static unsigned int DISPLAY_LENGTH;
-    static unsigned int DISPLAY_BOX_WIDTH;
-    static unsigned int DISPLAY_BOX_LENGTH;
-    static const int DISPLAY_DEFAULT_WIDTH;
-    static const int DISPLAY_DEFAULT_LENGTH;
-    static const int DISPLAY_SYNC_WIDTH;
-    static const int DISPLAY_SYNC_LENGTH;
 
     static const string MESSAGE_VIEWTYPE_0;
     static const string MESSAGE_VIEWTYPE_1;
@@ -139,6 +138,8 @@ public:
     static const string MESSAGE_VIEWTYPE_3;
 
     static const string MESSAGE_COMMAND_PROMPT;
+    static const string MESSAGE_SCROLL_PROMPT;
+    static const string MESSAGE_SCROLL_EXIT;
     static const string MESSAGE_DEFAULT_DIRECTORY;
     static const string MESSAGE_DIRECTORY_BOX;
     static const string MESSAGE_WELCOME_SCREEN[];

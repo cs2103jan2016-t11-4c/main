@@ -121,6 +121,9 @@
     <ClCompile Include="ViewType0.cpp">
       <Filter>Source Files\UserInterface Classes\ViewType</Filter>
     </ClCompile>
+    <ClCompile Include="Exception_CommandScroll.cpp">
+      <Filter>Source Files\Exception Classes</Filter>
+    </ClCompile>
     <ClCompile Include="Command_Scroll.cpp">
       <Filter>Source Files\Command Classes</Filter>
     </ClCompile>
@@ -242,6 +245,9 @@
     </ClInclude>
     <ClInclude Include="ViewType0.h">
       <Filter>Header Files\UserInterface Classes</Filter>
+    </ClInclude>
+    <ClInclude Include="Exception_CommandScroll.h">
+      <Filter>Header Files\Exception Classes</Filter>
     </ClInclude>
     <ClInclude Include="Command_Scroll.h">
       <Filter>Header Files\Command Classes</Filter>
