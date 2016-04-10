@@ -473,7 +473,10 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     changeListColour(COLOUR_HELP);
     printList(helpList);
 
-    scrollByAbsoluteCoord(124);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+    DISPLAY_LENGTH = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+    scrollByAbsoluteCoord(size - DISPLAY_LENGTH);
     keyboardCommandScroll();
 
     printTaskList(currentDate, viewType);
@@ -548,7 +551,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
     displayList.insert(displayList.end(), messageBox);
 
     c.X = DISPLAY_WIDTH;
-    c.Y = DISPLAY_LENGTH;
+    c.Y = displayList.size() + DISPLAY_SYNC_LENGTH - 1;
     SetConsoleScreenBufferSize(GetStdHandle( STD_OUTPUT_HANDLE), c);
 
     return displayList;
@@ -575,14 +578,30 @@ void UserInterface::setDisplayBoxLength(int size) {
     DISPLAY_WIDTH = csbi.srWindow.Right - csbi.srWindow.Left + 1;
     DISPLAY_LENGTH = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
 
+    //get appropriate minimum window size
+    DISPLAY_WIDTH = getLargerValue(DISPLAY_WIDTH, DISPLAY_DEFAULT_WIDTH);
+    DISPLAY_LENGTH = getLargerValue(DISPLAY_LENGTH, DISPLAY_DEFAULT_LENGTH);
+    //DISPLAY_LENGTH = getLargerValue(DISPLAY_LENGTH, size + DISPLAY_SYNC_LENGTH + 1);
+
     DISPLAY_BOX_WIDTH = DISPLAY_WIDTH - DISPLAY_SYNC_WIDTH;
     DISPLAY_BOX_LENGTH = DISPLAY_LENGTH - DISPLAY_SYNC_LENGTH;
+
+    resizeWindow(DISPLAY_WIDTH, DISPLAY_LENGTH);
     _memory->changeWindowSize(DISPLAY_WIDTH, DISPLAY_LENGTH);
 }
 
 void UserInterface::resizeWindow(int width, int length) {
     sprintf_s(buffer, SYSTEM_MODE_CON.c_str(), width, length);
     system(buffer);
+}
+
+int UserInterface::getLargerValue(int value1, int value2) {
+    if(value1 < value2) {
+        return value2;
+    } else {
+        return value1;
+    }
+
 }
 
 /****************************************************************/

@@ -88,7 +88,7 @@ public:
 
     //window size related function
     void setDisplayBoxLength(int size);
-    
+    int getLargerValue(int value1, int value2);
     void resizeWindow(int width, int length);
     /*
     void setWindowsRowsColumns(int size);
