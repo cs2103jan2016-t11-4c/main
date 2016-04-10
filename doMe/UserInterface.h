@@ -130,11 +130,6 @@ public:
     static const int DISPLAY_SYNC_WIDTH;
     static const int DISPLAY_SYNC_LENGTH;
 
-    static const string MESSAGE_FIRST_TIME;
-    static const string MESSAGE_SAVE_FILE_NAME;
-    static const string MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT;
-    static const string MESSAGE_EMPTY_SAVE_FILE_DIRECTORY;
-    static const string MESSAGE_TIP_SAVE_FILE_DIRECTORY;
     static const string MESSAGE_COMMAND_PROMPT;
     static const string MESSAGE_DEFAULT_DIRECTORY;
     static const string MESSAGE_DIRECTORY_BOX;

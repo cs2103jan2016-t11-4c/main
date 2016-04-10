@@ -7,19 +7,14 @@ const char UserInterface::MESSAGE_BOX_CHARACTER = '=';
 const string UserInterface::MESSAGE_VOID_STRING = "";
 const string UserInterface::MESSAGE_WELCOME = "Welcome to doMe. Your programme is ready for use.";
 unsigned int UserInterface::DISPLAY_WIDTH = 80;
-unsigned int UserInterface::DISPLAY_LENGTH = 30;
+unsigned int UserInterface::DISPLAY_LENGTH = 35;
 unsigned int UserInterface::DISPLAY_BOX_WIDTH = 80;
-unsigned int UserInterface::DISPLAY_BOX_LENGTH = 30;
+unsigned int UserInterface::DISPLAY_BOX_LENGTH = 35;
 const int UserInterface::DISPLAY_DEFAULT_WIDTH = 80;
 const int UserInterface::DISPLAY_DEFAULT_LENGTH = 25;
 const int UserInterface::DISPLAY_SYNC_WIDTH = 0;
 const int UserInterface::DISPLAY_SYNC_LENGTH = 5;
 
-const string UserInterface::MESSAGE_FIRST_TIME = "This is your first time using this programme.";
-const string UserInterface::MESSAGE_SAVE_FILE_NAME = "Input your save file name: ";
-const string UserInterface::MESSAGE_SET_SAVE_FILE_DIRECTORY_PROMPT = "Set your save file directory: ";
-const string UserInterface::MESSAGE_EMPTY_SAVE_FILE_DIRECTORY = "Your file is save at the current directory.";
-const string UserInterface::MESSAGE_TIP_SAVE_FILE_DIRECTORY = "You can change your directory later.";
 const string UserInterface::MESSAGE_COMMAND_PROMPT = "command: ";
 const string UserInterface::MESSAGE_DEFAULT_DIRECTORY = "Default Directory";
 const string UserInterface::MESSAGE_DIRECTORY_BOX = "<%s>";
@@ -548,7 +543,7 @@ void UserInterface::showToUserMessageBox() {
 
 void UserInterface::setDisplayBoxLength(int size) {
 	DISPLAY_BOX_WIDTH = DISPLAY_WIDTH - DISPLAY_SYNC_WIDTH;
-	DISPLAY_BOX_LENGTH = DISPLAY_LENGTH - DISPLAY_SYNC_LENGTH;
+	DISPLAY_BOX_LENGTH = size - DISPLAY_SYNC_LENGTH;
 	_memory->changeWindowSize(DISPLAY_WIDTH, DISPLAY_LENGTH);
 }
 
