@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
-//#include "TesterHeader.h"
-/*
+#include "TesterHeader.h"
+
 string testStringDriver[5] = { 
     "Attend dance performance @museum 1/4 730pm", 
     "Conduct V0.3 demo on 31 march 11am",
@@ -11,13 +11,13 @@ string testStringDriver[5] = {
 }; 
 
 string testerClear = "clear";
-*/
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 namespace IntegrationTest {	
     TEST_CLASS(Integration) {
 public:
-	/*
+	
     TEST_METHOD(_Integration_Command_Add_Feedback_V0) {
         UserInterface sut;
         Command* testCommand;
@@ -25,10 +25,10 @@ public:
         int i = 0;
         string actualString;
         string expectedString[5] = {
-            "Added \"Attend dance performance (museum) 19:30 1/4/2016\" into doMe.txt",
-            "Added \"Conduct V0.3 demo on 11:00 31/3/2016\" into doMe.txt",
-            "Added \"Sleep by 0:00 1/1/2016\" into doMe.txt",
-            "Added \"Presentation for IE2150 from 11/4/2016 - 12/4/2016\" into doMe.txt",
+            "Added \"Attend dance performance (museum) (19:30 1/4/2016)\" into doMe.txt",
+            "Added \"Conduct V0.3 demo (11:00 31/3/2016)\" into doMe.txt",
+            "Added \"Sleep (0:00 1/1/2016)\" into doMe.txt",
+            "Added \"Presentation for IE2150 (11/4/2016 - 12/4/2016)\" into doMe.txt",
             "Added \"Study hard <No deadline>\" into doMe.txt"
         };
 
@@ -41,14 +41,14 @@ public:
             Assert::AreEqual(expectedString[i], actualString);
         }
     }
-
+    
     TEST_METHOD(_Integration_Command_Clear_Feedback_V0) {
         UserInterface sut;
         Command* testCommand;
         int testViewType = 0;
         int i = 0;
         string actualString;
-        string expectedString = "All contents cleared from doMe.txt";
+        string expectedString = "All tasks in view cleared.";
 
         for(i = 0; i < 5; i++) {
             sut._logic->executeCommand(testStringDriver[i]);
@@ -70,8 +70,8 @@ public:
         string actualString;
         string expectedString[5] = {
             "Deleted \"Study hard <No deadline>\" from doMe.txt",
-            "Deleted \"Sleep by 12:00am 1/1/2016\" from doMe.txt",
-            "Deleted \"Attend dance performance (museum) 7:30pm 1/4/2016\" from doMe.txt"
+            "Deleted \"Sleep (12:00am 1-Jan)\" from doMe.txt",
+            "Deleted \"Attend dance performance (museum) (7:30pm 1-Apr)\" from doMe.txt"
         };
         string testerDelete[3] = {
             "delete 1",
@@ -93,7 +93,7 @@ public:
             Assert::AreEqual(expectedString[i], actualString);
         }
     }
-
+    
     TEST_METHOD(_Integration_Command_Edit_Feedback_V2) {
         UserInterface sut;
         Command* testCommand;
@@ -101,15 +101,15 @@ public:
         int i = 0;
         string actualString;
         string expectedString[5] = {
-            "Sleep by 12:00am 1-Jan",
-            "Conduct V0.3 demo on 11:00am 31-Mar",
-            "Study harder 4-Apr",
-            "Attend dance performance (museum) 7:30pm 5-Apr",
-            "Presentation for IE2150 from 11-Apr - 12-Apr"  
+            "Sleep (12:00am 1-Jan)",
+            "Conduct V0.3 demo (11:00am 31-Mar)",
+            "Study harder (4-Apr)",
+            "Attend dance performance (museum) (7:30pm 5-Apr)",
+            "Presentation for IE2150 (11-Apr - 12-Apr)"  
         };
         string expectedFeedback[2] = {
-            "Edited inputted task description to \"Study harder 4-Apr\"",
-            "Edited inputted task description to \"Attend dance performance (museum) 7:30pm 5-Apr\""
+            "Editted task to \"Study harder (4-Apr)\".",
+            "Editted task to \"Attend dance performance (museum) (7:30pm 5-Apr)\"."
         };
         string testerEdit[2] = {
             "edit 1 Study harder 4/4",
@@ -137,6 +137,6 @@ public:
             i++;
         }
     }
-	*/
+	
     };
 }

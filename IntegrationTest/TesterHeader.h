@@ -1,10 +1,13 @@
+//@@author A0130475L
 #ifndef TESTMODE 
 
 #else
 #pragma once
-#include "Exception_FileCannotOpen.cpp"
-#include "Exception_InvalidCommand.cpp"
+#include "Exception_CorruptedFile.cpp"
 #include "Exception_ExceededParameterLimit.cpp"
+#include "Exception_FileCannotOpen.cpp"
+#include "Exception_FirstTimeUser.cpp"
+#include "Exception_InvalidCommand.cpp"
 
 #include "Logic.cpp"
 #include "Commons.cpp"
@@ -12,10 +15,11 @@
 #include "Command.cpp"
 #include "Command_Add.cpp"
 #include "Command_Clear.cpp"
-#include "Command_Delete.cpp"
 #include "Command_Edit.cpp"
 #include "Command_Exit.cpp"
+#include "Command_Help.cpp"
 #include "Command_Invalid.cpp"
+#include "Command_Redo.cpp"
 #include "Command_SaveDirectory.cpp"
 #include "Command_Search.cpp"
 #include "Command_Undo.cpp"
@@ -31,10 +35,12 @@
 #include "Storage.cpp"
 
 #include "UserInterface.cpp"
-#include "Command_Feedback.cpp"
+#include "CommandFeedback.cpp"
 #include "ViewType.cpp"
+#include "ViewType0.cpp"
 #include "ViewType1.cpp"
 #include "ViewType2.cpp"
+#include "ViewType3.cpp"
 
 #include "SynonymList.h"
 #include "SynonymList.cpp"
