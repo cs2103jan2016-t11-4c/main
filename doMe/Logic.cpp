@@ -6,6 +6,10 @@ const string Logic::LOG_MESSAGE_PARSER = "Parser parses it to be ";
 Command* Logic::executeCommand(string commandText) {
 	throwExceptionIfEmpty(commandText);
 
+	if(commandText == "scroll") {
+		return new Command_Scroll();
+	}
+
 	Command* command = _parser->parse(commandText);
 	assert(command != NULL);
 

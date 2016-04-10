@@ -7,6 +7,7 @@
 #include "Parser.h"
 #include "Command.h"
 #include "Commons.h"
+#include "Command_Scroll.h"
 
 using namespace std;
 
