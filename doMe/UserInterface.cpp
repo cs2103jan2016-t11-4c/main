@@ -492,6 +492,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     CONSOLE_SCREEN_BUFFER_INFO csbi;
     GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
     DISPLAY_LENGTH = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+	_bufferBottomLimit = csbi.srWindow.Bottom;
     scrollByAbsoluteCoord(size - DISPLAY_LENGTH);
     keyboardCommandScroll();
 
@@ -569,6 +570,7 @@ vector<string> UserInterface::createDisplayBox(vector<string> displayList) {
 
     c.X = DISPLAY_WIDTH;
     c.Y = displayList.size() + DISPLAY_SYNC_LENGTH - 1;
+	_bufferBottomLimit = c.Y;
     SetConsoleScreenBufferSize(GetStdHandle( STD_OUTPUT_HANDLE), c);
 
     return displayList;
@@ -736,7 +738,7 @@ void UserInterface::scrollByAbsoluteCoord(int iRows) {
     GetConsoleScreenBufferInfo(hStdout, &csbiInfo);
     srctWindow = csbiInfo.srWindow; 
 
-    if (srctWindow.Top == 124 && iRows == -1) {
+    if (srctWindow.Bottom >= _bufferBottomLimit && iRows == -1) {
         return;
     } 
 
