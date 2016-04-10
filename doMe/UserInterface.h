@@ -72,6 +72,7 @@ public:
     void printTaskList(int currentDate ,int viewType);
     void printSearchList(int currentDate, int viewType);
     void printHelpList(int currentDate, int viewType);
+    void printViewType(int viewType);
 
     //notification
     void printExecutionMessage(Command* executionMessage, CommandOutcome commandOutcome);
@@ -98,6 +99,7 @@ public:
     enum Colour {
         BLACK, BLUE, GREEN, AQUA, RED, PURPLE, YELLOW, WHITE, GREY, LIGHT_BLUE, LIGHT_GREEN, LIGHT_AQUA, LIGHT_RED, LIGHT_PURPLE, LIGHT_YELLOW, LIGHT_WHITE
     };
+
     static const string COLOUR_DEFAULT;
     static const string COLOUR_NEW;
     static const string COLOUR_DONE;
@@ -105,6 +107,7 @@ public:
     static const string COLOUR_HELP;
     static const string COLOUR_CATEGORY;
     static const string COLOUR_FEEDBACK;
+    static const string COLOUR_VIEW_INDICATOR;
 
     void changeListColour(string colourCoding);
     void setConsoleColor(int background, int foreground);
@@ -129,6 +132,11 @@ public:
     static const int DISPLAY_DEFAULT_LENGTH;
     static const int DISPLAY_SYNC_WIDTH;
     static const int DISPLAY_SYNC_LENGTH;
+
+    static const string MESSAGE_VIEWTYPE_0;
+    static const string MESSAGE_VIEWTYPE_1;
+    static const string MESSAGE_VIEWTYPE_2;
+    static const string MESSAGE_VIEWTYPE_3;
 
     static const string MESSAGE_COMMAND_PROMPT;
     static const string MESSAGE_DEFAULT_DIRECTORY;

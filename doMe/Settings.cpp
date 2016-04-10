@@ -4,7 +4,7 @@ const string Settings::FILE_SETTINGS_NAME = "doMeSettings.txt";
 const string Settings::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const int Settings::DEFAULT_VIEWTYPE = 1;
 const int Settings::DEFAULT_WINDOWS_WIDTH = 80;
-const int Settings::DEFAULT_WINDOWS_LENGTH = 30; 
+const int Settings::DEFAULT_WINDOWS_LENGTH = 35; 
 
 Settings* Settings::_instance = 0;
 
