@@ -22,3 +22,4 @@
 #include "Command_Undo.h"
 #include "Command_ViewType.h"
 #include "Task.h"
+#include "Commons.h"

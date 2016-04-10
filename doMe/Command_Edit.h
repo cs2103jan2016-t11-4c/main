@@ -4,7 +4,11 @@
 using namespace std;
 
 class Command_Edit : public Command {
-private:
+#ifndef TESTMODE
+private: 
+#else
+public:
+#endif
 	int _index;
 	CommandType _commandType;
 	vector<int> _editList;
