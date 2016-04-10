@@ -1,8 +1,11 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
+#include "Commons.cpp"
 #include "Exception_InvalidCommand.cpp"
 #include "Exception_FileCannotOpen.cpp"
+#include "Exception_FirstTimeUser.cpp"
+#include "Exception_CorruptedFile.cpp"
 #include "Task.cpp"
 #include "Memory.h"
 #include "Memory.cpp"
@@ -31,8 +34,7 @@ namespace doMeTests_Command
 	{
 	public:
 
-		TEST_METHOD(Command_AddTest_Execute_Task)
-		{
+		TEST_METHOD(Command_AddTest_Execute_Task) {
 			Task* task = new Task();
 			Memory* memory = Memory::getInstance();
 			list<Task*> expectedTaskList = *(memory->ramGetTaskList());
@@ -44,8 +46,7 @@ namespace doMeTests_Command
 			Assert::AreEqual(true, executionStatus);
 		}
 
-		TEST_METHOD(Command_AddTest_Execute_NULL)
-		{
+		TEST_METHOD(Command_AddTest_Execute_NULL) {
 			Memory* memory = Memory::getInstance();
 			list<Task*> expectedTaskList = *(memory->ramGetTaskList());
 			Command_Add command(NULL);
@@ -57,98 +58,162 @@ namespace doMeTests_Command
 		}
 	};
 
-	TEST_CLASS(Command_DeleteTests)
-	{
-	public:
-		/*
-		TEST_METHOD(Command_DeleteTest_OutOfRange_LowValid)
-		{
+	TEST_CLASS(Command_DeleteTests) {
+		TEST_METHOD(Command_DeleteTest_outOfRange_true_negativeNumber) {
 			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
 			Task* task = new Task();
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
 
-			Command* command = new Command_Delete(1);
-			bool executionStatus = command->execute();
+			for(int i = 0 ; i < 5; i++) {
+				memory->ramAdd(task);
+			}
 
-			Assert::AreEqual(true, executionStatus);
+			deleteList.push_back(-1);
+			Command_Clear* command = new Command_Clear(&deleteList);
+			bool outOfRange = command->outOfRange();
+			Assert::AreEqual(true, outOfRange);
 		}
 
-		TEST_METHOD(Command_DeleteTest_OutOfRange_HighValid)
-		{
+		TEST_METHOD(Command_DeleteTest_outOfRange_true_tooHigh) {
 			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
 			Task* task = new Task();
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
 
-			Command* command = new Command_Delete(4);
-			bool executionStatus = command->execute();
+			for(int i = 0 ; i < 5; i++) {
+				memory->ramAdd(task);
+			}
 
-			Assert::AreEqual(true, executionStatus);
+			deleteList.push_back(6);
+			Command_Clear* command = new Command_Clear(&deleteList);
+			bool outOfRange = command->outOfRange();
+			Assert::AreEqual(true, outOfRange);
 		}
 
-		TEST_METHOD(Command_DeleteTest_OutOfRange_LowInvalid1)
-		{
+		TEST_METHOD(Command_DeleteTest_outOfRange_false_singleIndexZero) {
 			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
 			Task* task = new Task();
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
 
-			Command* command = new Command_Delete(0);
-			bool executionStatus = command->execute();
+			for(int i = 0 ; i < 5; i++) {
+				memory->ramAdd(task);
+			}
 
-			Assert::AreEqual(false, executionStatus);
+			deleteList.push_back(0);
+			Command_Clear* command = new Command_Clear(&deleteList);
+			bool outOfRange = command->outOfRange();
+			Assert::AreEqual(false, outOfRange);
 		}
-		TEST_METHOD(Command_DeleteTest_OutOfRange_LowInvalid2)
-		{
+
+		TEST_METHOD(Command_DeleteTest_outOfRange_false_singleMaxValidIndex) {
 			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
 			Task* task = new Task();
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
 
-			Command* command = new Command_Delete(-50);
-			bool executionStatus = command->execute();
+			for(int i = 0 ; i < 5; i++) {
+				memory->ramAdd(task);
+			}
 
-			Assert::AreEqual(false, executionStatus);
+			deleteList.push_back(5);
+			Command_Clear* command = new Command_Clear(&deleteList);
+			bool outOfRange = command->outOfRange();
+			Assert::AreEqual(false, outOfRange);
 		}
-		TEST_METHOD(Command_DeleteTest_OutOfRange_HighInvalid1)
-		{
+
+		TEST_METHOD(Command_DeleteTest_outOfRange_false_MultipleAllValid) {
 			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
 			Task* task = new Task();
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			vector<int>* intVect = new vector<int>;
-			intVect->push_back(5);
-			Command* command = new Command_Clear(intVect);
-			bool executionStatus = command->execute();
 
-			Assert::AreEqual(true, executionStatus);
+			for(int i = 0 ; i < 5; i++) {
+				memory->ramAdd(task);
+			}
+
+			for(int i = 0 ; i < 6; i++) {
+				deleteList.push_back(i);
+			}
+
+			Command_Clear* command = new Command_Clear(&deleteList);
+			bool outOfRange = command->outOfRange();
+			Assert::AreEqual(false, outOfRange);
 		}
-		TEST_METHOD(Command_DeleteTest_OutOfRange_HighInvalid2)
-		{
+
+		TEST_METHOD(Command_DeleteTest_clearAllTasks) {
 			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
 			Task* task = new Task();
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			memory->ramAdd(task);
-			vector<int>* intVect = new vector<int>;
-			intVect->push_back(100000);
-			Command* command = new Command_Clear(intVect);
-			bool executionStatus = command->execute();
 
-			Assert::AreEqual(true, executionStatus);
+			for(int i = 0 ; i < 5; i++) {
+				memory->ramAdd(task);
+			}
+
+			Command_Clear* command = new Command_Clear(&deleteList);
+
+			command->execute();
+
+			int taskListSize = memory->ramGetSize();
+
+			Assert::AreEqual(0, taskListSize);
 		}
-		*/
+		TEST_METHOD(Command_DeleteTest_clearSelectedTasks_Single) {
+			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
+
+			for(int i = 1 ; i < 6; i++) {
+				memory->ramAdd(new Task(to_string(i),-1,-1,-1,-1,"",0));
+			}
+
+			deleteList.push_back(1);
+
+			Command_Clear* command = new Command_Clear(&deleteList);
+
+			command->execute();
+			list<Task*>* taskList = memory->ramGetTaskList();
+			list<Task*>* expectedTaskList;
+
+			for(int i = 2; i < 6; i++) {
+				expectedTaskList->push_back(new Task(to_string(i),-1,-1,-1,-1,"",0));
+			}
+
+			list<Task*>::iterator taskListIter = taskList->begin();
+			list<Task*>::iterator expectedTaskListIter = expectedTaskList->begin();
+
+			Assert::AreEqual(taskList->size(), expectedTaskList->size());
+
+			while(taskListIter != taskList->end() && expectedTaskListIter != expectedTaskList->end()) {
+				Assert::AreEqual((*taskListIter)->getName(), (*expectedTaskListIter)->getName());
+			}
+		}
+
+
+		TEST_METHOD(Command_DeleteTest_clearSelectedTasks_Multiple) {
+			Memory* memory = Memory::getInstance();
+			vector<int> deleteList;
+
+			for(int i = 1 ; i < 6; i++) {
+				memory->ramAdd(new Task(to_string(i),-1,-1,-1,-1,"",0));
+			}
+
+			deleteList.push_back(1);
+			deleteList.push_back(3);
+			deleteList.push_back(5);
+
+			Command_Clear* command = new Command_Clear(&deleteList);
+
+			command->execute();
+			list<Task*>* taskList = memory->ramGetTaskList();
+			list<Task*>* expectedTaskList;
+
+			expectedTaskList->push_back(new Task(to_string(2),-1,-1,-1,-1,"",0));
+			expectedTaskList->push_back(new Task(to_string(4),-1,-1,-1,-1,"",0));			
+
+			list<Task*>::iterator taskListIter = taskList->begin();
+			list<Task*>::iterator expectedTaskListIter = expectedTaskList->begin();
+
+			Assert::AreEqual(taskList->size(), expectedTaskList->size());
+
+			while(taskListIter != taskList->end() && expectedTaskListIter != expectedTaskList->end()) {
+				Assert::AreEqual((*taskListIter)->getName(), (*expectedTaskListIter)->getName());
+			}
+		}
 	};
 }
