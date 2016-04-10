@@ -15,6 +15,11 @@ Command_Edit::Command_Edit(vector<int>* editList, Task* task)
 		_newTime2 = task->getTime2();
 		_newLocation = task->getLocation();
 		_newDoneStatus = task->getDoneStatus();
+
+		if(_newDate1 == DATE_NO_CHANGE && _newDate2 != DATE_NO_CHANGE) {
+			_newDate1 = NO_DATE;
+		}
+
 		if(_editList.size() == 1) {
 			_commandType = EDIT;
 		}else{
@@ -65,6 +70,7 @@ void Command_Edit::editAllTasks() {
 		if(_newDoneStatus != -1) {
 			_edittedTaskPtrList.back()->setDoneStatus(_newDoneStatus);
 		}
+		ensureDatesAreValid();
 	}
 
 }
@@ -101,7 +107,20 @@ void Command_Edit::editSelectedTasks() {
 		if(_newDoneStatus != -1) {
 			_edittedTaskPtrList.back()->setDoneStatus(_newDoneStatus);
 		}
+
+		ensureDatesAreValid();
 	}
+}
+
+void Command_Edit::ensureDatesAreValid() {
+	int date1 = _edittedTaskPtrList.back()->getDate1();
+	int date2 = _edittedTaskPtrList.back()->getDate2();
+
+	if(date2 == date1) {
+		_edittedTaskPtrList.back()->setDate1(-1);
+	}
+
+
 }
 
 bool Command_Edit::undo() {
@@ -132,7 +151,7 @@ CommandType Command_Edit::getCommandType() {
 }
 
 int Command_Edit::getDoneStatus() {
-    return _newDoneStatus;
+	return _newDoneStatus;
 }
 
 string Command_Edit::getStringForm() {

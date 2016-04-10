@@ -28,6 +28,7 @@
     <ClCompile Include="Command_Redo.cpp" />
     <ClCompile Include="Command_Help.cpp" />
     <ClCompile Include="Exception_CorruptedFile.cpp" />
+    <ClCompile Include="Command_Scroll.cpp" />
     <ClCompile Include="TaskPacker.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="Logic.cpp" />
@@ -62,6 +63,7 @@
     <ClInclude Include="Command_Redo.h" />
     <ClInclude Include="Command_Help.h" />
     <ClInclude Include="Exception_CorruptedFile.h" />
+    <ClInclude Include="Command_Scroll.h" />
     <ClInclude Include="InputTokens.h" />
     <ClInclude Include="Command.h" />
     <ClInclude Include="Command_Add.h" />

@@ -31,6 +31,7 @@ public:
 	bool isDeleteTaskParametersCommand();
 	void editAllTasks();
 	void editSelectedTasks();
+	void ensureDatesAreValid();
 public:
 	Command_Edit(vector<int>* editList, Task* task);
 	bool execute();
