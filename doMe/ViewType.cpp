@@ -22,6 +22,7 @@ const string ViewType::COLOUR_DEFAULT = "DEFAULT";
 const string ViewType::COLOUR_NEW = "NEW";
 const string ViewType::COLOUR_DONE = "DONE";
 const string ViewType::COLOUR_CATEGORY = "CATEGORY";
+const string ViewType::COLOUR_SEARCH = "SEARCH";
 const string ViewType::MESSAGE_EMPTY_LIST[] = {
     "                               <list is empty!>",
     "                 Type \"HELP\" to see list of available commands."
@@ -103,12 +104,14 @@ vector<string> ViewType::createSearchList() {
         size_t size = (sizeof(MESSAGE_EMPTY_LIST)/sizeof(*MESSAGE_EMPTY_LIST));
         vector<string> emptyList(MESSAGE_EMPTY_LIST,MESSAGE_EMPTY_LIST+size);
         _displayList = emptyList;
+        _colourCoding.push_back(COLOUR_SEARCH);
     } else {
         list<Task*>::iterator taskListIter = (*_taskList).begin();
         int index = 1;
 
         while(taskListIter != (*_taskList).end()) {
             _displayList.push_back(ViewType::createTaskString(*taskListIter,index));
+            _colourCoding.push_back(COLOUR_SEARCH);
             index++;
             taskListIter++;
         }

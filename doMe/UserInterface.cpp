@@ -448,6 +448,8 @@ void UserInterface::printTaskList(int currentDate, int viewType) {
 
 void UserInterface::printSearchList(int currentDate, int viewType) {
     ViewType* taskListType;
+    vector<string> displayList;
+    vector<string> colourCoding;
 
     switch(viewType) {
     case 1:
@@ -463,11 +465,14 @@ void UserInterface::printSearchList(int currentDate, int viewType) {
         taskListType = new ViewType0(_taskList, currentDate);
         break;
     }
+    displayList = taskListType->createSearchList();
+    colourCoding = taskListType->getColourCoding();
 
-    changeListColour(COLOUR_SEARCH);
+    displayList = createDisplayBox(displayList);
+    colourCoding = synchronizeColourCodingWithDisplayBox(colourCoding);
+
     printViewType(viewType);
-    printList(createDisplayBox(taskListType->createSearchList()));
-    //changeListColour(COLOUR_DEFAULT);
+    printList(displayList, colourCoding);
 
     delete taskListType;
 }
@@ -490,6 +495,7 @@ void UserInterface::printHelpList(int currentDate, int viewType) {
     scrollByAbsoluteCoord(size - DISPLAY_LENGTH);
     keyboardCommandScroll();
 
+    changeListColour(COLOUR_DEFAULT);
     printTaskList(currentDate, viewType);
     _lastDisplayType = DEFAULT_DISPLAY;
 }

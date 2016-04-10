@@ -72,6 +72,7 @@ public:
     static const string COLOUR_NEW;
     static const string COLOUR_DONE;
     static const string COLOUR_CATEGORY;
+    static const string COLOUR_SEARCH;
 
 public:
     ViewType(void);
