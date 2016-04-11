@@ -272,9 +272,6 @@
     <Filter Include="Source Files\Parser Classes">
       <UniqueIdentifier>{062c88c3-734c-4d71-9401-735664e7975a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Commons Classes">
-      <UniqueIdentifier>{80f2ddef-9628-44d7-ac21-8a8d50175894}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Memory Classes">
       <UniqueIdentifier>{74ca3258-831e-476c-807d-8df48c8c07a3}</UniqueIdentifier>
     </Filter>
@@ -316,6 +313,9 @@
     </Filter>
     <Filter Include="Header Files\Commons Classes">
       <UniqueIdentifier>{399d6735-2ae3-492b-b9ed-c74def425afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Commons Classes">
+      <UniqueIdentifier>{80f2ddef-9628-44d7-ac21-8a8d50175894}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

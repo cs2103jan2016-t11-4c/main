@@ -21,6 +21,7 @@
 #include "Command_Help.cpp"
 #include "Command_Invalid.cpp"
 #include "Command_Redo.cpp"
+#include "Command_Scroll.cpp"
 #include "Command_SaveDirectory.cpp"
 #include "Command_Search.cpp"
 #include "Command_Undo.cpp"

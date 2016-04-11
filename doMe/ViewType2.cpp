@@ -2,11 +2,12 @@
 #include "ViewType2.h"
 
 const string ViewType2::MESSAGE_DISPLAY_HEADER[] = {
-    "<Done, No Deadlines, Past>",
+    "<No Deadlines, Past>",
     "<TODAY>",
     "<This Week>",
     "<Next Week>",
-    "<Future>"
+    "<Future>",
+    "<Done>"
 };
 
 ViewType2::ViewType2(void) {
@@ -28,8 +29,15 @@ vector<string> ViewType2::getCategoryHeader() {
 }
 
 bool ViewType2::isInNextCategory(Task* individualTask, int i) {
-    int date = individualTask->getDate2();
+    int date; 
+    int date1 = individualTask->getDate1();
+    int date2 = individualTask->getDate2();
     Commons commons;
+    if(date1 != -1) {
+        date = date1;
+    } else {
+        date = date2;
+    }
 
     switch(i) {
     case 0:
@@ -61,6 +69,14 @@ bool ViewType2::isInNextCategory(Task* individualTask, int i) {
         }
     case 4:
         if(date > commons.addToDate(_dayToEndOfWeek + NO_OF_DAYS_IN_WEEK,_currentDate) ) {
+            return true;
+            break;
+        } else {
+            return false;
+            break;
+        }
+    case 5:
+        if(individualTask->getDoneStatus() == true) {
             return true;
             break;
         } else {

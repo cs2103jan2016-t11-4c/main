@@ -694,7 +694,6 @@ void UserInterface::scrollEngine() {
 
     printDefaultDisplay();
     showToUser(MESSAGE_SCROLL_EXIT);
-    executeCommandUntilExit();
 }
 
 void UserInterface::keyboardCommandScroll() {
