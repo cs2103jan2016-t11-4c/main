@@ -1,3 +1,5 @@
+//@@author A0122569B
+//
 //This is the CommandPacker. This class creates the appropriate command object based on the 
 //lexed tokens passed to it. It is an singleton class and pointer to the object should be 
 //retrieved using the CommandPacker::getInstance() method.
@@ -6,8 +8,7 @@
 //to the command object.
 //Pre-Condition: The tokens pointer should not be NULL
 //Post-Condition: A Command object would be created. If required, a Task Object may also be created
-//
-//@@author A0122569B
+
 
 #pragma once
 
@@ -16,6 +17,7 @@
 #include "Command_Clear.h"
 #include "Command_Edit.h"
 #include "Command_Exit.h"
+#include "Command_Scroll.h"
 #include "Command_Invalid.h"
 #include "Command_SaveDirectory.h"
 #include "Command_Search.h"
@@ -62,62 +64,68 @@ private:
 	int _doneStatus;
 
 	void setEnvironment(InputTokens* tokens);
-	void branchToNode(int index);
+	void branchToNode(int index); //branches to the various command nodes for parsing
 
-	void nodeOneOfDisplayCommand(int index);
-	void nodeTwoOfDisplayCommand(int index);
+	//Below are the method nodes that check an aspect of every command. The part in the []brackets is the part being checked
+	void nodeOneOfDisplayCommand(int index);			//display [1]
 
-	void nodeOneOfChangeDirectoryCommand(int index);
-	void nodeTwoOfChangeDirectoryCommand(int index);
-	void nodeThreeOfChangeDirectoryCommand(int index);
-	void nodeFourOfChangeDirectoryCommand(int index);
+	void nodeOneOfChangeDirectoryCommand(int index);	//change [the] directory to some address
+	void nodeTwoOfChangeDirectoryCommand(int index);	//change the [directory] to some address 
+	void nodeThreeOfChangeDirectoryCommand(int index);	//change the directory [to] some address
+	void nodeFourOfChangeDirectoryCommand(int index);	//change the directory to [some address]
 
-	void nodeOneOfChangeViewTypeCommand(int index);
-	void nodeTwoOfChangeViewTypeCommand(int index);
-	void nodeThreeOfChangeViewTypeCommand(int index);
-	void nodeFourOfChangeViewTypeCommand(int index);
+	void nodeOneOfChangeViewTypeCommand(int index);		//change the [viewtype] to index
+	void nodeTwoOfChangeViewTypeCommand(int index);		//change the viewtype [to] index
+	void nodeThreeOfChangeViewTypeCommand(int index);	//change the viewtype to [index]
+	void nodeFourOfChangeViewTypeCommand(int index);	//change the viewtype to index []
 
-	void nodeOneOfDeleteCommand(int index);
-	void nodeTwoOfDeleteCommand(int index);	
-	void nodeThreeOfDeleteCommand(int index);
+	void nodeOneOfDeleteCommand(int index);				//delete [1] location date time
+	void nodeTwoOfDeleteCommand(int index);				//delete 1 [location] date time
+	void nodeThreeOfDeleteCommand(int index);			//delete 1 location [date time]
 
-	void nodeOneOfUndoCommand(int index);
+	void nodeOneOfUndoCommand(int index);				//undo []
 
-	void nodeOneOfRedoCommand(int index);
+	void nodeOneOfRedoCommand(int index);				//redo []
 
-	void nodeOneOfHelpCommand(int index);
+	void nodeOneOfHelpCommand(int index);				//help []
 
-	void nodeOneOfExitCommand(int index);
+	void nodeOneOfExitCommand(int index);				//exit []
 
-	void nodeOneOfClearCommand(int index);
-	void nodeTwoOfClearCommand(int index);
-	void nodeThreeOfClearCommand(int index);
-	void nodeFourOfClearCommand(int index);
-	void nodeFiveOfClearCommand(int index);
-	void nodeSixOfClearCommand(int index);
+	void nodeOneOfScrollCommand(int index);				//b []
 
-	void nodeOneOfSearchCommand(int index);
-	void nodeTwoOfSearchCommand(int index);
+	void nodeOneOfClearCommand(int index);				//clear [] 
+	void nodeTwoOfClearCommand(int index);				//clear [all]
+	void nodeThreeOfClearCommand(int index);			//clear all []
+	void nodeFourOfClearCommand(int index);				//clear [1]-5
+	void nodeFiveOfClearCommand(int index);				//clear 1[-]5
+	void nodeSixOfClearCommand(int index);				//clear 1-[5]
+	void nodeSevenOfClearCommand(int index);			//clear 1-5 [location date time]
+
+	void nodeOneOfSearchCommand(int index);				//search [for] the meaning of life
+	void nodeTwoOfSearchCommand(int index);				//search for [the meaning of life]
 	void nodeThreeOfSearchCommand(int index);
 
-	void nodeOneOfMarkCommand(int index);
-	void nodeTwoOfMarkCommand(int index);
-	void nodeThreeOfMarkCommand(int index);
-	void nodeFourOfMarkCommand(int index);
-	void nodeFiveOfMarkCommand(int index);
-	void nodeSixOfMarkCommand(int index);
-	void nodeSevenOfMarkCommand(int index);
-	void nodeEightOfMarkCommand(int index);
-	void nodeNineOfMarkCommand(int index);
-	void nodeTenOfMarkCommand(int index);
+	void nodeOneOfMarkCommand(int index);				//mark [1]-3 as not done
+	void nodeTwoOfMarkCommand(int index);				//mark 1[-]3 as not done
+	void nodeThreeOfMarkCommand(int index);				//mark 1-[3] as not done
+	void nodeFourOfMarkCommand(int index);				//mark 1-3 as [not] done
+	void nodeFiveOfMarkCommand(int index);				//mark 1-3 as not [done]
+	void nodeSixOfMarkCommand(int index);				//mark [as] not done 1-3
+	void nodeSevenOfMarkCommand(int index);				//mark as [not] done 1-3
+	void nodeEightOfMarkCommand(int index);				//mark as not [done] 1-3
+	void nodeNineOfMarkCommand(int index);				//mark as not done [1]-3
+	void nodeTenOfMarkCommand(int index);				//mark as not done 1[-]3
+	void nodeElevenOfMarkCommand(int index);			//mark as not done 1-[3]
+	void nodeTwelveOfMarkCommand(int index);			//mark as not done 1-3 []
 
-	void nodeOneOfAddCommand(int index);
-	void nodeTwoOfAddCommand(int index);
+	void nodeOneOfAddCommand(int index);				//[add] submit everything 11 apr 2359
+	void nodeTwoOfAddCommand(int index);				//add [submit everything 11 apr 2359]
 
-	void nodeOneOfEditCommand(int index);
-	void nodeTwoOfEditCommand(int index);
-	void nodeThreeOfEditCommand(int index);
+	void nodeOneOfEditCommand(int index);				//edit [1] to just give up
+	void nodeTwoOfEditCommand(int index);				//edit 1 [to] just give up
+	void nodeThreeOfEditCommand(int index);				//edit 1 to [just give up]
 
+	//uses global variables to pack the command object
 	void packDisplayCommand();
 	void packChangeViewTypeCommand();
 	void packChangeDirectoryCommand();
@@ -127,6 +135,7 @@ private:
 	void packRedoCommand();
 	void packHelpCommand();
 	void packExitCommand();
+	void packScrollCommand();
 	void packClearCommand();
 	void packSearchCommand();
 	void packMarkCommand();
@@ -134,11 +143,11 @@ private:
 	void packEditCommand();
 	void packInvalidCommand();
 
-	void extractTerm(int index);
+	void extractTerm(int index);			//reads in tokens till the end and stores the read string in _description
 
-	void extractDeleteParameter(int index);
-	void packDeleteTask();
+	void extractDeleteParameter(int index);	//finds the parameter to delete from a task
+	void packDeleteTask();					//packs up the parameters for task deletion
 
-	void addToIndexes(int index);
-	void addRangeToIndexes(int index);
+	void addToIndexes(int index);			//adds an integer to the global _indexes variable
+	void addRangeToIndexes(int index);		//adds a range of integer to the global _indexes variable
 };

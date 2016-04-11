@@ -63,6 +63,7 @@ private:
 	void addRedo();
 	void addHelp();
 	void addMark();
+	void addScroll();
 
 	void addHrs();
 	void addDateDivider();

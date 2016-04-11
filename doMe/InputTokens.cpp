@@ -26,7 +26,12 @@ int InputTokens::getInteger(int index) {
 	assert(!isOutOfBounds(index));
 	assert(isInteger(index));
 	
-	return stoi(_tokens[index]);
+	if(getSize(index) > 9) {
+		//number is too large and so return largest integer
+		return INT_MAX;
+	} else {
+		return stoi(_tokens[index]);
+	}
 }
 
 unsigned int InputTokens::getSize() {
@@ -68,6 +73,32 @@ bool InputTokens::isInteger(int index) {
 	assert(!isOutOfBounds(index));
 
 	return (_tokens[index].find_first_not_of("1234567890") == string::npos);
+}
+
+bool InputTokens::isValidIndex(int index) {
+	assert(!isOutOfBounds(index));
+
+	if(!isInteger(index)) {
+		return false;
+	} else if(isOutOfBounds(index+1)) {
+		return true;
+	} else if(isExtensionOfAWord(index+1)) {
+		return false;
+	} else if(hasMeaning("MERIDIEM", index+1)) {
+		return false;
+	} else if(hasMeaning("MONTHSOFTHEYEAR", index+1)) {
+		return false;
+	} else if(hasMeaning("HRS", index+1)) {
+		return false;
+	} else if(hasMeaning("TIMEDIVIDER", index+1)) {
+		return false;
+	} else if(hasMeaning("DATEDIVIDER", index+1)) {
+		return false;
+	} else if(hasMeaning("NUMBERSUFFIX", index+1)) {
+		return false;
+	} else {
+		return true;
+	}
 }
 
 bool InputTokens::isParsed(int index) {
@@ -128,6 +159,9 @@ void InputTokens::generateTokensFromCommandLine(string commandLine) {
 	istringstream is(commandLine);
 	string chunk;
 	while(is >> chunk) {
+		chunk = removeIllegalCharacter(chunk);
+
+
 		//words starting with * are ignored from parsing
 		if(chunk[START_INDEX] == '*') {
 			chunk.erase(chunk.begin());
@@ -222,6 +256,17 @@ string InputTokens::makeAllCaps(string s) {
 	return s;
 }
 
+string InputTokens::removeIllegalCharacter(string s) {
+	for(unsigned int i = 0; i < s.size(); i++) {
+		while(i < s.size() && isIllegalCharacter(s[i])) {
+			s.erase(s.begin()+i);
+		}
+	}
+
+	return s;
+}
+
+
 bool InputTokens::isInteger(char c) {
 	return (c >= '0' && c <= '9');
 }
@@ -230,4 +275,8 @@ bool InputTokens::isLowerCase(string s) {
 	assert(s.size() != 0);
 
 	return (s.find_first_of("ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890") == string::npos);
+}
+
+bool InputTokens::isIllegalCharacter(char c) {
+	return (c >= 1 && c <= 31) || c == 127;
 }
