@@ -1,3 +1,4 @@
+//@@author A0125290M
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
@@ -44,17 +45,6 @@ namespace doMeTests_Command
 			executionStatus = command.execute();
 
 			Assert::AreEqual(true, executionStatus);
-		}
-
-		TEST_METHOD(Command_AddTest_Execute_NULL) {
-			Memory* memory = Memory::getInstance();
-			list<Task*> expectedTaskList = *(memory->ramGetTaskList());
-			Command_Add command(NULL);
-			bool executionStatus;
-
-			executionStatus = command.execute();
-
-			Assert::AreEqual(false, executionStatus);
 		}
 	};
 
@@ -168,7 +158,7 @@ namespace doMeTests_Command
 
 			command->execute();
 			list<Task*>* taskList = memory->ramGetTaskList();
-			list<Task*>* expectedTaskList;
+			list<Task*>* expectedTaskList = new list<Task*>;
 
 			for(int i = 2; i < 6; i++) {
 				expectedTaskList->push_back(new Task(to_string(i),-1,-1,-1,-1,"",0));
@@ -201,7 +191,7 @@ namespace doMeTests_Command
 
 			command->execute();
 			list<Task*>* taskList = memory->ramGetTaskList();
-			list<Task*>* expectedTaskList;
+			list<Task*>* expectedTaskList = new list<Task*>;
 
 			expectedTaskList->push_back(new Task(to_string(2),-1,-1,-1,-1,"",0));
 			expectedTaskList->push_back(new Task(to_string(4),-1,-1,-1,-1,"",0));			
