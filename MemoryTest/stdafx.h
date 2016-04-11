@@ -11,4 +11,6 @@
 #include "CppUnitTest.h"
 
 // TODO: reference additional headers your program requires here
+#include "Storage.h"
+#include "Exception_FileCannotOpen.h"
 
