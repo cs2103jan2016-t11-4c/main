@@ -19,7 +19,7 @@ public:
     TEST_METHOD(Storage_RetrieveTest) {
         Storage* storage = Storage::getInstance();
         int totalLines = 4;
-        string readDirectory = "storagetestread.txt";
+        string readDirectory = "storagetestwrite.txt";
         vector<string> actualData = storage->retrieveData(readDirectory);
 
         string expectedData[] = {
