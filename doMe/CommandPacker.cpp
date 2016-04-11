@@ -211,6 +211,9 @@ void CommandPacker::nodeOneOfDeleteCommand(int index) {
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
 		nodeTwoOfDeleteCommand(index+1);
+	} else if(_tokens->hasMeaning("LAST", index)) {
+		_singleIndex = LAST_INDEX;
+		nodeTwoOfDeleteCommand(index+1);
 	} else {
 		_singleIndex = LAST_INDEX;
 		nodeTwoOfDeleteCommand(index);
@@ -249,6 +252,18 @@ void CommandPacker::nodeThreeOfDeleteCommand(int index) {
 void CommandPacker::nodeOneOfUndoCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		packUndoCommand();
+	} else if(_tokens->hasMeaning("LAST", index)) {
+		nodeTwoOfUndoCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeTwoOfUndoCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packUndoCommand();
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
 	}
@@ -258,6 +273,18 @@ void CommandPacker::nodeOneOfUndoCommand(int index) {
 
 
 void CommandPacker::nodeOneOfRedoCommand(int index) {
+	if(_tokens->isOutOfBounds(index)) {
+		packRedoCommand();
+	} else if(_tokens->hasMeaning("LAST", index)) {
+		nodeTwoOfRedoCommand(index+1);
+	} else {
+		nodeOneOfAddCommand(START_INDEX);
+	}
+	
+	return;
+}
+
+void CommandPacker::nodeTwoOfRedoCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		packRedoCommand();
 	} else {
@@ -423,6 +450,11 @@ void CommandPacker::nodeOneOfMarkCommand(int index) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
 		nodeTwoOfMarkCommand(index);
+	} else if(_tokens->hasMeaning("LAST", index)) {
+		addToIndexes(LAST_INDEX);
+		nodeFourOfMarkCommand(index);
+	} else if(_tokens->hasMeaning("ALL", index)) {
+		nodeFourOfMarkCommand(index);
 	} else {
 		nodeSixOfMarkCommand(index);
 	}
@@ -534,6 +566,11 @@ void CommandPacker::nodeEightOfMarkCommand(int index) {
 
 void CommandPacker::nodeNineOfMarkCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
+		addToIndexes(LAST_INDEX);
+		packMarkCommand();
+	} else if(_tokens->hasMeaning("ALL", index)) {
+		packMarkCommand();
+	} else if(_tokens->hasMeaning("LAST", index)) {
 		addToIndexes(LAST_INDEX);
 		packMarkCommand();
 	} else if(_tokens->isInteger(index)) {

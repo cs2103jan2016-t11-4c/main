@@ -152,14 +152,6 @@ namespace ParserTest
 			Command* expected = new Command_Invalid();
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
-
-		TEST_METHOD(Parser_Add_Invalid_TooManyLocation)
-		{
-			Parser* sut = Parser::getInstance();
-			Command* actual = sut->parse("go on holiday @home @school");
-			Command* expected = new Command_Invalid();
-			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
-		}
 	};
 
 	TEST_CLASS(IgnoreTest)

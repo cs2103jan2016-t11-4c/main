@@ -83,9 +83,11 @@ private:
 	void nodeTwoOfDeleteCommand(int index);				//delete 1 [location] date time
 	void nodeThreeOfDeleteCommand(int index);			//delete 1 location [date time]
 
-	void nodeOneOfUndoCommand(int index);				//undo []
+	void nodeOneOfUndoCommand(int index);				//undo [last]
+	void nodeTwoOfUndoCommand(int index);				//undo last []
 
-	void nodeOneOfRedoCommand(int index);				//redo []
+	void nodeOneOfRedoCommand(int index);				//redo [last]
+	void nodeTwoOfRedoCommand(int index);				//redo last []
 
 	void nodeOneOfHelpCommand(int index);				//help []
 
