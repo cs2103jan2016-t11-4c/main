@@ -2,30 +2,7 @@
 #include "stdafx.h"
 #include "CppUnitTest.h"
 
-#include "Commons.cpp"
-#include "Exception_InvalidCommand.cpp"
-#include "Exception_FileCannotOpen.cpp"
-#include "Exception_FirstTimeUser.cpp"
-#include "Exception_CorruptedFile.cpp"
-#include "Task.cpp"
-#include "Memory.h"
-#include "Memory.cpp"
-#include "Settings.h"
-#include "Settings.cpp"
-#include "RAM.h"
-#include "RAM.cpp"
-#include "Storage.h"
-#include "Storage.cpp"
-#include "Command.cpp"
-#include "Command_Add.cpp"
-#include "Command_Clear.cpp"
-#include "Command_Edit.cpp"
-#include "Command_Exit.cpp"
-#include "Command_Invalid.cpp"
-#include "Command_SaveDirectory.cpp"
-#include "Command_Search.cpp"
-#include "Command_Undo.cpp"
-#include "Command_ViewType.cpp"
+#include "TesterHeader.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -34,7 +11,7 @@ namespace doMeTests_Command
 	TEST_CLASS(Command_AddTests)
 	{
 	public:
-
+        
 		TEST_METHOD(Command_AddTest_Execute_Task) {
 			Task* task = new Task();
 			Memory* memory = Memory::getInstance();
@@ -47,7 +24,7 @@ namespace doMeTests_Command
 			Assert::AreEqual(true, executionStatus);
 		}
 	};
-
+    
 	TEST_CLASS(Command_DeleteTests) {
 		TEST_METHOD(Command_DeleteTest_outOfRange_true_negativeNumber) {
 			Memory* memory = Memory::getInstance();
@@ -63,7 +40,7 @@ namespace doMeTests_Command
 			bool outOfRange = command->outOfRange();
 			Assert::AreEqual(true, outOfRange);
 		}
-
+        
 		TEST_METHOD(Command_DeleteTest_outOfRange_true_tooHigh) {
 			Memory* memory = Memory::getInstance();
 			vector<int> deleteList;
@@ -78,7 +55,7 @@ namespace doMeTests_Command
 			bool outOfRange = command->outOfRange();
 			Assert::AreEqual(true, outOfRange);
 		}
-
+        
 		TEST_METHOD(Command_DeleteTest_outOfRange_false_singleIndexZero) {
 			Memory* memory = Memory::getInstance();
 			vector<int> deleteList;
@@ -205,5 +182,7 @@ namespace doMeTests_Command
 				Assert::AreEqual((*taskListIter)->getName(), (*expectedTaskListIter)->getName());
 			}
 		}
+        
 	};
+    
 }

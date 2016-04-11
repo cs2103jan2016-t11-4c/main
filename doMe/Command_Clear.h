@@ -4,10 +4,10 @@
 using namespace std;
 
 class Command_Clear : public Command {
-#ifndef TESTMODE
-public:
-#else
-private:
+#ifndef TESTMODE 
+private: 
+#else 
+public: 
 #endif
 	list<Task*> _oldTaskList;
 	vector<int> _deleteList;
