@@ -47,9 +47,9 @@ void CommandPacker::setEnvironment(InputTokens* tokens) {
 }
 
 void CommandPacker::branchToNode(int index) {
-	assert(!_tokens->isOutOfBounds(index));
-	
-	if(_tokens->hasMeaning("DISPLAY", index)) {
+	if(_tokens->isOutOfBounds(index)) {
+		packInvalidCommand();
+	} else if(_tokens->hasMeaning("DISPLAY", index)) {
 		nodeOneOfDisplayCommand(index+1);
 	} else if(_tokens->hasMeaning("EDIT", index)) {
 		nodeOneOfChangeDirectoryCommand(index+1);
@@ -182,6 +182,9 @@ void CommandPacker::nodeThreeOfChangeViewTypeCommand(int index) {
 		packInvalidCommand();
 	} else if(_tokens->isInteger(index)) {
 		_singleIndex = stoi(_tokens->getToken(index));
+		nodeFourOfChangeViewTypeCommand(index+1);
+	} else if(_tokens->hasMeaning("VIEWDESCRIPTION", index)) {
+		extractViewType(index);
 		nodeFourOfChangeViewTypeCommand(index+1);
 	} else {
 		nodeOneOfAddCommand(START_INDEX);
@@ -773,6 +776,24 @@ void CommandPacker::extractTerm(int index) {
 	return;
 }
 
+void CommandPacker::extractViewType(int index) {
+	assert(!_tokens->isOutOfBounds(index));
+	assert(_tokens->hasMeaning("VIEWDESCRIPTION", index));
+
+	if(_tokens->hasMeaning("ALL", index)) {
+		_singleIndex = 1;
+		return;
+	} else if(_tokens->hasMeaning("PRESENT", index)) {
+		_singleIndex = 2;
+		return;
+	} else if(_tokens->hasMeaning("TODAY", index)) {
+		_singleIndex = 3;
+		return;
+	}
+	
+	assert(false); //method should return before reaching this line
+	return;
+}
 
 void CommandPacker::extractDeleteParameter(int index) {
 	assert(!_tokens->isOutOfBounds(index));

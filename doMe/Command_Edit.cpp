@@ -155,7 +155,12 @@ int Command_Edit::getDoneStatus() {
 }
 
 string Command_Edit::getStringForm() {
-	string s = "Edit index: " + to_string(_index) + " task- ";
+	string s = "Edit index: ";
+	for(unsigned int i = 0; i < _editList.size(); i++) {
+		s += to_string(_editList[i]);
+		s += ", ";
+	}
+	s += " task- ";
 	s += "name: " + _newName;
 	s += ", location: " + _newLocation;
 	s += ", date1: " + to_string(_newDate1);

@@ -121,6 +121,9 @@ void Dictionary::addNaturalLanguagePackage() {
 	addThe();
 	addAll();
 	addNot();
+	addPresent();
+	addViewDescription();
+	addLast();
 
 	return;
 }
@@ -708,6 +711,28 @@ void Dictionary::addNot() {
 	SynonymList* list = new SynonymList("NOT");
 	list->add("NOT");
 	list->add("NT");
+	addToDictionary(list);
+}
+
+void Dictionary::addPresent() {
+	SynonymList* list = new SynonymList("PRESENT");
+	list->add("PRESENT");
+	list->add("PRSNT");
+	addToDictionary(list);
+}
+
+void Dictionary::addViewDescription() {
+	SynonymList* list = new SynonymList("VIEWDESCRIPTION");
+	list->add(getSynonyms("PRESENT"));
+	list->add(getSynonyms("ALL"));
+	list->add(getSynonyms("TODAY"));
+	addToDictionary(list);
+}
+
+void Dictionary::addLast() {
+	SynonymList* list = new SynonymList("LAST");
+	list->add("LAST");
+	list->add("LST");
 	addToDictionary(list);
 }
 

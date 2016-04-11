@@ -93,7 +93,7 @@ private:
 
 	void nodeOneOfScrollCommand(int index);				//b []
 
-	void nodeOneOfClearCommand(int index);				//clear [] 
+	void nodeOneOfClearCommand(int index);				//clear []
 	void nodeTwoOfClearCommand(int index);				//clear [all]
 	void nodeThreeOfClearCommand(int index);			//clear all []
 	void nodeFourOfClearCommand(int index);				//clear [1]-5
@@ -145,6 +145,7 @@ private:
 
 	void extractTerm(int index);			//reads in tokens till the end and stores the read string in _description
 
+	void extractViewType(int index);
 	void extractDeleteParameter(int index);	//finds the parameter to delete from a task
 	void packDeleteTask();					//packs up the parameters for task deletion
 
