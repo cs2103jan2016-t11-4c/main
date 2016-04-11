@@ -975,7 +975,7 @@ bool ChronoInterpreter::dateFormatENodeFour(int index) {
 
 	if(_tokens->hasMeaning("WEEK", index)) {
 		int daysToTarget = 7 - WEEK_DAY;
-		if(daysToTarget == 0) {
+		if(daysToTarget == 0 && _nextCount == 0) {
 			daysToTarget += 7;
 		}
 		daysToTarget += 7 * _nextCount;
@@ -1001,7 +1001,11 @@ bool ChronoInterpreter::dateFormatENodeFive(int index) {
 
 	if(_tokens->hasMeaning("DAYSOFTHEWEEK", index)) {
 		int daysToTarget = getDayOfWeekFromWord(index);
+
 		daysToTarget = (daysToTarget + 7 - WEEK_DAY) % 7;
+		if(daysToTarget == 0 && _nextCount == 0) {
+			daysToTarget += 7;
+		}
 		daysToTarget += 7 * _nextCount;
 		int date = ADD_TO_DATE(daysToTarget, DATE);
 		_day = GET_DAY(date);

@@ -91,6 +91,11 @@ void TaskPacker::customizeTaskForAddCommand() {
 		_task->setDoneStatus(NO_DONE);
 	}
 
+	if(_task->getDate1() == _task->getDate2() && 
+	  (_task->getDate1() != -1 || _task->getDate2() != -2)) {
+		  _task->setDate1(-1);
+	}
+
 	return;
 }
 
@@ -117,6 +122,11 @@ void TaskPacker::customizeTaskForEditCommand() {
 			_task->setTime2(_task->getTime1());
 			_task->setTime1(NO_DATE);
 		}
+	}
+
+	if(_task->getDate1() == _task->getDate2() && 
+	  (_task->getDate1() != -1 || _task->getDate2() != -2)) {
+		  _task->setDate1(-1);
 	}
 	
 	
@@ -231,6 +241,8 @@ void TaskPacker::finalizeTimes() {
 	} else if(_times.size() == 2) {
 		_time1 = _times[FIRST_INDEX];
 		_time2 = _times[SECOND_INDEX];
+	} else if(_times.size() > 2) {
+		throw Exception_ExceededParameterLimit();
 	}
 	return;
 }
