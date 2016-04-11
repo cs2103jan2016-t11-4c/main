@@ -162,7 +162,7 @@ namespace ParserTest
 		}
 	};
 
-		TEST_CLASS(IgnoreTest)
+	TEST_CLASS(IgnoreTest)
 	{
 	public:
 		//these cases are to test functionality of *command to ignore parsing
@@ -181,7 +181,7 @@ namespace ParserTest
 			Command* expected = new Command_Add(new Task("hit target of making a 1000 sales"));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
-
+		//these test cases handle ambiguities
 		TEST_METHOD(Parser_Ambiguity_4Digits)
 		{
 			Parser* sut = Parser::getInstance();
@@ -207,7 +207,7 @@ namespace ParserTest
 		}
 	};
 
-	TEST_CLASS(ChronoTest)//this class tests interpretation
+	TEST_CLASS(ChronoTest)//this class tests chrono interpretations
 	{
 	public:
 		//Following test cases based on equivalence partitioning.
@@ -867,6 +867,7 @@ namespace ParserTest
 			Command* expected = new Command_Edit(intVector, new Task("", -2, 20160401, -2, -2, " ", -1));
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
+
 	};
 
 	TEST_CLASS(ClearTest)
@@ -1008,7 +1009,6 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 	};
-
 
 	TEST_CLASS(RedoTest)
 	{
@@ -1206,6 +1206,30 @@ namespace ParserTest
 			Parser* sut = Parser::getInstance();
 			Command* actual = sut->parse("view2");
 			Command* expected = new Command_ViewType(2);
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_ChangeViewType_Valid_Type4)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("view present");
+			Command* expected = new Command_ViewType(2);
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_ChangeViewType_Valid_Type5)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("view all");
+			Command* expected = new Command_ViewType(1);
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
+
+		TEST_METHOD(Parser_ChangeViewType_Valid_Type6)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("view tday");
+			Command* expected = new Command_ViewType(3);
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
 

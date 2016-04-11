@@ -116,6 +116,9 @@ private:
 	void addThe();
 	void addAll();
 	void addNot();
+	void addPresent();
+	void addViewDescription();
+	void addLast();
 
 	bool isFoundInVector(vector<string>* vector, string s);
 };

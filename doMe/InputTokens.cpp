@@ -160,7 +160,9 @@ void InputTokens::generateTokensFromCommandLine(string commandLine) {
 	string chunk;
 	while(is >> chunk) {
 		chunk = removeIllegalCharacter(chunk);
-
+		if(chunk.size() == 0) {
+			continue;
+		}
 
 		//words starting with * are ignored from parsing
 		if(chunk[START_INDEX] == '*') {

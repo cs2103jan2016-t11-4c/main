@@ -454,6 +454,7 @@ bool ChronoInterpreter::timeRangeFormatANodeThree(int index) {
 	}
 }
 
+
 bool ChronoInterpreter::timeRangeFormatBNodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
 	assert(_tokens->isInteger(index));
@@ -917,6 +918,7 @@ bool ChronoInterpreter::dateFormatDNodeFour(int index) {
 		return false;
 	}
 }
+
 
 bool ChronoInterpreter::dateFormatENodeOne(int index) {
 	assert(!_tokens->isOutOfBounds(index));
