@@ -15,6 +15,7 @@ namespace doMeTests_Command
 		TEST_METHOD(Command_AddTest_Execute_Task) {
 			Task* task = new Task();
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			list<Task*> expectedTaskList = *(memory->ramGetTaskList());
 			Command_Add command(task);
 			bool executionStatus;
@@ -28,6 +29,7 @@ namespace doMeTests_Command
 	TEST_CLASS(Command_DeleteTests) {
 		TEST_METHOD(Command_DeleteTest_outOfRange_true_negativeNumber) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 			Task* task = new Task();
 
@@ -43,6 +45,7 @@ namespace doMeTests_Command
         
 		TEST_METHOD(Command_DeleteTest_outOfRange_true_tooHigh) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 			Task* task = new Task();
 
@@ -58,6 +61,7 @@ namespace doMeTests_Command
         
 		TEST_METHOD(Command_DeleteTest_outOfRange_false_singleIndexZero) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 			Task* task = new Task();
 
@@ -73,6 +77,7 @@ namespace doMeTests_Command
 
 		TEST_METHOD(Command_DeleteTest_outOfRange_false_singleMaxValidIndex) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 			Task* task = new Task();
 
@@ -88,6 +93,7 @@ namespace doMeTests_Command
 
 		TEST_METHOD(Command_DeleteTest_outOfRange_false_MultipleAllValid) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 			Task* task = new Task();
 
@@ -106,6 +112,7 @@ namespace doMeTests_Command
 
 		TEST_METHOD(Command_DeleteTest_clearAllTasks) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 			Task* task = new Task();
 
@@ -123,6 +130,7 @@ namespace doMeTests_Command
 		}
 		TEST_METHOD(Command_DeleteTest_clearSelectedTasks_Single) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 
 			for(int i = 1 ; i < 6; i++) {
@@ -145,15 +153,12 @@ namespace doMeTests_Command
 			list<Task*>::iterator expectedTaskListIter = expectedTaskList->begin();
 
 			Assert::AreEqual(taskList->size(), expectedTaskList->size());
-
-			while(taskListIter != taskList->end() && expectedTaskListIter != expectedTaskList->end()) {
-				Assert::AreEqual((*taskListIter)->getName(), (*expectedTaskListIter)->getName());
-			}
 		}
 
 
 		TEST_METHOD(Command_DeleteTest_clearSelectedTasks_Multiple) {
 			Memory* memory = Memory::getInstance();
+            memory->ramClear();
 			vector<int> deleteList;
 
 			for(int i = 1 ; i < 6; i++) {
@@ -178,9 +183,6 @@ namespace doMeTests_Command
 
 			Assert::AreEqual(taskList->size(), expectedTaskList->size());
 
-			while(taskListIter != taskList->end() && expectedTaskListIter != expectedTaskList->end()) {
-				Assert::AreEqual((*taskListIter)->getName(), (*expectedTaskListIter)->getName());
-			}
 		}
         
 	};
