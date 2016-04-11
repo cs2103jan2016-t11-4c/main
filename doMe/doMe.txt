@@ -1,11 +1,3 @@
-Go to church
--1
-20160417
--1
--1
-bjp
-1
-__________
 Remind friend to give beanie by this firday
 -1
 -1
@@ -133,4 +125,12 @@ Visit grandmother
 -1
 
 0
+__________
+Go to church
+-1
+20160417
+-1
+-1
+bjp
+1
 __________
