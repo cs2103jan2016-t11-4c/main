@@ -2,11 +2,10 @@
 #include "ViewType3.h"
 
 const string ViewType3::MESSAGE_DISPLAY_HEADER[] = {
-    "<Done>",
-    "<No Deadlines>",
-    "<Past>",
+    "<No Deadlines, Past>",
     "<TODAY>",
-    "<Future>"
+    "<Future>",
+    "<Done>"
 };
 
 ViewType3::ViewType3(void) {
@@ -28,15 +27,22 @@ vector<string> ViewType3::getCategoryHeader() {
 }
 
 bool ViewType3::isInNextCategory(Task* individualTask, int i) {
-    int date = individualTask->getDate2();
+    int date; 
+    int date1 = individualTask->getDate1();
+    int date2 = individualTask->getDate2();
     Commons commons;
+    if(date1 != -1) {
+        date = date1;
+    } else {
+        date = date2;
+    }
 
     switch(i) {
     case 0:
         return true;
         break; 
     case 1:
-        if(individualTask->getDoneStatus() == false) {
+        if(individualTask->getDoneStatus() == false && date >= _currentDate) {
             return true;
             break;
         } else {
@@ -44,7 +50,7 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
             break;
         }
     case 2:
-        if(date >= 0) {
+        if(date > _currentDate) {
             return true;
             break;
         } else {
@@ -52,15 +58,7 @@ bool ViewType3::isInNextCategory(Task* individualTask, int i) {
             break;
         }
     case 3:
-        if(date >= _currentDate) {
-            return true;
-            break;
-        } else {
-            return false;
-            break;
-        }
-    case 4:
-        if(date > _currentDate) {
+        if(individualTask->getDoneStatus() == true) {
             return true;
             break;
         } else {
