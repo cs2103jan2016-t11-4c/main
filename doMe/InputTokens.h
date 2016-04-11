@@ -36,11 +36,13 @@ public:
 	bool hasNoMoreWord(int index);				//checks if the there are anymore words to be parsed
 	bool hasMeaning(string meaning, int index);	//checks if the token denoted by index has the expected meaning	
 	bool isInteger(int index);					//checks if the token is a number					
+	bool isValidIndex(int index);				//checks if the number is an index
 	bool isParsed(int index);					//checks if a the token has already been processed
 	bool isExtensionOfAWord(int index);			//checks if the token is an extension of a word inputted by user
 	bool isBreakPoint(int index);				//checkks if the point indicated by index is the end point of a token chain collection
 	bool isMarkedAs(string marker, int index);	//checks if the token indicated by index has the same value as marker
-	
+
+
 	void markAs(string marker, int index);
 	void markAs(string firstMarker, string secondMarker, int index);
 	void remove(int index);
@@ -64,6 +66,9 @@ private:
 	size_t getAlphabets(size_t index, string chunk, vector<string>* tokens);
 	size_t getNumbers(size_t index, string chunk, vector<string>*  tokens);
 	string makeAllCaps(string s);
+	string removeIllegalCharacter(string s);
+
 	bool isInteger(char c);
 	bool isLowerCase(string s);
+	bool isIllegalCharacter(char c);
 };

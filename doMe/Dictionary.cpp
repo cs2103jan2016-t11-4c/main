@@ -60,6 +60,7 @@ void Dictionary::addBasicVocabularyPackage() {
 	addRedo();
 	addHelp();
 	addMark();
+	addScroll();
 
 	return;
 }
@@ -173,7 +174,7 @@ void Dictionary::addEdit() {
 	list->add("C");
 	list->add("CHNG");
 	list->add("EDIT");
-    list->add("POSTPONE");
+    list->add("SET");
 	addToDictionary(list);
 }
 
@@ -319,8 +320,15 @@ void Dictionary::addHelp() {
 void Dictionary::addMark() {
 	SynonymList* list = new SynonymList("MARK");
 	list->add("MARK");
-	list->add("SET");
 	list->add("MRK");
+	addToDictionary(list);
+}
+
+void Dictionary::addScroll() {
+	SynonymList* list = new SynonymList("SCROLL");
+	list->add("B");
+	list->add("BROWSE");
+	list->add("SCROLL");
 	addToDictionary(list);
 }
 
