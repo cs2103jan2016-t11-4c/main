@@ -178,6 +178,7 @@ void Dictionary::addEdit() {
 	list->add("CHNG");
 	list->add("EDIT");
     list->add("SET");
+    list->add("UPDATE");
 	addToDictionary(list);
 }
 
@@ -199,6 +200,8 @@ void Dictionary::addUndo() {
 void Dictionary::addSearch() {
 	SynonymList* list = new SynonymList("SEARCH");
 	list->add("SEARCH");
+	list->add("FIND");
+	list->add("FND");
 	list->add("SRCH");
 	list->add("S");
 	addToDictionary(list);
@@ -290,6 +293,7 @@ void Dictionary::addDone() {
 	SynonymList* list = new SynonymList("DONE");
 	list->add("DONE");
 	list->add("FINISHED");
+	list->add("FINISH");
 	list->add("COMPLETED");
 	addToDictionary(list);
 }

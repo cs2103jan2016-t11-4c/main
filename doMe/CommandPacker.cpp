@@ -85,6 +85,10 @@ void CommandPacker::branchToNode(int index) {
 		nodeTwoOfChangeViewTypeCommand(index+1);
 	} else if(_tokens->isInteger(index)) {
 		nodeOneOfMarkCommand(index);
+	} else if(_tokens->hasMeaning("LAST", index)) {
+		nodeOneOfMarkCommand(index);
+	} else if(_tokens->hasMeaning("ALL", index)) {
+		nodeOneOfMarkCommand(index);
 	} else {
 		nodeOneOfAddCommand(index);
 	}
@@ -452,9 +456,9 @@ void CommandPacker::nodeOneOfMarkCommand(int index) {
 		nodeTwoOfMarkCommand(index);
 	} else if(_tokens->hasMeaning("LAST", index)) {
 		addToIndexes(LAST_INDEX);
-		nodeFourOfMarkCommand(index);
+		nodeFourOfMarkCommand(index+1);
 	} else if(_tokens->hasMeaning("ALL", index)) {
-		nodeFourOfMarkCommand(index);
+		nodeFourOfMarkCommand(index+1);
 	} else {
 		nodeSixOfMarkCommand(index);
 	}
@@ -569,10 +573,10 @@ void CommandPacker::nodeNineOfMarkCommand(int index) {
 		addToIndexes(LAST_INDEX);
 		packMarkCommand();
 	} else if(_tokens->hasMeaning("ALL", index)) {
-		packMarkCommand();
+		nodeTwelveOfMarkCommand(index+1);
 	} else if(_tokens->hasMeaning("LAST", index)) {
 		addToIndexes(LAST_INDEX);
-		packMarkCommand();
+		nodeTwelveOfMarkCommand(index+1);
 	} else if(_tokens->isInteger(index)) {
 		nodeTenOfMarkCommand(index);
 	} else {

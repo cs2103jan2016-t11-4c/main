@@ -1311,6 +1311,14 @@ namespace ParserTest
 			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
 		}
         
+		TEST_METHOD(Parser_Mark_All)
+		{
+			Parser* sut = Parser::getInstance();
+			Command* actual = sut->parse("mark all done");
+			vector<int>* intVector = new vector<int>;
+			Command* expected = new Command_Edit(intVector, new Task("", -2, -2, -2, -2, " ", 1));
+			Assert::AreEqual(expected->getStringForm(),actual->getStringForm());
+		}
 		TEST_METHOD(Parser_Mark)
 		{
 			Parser* sut = Parser::getInstance();
