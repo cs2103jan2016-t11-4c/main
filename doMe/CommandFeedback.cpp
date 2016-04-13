@@ -4,6 +4,7 @@
 const string CommandFeedback::DEFAULT_TEXT_FILE_NAME = "doMe.txt";
 const string CommandFeedback::MESSAGE_VOID_STRING = "";
 const string CommandFeedback::MESSAGE_TASK_INDEX = ", ";
+const string CommandFeedback::MESSAGE_ALL = "All";
 
 const string CommandFeedback::MESSAGE_ADD = "Added \"%s\" into %s";
 const string CommandFeedback::MESSAGE_DELETE = "Deleted \"%s\" from %s";
@@ -93,6 +94,9 @@ string CommandFeedback::getCommandFeedback(Command* executionMessage, CommandOut
         break;
     case EDIT:
         return getNotificationEdit(executionMessage, commandOutcome, viewType);
+        break;
+    case EDIT_MULTIPLE:
+        return getNotificationEditMultiple(executionMessage, commandOutcome, viewType);
         break;
     case CLEAR:
         return getNotificationClear(executionMessage, commandOutcome, viewType);
@@ -249,6 +253,21 @@ string CommandFeedback::getNotificationEdit(Command* executionMessage, CommandOu
     return ERROR_INVALID_COMMAND;
 }
 
+string CommandFeedback::getNotificationEditMultiple(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
+    vector<int>* editList;
+    switch(commandOutcome) {
+    case VALID_MESSAGE:
+        editList = executionMessage->getEditList();
+        return validNotificationEditMultiple(editList, viewType, executionMessage->getDoneStatus());
+        break;
+    case INVALID_MESSAGE:
+        return invalidNotificationEdit();
+        break;
+    }
+    return ERROR_INVALID_COMMAND;
+}
+
+
 string CommandFeedback::getNotificationClear(Command* executionMessage, CommandOutcome commandOutcome, int viewType) {
     switch(commandOutcome) {
     case VALID_MESSAGE:
@@ -351,6 +370,41 @@ string CommandFeedback::validNotificationEdit(Task* task, int viewType, int done
         }
     }
     return buffer;
+}
+
+string CommandFeedback::validNotificationEditMultiple(vector<int>* editIndex, int viewType, int doneStatus) {
+    string taskString;
+    if(editIndex->size() == 0) {
+        switch(doneStatus) {
+        case 0:
+            sprintf_s(buffer, MESSAGE_EDIT_UNDONE.c_str(), MESSAGE_ALL.c_str());
+            return buffer;
+            break;
+        case 1:
+            sprintf_s(buffer, MESSAGE_EDIT_DONE.c_str(), MESSAGE_ALL.c_str());
+            return buffer;
+            break;
+        }
+    } else {
+        vector<int>::iterator intIter = editIndex->begin();
+        while(intIter != editIndex->end()) {
+            taskString = taskString + taskIndexToString(*intIter);
+            intIter++;
+        }
+        taskString.pop_back();
+        taskString.pop_back();
+        switch(doneStatus) {
+        case 0:
+            sprintf_s(buffer, MESSAGE_EDIT_UNDONE.c_str(), taskString.c_str());
+            return buffer;
+            break;
+        case 1:
+            sprintf_s(buffer, MESSAGE_EDIT_DONE.c_str(), taskString.c_str());
+            return buffer;
+            break;
+        }    
+    }
+    return MESSAGE_VOID_STRING;
 }
 
 string CommandFeedback::validNotificationClear(string textFileName) {

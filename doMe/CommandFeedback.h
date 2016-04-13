@@ -40,6 +40,7 @@ public:
     string getNotificationAdd(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationDelete(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationEdit(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
+    string getNotificationEditMultiple(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationClear(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationSearchTerm(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
     string getNotificationEndSearch(Command* executionMessage, CommandOutcome commandOutcome, int viewType);
@@ -53,6 +54,7 @@ public:
     string validNotificationDelete(Task* task, int viewType, string textFileName);
     string validNotificationDeleteMultiple(vector<int>* deleteIndex, int viewType, string textFileName);
     string validNotificationEdit(Task* task, int viewType, int doneStatus);
+    string validNotificationEditMultiple(vector<int>* editIndex, int viewType, int doneStatus);
     string validNotificationClear(string textFileName);
     string validNotificationSearchTerm(string searchTerm);
     string validNotificationExitSearch(); 
@@ -86,6 +88,7 @@ public:
     static const string DEFAULT_TEXT_FILE_NAME;
     static const string MESSAGE_VOID_STRING;
     static const string MESSAGE_TASK_INDEX;
+    static const string MESSAGE_ALL;
 
     static const string MESSAGE_ADD;
     static const string MESSAGE_DELETE;

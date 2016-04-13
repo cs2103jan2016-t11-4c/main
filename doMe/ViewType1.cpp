@@ -46,6 +46,7 @@ bool ViewType1::isInNextCategory(Task* individualTask, int i) {
         break; 
     case 1:
         if(date >= 0) {
+            
             return true;
             break;
         } else {
@@ -69,7 +70,7 @@ bool ViewType1::isInNextCategory(Task* individualTask, int i) {
             break;
         }
     case 4:
-        if(date > commons.addToDate(_dayToEndOfWeek,_currentDate) ) {
+        if(date > commons.addToDate(_dayToEndOfWeek,_currentDate)) {
             return true;
             break;
         } else {
@@ -77,7 +78,7 @@ bool ViewType1::isInNextCategory(Task* individualTask, int i) {
             break;
         }
     case 5:
-        if(date > commons.addToDate(_dayToEndOfWeek + NO_OF_DAYS_IN_WEEK,_currentDate) ) {
+        if(date > commons.addToDate(_dayToEndOfWeek + NO_OF_DAYS_IN_WEEK,_currentDate)) {
             return true;
             break;
         } else {
