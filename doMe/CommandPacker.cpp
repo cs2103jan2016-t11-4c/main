@@ -87,8 +87,6 @@ void CommandPacker::branchToNode(int index) {
 		nodeOneOfMarkCommand(index);
 	} else if(_tokens->hasMeaning("LAST", index)) {
 		nodeOneOfMarkCommand(index);
-	} else if(_tokens->hasMeaning("ALL", index)) {
-		nodeOneOfMarkCommand(index);
 	} else {
 		nodeOneOfAddCommand(index);
 	}
@@ -457,8 +455,6 @@ void CommandPacker::nodeOneOfMarkCommand(int index) {
 	} else if(_tokens->hasMeaning("LAST", index)) {
 		addToIndexes(LAST_INDEX);
 		nodeFourOfMarkCommand(index+1);
-	} else if(_tokens->hasMeaning("ALL", index)) {
-		nodeFourOfMarkCommand(index+1);
 	} else {
 		nodeSixOfMarkCommand(index);
 	}
@@ -572,8 +568,6 @@ void CommandPacker::nodeNineOfMarkCommand(int index) {
 	if(_tokens->isOutOfBounds(index)) {
 		addToIndexes(LAST_INDEX);
 		packMarkCommand();
-	} else if(_tokens->hasMeaning("ALL", index)) {
-		nodeTwelveOfMarkCommand(index+1);
 	} else if(_tokens->hasMeaning("LAST", index)) {
 		addToIndexes(LAST_INDEX);
 		nodeTwelveOfMarkCommand(index+1);
