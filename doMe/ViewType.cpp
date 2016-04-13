@@ -80,7 +80,7 @@ vector<string> ViewType::createDisplayList() {
             i++;
         }
         while(taskListIter != (*_taskList).end()) {
-            while((isInNextCategory(*taskListIter, i)) && (i < categoryHeader.size())) {
+            while(((isInNextCategory(*taskListIter, i) || (*taskListIter)->getDoneStatus() == true)) && (i < categoryHeader.size()))  {
                 _displayList.push_back("");
                 _colourCoding.push_back(COLOUR_DEFAULT);
 
